@@ -91,7 +91,7 @@ Value: 185.199.111.153
 
 Type: CNAME
 Name: www
-Value: sugan.github.io
+Value: devangsankhla.github.io
 ```
 
 ## Troubleshooting
@@ -103,6 +103,6 @@ Value: sugan.github.io
 
 ## Important Notes
 
-1. The repository name `sugan.github.io` suggests this is a user/organization site, which means the site will be at `https://sugan.github.io/` (no repository name in URL)
+1. The repository name `devangsankhla.github.io` suggests this is a user/organization site, which means the site will be at `https://devangsankhla.github.io/` (no repository name in URL)
 2. If using a custom domain, the base URL in `vite.config.ts` should remain as `/`
 3. Make sure to commit and push the CNAME file to the `main` branch

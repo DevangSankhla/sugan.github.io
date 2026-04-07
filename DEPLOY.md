@@ -23,11 +23,11 @@ Log in to your GoDaddy account and add these DNS records:
 
 | Type | Host | Points to | TTL |
 |------|------|-----------|-----|
-| CNAME | www | sugan.github.io | 600 seconds |
+| CNAME | www | devangsankhla.github.io | 600 seconds |
 
 ### 3. Enable GitHub Pages
 
-1. Push this code to GitHub repository: `sugan/sugan.github.io`
+1. Push this code to GitHub repository: `sugan/devangsankhla.github.io`
 2. Go to repository **Settings** → **Pages**
 3. Select **GitHub Actions** as the source
 4. The workflow will automatically deploy your site
@@ -60,7 +60,7 @@ The deployment is automated via `.github/workflows/deploy.yml`. It triggers on e
 
 After setup, your site will be available at:
 - **Custom Domain**: https://suganwoodenart.com
-- **GitHub Pages**: https://sugan.github.io
+- **GitHub Pages**: https://devangsankhla.github.io
 
 ## Troubleshooting
 

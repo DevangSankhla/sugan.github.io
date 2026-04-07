@@ -4,7 +4,7 @@
 
 In your screenshot, you have a typo:
 - ❌ Wrong: `sugar.github.io` (with an 'r')
-- ✅ Correct: `sugan.github.io` (no 'r')
+- ✅ Correct: `devangsankhla.github.io` (no 'r')
 
 ## Correct DNS Records for sugan.shop
 
@@ -29,12 +29,12 @@ Use **A Records** (not CNAME) for the apex domain:
 
 | Type | Name | Value | TTL |
 |------|------|-------|-----|
-| CNAME | www | **sugan.github.io** | 1 Hour |
+| CNAME | www | **devangsankhla.github.io** | 1 Hour |
 
 **In GoDaddy:**
 - Type: `CNAME`
 - Name: `www`
-- Value: `sugan.github.io` ⬅️ Make sure there's no 'r' in "sugan"
+- Value: `devangsankhla.github.io` ⬅️ Make sure there's no 'r' in "sugan"
 - TTL: 1 Hour
 
 ---
