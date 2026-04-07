@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ShoppingCart, ExternalLink, Star } from 'lucide-react';
+import { ShoppingCart, ExternalLink, Star, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { products, categories } from '@/data/products';
 import { useCart } from '@/context/CartContext';
 import type { Product } from '@/types';
@@ -96,13 +97,17 @@ export default function Products() {
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8"
         >
           {filteredProducts.map((product) => (
-            <div key={product.id} className="product-card">
+            <Link
+              key={product.id}
+              to={`/product/${product.id}`}
+              className="product-card group"
+            >
               {/* Image */}
               <div className="relative aspect-square overflow-hidden bg-sugan-cream-dark">
                 <img
                   src={product.image}
                   alt={product.name}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 {product.originalPrice && (
                   <span className="absolute top-3 left-3 bg-sugan-gold text-white text-xs font-body px-2 py-1 rounded">
@@ -110,7 +115,13 @@ export default function Products() {
                   </span>
                 )}
                 {/* Quick Actions */}
-                <div className="absolute inset-0 bg-sugan-brown/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3">
+                <div 
+                  className="absolute inset-0 bg-sugan-brown/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                  }}
+                >
                   <button
                     onClick={() => handleAddToCart(product)}
                     className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-sugan-brown hover:bg-sugan-gold hover:text-white transition-colors"
@@ -162,7 +173,7 @@ export default function Products() {
                   )}
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
 
@@ -171,15 +182,13 @@ export default function Products() {
           <p className="text-sugan-brown/60 font-body text-sm mb-4">
             All orders are fulfilled via Amazon FBA for fast, reliable delivery
           </p>
-          <a
-            href="https://www.amazon.in/s?me=SUGAN_SELLER_ID"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-sugan-gold font-body text-sm hover:underline"
+          <Link
+            to="/shop"
+            className="inline-flex items-center gap-2 btn-primary"
           >
-            View All Products on Amazon
-            <ExternalLink className="w-4 h-4" />
-          </a>
+            View All Products
+            <ArrowRight className="w-4 h-4" />
+          </Link>
         </div>
       </div>
     </section>

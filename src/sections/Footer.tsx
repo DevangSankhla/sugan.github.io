@@ -1,4 +1,5 @@
-import { Mail, Phone, MapPin, Instagram, Facebook, Twitter } from 'lucide-react';
+import { Mail, Phone, MapPin, Instagram, Facebook } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -28,7 +29,7 @@ export default function Footer() {
               {/* Social Links */}
               <div className="flex gap-3">
                 <a
-                  href="https://instagram.com/sugan"
+                  href="https://www.instagram.com/visit_sugan.shop?igsh=a3ZsOGJ3a2VmYndt&utm_source=qr"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-10 h-10 rounded-full bg-sugan-cream/10 flex items-center justify-center hover:bg-sugan-gold transition-colors"
@@ -45,15 +46,7 @@ export default function Footer() {
                 >
                   <Facebook className="w-4 h-4" />
                 </a>
-                <a
-                  href="https://twitter.com/sugan"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-sugan-cream/10 flex items-center justify-center hover:bg-sugan-gold transition-colors"
-                  aria-label="Twitter"
-                >
-                  <Twitter className="w-4 h-4" />
-                </a>
+                
               </div>
             </div>
 
@@ -76,16 +69,12 @@ export default function Footer() {
                   </button>
                 </li>
                 <li>
-                  <button
-                    onClick={() =>
-                      document
-                        .getElementById('products')
-                        ?.scrollIntoView({ behavior: 'smooth' })
-                    }
+                  <Link
+                    to="/shop"
                     className="text-sugan-cream/60 font-body text-sm hover:text-sugan-gold transition-colors hover:translate-x-1 inline-block"
                   >
                     Shop
-                  </button>
+                  </Link>
                 </li>
                 <li>
                   <button
@@ -121,44 +110,36 @@ export default function Footer() {
               </h4>
               <ul className="space-y-3">
                 <li>
-                  <a
-                    href="https://www.amazon.in/gp/help/customer/display.html"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <Link
+                    to="/shipping"
                     className="text-sugan-cream/60 font-body text-sm hover:text-sugan-gold transition-colors hover:translate-x-1 inline-block"
                   >
                     Shipping Info
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
-                    href="https://www.amazon.in/gp/help/customer/display.html"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <Link
+                    to="/returns"
                     className="text-sugan-cream/60 font-body text-sm hover:text-sugan-gold transition-colors hover:translate-x-1 inline-block"
                   >
                     Returns & Refunds
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
-                    href="https://www.amazon.in/gp/help/customer/display.html"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <Link
+                    to="/faq"
                     className="text-sugan-cream/60 font-body text-sm hover:text-sugan-gold transition-colors hover:translate-x-1 inline-block"
                   >
                     FAQ
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
-                    href="https://www.amazon.in/s?me=SUGAN_SELLER_ID"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <Link
+                    to="/amazon-store"
                     className="text-sugan-cream/60 font-body text-sm hover:text-sugan-gold transition-colors hover:translate-x-1 inline-block"
                   >
                     Amazon Store
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -172,27 +153,27 @@ export default function Footer() {
                 <li className="flex items-start gap-3">
                   <MapPin className="w-5 h-5 text-sugan-gold flex-shrink-0 mt-0.5" />
                   <span className="text-sugan-cream/60 font-body text-sm">
-                    Sardarpura, Jodhpur
+                    III Phase, Boranada, Jodhpur
                     <br />
-                    Rajasthan, India 342001
+                    Rajasthan, India 342012
                   </span>
                 </li>
                 <li className="flex items-center gap-3">
                   <Phone className="w-5 h-5 text-sugan-gold flex-shrink-0" />
                   <a
-                    href="tel:+919876543210"
+                    href="tel:+916367677255"
                     className="text-sugan-cream/60 font-body text-sm hover:text-sugan-gold transition-colors"
                   >
-                    +91 98765 43210
+                    +91 6367677255
                   </a>
                 </li>
                 <li className="flex items-center gap-3">
                   <Mail className="w-5 h-5 text-sugan-gold flex-shrink-0" />
                   <a
-                    href="mailto:hello@sugan.in"
+                    href="mailto:sac280422@gmail.com"
                     className="text-sugan-cream/60 font-body text-sm hover:text-sugan-gold transition-colors"
                   >
-                    hello@sugan.in
+                    sac280422@gmail.com
                   </a>
                 </li>
               </ul>
@@ -210,14 +191,12 @@ export default function Footer() {
               Jodhpur.
             </p>
             <div className="flex items-center gap-4">
-              <a
-                href="https://www.amazon.in/s?me=SUGAN_SELLER_ID"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                to="/amazon-store"
                 className="text-sugan-cream/40 font-body text-xs hover:text-sugan-gold transition-colors"
               >
                 Shop on Amazon
-              </a>
+              </Link>
               <span className="text-sugan-cream/20">|</span>
               <button
                 onClick={() =>

@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -85,25 +86,19 @@ export default function CTA() {
               doorstep via Amazon FBA.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button
-                onClick={() =>
-                  document
-                    .getElementById('products')
-                    ?.scrollIntoView({ behavior: 'smooth' })
-                }
+              <Link
+                to="/shop"
                 className="btn-primary flex items-center justify-center gap-2 group"
               >
                 Shop Now
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-              </button>
-              <a
-                href="https://www.amazon.in/s?me=SUGAN_SELLER_ID"
-                target="_blank"
-                rel="noopener noreferrer"
+              </Link>
+              <Link
+                to="/amazon-store"
                 className="btn-outline"
               >
                 Visit Amazon Store
-              </a>
+              </Link>
             </div>
 
             {/* Trust Badges */}
