@@ -1,5 +1,5 @@
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { ArrowLeft, ShoppingCart, ExternalLink, Star, Minus, Plus, Heart, Share2 } from 'lucide-react';
+import { ArrowLeft, ShoppingCart, Star, Minus, Plus, Heart, Share2, Package, Ruler, Sparkles, Shield, Truck, ChevronDown, ChevronUp } from 'lucide-react';
 import { allProducts } from '@/data/rooms';
 import { useCart } from '@/context/CartContext';
 import { useState } from 'react';
@@ -9,6 +9,9 @@ export default function ProductDetail() {
   const navigate = useNavigate();
   const { addToCart, setIsCartOpen } = useCart();
   const [quantity, setQuantity] = useState(1);
+  const [selectedImage, setSelectedImage] = useState(0);
+  const [expandedSection, setExpandedSection] = useState<string | null>(null);
+  const [selectedVariant, setSelectedVariant] = useState<number>(0);
 
   const product = allProducts.find((p) => p.id === id);
 
@@ -26,15 +29,29 @@ export default function ProductDetail() {
   }
 
   const handleAddToCart = () => {
+    const itemToAdd = {
+      ...product,
+      price: product.details?.variants?.[selectedVariant]?.price || product.price,
+    };
     for (let i = 0; i < quantity; i++) {
-      addToCart(product);
+      addToCart(itemToAdd);
     }
     setIsCartOpen(true);
   };
 
-  const relatedProducts = allProducts
-    .filter((p) => p.category === product.category && p.id !== product.id)
-    .slice(0, 4);
+  // Get all images (main + additional)
+  const allImages = [
+    product.image,
+    ...(product.details?.photos || [])
+  ];
+
+  const toggleSection = (section: string) => {
+    setExpandedSection(expandedSection === section ? null : section);
+  };
+
+  // Calculate display price
+  const displayPrice = product.details?.variants?.[selectedVariant]?.price || product.price;
+  const displaySku = product.details?.variants?.[selectedVariant]?.sku || product.id;
 
   return (
     <div className="min-h-screen bg-sugan-cream pt-24">
@@ -46,7 +63,7 @@ export default function ProductDetail() {
             className="flex items-center gap-2 text-sugan-brown/60 hover:text-sugan-gold transition-colors text-sm font-body"
           >
             <ArrowLeft className="w-4 h-4" />
-            Back to Products
+            Back to {product.room.charAt(0).toUpperCase() + product.room.slice(1)}
           </button>
         </div>
       </div>
@@ -54,83 +71,163 @@ export default function ProductDetail() {
       {/* Product Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Image */}
-          <div className="aspect-square bg-sugan-cream-dark rounded-lg overflow-hidden">
-            <img
-              src={product.image}
-              alt={product.name}
-              className="w-full h-full object-cover"
-            />
+          {/* Image Gallery */}
+          <div className="space-y-4">
+            {/* Main Image */}
+            <div className="aspect-square bg-sugan-cream-dark rounded-lg overflow-hidden">
+              <img
+                src={allImages[selectedImage]}
+                alt={product.name}
+                className="w-full h-full object-cover"
+              />
+            </div>
+            
+            {/* Thumbnail Gallery */}
+            {allImages.length > 1 && (
+              <div className="flex gap-2 overflow-x-auto">
+                {allImages.map((img, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setSelectedImage(idx)}
+                    className={`w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 border-2 transition-colors ${
+                      selectedImage === idx ? 'border-sugan-gold' : 'border-transparent'
+                    }`}
+                  >
+                    <img src={img} alt={`${product.name} ${idx + 1}`} className="w-full h-full object-cover" />
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
-          {/* Details */}
+          {/* Product Details */}
           <div className="flex flex-col">
-            <p className="text-sugan-gold text-sm font-body uppercase tracking-wider mb-2">
-              {product.category}
-            </p>
+            {/* Category & SKU */}
+            <div className="flex items-center gap-3 mb-2">
+              <p className="text-sugan-gold text-sm font-body uppercase tracking-wider">
+                {product.category}
+              </p>
+              {displaySku && (
+                <span className="text-sugan-brown/40 text-xs font-body">SKU: {displaySku}</span>
+              )}
+            </div>
+            
+            {/* Name */}
             <h1 className="font-display text-3xl sm:text-4xl text-sugan-brown mb-4">
               {product.name}
             </h1>
             
             {/* Rating */}
-            <div className="flex items-center gap-2 mb-4">
-              <div className="flex items-center gap-1">
-                {[...Array(5)].map((_, i) => (
-                  <Star
-                    key={i}
-                    className={`w-4 h-4 ${
-                      i < Math.floor(product.rating || 0)
-                        ? 'fill-sugan-gold text-sugan-gold'
-                        : 'text-sugan-brown/20'
-                    }`}
-                  />
-                ))}
+            {product.rating && (
+              <div className="flex items-center gap-2 mb-4">
+                <div className="flex items-center gap-1">
+                  {[...Array(5)].map((_, i) => (
+                    <Star
+                      key={i}
+                      className={`w-4 h-4 ${
+                        i < Math.floor(product.rating || 0)
+                          ? 'fill-sugan-gold text-sugan-gold'
+                          : 'text-sugan-brown/20'
+                      }`}
+                    />
+                  ))}
+                </div>
+                <span className="text-sm text-sugan-brown/60 font-body">
+                  {product.rating} ({product.reviews} reviews)
+                </span>
               </div>
-              <span className="text-sm text-sugan-brown/60 font-body">
-                {product.rating} ({product.reviews} reviews)
-              </span>
-            </div>
+            )}
 
             {/* Price */}
             <div className="flex items-center gap-3 mb-6">
               <span className="font-display text-3xl font-semibold text-sugan-brown">
-                ₹{product.price.toLocaleString()}
+                ₹{displayPrice.toLocaleString()}
               </span>
-              {product.originalPrice && (
+              {product.originalPrice && product.originalPrice > displayPrice && (
                 <>
                   <span className="text-xl text-sugan-brown/40 line-through">
                     ₹{product.originalPrice.toLocaleString()}
                   </span>
                   <span className="bg-sugan-gold text-white text-xs px-2 py-1 rounded">
-                    Save ₹{(product.originalPrice - product.price).toLocaleString()}
+                    Save ₹{(product.originalPrice - displayPrice).toLocaleString()}
                   </span>
                 </>
               )}
             </div>
 
-            {/* Description */}
-            <p className="text-sugan-brown/70 font-body leading-relaxed mb-8">
+            {/* Short Description */}
+            <p className="text-sugan-brown/70 font-body leading-relaxed mb-6">
               {product.description}
             </p>
 
-            {/* Features */}
-            <div className="grid grid-cols-2 gap-4 mb-8">
-              <div className="flex items-center gap-2 text-sm text-sugan-brown/60 font-body">
-                <div className="w-2 h-2 bg-sugan-gold rounded-full" />
-                Handcrafted in Jodhpur
+            {/* Variants Selection */}
+            {product.details?.variants && product.details.variants.length > 0 && (
+              <div className="mb-6">
+                <label className="block text-sm font-medium text-sugan-brown mb-2">
+                  Select Variant
+                </label>
+                <div className="flex flex-wrap gap-2">
+                  {product.details.variants.map((variant, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setSelectedVariant(idx)}
+                      className={`px-4 py-2 rounded-lg border-2 transition-colors ${
+                        selectedVariant === idx
+                          ? 'border-sugan-gold bg-sugan-gold/10'
+                          : 'border-sugan-brown/20 hover:border-sugan-gold'
+                      }`}
+                    >
+                      <span className="text-sm font-body text-sugan-brown">
+                        {variant.size || variant.color}
+                      </span>
+                      <span className="text-sm font-semibold text-sugan-brown ml-2">
+                        ₹{variant.price.toLocaleString()}
+                      </span>
+                    </button>
+                  ))}
+                </div>
               </div>
-              <div className="flex items-center gap-2 text-sm text-sugan-brown/60 font-body">
-                <div className="w-2 h-2 bg-sugan-gold rounded-full" />
-                Premium Solid Wood
+            )}
+
+            {/* Color Selection */}
+            {product.details?.colors && product.details.colors.length > 0 && (
+              <div className="mb-6">
+                <label className="block text-sm font-medium text-sugan-brown mb-2">
+                  Color
+                </label>
+                <div className="flex flex-wrap gap-2">
+                  {product.details.colors.map((color, idx) => (
+                    <span
+                      key={idx}
+                      className="px-3 py-1 bg-sugan-cream rounded-full text-sm font-body text-sugan-brown"
+                    >
+                      {color}
+                    </span>
+                  ))}
+                </div>
               </div>
-              <div className="flex items-center gap-2 text-sm text-sugan-brown/60 font-body">
-                <div className="w-2 h-2 bg-sugan-gold rounded-full" />
-                Food-Safe Finish
-              </div>
-              <div className="flex items-center gap-2 text-sm text-sugan-brown/60 font-body">
-                <div className="w-2 h-2 bg-sugan-gold rounded-full" />
-                25+ Years Warranty
-              </div>
+            )}
+
+            {/* Quick Info Badges */}
+            <div className="flex flex-wrap gap-3 mb-6">
+              {product.details?.materials && (
+                <div className="flex items-center gap-2 text-sm text-sugan-brown/60 font-body bg-white px-3 py-2 rounded-lg">
+                  <Package className="w-4 h-4 text-sugan-gold" />
+                  {product.details.materials.split(',')[0]}
+                </div>
+              )}
+              {product.details?.dimensions && (
+                <div className="flex items-center gap-2 text-sm text-sugan-brown/60 font-body bg-white px-3 py-2 rounded-lg">
+                  <Ruler className="w-4 h-4 text-sugan-gold" />
+                  {product.details.dimensions.length} × {product.details.dimensions.width}
+                </div>
+              )}
+              {product.details?.warranty && (
+                <div className="flex items-center gap-2 text-sm text-sugan-brown/60 font-body bg-white px-3 py-2 rounded-lg">
+                  <Shield className="w-4 h-4 text-sugan-gold" />
+                  {product.details.warranty.split(' ')[0]} Warranty
+                </div>
+              )}
             </div>
 
             {/* Quantity & Actions */}
@@ -161,14 +258,13 @@ export default function ProductDetail() {
                 Add to Cart
               </button>
 
-              {/* Contact for Purchase */}
+              {/* WhatsApp Inquire */}
               <a
-                href="https://wa.me/916367677255"
+                href={`https://wa.me/916367677255?text=Hi, I'm interested in ${product.name} (SKU: ${displaySku})`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-outline flex items-center justify-center gap-2"
               >
-                <ExternalLink className="w-4 h-4" />
                 Inquire on WhatsApp
               </a>
             </div>
@@ -186,7 +282,7 @@ export default function ProductDetail() {
             </div>
 
             {/* Stock Status */}
-            <div className="flex items-center gap-2 text-sm">
+            <div className="flex items-center gap-2 text-sm mb-8">
               <div className={`w-2 h-2 rounded-full ${product.inStock ? 'bg-green-500' : 'bg-red-500'}`} />
               <span className={`font-body ${product.inStock ? 'text-green-600' : 'text-red-600'}`}>
                 {product.inStock ? 'In Stock' : 'Out of Stock'}
@@ -195,33 +291,252 @@ export default function ProductDetail() {
           </div>
         </div>
 
-        {/* Related Products */}
-        {relatedProducts.length > 0 && (
-          <div className="mt-20">
-            <h2 className="font-display text-2xl text-sugan-brown mb-8">Related Products</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {relatedProducts.map((p) => (
-                <Link
-                  key={p.id}
-                  to={`/product/${p.id}`}
-                  className="group bg-white rounded-lg overflow-hidden hover:shadow-gold transition-shadow"
+        {/* Expandable Sections */}
+        <div className="mt-16 grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Product Information */}
+          <div className="lg:col-span-2 space-y-4">
+            {/* Description Section */}
+            <div className="bg-white rounded-lg overflow-hidden">
+              <button
+                onClick={() => toggleSection('description')}
+                className="w-full flex items-center justify-between p-6 text-left"
+              >
+                <span className="font-display text-lg text-sugan-brown">Description</span>
+                {expandedSection === 'description' ? (
+                  <ChevronUp className="w-5 h-5 text-sugan-brown" />
+                ) : (
+                  <ChevronDown className="w-5 h-5 text-sugan-brown" />
+                )}
+              </button>
+              {expandedSection === 'description' && (
+                <div className="px-6 pb-6">
+                  <p className="text-sugan-brown/70 font-body leading-relaxed">
+                    {product.description}
+                  </p>
+                  {product.details?.story && (
+                    <div className="mt-4 p-4 bg-sugan-cream rounded-lg">
+                      <h4 className="font-medium text-sugan-brown mb-2">The Story</h4>
+                      <p className="text-sugan-brown/70 font-body text-sm">{product.details.story}</p>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* Materials & Dimensions */}
+            {(product.details?.materials || product.details?.dimensions) && (
+              <div className="bg-white rounded-lg overflow-hidden">
+                <button
+                  onClick={() => toggleSection('specs')}
+                  className="w-full flex items-center justify-between p-6 text-left"
                 >
-                  <div className="aspect-square overflow-hidden">
-                    <img
-                      src={p.image}
-                      alt={p.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
+                  <span className="font-display text-lg text-sugan-brown">Materials & Dimensions</span>
+                  {expandedSection === 'specs' ? (
+                    <ChevronUp className="w-5 h-5 text-sugan-brown" />
+                  ) : (
+                    <ChevronDown className="w-5 h-5 text-sugan-brown" />
+                  )}
+                </button>
+                {expandedSection === 'specs' && (
+                  <div className="px-6 pb-6 space-y-4">
+                    {product.details.materials && (
+                      <div>
+                        <h4 className="font-medium text-sugan-brown mb-1">Materials</h4>
+                        <p className="text-sugan-brown/70 font-body text-sm">{product.details.materials}</p>
+                      </div>
+                    )}
+                    {product.details.construction && (
+                      <div>
+                        <h4 className="font-medium text-sugan-brown mb-1">Construction</h4>
+                        <p className="text-sugan-brown/70 font-body text-sm">{product.details.construction}</p>
+                      </div>
+                    )}
+                    {product.details.finish && (
+                      <div>
+                        <h4 className="font-medium text-sugan-brown mb-1">Finish</h4>
+                        <p className="text-sugan-brown/70 font-body text-sm">{product.details.finish}</p>
+                      </div>
+                    )}
+                    {product.details.dimensions && (
+                      <div>
+                        <h4 className="font-medium text-sugan-brown mb-2">Dimensions</h4>
+                        <div className="grid grid-cols-2 gap-2 text-sm">
+                          {Object.entries(product.details.dimensions).map(([key, value]) => (
+                            <div key={key} className="flex justify-between bg-sugan-cream px-3 py-2 rounded">
+                              <span className="text-sugan-brown/60 capitalize">{key}</span>
+                              <span className="text-sugan-brown font-medium">{value}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
-                  <div className="p-4">
-                    <h3 className="font-display text-lg text-sugan-brown">{p.name}</h3>
-                    <p className="text-sugan-gold font-semibold">₹{p.price.toLocaleString()}</p>
+                )}
+              </div>
+            )}
+
+            {/* Care Instructions */}
+            {product.details?.care && (
+              <div className="bg-white rounded-lg overflow-hidden">
+                <button
+                  onClick={() => toggleSection('care')}
+                  className="w-full flex items-center justify-between p-6 text-left"
+                >
+                  <span className="font-display text-lg text-sugan-brown">Care Instructions</span>
+                  {expandedSection === 'care' ? (
+                    <ChevronUp className="w-5 h-5 text-sugan-brown" />
+                  ) : (
+                    <ChevronDown className="w-5 h-5 text-sugan-brown" />
+                  )}
+                </button>
+                {expandedSection === 'care' && (
+                  <div className="px-6 pb-6">
+                    <p className="text-sugan-brown/70 font-body">{product.details.care}</p>
+                    {product.details.maintenance && (
+                      <div className="mt-4">
+                        <h4 className="font-medium text-sugan-brown mb-1">Long-term Maintenance</h4>
+                        <p className="text-sugan-brown/70 font-body text-sm">{product.details.maintenance}</p>
+                      </div>
+                    )}
                   </div>
-                </Link>
-              ))}
+                )}
+              </div>
+            )}
+
+            {/* Shipping & Returns */}
+            <div className="bg-white rounded-lg overflow-hidden">
+              <button
+                onClick={() => toggleSection('shipping')}
+                className="w-full flex items-center justify-between p-6 text-left"
+              >
+                <span className="font-display text-lg text-sugan-brown">Shipping & Returns</span>
+                {expandedSection === 'shipping' ? (
+                  <ChevronUp className="w-5 h-5 text-sugan-brown" />
+                ) : (
+                  <ChevronDown className="w-5 h-5 text-sugan-brown" />
+                )}
+              </button>
+              {expandedSection === 'shipping' && (
+                <div className="px-6 pb-6 space-y-4">
+                  {product.details?.shipping && (
+                    <div>
+                      <h4 className="font-medium text-sugan-brown mb-1">Shipping</h4>
+                      <p className="text-sugan-brown/70 font-body text-sm">{product.details.shipping}</p>
+                    </div>
+                  )}
+                  {product.details?.delivery && (
+                    <div>
+                      <h4 className="font-medium text-sugan-brown mb-1">Delivery Time</h4>
+                      <p className="text-sugan-brown/70 font-body text-sm">{product.details.delivery}</p>
+                    </div>
+                  )}
+                  {product.details?.returns && (
+                    <div>
+                      <h4 className="font-medium text-sugan-brown mb-1">Returns</h4>
+                      <p className="text-sugan-brown/70 font-body text-sm">{product.details.returns}</p>
+                    </div>
+                  )}
+                  {product.details?.warranty && (
+                    <div>
+                      <h4 className="font-medium text-sugan-brown mb-1">Warranty</h4>
+                      <p className="text-sugan-brown/70 font-body text-sm">{product.details.warranty}</p>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* FAQ */}
+            {product.details?.faq && product.details.faq.length > 0 && (
+              <div className="bg-white rounded-lg overflow-hidden">
+                <button
+                  onClick={() => toggleSection('faq')}
+                  className="w-full flex items-center justify-between p-6 text-left"
+                >
+                  <span className="font-display text-lg text-sugan-brown">FAQ</span>
+                  {expandedSection === 'faq' ? (
+                    <ChevronUp className="w-5 h-5 text-sugan-brown" />
+                  ) : (
+                    <ChevronDown className="w-5 h-5 text-sugan-brown" />
+                  )}
+                </button>
+                {expandedSection === 'faq' && (
+                  <div className="px-6 pb-6 space-y-4">
+                    {product.details.faq.map((item, idx) => (
+                      <div key={idx}>
+                        <h4 className="font-medium text-sugan-brown mb-1">{item.question}</h4>
+                        <p className="text-sugan-brown/70 font-body text-sm">{item.answer}</p>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+
+          {/* Sidebar Info */}
+          <div className="space-y-4">
+            {/* USP */}
+            {product.details?.usp && product.details.usp.length > 0 && (
+              <div className="bg-white rounded-lg p-6">
+                <div className="flex items-center gap-2 mb-4">
+                  <Sparkles className="w-5 h-5 text-sugan-gold" />
+                  <h3 className="font-display text-lg text-sugan-brown">Key Features</h3>
+                </div>
+                <ul className="space-y-3">
+                  {product.details.usp.map((point, idx) => (
+                    <li key={idx} className="flex items-start gap-3">
+                      <div className="w-1.5 h-1.5 bg-sugan-gold rounded-full mt-2 flex-shrink-0" />
+                      <span className="text-sugan-brown/70 font-body text-sm">{point}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* Shipping Info */}
+            <div className="bg-sugan-brown text-sugan-cream rounded-lg p-6">
+              <div className="flex items-center gap-2 mb-4">
+                <Truck className="w-5 h-5 text-sugan-gold" />
+                <h3 className="font-display text-lg">Delivery</h3>
+              </div>
+              <ul className="space-y-3 text-sm">
+                <li className="flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 bg-sugan-gold rounded-full" />
+                  Free shipping on orders above ₹1999
+                </li>
+                <li className="flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 bg-sugan-gold rounded-full" />
+                  Ships within 2-3 business days
+                </li>
+                <li className="flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 bg-sugan-gold rounded-full" />
+                  Pan India delivery
+                </li>
+                <li className="flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 bg-sugan-gold rounded-full" />
+                  Cash on delivery available
+                </li>
+              </ul>
+            </div>
+
+            {/* Need Help */}
+            <div className="bg-sugan-gold/10 rounded-lg p-6">
+              <h3 className="font-display text-lg text-sugan-brown mb-2">Need Help?</h3>
+              <p className="text-sugan-brown/70 font-body text-sm mb-4">
+                Have questions about this product? Contact us on WhatsApp.
+              </p>
+              <a
+                href={`https://wa.me/916367677255?text=Hi, I have questions about ${product.name}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary w-full text-center block"
+              >
+                Chat on WhatsApp
+              </a>
             </div>
           </div>
-        )}
+        </div>
       </div>
     </div>
   );
