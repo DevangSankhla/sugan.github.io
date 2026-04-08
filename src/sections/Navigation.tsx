@@ -2,14 +2,14 @@ import { useState, useEffect } from 'react';
 import { ShoppingBag, Search, Menu, X, ArrowRight } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useCart } from '@/context/CartContext';
-import { products } from '@/data/products';
+import { allProducts } from '@/data/rooms';
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [searchResults, setSearchResults] = useState<typeof products>([]);
+  const [searchResults, setSearchResults] = useState<typeof allProducts>([]);
   const { totalItems, setIsCartOpen } = useCart();
   const location = useLocation();
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ export default function Navigation() {
   // Filter products based on search query
   useEffect(() => {
     if (searchQuery.trim()) {
-      const filtered = products.filter(
+      const filtered = allProducts.filter(
         (p) =>
           p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
           p.description.toLowerCase().includes(searchQuery.toLowerCase()) ||

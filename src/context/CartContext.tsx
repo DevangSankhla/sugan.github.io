@@ -55,12 +55,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const checkoutToAmazon = useCallback(() => {
-    // For multiple items, we'll open the first product's Amazon page
-    // In a real implementation with Amazon SP-API, this would create a cart on Amazon
-    if (items.length > 0) {
-      const firstItem = items[0];
-      window.open(firstItem.amazonUrl, '_blank');
-    }
+    // Checkout functionality - will be implemented with courier integration
+    // For now, show cart summary
+    alert('Checkout coming soon with Shiprocket/Delhivery integration!');
   }, [items]);
 
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);

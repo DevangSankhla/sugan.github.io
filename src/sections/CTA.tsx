@@ -83,7 +83,7 @@ export default function CTA() {
             <p className="text-sugan-brown/70 font-body leading-relaxed mb-8 max-w-lg mx-auto">
               Explore our collection of handcrafted wooden lifestyle products.
               Each piece is made with love in Jodhpur and delivered to your
-              doorstep via Amazon FBA.
+              doorstep with pan-India shipping.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
@@ -94,10 +94,10 @@ export default function CTA() {
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </Link>
               <Link
-                to="/amazon-store"
+                to="/shop"
                 className="btn-outline"
               >
-                Visit Amazon Store
+                Browse All Rooms
               </Link>
             </div>
 
@@ -115,7 +115,7 @@ export default function CTA() {
                   >
                     <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
                   </svg>
-                  <span className="text-xs font-body">Amazon FBA</span>
+                  <span className="text-xs font-body">Premium Quality</span>
                 </div>
                 <div className="flex items-center gap-2 text-sugan-brown/60">
                   <svg

@@ -13,11 +13,11 @@ import CTA from '@/sections/CTA';
 import Footer from '@/sections/Footer';
 import CartDrawer from '@/sections/CartDrawer';
 import Shop from '@/pages/Shop';
+import RoomShop from '@/pages/RoomShop';
 import ProductDetail from '@/pages/ProductDetail';
 import ShippingInfo from '@/pages/ShippingInfo';
 import ReturnsRefunds from '@/pages/ReturnsRefunds';
 import FAQ from '@/pages/FAQ';
-import AmazonStore from '@/pages/AmazonStore';
 import './App.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -76,11 +76,11 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/shop" element={<><Shop /><Footer /></>} />
+            <Route path="/shop/:roomId" element={<><RoomShop /><Footer /></>} />
             <Route path="/product/:id" element={<><ProductDetail /><Footer /></>} />
             <Route path="/shipping" element={<ShippingInfo />} />
             <Route path="/returns" element={<ReturnsRefunds />} />
             <Route path="/faq" element={<FAQ />} />
-            <Route path="/amazon-store" element={<AmazonStore />} />
           </Routes>
 
           {/* Cart Drawer */}

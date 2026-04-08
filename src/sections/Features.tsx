@@ -16,7 +16,7 @@ const features = [
     icon: Truck,
     title: 'Free Shipping',
     description:
-      'Enjoy complimentary delivery across India via Amazon FBA. Fast, reliable, and right to your doorstep.',
+      'Enjoy complimentary delivery across India. Fast, reliable, and right to your doorstep.',
   },
   {
     icon: ShieldCheck,

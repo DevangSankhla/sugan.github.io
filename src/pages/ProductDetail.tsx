@@ -1,6 +1,6 @@
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { ArrowLeft, ShoppingCart, ExternalLink, Star, Minus, Plus, Heart, Share2 } from 'lucide-react';
-import { products } from '@/data/products';
+import { allProducts } from '@/data/rooms';
 import { useCart } from '@/context/CartContext';
 import { useState } from 'react';
 
@@ -10,7 +10,7 @@ export default function ProductDetail() {
   const { addToCart, setIsCartOpen } = useCart();
   const [quantity, setQuantity] = useState(1);
 
-  const product = products.find((p) => p.id === id);
+  const product = allProducts.find((p) => p.id === id);
 
   if (!product) {
     return (
@@ -32,7 +32,7 @@ export default function ProductDetail() {
     setIsCartOpen(true);
   };
 
-  const relatedProducts = products
+  const relatedProducts = allProducts
     .filter((p) => p.category === product.category && p.id !== product.id)
     .slice(0, 4);
 
@@ -161,15 +161,15 @@ export default function ProductDetail() {
                 Add to Cart
               </button>
 
-              {/* Buy on Amazon */}
+              {/* Contact for Purchase */}
               <a
-                href={product.amazonUrl}
+                href="https://wa.me/916367677255"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-outline flex items-center justify-center gap-2"
               >
                 <ExternalLink className="w-4 h-4" />
-                Buy on Amazon
+                Inquire on WhatsApp
               </a>
             </div>
 

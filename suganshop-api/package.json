@@ -1,0 +1,26 @@
+{
+  "name": "suganshop-api",
+  "version": "1.0.0",
+  "description": "Amazon SP-API integration for sugan.shop",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "node test.js"
+  },
+  "keywords": [
+    "amazon",
+    "sp-api",
+    "ecommerce"
+  ],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@aws-sdk/client-iam": "^3.1025.0",
+    "@aws-sdk/client-sts": "^3.1026.0",
+    "amazon-sp-api": "^1.2.1",
+    "axios": "^1.14.0",
+    "dotenv": "^17.4.1"
+  }
+}

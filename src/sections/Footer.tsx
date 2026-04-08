@@ -135,10 +135,10 @@ export default function Footer() {
                 </li>
                 <li>
                   <Link
-                    to="/amazon-store"
+                    to="/shop"
                     className="text-sugan-cream/60 font-body text-sm hover:text-sugan-gold transition-colors hover:translate-x-1 inline-block"
                   >
-                    Amazon Store
+                    Shop All
                   </Link>
                 </li>
               </ul>
@@ -192,10 +192,10 @@ export default function Footer() {
             </p>
             <div className="flex items-center gap-4">
               <Link
-                to="/amazon-store"
+                to="/shop"
                 className="text-sugan-cream/40 font-body text-xs hover:text-sugan-gold transition-colors"
               >
-                Shop on Amazon
+                Shop Now
               </Link>
               <span className="text-sugan-cream/20">|</span>
               <button

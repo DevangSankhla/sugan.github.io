@@ -1,28 +1,23 @@
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ShoppingCart, ExternalLink, Star, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { products, categories } from '@/data/products';
-import { useCart } from '@/context/CartContext';
-import type { Product } from '@/types';
+import { rooms } from '@/data/rooms';
+import * as Icons from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Products() {
-  const [activeCategory, setActiveCategory] = useState('all');
-  const { addToCart, setIsCartOpen } = useCart();
   const sectionRef = useRef<HTMLDivElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
 
-  const filteredProducts =
-    activeCategory === 'all'
-      ? products
-      : products.filter((p) => p.category === activeCategory);
+  // Show only first 6 rooms on home page
+  const featuredRooms = rooms.slice(0, 6);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const cards = gridRef.current?.querySelectorAll('.product-card');
+      const cards = gridRef.current?.querySelectorAll('.room-card');
       if (cards) {
         gsap.fromTo(
           cards,
@@ -44,16 +39,7 @@ export default function Products() {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, [filteredProducts]);
-
-  const handleAddToCart = (product: Product) => {
-    addToCart(product);
-    setIsCartOpen(true);
-  };
-
-  const handleBuyOnAmazon = (amazonUrl: string) => {
-    window.open(amazonUrl, '_blank');
-  };
+  }, []);
 
   return (
     <section
@@ -66,127 +52,68 @@ export default function Products() {
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-12">
           <div>
             <p className="text-sugan-gold font-body text-sm tracking-[0.2em] uppercase mb-3">
-              Our Collection
+              Shop by Room
             </p>
             <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-light text-sugan-brown">
-              Featured <span className="font-medium">Products</span>
+              Find Products for <span className="font-medium">Every Space</span>
             </h2>
-          </div>
-
-          {/* Category Filter */}
-          <div className="flex flex-wrap gap-2 mt-6 lg:mt-0">
-            {categories.map((cat) => (
-              <button
-                key={cat.id}
-                onClick={() => setActiveCategory(cat.id)}
-                className={`px-4 py-2 text-sm font-body transition-all duration-300 rounded-full ${
-                  activeCategory === cat.id
-                    ? 'bg-sugan-brown text-sugan-cream'
-                    : 'bg-white text-sugan-brown hover:bg-sugan-brown/10'
-                }`}
-              >
-                {cat.name}
-              </button>
-            ))}
+            <p className="text-sugan-brown/60 font-body mt-4 max-w-xl">
+              Browse our handcrafted wooden products organized by room. 
+              From kitchen essentials to living room decor, find the perfect pieces for your home.
+            </p>
           </div>
         </div>
 
-        {/* Products Grid */}
+        {/* Rooms Grid */}
         <div
           ref={gridRef}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
         >
-          {filteredProducts.map((product) => (
-            <Link
-              key={product.id}
-              to={`/product/${product.id}`}
-              className="product-card group"
-            >
-              {/* Image */}
-              <div className="relative aspect-square overflow-hidden bg-sugan-cream-dark">
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                {product.originalPrice && (
-                  <span className="absolute top-3 left-3 bg-sugan-gold text-white text-xs font-body px-2 py-1 rounded">
-                    Sale
-                  </span>
-                )}
-                {/* Quick Actions */}
-                <div 
-                  className="absolute inset-0 bg-sugan-brown/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                  }}
-                >
-                  <button
-                    onClick={() => handleAddToCart(product)}
-                    className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-sugan-brown hover:bg-sugan-gold hover:text-white transition-colors"
-                    title="Add to Cart"
-                  >
-                    <ShoppingCart className="w-5 h-5" />
-                  </button>
-                  <button
-                    onClick={() => handleBuyOnAmazon(product.amazonUrl)}
-                    className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-sugan-brown hover:bg-sugan-gold hover:text-white transition-colors"
-                    title="Buy on Amazon"
-                  >
-                    <ExternalLink className="w-5 h-5" />
-                  </button>
+          {featuredRooms.map((room) => {
+            const IconComponent = (Icons as unknown as Record<string, React.ComponentType<{ className?: string }>>)[room.icon];
+            
+            return (
+              <Link
+                key={room.id}
+                to={`/shop/${room.id}`}
+                className="room-card group relative bg-white rounded-2xl p-8 transition-all duration-500 hover:shadow-gold-lg hover:-translate-y-2 overflow-hidden"
+              >
+                {/* Background Pattern */}
+                <div className="absolute top-0 right-0 w-32 h-32 bg-sugan-cream/50 rounded-full -mr-16 -mt-16 transition-transform duration-500 group-hover:scale-150" />
+                
+                {/* Icon */}
+                <div className="relative mb-6">
+                  <div className="w-14 h-14 bg-sugan-brown/5 rounded-xl flex items-center justify-center transition-colors duration-300 group-hover:bg-sugan-gold/10">
+                    {IconComponent && <IconComponent className="w-7 h-7 text-sugan-brown transition-colors duration-300 group-hover:text-sugan-gold" />}
+                  </div>
                 </div>
-              </div>
 
-              {/* Content */}
-              <div className="p-5">
-                <p className="text-sugan-gold text-xs font-body uppercase tracking-wider mb-1">
-                  {product.category}
-                </p>
-                <h3 className="font-display text-lg font-medium text-sugan-brown mb-2 group-hover:text-sugan-gold transition-colors">
-                  {product.name}
-                </h3>
-                <div className="flex items-center gap-1 mb-3">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      className={`w-3 h-3 ${
-                        i < Math.floor(product.rating || 0)
-                          ? 'fill-sugan-gold text-sugan-gold'
-                          : 'text-sugan-brown/20'
-                      }`}
-                    />
-                  ))}
-                  <span className="text-xs text-sugan-brown/50 ml-1">
-                    ({product.reviews})
-                  </span>
+                {/* Content */}
+                <div className="relative">
+                  <h3 className="font-display text-xl font-medium text-sugan-brown mb-2 group-hover:text-sugan-gold transition-colors">
+                    {room.name}
+                  </h3>
+                  <p className="text-sugan-brown/60 font-body text-sm">
+                    {room.description}
+                  </p>
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className="font-display text-xl font-semibold text-sugan-brown">
-                    ₹{product.price.toLocaleString()}
-                  </span>
-                  {product.originalPrice && (
-                    <span className="text-sm text-sugan-brown/40 line-through">
-                      ₹{product.originalPrice.toLocaleString()}
-                    </span>
-                  )}
+
+                {/* Arrow */}
+                <div className="absolute bottom-8 right-8 opacity-0 transform translate-x-4 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0">
+                  <Icons.ArrowRight className="w-5 h-5 text-sugan-gold" />
                 </div>
-              </div>
-            </Link>
-          ))}
+              </Link>
+            );
+          })}
         </div>
 
         {/* View All CTA */}
         <div className="text-center mt-12">
-          <p className="text-sugan-brown/60 font-body text-sm mb-4">
-            All orders are fulfilled via Amazon FBA for fast, reliable delivery
-          </p>
           <Link
             to="/shop"
             className="inline-flex items-center gap-2 btn-primary"
           >
-            View All Products
+            Explore All Rooms
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>

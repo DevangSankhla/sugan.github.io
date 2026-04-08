@@ -6,8 +6,7 @@ export interface Product {
   originalPrice?: number;
   image: string;
   category: string;
-  amazonUrl: string;
-  asin: string;
+  room?: string; // Room this product belongs to
   inStock: boolean;
   rating?: number;
   reviews?: number;
@@ -31,4 +30,11 @@ export interface Feature {
   title: string;
   description: string;
   icon: string;
+}
+
+export interface Room {
+  id: string;
+  name: string;
+  icon: string;
+  description: string;
 }

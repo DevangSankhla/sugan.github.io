@@ -161,7 +161,7 @@ export default function CartDrawer() {
 
             {/* Note */}
             <p className="text-sugan-brown/50 font-body text-xs">
-              Shipping and taxes calculated at checkout via Amazon
+              Shipping and taxes calculated at checkout
             </p>
 
             {/* Checkout Buttons */}
@@ -170,7 +170,7 @@ export default function CartDrawer() {
                 onClick={checkoutToAmazon}
                 className="w-full btn-primary flex items-center justify-center gap-2"
               >
-                Checkout on Amazon
+                Proceed to Checkout
                 <ExternalLink className="w-4 h-4" />
               </button>
               <button
@@ -192,7 +192,7 @@ export default function CartDrawer() {
                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
               </svg>
               <span className="text-sugan-brown/50 text-xs font-body">
-                Fulfilled by Amazon FBA
+                Free shipping on orders above ₹1999
               </span>
             </div>
           </div>
