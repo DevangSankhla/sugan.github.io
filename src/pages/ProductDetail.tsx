@@ -235,22 +235,29 @@ export default function ProductDetail() {
                   Also Available In
                 </label>
                 <div className="flex flex-wrap gap-2">
-                  {/* Current Size (active) */}
-                  <span className="px-4 py-2 rounded-lg border-2 border-sugan-gold bg-sugan-gold/10 text-sm font-body text-sugan-brown">
-                    {product.name.match(/(Small|Medium|Large|Extra Small)/)?.[0] || 'Current'}
-                    <span className="font-semibold ml-2">₹{product.price.toLocaleString()}</span>
-                  </span>
-                  {/* Other Sizes */}
-                  {product.relatedSizes.map((variant, idx) => (
-                    <Link
-                      key={idx}
-                      to={`/product/${variant.productId}`}
-                      className="px-4 py-2 rounded-lg border-2 border-sugan-brown/20 hover:border-sugan-gold transition-colors text-sm font-body text-sugan-brown"
-                    >
-                      {variant.size}
-                      <span className="font-semibold ml-2">₹{variant.price.toLocaleString()}</span>
-                    </Link>
-                  ))}
+                  {/* All sizes including current, sorted by price ascending */}
+                  {[...product.relatedSizes, { size: product.name.match(/(Small|Medium|Large|Extra Small)/)?.[0] || 'Current', productId: product.id, price: product.price }]
+                    .sort((a, b) => a.price - b.price)
+                    .map((variant, idx) => (
+                      variant.productId === product.id ? (
+                        <span
+                          key={idx}
+                          className="px-4 py-2 rounded-lg border-2 border-sugan-gold bg-sugan-gold/10 text-sm font-body text-sugan-brown"
+                        >
+                          {variant.size}
+                          <span className="font-semibold ml-2">₹{variant.price.toLocaleString()}</span>
+                        </span>
+                      ) : (
+                        <Link
+                          key={idx}
+                          to={`/product/${variant.productId}`}
+                          className="px-4 py-2 rounded-lg border-2 border-sugan-brown/20 hover:border-sugan-gold transition-colors text-sm font-body text-sugan-brown"
+                        >
+                          {variant.size}
+                          <span className="font-semibold ml-2">₹{variant.price.toLocaleString()}</span>
+                        </Link>
+                      )
+                    ))}
                 </div>
               </div>
             )}
