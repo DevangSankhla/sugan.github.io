@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { CartProvider } from '@/context/CartContext';
+import { AuthProvider } from '@/context/AuthContext';
 import Navigation from '@/sections/Navigation';
 import Hero from '@/sections/Hero';
 import Features from '@/sections/Features';
@@ -18,6 +19,11 @@ import ProductDetail from '@/pages/ProductDetail';
 import ShippingInfo from '@/pages/ShippingInfo';
 import ReturnsRefunds from '@/pages/ReturnsRefunds';
 import FAQ from '@/pages/FAQ';
+import Login from '@/pages/Login';
+import Signup from '@/pages/Signup';
+import Account from '@/pages/Account';
+import Admin from '@/pages/Admin';
+import Checkout from '@/pages/Checkout';
 import './App.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -61,6 +67,7 @@ function HomePage() {
 
 function App() {
   return (
+    <AuthProvider>
     <CartProvider>
       <BrowserRouter>
         <div className="relative min-h-screen bg-sugan-cream">
@@ -81,6 +88,11 @@ function App() {
             <Route path="/shipping" element={<ShippingInfo />} />
             <Route path="/returns" element={<ReturnsRefunds />} />
             <Route path="/faq" element={<FAQ />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/account" element={<Account />} />
+            <Route path="/admin" element={<Admin />} />
+            <Route path="/checkout" element={<Checkout />} />
           </Routes>
 
           {/* Cart Drawer */}
@@ -88,6 +100,7 @@ function App() {
         </div>
       </BrowserRouter>
     </CartProvider>
+    </AuthProvider>
   );
 }
 

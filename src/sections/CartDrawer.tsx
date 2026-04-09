@@ -1,7 +1,9 @@
-import { X, Plus, Minus, ShoppingBag, ExternalLink, ArrowRight } from 'lucide-react';
+import { X, Plus, Minus, ShoppingBag, ArrowRight, CreditCard } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { useCart } from '@/context/CartContext';
 
 export default function CartDrawer() {
+  const navigate = useNavigate();
   const {
     items,
     removeFromCart,
@@ -10,7 +12,6 @@ export default function CartDrawer() {
     totalPrice,
     isCartOpen,
     setIsCartOpen,
-    checkoutToAmazon,
   } = useCart();
 
   if (!isCartOpen) return null;
@@ -167,11 +168,14 @@ export default function CartDrawer() {
             {/* Checkout Buttons */}
             <div className="space-y-3">
               <button
-                onClick={checkoutToAmazon}
+                onClick={() => {
+                  setIsCartOpen(false);
+                  navigate('/checkout');
+                }}
                 className="w-full btn-primary flex items-center justify-center gap-2"
               >
                 Proceed to Checkout
-                <ExternalLink className="w-4 h-4" />
+                <CreditCard className="w-4 h-4" />
               </button>
               <button
                 onClick={() => setIsCartOpen(false)}
@@ -182,7 +186,7 @@ export default function CartDrawer() {
               </button>
             </div>
 
-            {/* Amazon Trust */}
+            {/* Shipping Info */}
             <div className="flex items-center justify-center gap-2 pt-2">
               <svg
                 className="w-5 h-5 text-sugan-gold"

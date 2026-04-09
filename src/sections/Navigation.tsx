@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { ShoppingBag, Search, Menu, X, ArrowRight } from 'lucide-react';
+import { ShoppingBag, Search, Menu, X, ArrowRight, User } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useCart } from '@/context/CartContext';
+import { useAuth } from '@/context/AuthContext';
 import { allProducts } from '@/data/rooms';
 
 export default function Navigation() {
@@ -11,6 +12,7 @@ export default function Navigation() {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<typeof allProducts>([]);
   const { totalItems, setIsCartOpen } = useCart();
+  const { user } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const isHomePage = location.pathname === '/';
@@ -154,6 +156,13 @@ export default function Navigation() {
                   </span>
                 )}
               </button>
+              <Link
+                to={user ? "/account" : "/login"}
+                className="p-2 text-sugan-brown hover:text-sugan-gold transition-colors"
+                aria-label="Account"
+              >
+                <User className="w-5 h-5" />
+              </Link>
               <button
                 className="md:hidden p-2 text-sugan-brown"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}

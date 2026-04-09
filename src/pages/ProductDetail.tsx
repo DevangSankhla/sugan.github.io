@@ -2,18 +2,47 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { ArrowLeft, ShoppingCart, Star, Minus, Plus, Heart, Share2, Package, Ruler, Sparkles, Shield, Truck, ChevronDown, ChevronUp } from 'lucide-react';
 import { allProducts } from '@/data/rooms';
 import { useCart } from '@/context/CartContext';
-import { useState } from 'react';
+import { useAuth } from '@/context/AuthContext';
+import { useState, useEffect } from 'react';
+import { db } from '@/lib/firebase';
+import { collection, query, where, onSnapshot, addDoc, deleteDoc, doc } from 'firebase/firestore';
 
 export default function ProductDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { addToCart, setIsCartOpen } = useCart();
+  const { user } = useAuth();
   const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(0);
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
   const [selectedVariant, setSelectedVariant] = useState<number>(0);
+  const [isInWishlist, setIsInWishlist] = useState(false);
+  const [wishlistId, setWishlistId] = useState<string | null>(null);
 
   const product = allProducts.find((p) => p.id === id);
+
+  // Check if product is in wishlist
+  useEffect(() => {
+    if (!user || !product) return;
+
+    const wishlistQuery = query(
+      collection(db, 'wishlists'),
+      where('userId', '==', user.uid),
+      where('productId', '==', product.id)
+    );
+
+    const unsubscribe = onSnapshot(wishlistQuery, (snapshot) => {
+      if (!snapshot.empty) {
+        setIsInWishlist(true);
+        setWishlistId(snapshot.docs[0].id);
+      } else {
+        setIsInWishlist(false);
+        setWishlistId(null);
+      }
+    });
+
+    return unsubscribe;
+  }, [user, product]);
 
   if (!product) {
     return (
@@ -262,11 +291,47 @@ export default function ProductDetail() {
 
             {/* Wishlist & Share */}
             <div className="flex gap-4 mb-8">
-              <button className="flex items-center gap-2 text-sugan-brown/60 hover:text-sugan-gold transition-colors text-sm font-body">
-                <Heart className="w-4 h-4" />
-                Add to Wishlist
+              <button 
+                onClick={async () => {
+                  if (!user) {
+                    navigate('/login');
+                    return;
+                  }
+                  if (isInWishlist && wishlistId) {
+                    await deleteDoc(doc(db, 'wishlists', wishlistId));
+                  } else if (product) {
+                    await addDoc(collection(db, 'wishlists'), {
+                      userId: user.uid,
+                      productId: product.id,
+                      name: product.name,
+                      price: product.price,
+                      image: product.image,
+                      addedAt: new Date()
+                    });
+                  }
+                }}
+                className={`flex items-center gap-2 transition-colors text-sm font-body ${
+                  isInWishlist ? 'text-red-500' : 'text-sugan-brown/60 hover:text-sugan-gold'
+                }`}
+              >
+                <Heart className={`w-4 h-4 ${isInWishlist ? 'fill-current' : ''}`} />
+                {isInWishlist ? 'Remove from Wishlist' : 'Add to Wishlist'}
               </button>
-              <button className="flex items-center gap-2 text-sugan-brown/60 hover:text-sugan-gold transition-colors text-sm font-body">
+              <button 
+                onClick={() => {
+                  if (navigator.share) {
+                    navigator.share({
+                      title: product?.name,
+                      text: product?.description,
+                      url: window.location.href
+                    });
+                  } else {
+                    navigator.clipboard.writeText(window.location.href);
+                    alert('Link copied to clipboard!');
+                  }
+                }}
+                className="flex items-center gap-2 text-sugan-brown/60 hover:text-sugan-gold transition-colors text-sm font-body"
+              >
                 <Share2 className="w-4 h-4" />
                 Share
               </button>
@@ -350,14 +415,44 @@ export default function ProductDetail() {
                     )}
                     {product.details.dimensions && (
                       <div>
-                        <h4 className="font-medium text-sugan-brown mb-2">Dimensions</h4>
+                        <h4 className="font-medium text-sugan-brown mb-2">Dimensions (inches)</h4>
                         <div className="grid grid-cols-2 gap-2 text-sm">
-                          {Object.entries(product.details.dimensions).map(([key, value]) => (
-                            <div key={key} className="flex justify-between bg-sugan-cream px-3 py-2 rounded">
-                              <span className="text-sugan-brown/60 capitalize">{key}</span>
-                              <span className="text-sugan-brown font-medium">{value}</span>
+                          {product.details.dimensions.length && (
+                            <div className="flex justify-between bg-sugan-cream px-3 py-2 rounded">
+                              <span className="text-sugan-brown/60">Length</span>
+                              <span className="text-sugan-brown font-medium">{product.details.dimensions.length}"</span>
                             </div>
-                          ))}
+                          )}
+                          {product.details.dimensions.width && (
+                            <div className="flex justify-between bg-sugan-cream px-3 py-2 rounded">
+                              <span className="text-sugan-brown/60">Width</span>
+                              <span className="text-sugan-brown font-medium">{product.details.dimensions.width}"</span>
+                            </div>
+                          )}
+                          {product.details.dimensions.height && (
+                            <div className="flex justify-between bg-sugan-cream px-3 py-2 rounded">
+                              <span className="text-sugan-brown/60">Height</span>
+                              <span className="text-sugan-brown font-medium">{product.details.dimensions.height}"</span>
+                            </div>
+                          )}
+                          {product.details.dimensions.depth && (
+                            <div className="flex justify-between bg-sugan-cream px-3 py-2 rounded">
+                              <span className="text-sugan-brown/60">Depth</span>
+                              <span className="text-sugan-brown font-medium">{product.details.dimensions.depth}"</span>
+                            </div>
+                          )}
+                          {product.details.dimensions.diameter && (
+                            <div className="flex justify-between bg-sugan-cream px-3 py-2 rounded">
+                              <span className="text-sugan-brown/60">Diameter</span>
+                              <span className="text-sugan-brown font-medium">{product.details.dimensions.diameter}"</span>
+                            </div>
+                          )}
+                          {product.details.dimensions.weight && (
+                            <div className="flex justify-between bg-sugan-cream px-3 py-2 rounded">
+                              <span className="text-sugan-brown/60">Weight</span>
+                              <span className="text-sugan-brown font-medium">{product.details.dimensions.weight}</span>
+                            </div>
+                          )}
                         </div>
                       </div>
                     )}
