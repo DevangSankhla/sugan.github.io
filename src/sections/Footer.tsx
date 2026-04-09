@@ -1,4 +1,4 @@
-import { Mail, Phone, MapPin, Instagram, Facebook } from 'lucide-react';
+import { Mail, Phone, MapPin, Instagram } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export default function Footer() {
@@ -37,16 +37,7 @@ export default function Footer() {
                 >
                   <Instagram className="w-4 h-4" />
                 </a>
-                <a
-                  href="https://facebook.com/sugan"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-sugan-cream/10 flex items-center justify-center hover:bg-sugan-gold transition-colors"
-                  aria-label="Facebook"
-                >
-                  <Facebook className="w-4 h-4" />
-                </a>
-                
+
               </div>
             </div>
 
