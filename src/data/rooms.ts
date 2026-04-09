@@ -10,63 +10,937 @@ export const rooms: Room[] = [
   { id: 'library', name: 'Library/Study', icon: 'BookOpen', description: 'Organized spaces for reading' },
   { id: 'pooja', name: 'Pooja Room', icon: 'Sparkles', description: 'Sacred space essentials' },
   { id: 'outdoor', name: 'Outdoor/Balcony', icon: 'Sun', description: 'Open air living solutions' },
+  { id: 'pet', name: 'Pet', icon: 'Heart', description: 'Premium products for your pets' },
   { id: 'shop-all', name: 'Shop All', icon: 'Grid3X3', description: 'Browse our complete collection' },
 ];
 
-// ============================================
-// PRODUCT STRUCTURE TEMPLATE
-// ============================================
-// For each product, you need to provide:
-//
-// REQUIRED FIELDS:
-// - id: Unique identifier (e.g., "k1", "l1", "b1")
-// - name: Product name
-// - price: Price in INR (number, no commas)
-// - description: Detailed product description
-// - image: Path to main image (e.g., "/images/product-name.jpg")
-// - room: Which room it belongs to (must match room id above)
-// - inStock: true/false
-//
-// ADDITIONAL FIELDS (optional but recommended):
-// - originalPrice: Sale price comparison (number)
-// - rating: Average rating 1-5 (number)
-// - reviews: Number of reviews (number)
-//
-// ============================================
-// PRODUCT DETAILS STRUCTURE (for Product Detail Page)
-// ============================================
-// Each product can have extended details:
-//
-// details: {
-//   materials: "Wood type, finish, etc.",
-//   dimensions: { length: "", width: "", height: "", weight: "" },
-//   care: "How to clean and maintain",
-//   usp: ["Key selling point 1", "Key selling point 2", ...],
-//   shipping: "Shipping info",
-//   warranty: "Warranty details",
-//   photos: ["/images/photo1.jpg", "/images/photo2.jpg", ...],
-//   videos: ["/videos/video1.mp4"],
-//   colors: ["Natural", "Walnut", "Teak"],
-//   variants: [
-//     { size: "Small", price: 999 },
-//     { size: "Large", price: 1499 }
-//   ],
-//   faq: [
-//     { question: "Q?", answer: "A." }
-//   ]
-// }
-//
-// ============================================
 
-// Products organized by room - START EMPTY
+
+// Products organized by room
 export const roomProducts: Record<string, Product[]> = {
-  kitchen: [],
-  living: [],
-  bedroom: [],
+  pet: [
+    {
+      id: '9U-D6EU-J9Y5',
+      name: 'Acacia Wood Double-Bowl Pet Feeder, X-Leg Stand, Medium',
+      price: 1999,
+      originalPrice: 2999,
+      description: 'Handcrafted in Jodhpur from solid acacia wood, this double-bowl feeder features a signature X-leg base that keeps bowls at a comfortable height, supporting healthy posture during mealtimes. The natural wood finish is completely non-toxic and pet-safe, while the two stainless steel bowls make it easy to serve food and fresh water side by side.',
+      image: '/images/pet-feeder-xleg-medium.jpg',
+      category: 'Pet Feeders',
+      room: 'pet',
+      inStock: true,
+      rating: 4.8,
+      reviews: 127,
+      details: {
+        materials: 'Acacia wood',
+        finish: 'Natural grain finish, food-safe mineral oil',
+        origin: 'Made in Jodhpur, Rajasthan',
+        shipping: 'Ships within 2-3 business days',
+        delivery: '5-7 days pan India',
+        returns: '7-day easy returns',
+        usp: ['Handcrafted in Jodhpur', 'Anti-bacterial natural wood properties', 'Non-toxic and pet-safe', 'Stainless steel bowls included'],
+        sustainability: 'Sustainably sourced wood',
+        story: 'At Sugan, we set out to change how India thinks about everyday pet products. Your pet eats from this bowl twice a day — so why should it be made of cheap plastic that scratches, stains, and harbors bacteria? This feeder is crafted from premium acacia wood, sustainably sourced and hand-finished with food-safe mineral oil by artisans in Jodhpur whose families have worked wood for generations.',
+        care: 'Hand wash with mild soap. Do not soak.',
+        maintenance: 'Apply mineral oil periodically'
+      }
+    },
+    {
+      id: 'BM-UQ5U-IU9U',
+      name: 'Acacia Wood Double-Bowl Pet Feeder with Iron Stand, Medium',
+      price: 1999,
+      originalPrice: 2599,
+      description: 'Solid acacia wood paired with a hand-forged iron stand gives this double-bowl feeder a warm, considered look that fits naturally into any home. The elevated position supports better digestion and posture, especially for medium-sized breeds, and the two stainless steel bowls detach easily for a thorough clean.',
+      image: '/images/pet-feeder-iron-medium.jpg',
+      category: 'Pet Feeders',
+      room: 'pet',
+      inStock: true,
+      rating: 4.9,
+      reviews: 89,
+      details: {
+        materials: 'Acacia wood, iron',
+        finish: 'Natural grain finish, food-safe mineral oil',
+        origin: 'Made in Jodhpur, Rajasthan',
+        shipping: 'Ships within 2-3 business days',
+        delivery: '5-7 days pan India',
+        returns: '7-day easy returns',
+        usp: ['Hand-forged iron stand', 'Handcrafted in Jodhpur', 'Sustainably sourced wood', 'Stainless steel bowls included'],
+        sustainability: 'Sustainably sourced wood',
+        story: 'We started Sugan with a simple belief: everyday objects in your home should be beautiful, safe, and built to last. This pet feeder combines high-grade acacia wood — one of the hardest, most water-resistant woods available — with a hand-forged iron stand, assembled by artisans who have honed their craft in Jodhpur for generations.',
+        care: 'Hand wash with mild soap. Do not soak.',
+        maintenance: 'Apply mineral oil periodically'
+      }
+    },
+    {
+      id: 'M0-5FJV-JJ1Q',
+      name: 'Acacia Wood Double-Bowl Pet Feeder with Iron Stand, Small',
+      price: 1499,
+      originalPrice: 1999,
+      description: 'This compact acacia and iron pet feeder is made for smaller breeds who deserve the same quality of care as larger pets. The iron stand holds the bowls at a height that reduces strain on the neck, while the natural acacia frame brings a warmth to the feeding area that plastic alternatives simply cannot match.',
+      image: '/images/pet-feeder-iron-small.jpg',
+      category: 'Pet Feeders',
+      room: 'pet',
+      inStock: true,
+      rating: 4.7,
+      reviews: 156,
+      details: {
+        materials: 'Acacia wood, iron',
+        finish: 'Natural grain finish, food-safe mineral oil',
+        origin: 'Made in Jodhpur, Rajasthan',
+        shipping: 'Ships within 2-3 business days',
+        delivery: '5-7 days pan India',
+        returns: '7-day easy returns',
+        usp: ['Compact size for small breeds', 'Hand-forged iron stand', 'Handcrafted in Jodhpur', 'Non-toxic finish'],
+        sustainability: 'Sustainably sourced wood',
+        story: 'We started Sugan with a simple belief: everyday objects in your home should be beautiful, safe, and built to last. This pet feeder combines high-grade acacia wood with a hand-forged iron stand, assembled by artisans who have honed their craft in Jodhpur for generations.',
+        care: 'Hand wash with mild soap. Do not soak.',
+        maintenance: 'Apply mineral oil periodically'
+      }
+    },
+    {
+      id: 'OF-T4QC-3ZZ3',
+      name: 'Acacia Wood Stripe Crate Pet Feeder with Stainless Steel Bowls, Small',
+      price: 1499,
+      originalPrice: 3999,
+      description: 'This stripe-pattern acacia crate feeder combines the warmth of natural wood with the practicality of two stainless steel bowls set into a sturdy raised frame. The crate design keeps the bowls stable and spill-resistant while adding a refined, furniture-like quality to your pet\'s space.',
+      image: '/images/pet-feeder-stripe-small.jpg',
+      category: 'Pet Feeders',
+      room: 'pet',
+      inStock: true,
+      rating: 4.9,
+      reviews: 203,
+      details: {
+        materials: 'Acacia wood, stainless steel',
+        finish: 'Natural grain finish, food-safe mineral oil',
+        origin: 'Made in Jodhpur, Rajasthan',
+        shipping: 'Ships within 2-3 business days',
+        delivery: '5-7 days pan India',
+        returns: '7-day easy returns',
+        usp: ['Stripe pattern design', 'Crate style frame', 'Stainless steel bowls', 'Handcrafted in Jodhpur'],
+        sustainability: 'Sustainably sourced wood',
+        story: 'The idea behind Sugan was to replace the ordinary with something worth keeping. This stripe-design crate feeder is hand-built from sustainably sourced acacia wood, with each plank fitted and finished by skilled craftspeople in Jodhpur — no shortcuts, no MDF, no plastic.',
+        care: 'Hand wash with mild soap. Do not soak.',
+        maintenance: 'Apply mineral oil periodically'
+      }
+    },
+    {
+      id: 'SAC033',
+      name: 'Wooden Cat Feeder with Detachable Stainless Steel Bowls, Small',
+      price: 749,
+      originalPrice: 899,
+      description: 'A small wooden cat feeder with two detachable stainless steel bowls, made for kittens and cats who deserve something better than plastic at mealtimes. The natural wood stand raises the bowls to a comfortable height, reducing neck strain during eating, and the non-toxic finish keeps every meal safe.',
+      image: '/images/cat-feeder-small.jpg',
+      category: 'Pet Feeders',
+      room: 'pet',
+      inStock: true,
+      rating: 4.5,
+      reviews: 78,
+      details: {
+        materials: 'Natural wood',
+        finish: 'Natural grain finish, food-safe mineral oil',
+        origin: 'Made in Jodhpur, Rajasthan',
+        shipping: 'Ships within 2-3 business days',
+        delivery: '5-7 days pan India',
+        returns: '7-day easy returns',
+        usp: ['Perfect for cats and kittens', 'Detachable bowls', 'Raises bowls to comfortable height', 'Non-toxic finish'],
+        sustainability: 'Sustainably sourced wood',
+        story: 'At Sugan, we set out to change how India thinks about everyday pet products. Your pet eats from this bowl twice a day — so why should it be made of cheap plastic? This feeder is crafted from premium wood, sustainably sourced and hand-finished with food-safe mineral oil by artisans in Jodhpur.',
+        care: 'Hand wash with mild soap. Do not soak.',
+        maintenance: 'Apply mineral oil periodically'
+      }
+    },
+    {
+      id: 'SAC034',
+      name: 'Wooden Cat Feeder with Detachable Stainless Steel Bowls, Medium',
+      price: 999,
+      originalPrice: 1299,
+      description: 'Sized for medium cats and small dogs, this wooden feeder with two stainless steel bowls is a clean, practical alternative to plastic feeding stations. The raised stand encourages better posture and calmer eating, and the bowls detach easily for thorough daily washing.',
+      image: '/images/cat-feeder-medium.jpg',
+      category: 'Pet Feeders',
+      room: 'pet',
+      inStock: true,
+      rating: 4.6,
+      reviews: 112,
+      details: {
+        materials: 'Natural wood',
+        finish: 'Natural grain finish, food-safe mineral oil',
+        origin: 'Made in Jodhpur, Rajasthan',
+        shipping: 'Ships within 2-3 business days',
+        delivery: '5-7 days pan India',
+        returns: '7-day easy returns',
+        usp: ['Perfect for medium cats', 'Detachable stainless steel bowls', 'Encourages better posture', 'Food-safe coating'],
+        sustainability: 'Sustainably sourced wood',
+        story: 'At Sugan, we set out to change how India thinks about everyday pet products. Your pet eats from this bowl twice a day — so why should it be made of cheap plastic? This feeder is crafted from premium wood, sustainably sourced and hand-finished with food-safe mineral oil by artisans in Jodhpur.',
+        care: 'Hand wash with mild soap. Do not soak.',
+        maintenance: 'Apply mineral oil periodically'
+      }
+    },
+    {
+      id: 'SAC039',
+      name: 'Acacia Wood Crate Pet Feeder with Stainless Steel Bowls, Medium',
+      price: 1999,
+      originalPrice: 2999,
+      description: 'A well-proportioned acacia wood crate feeder with two stainless steel bowls, designed to sit comfortably in any room without looking like pet furniture. The raised frame brings bowls to the right height for medium breeds, supporting better posture and calmer mealtimes.',
+      image: '/images/pet-feeder-crate-medium.jpg',
+      category: 'Pet Feeders',
+      room: 'pet',
+      inStock: true,
+      rating: 4.8,
+      reviews: 145,
+      details: {
+        materials: 'Natural wood',
+        finish: 'Natural grain finish, food-safe mineral oil',
+        origin: 'Made in Jodhpur, Rajasthan',
+        shipping: 'Ships within 2-3 business days',
+        delivery: '5-7 days pan India',
+        returns: '7-day easy returns',
+        usp: ['Crate design', 'Stainless steel bowls', 'Furniture-like quality', 'Handcrafted in Jodhpur'],
+        sustainability: 'Sustainably sourced wood',
+        story: 'At Sugan, we set out to change how India thinks about everyday pet products. Your pet eats from this bowl twice a day — so why should it be made of cheap plastic? This feeder is crafted from premium acacia wood, sustainably sourced and hand-finished with food-safe mineral oil by artisans in Jodhpur.',
+        care: 'Hand wash with mild soap. Do not soak.',
+        maintenance: 'Apply mineral oil periodically'
+      }
+    },
+    {
+      id: 'SAC039L',
+      name: 'Acacia Wood Crate Pet Feeder with Stainless Steel Bowls, Large',
+      price: 2399,
+      originalPrice: 3399,
+      description: 'This large acacia wood crate feeder is built for dogs who need more - more bowl space, more height, and more stability than compact feeders can offer. The solid wood frame is sturdy enough to handle enthusiastic eaters, and both stainless steel bowls remove cleanly for washing.',
+      image: '/images/pet-feeder-crate-large.jpg',
+      category: 'Pet Feeders',
+      room: 'pet',
+      inStock: true,
+      rating: 4.9,
+      reviews: 89,
+      details: {
+        materials: 'Acacia wood, stainless steel',
+        finish: 'Natural grain finish, food-safe mineral oil',
+        origin: 'Made in Jodhpur, Rajasthan',
+        shipping: 'Ships within 2-3 business days',
+        delivery: '5-7 days pan India',
+        returns: '7-day easy returns',
+        usp: ['Large size for big dogs', 'Sturdy construction', 'Stainless steel bowls', 'Handcrafted in Jodhpur'],
+        sustainability: 'Sustainably sourced wood',
+        story: 'The idea behind Sugan was to replace the ordinary with something worth keeping. This crate feeder is hand-built from sustainably sourced acacia wood, with each plank fitted and finished by skilled craftspeople in Jodhpur — no shortcuts, no MDF, no plastic.',
+        care: 'Hand wash with mild soap. Do not soak.',
+        maintenance: 'Apply mineral oil periodically'
+      }
+    },
+    {
+      id: 'SAC039M',
+      name: 'Acacia Wood Crate Pet Feeder with Stainless Steel Bowls, Medium',
+      price: 1999,
+      originalPrice: 2999,
+      description: 'Sized for medium breeds, this acacia wood crate feeder holds two stainless steel bowls at a height that encourages a relaxed, natural eating posture. The wood is sourced sustainably and finished with a non-toxic coating safe for daily food and water contact.',
+      image: '/images/pet-feeder-crate-medium-2.jpg',
+      category: 'Pet Feeders',
+      room: 'pet',
+      inStock: true,
+      rating: 4.7,
+      reviews: 167,
+      details: {
+        materials: 'Acacia wood, stainless steel',
+        finish: 'Natural grain finish, food-safe mineral oil',
+        origin: 'Made in Jodhpur, Rajasthan',
+        shipping: 'Ships within 2-3 business days',
+        delivery: '5-7 days pan India',
+        returns: '7-day easy returns',
+        usp: ['Perfect for medium breeds', 'Relaxed eating posture', 'Non-toxic coating', 'Handcrafted in Jodhpur'],
+        sustainability: 'Sustainably sourced wood',
+        story: 'The idea behind Sugan was to replace the ordinary with something worth keeping. This crate feeder is hand-built from sustainably sourced acacia wood, with each plank fitted and finished by skilled craftspeople in Jodhpur — no shortcuts, no MDF, no plastic.',
+        care: 'Hand wash with mild soap. Do not soak.',
+        maintenance: 'Apply mineral oil periodically'
+      }
+    },
+    {
+      id: 'SAC039S',
+      name: 'Acacia Wood Crate Pet Feeder with Stainless Steel Bowls, Small',
+      price: 1499,
+      originalPrice: 1999,
+      description: 'A small-scale acacia crate feeder made for cats, kittens, and small-breed dogs who benefit from having their bowls lifted off the floor. The natural wood grain and clean lines give it a warmth that fits into kitchens and living areas without looking out of place.',
+      image: '/images/pet-feeder-crate-small.jpg',
+      category: 'Pet Feeders',
+      room: 'pet',
+      inStock: true,
+      rating: 4.6,
+      reviews: 134,
+      details: {
+        materials: 'Acacia wood, stainless steel',
+        finish: 'Natural grain finish, food-safe mineral oil',
+        origin: 'Made in Jodhpur, Rajasthan',
+        shipping: 'Ships within 2-3 business days',
+        delivery: '5-7 days pan India',
+        returns: '7-day easy returns',
+        usp: ['Perfect for cats and small dogs', 'Lifts bowls off floor', 'Natural wood grain', 'Handcrafted in Jodhpur'],
+        sustainability: 'Sustainably sourced wood',
+        story: 'The idea behind Sugan was to replace the ordinary with something worth keeping. This crate feeder is hand-built from sustainably sourced acacia wood, with each plank fitted and finished by skilled craftspeople in Jodhpur — no shortcuts, no MDF, no plastic.',
+        care: 'Hand wash with mild soap. Do not soak.',
+        maintenance: 'Apply mineral oil periodically'
+      }
+    },
+    {
+      id: 'SAC037_L',
+      name: 'Acacia Wood Stripe Crate Pet Feeder with Stainless Steel Bowls, Large',
+      price: 2399,
+      originalPrice: 3999,
+      description: 'A large-format stripe crate feeder crafted from solid acacia wood, built for bigger dogs who need generous bowls at a comfortable height. The natural stripe grain pattern runs through every plank, giving each piece its own character.',
+      image: '/images/pet-feeder-stripe-large.jpg',
+      category: 'Pet Feeders',
+      room: 'pet',
+      inStock: true,
+      rating: 4.8,
+      reviews: 98,
+      details: {
+        materials: 'Acacia wood, stainless steel',
+        finish: 'Natural grain finish, food-safe mineral oil',
+        origin: 'Made in Jodhpur, Rajasthan',
+        shipping: 'Ships within 2-3 business days',
+        delivery: '5-7 days pan India',
+        returns: '7-day easy returns',
+        usp: ['Large format for big dogs', 'Stripe grain pattern', 'Stainless steel bowls', 'Handcrafted in Jodhpur'],
+        sustainability: 'Sustainably sourced wood',
+        story: 'The idea behind Sugan was to replace the ordinary with something worth keeping. This stripe-design crate feeder is hand-built from sustainably sourced acacia wood, with each plank fitted and finished by skilled craftspeople in Jodhpur.',
+        care: 'Hand wash with mild soap. Do not soak.',
+        maintenance: 'Apply mineral oil periodically'
+      }
+    },
+  ],
+  kitchen: [
+    {
+      id: 'SAC010',
+      name: 'Acacia Wood Triangle Napkin Holder, Small',
+      price: 1099,
+      originalPrice: 1299,
+      description: 'Cut from solid acacia wood and shaped into a clean triangle profile, this napkin holder brings a natural elegance to any dining table or kitchen counter. The tight grain of the acacia resists moisture and food contact, making it as practical as it is decorative.',
+      image: '/images/napkin-holder-triangle.jpg',
+      category: 'Napkin Holders',
+      room: 'kitchen',
+      inStock: true,
+      rating: 4.7,
+      reviews: 89,
+      details: {
+        materials: 'Acacia wood',
+        finish: 'Natural grain finish, food-safe mineral oil',
+        origin: 'Made in Jodhpur, Rajasthan',
+        shipping: 'Ships within 2-3 business days',
+        delivery: '5-7 days pan India',
+        returns: '7-day easy returns',
+        usp: ['Triangle profile design', 'Moisture resistant', 'Food-safe finish', 'Handcrafted in Jodhpur'],
+        sustainability: 'Sustainably sourced wood',
+        story: 'The smallest objects in a home say the most about it. Sugan was built on the belief that even a napkin holder on your dining table should be made from honest materials — not plastic, not painted MDF, but real wood.',
+        care: 'Hand wash with mild soap. Do not soak.',
+        maintenance: 'Apply mineral oil periodically'
+      }
+    },
+    {
+      id: 'SAC012',
+      name: 'Acacia Wood Decorative Napkin Holder, Small',
+      price: 999,
+      originalPrice: 1299,
+      description: 'This acacia wood napkin holder is a quietly beautiful addition to the dining table - compact, well-weighted, and made from a single piece of natural hardwood. The food-safe finish means it handles the occasional splash without warping.',
+      image: '/images/napkin-holder-decorative.jpg',
+      category: 'Napkin Holders',
+      room: 'kitchen',
+      inStock: true,
+      rating: 4.6,
+      reviews: 76,
+      details: {
+        materials: 'Acacia wood',
+        finish: 'Natural grain finish, food-safe mineral oil',
+        origin: 'Made in Jodhpur, Rajasthan',
+        shipping: 'Ships within 2-3 business days',
+        delivery: '5-7 days pan India',
+        returns: '7-day easy returns',
+        usp: ['Compact design', 'Well-weighted', 'Food-safe finish', 'Handcrafted in Jodhpur'],
+        sustainability: 'Sustainably sourced wood',
+        story: 'The smallest objects in a home say the most about it. Sugan was built on the belief that even a napkin holder on your dining table should be made from honest materials — not plastic, not painted MDF, but real wood.',
+        care: 'Hand wash with mild soap. Do not soak.',
+        maintenance: 'Apply mineral oil periodically'
+      }
+    },
+    {
+      id: 'SAC013',
+      name: 'Acacia Wood Napkin Holder Stand, Small',
+      price: 999,
+      originalPrice: 999,
+      description: 'A simple, well-proportioned acacia wood napkin stand that holds its shape and looks better with age. Made in Jodhpur from solid acacia with a natural oil finish, it keeps napkins accessible at the table without cluttering the surface.',
+      image: '/images/napkin-holder-stand.jpg',
+      category: 'Napkin Holders',
+      room: 'kitchen',
+      inStock: true,
+      rating: 4.5,
+      reviews: 68,
+      details: {
+        materials: 'Acacia wood',
+        finish: 'Natural grain finish, food-safe mineral oil',
+        origin: 'Made in Jodhpur, Rajasthan',
+        shipping: 'Ships within 2-3 business days',
+        delivery: '5-7 days pan India',
+        returns: '7-day easy returns',
+        usp: ['Simple design', 'Ages beautifully', 'Natural oil finish', 'Handcrafted in Jodhpur'],
+        sustainability: 'Sustainably sourced wood',
+        story: 'The smallest objects in a home say the most about it. Sugan was built on the belief that even a napkin holder on your dining table should be made from honest materials — not plastic, not painted MDF, but real wood.',
+        care: 'Hand wash with mild soap. Do not soak.',
+        maintenance: 'Apply mineral oil periodically'
+      }
+    },
+    {
+      id: 'SAC014',
+      name: 'Acacia Wood Rectangle Serving Tray, Small',
+      price: 1099,
+      originalPrice: 1299,
+      description: 'This compact rectangle acacia tray is made from a single plank of solid hardwood in Jodhpur, finished with food-safe mineral oil. The clean shape and natural grain make it as practical for a snack board as it is elegant on a dining table.',
+      image: '/images/serving-tray-rectangle-small.jpg',
+      category: 'Serving Trays',
+      room: 'kitchen',
+      inStock: true,
+      rating: 4.8,
+      reviews: 134,
+      details: {
+        materials: 'Acacia wood',
+        finish: 'Natural grain finish, food-safe mineral oil',
+        origin: 'Made in Jodhpur, Rajasthan',
+        shipping: 'Ships within 2-3 business days',
+        delivery: '5-7 days pan India',
+        returns: '7-day easy returns',
+        usp: ['Single plank construction', 'Compact size', 'Natural grain', 'Handcrafted in Jodhpur'],
+        sustainability: 'Sustainably sourced wood',
+        story: 'Sugan exists because we believed everyday objects in Indian homes could be made without plastic, without harmful chemicals, and without compromising on beauty.',
+        care: 'Hand wash with mild soap. Do not soak.',
+        maintenance: 'Apply mineral oil periodically'
+      }
+    },
+    {
+      id: 'SAC01_Combo_Set of 3-S',
+      name: 'Acacia Wood Square Serving Trays, Natural Finish, Set of 3',
+      price: 2500,
+      originalPrice: 3299,
+      description: 'Three graduating square acacia trays, each cut from solid natural hardwood and finished with food-safe mineral oil - a complete set for anyone who values both function and warmth in the kitchen.',
+      image: '/images/serving-trays-square-set3.jpg',
+      category: 'Home Decor',
+      room: 'kitchen',
+      inStock: true,
+      rating: 4.9,
+      reviews: 187,
+      details: {
+        materials: 'Acacia wood',
+        finish: 'Natural grain finish, food-safe mineral oil',
+        origin: 'Made in Jodhpur, Rajasthan',
+        shipping: 'Ships within 2-3 business days',
+        delivery: '5-7 days pan India',
+        returns: '7-day easy returns',
+        usp: ['Set of 3 trays', 'Graduating sizes', 'Natural finish', 'Handcrafted in Jodhpur'],
+        sustainability: 'Sustainably sourced wood',
+        story: 'Sugan exists because we believed everyday objects in Indian homes could be made without plastic, without harmful chemicals, and without compromising on beauty.',
+        care: 'Hand wash with mild soap. Do not soak.',
+        maintenance: 'Apply mineral oil periodically'
+      }
+    },
+    {
+      id: 'SAC01_L',
+      name: 'Acacia Wood Square Serving Tray, Natural Finish, Large',
+      price: 1260,
+      originalPrice: 1999,
+      description: 'This large square acacia tray is a versatile piece - generous enough to carry a full tea service, elegant enough to display fruit on a sideboard, and durable enough for daily kitchen use.',
+      image: '/images/serving-tray-square-large.jpg',
+      category: 'Home Decor',
+      room: 'kitchen',
+      inStock: true,
+      rating: 4.8,
+      reviews: 156,
+      details: {
+        materials: 'Acacia wood',
+        finish: 'Natural grain finish, food-safe mineral oil',
+        origin: 'Made in Jodhpur, Rajasthan',
+        shipping: 'Ships within 2-3 business days',
+        delivery: '5-7 days pan India',
+        returns: '7-day easy returns',
+        usp: ['Large size', 'Versatile use', 'Natural finish', 'Handcrafted in Jodhpur'],
+        sustainability: 'Sustainably sourced wood',
+        story: 'Sugan exists because we believed everyday objects in Indian homes could be made without plastic, without harmful chemicals, and without compromising on beauty.',
+        care: 'Hand wash with mild soap. Do not soak.',
+        maintenance: 'Apply mineral oil periodically'
+      }
+    },
+    {
+      id: 'SAC01_M',
+      name: 'Acacia Wood Square Serving Tray, Natural Finish, Medium',
+      price: 1035,
+      originalPrice: 1999,
+      description: 'A medium square acacia serving tray with a natural grain finish, sized for everyday use as a breakfast tray, snack plate, or countertop organiser.',
+      image: '/images/serving-tray-square-medium.jpg',
+      category: 'Home Decor',
+      room: 'kitchen',
+      inStock: true,
+      rating: 4.7,
+      reviews: 123,
+      details: {
+        materials: 'Acacia wood',
+        finish: 'Natural grain finish, food-safe mineral oil',
+        origin: 'Made in Jodhpur, Rajasthan',
+        shipping: 'Ships within 2-3 business days',
+        delivery: '5-7 days pan India',
+        returns: '7-day easy returns',
+        usp: ['Medium size', 'Everyday use', 'Natural finish', 'Handcrafted in Jodhpur'],
+        sustainability: 'Sustainably sourced wood',
+        story: 'Sugan exists because we believed everyday objects in Indian homes could be made without plastic, without harmful chemicals, and without compromising on beauty.',
+        care: 'Hand wash with mild soap. Do not soak.',
+        maintenance: 'Apply mineral oil periodically'
+      }
+    },
+    {
+      id: 'SAC01_S',
+      name: 'Acacia Wood Square Serving Tray, Natural Finish, Small',
+      price: 788,
+      originalPrice: 999,
+      description: 'This small square acacia tray from Jodhpur is cut from a single plank of natural hardwood, finished with food-safe mineral oil, and built to handle daily use in the kitchen or on the dining table.',
+      image: '/images/serving-tray-square-small.jpg',
+      category: 'Home Decor',
+      room: 'kitchen',
+      inStock: true,
+      rating: 4.6,
+      reviews: 98,
+      details: {
+        materials: 'Acacia wood',
+        finish: 'Natural grain finish, food-safe mineral oil',
+        origin: 'Made in Jodhpur, Rajasthan',
+        shipping: 'Ships within 2-3 business days',
+        delivery: '5-7 days pan India',
+        returns: '7-day easy returns',
+        usp: ['Small size', 'Single plank', 'Natural finish', 'Handcrafted in Jodhpur'],
+        sustainability: 'Sustainably sourced wood',
+        story: 'Sugan exists because we believed everyday objects in Indian homes could be made without plastic, without harmful chemicals, and without compromising on beauty.',
+        care: 'Hand wash with mild soap. Do not soak.',
+        maintenance: 'Apply mineral oil periodically'
+      }
+    },
+    {
+      id: 'SAC02_Combo_Set of 3-S',
+      name: 'Acacia Wood Rectangle Serving Trays, Honey Finish, Set of 3',
+      price: 2200,
+      originalPrice: 3299,
+      description: 'Three rectangle honey-finish acacia trays in graduating sizes, each made from solid natural hardwood and finished with food-safe mineral oil. The warm golden tone makes the set cohesive and welcoming.',
+      image: '/images/serving-trays-honey-set3.jpg',
+      category: 'Home Decor',
+      room: 'kitchen',
+      inStock: true,
+      rating: 4.9,
+      reviews: 167,
+      details: {
+        materials: 'Acacia wood',
+        finish: 'Honey finish',
+        origin: 'Made in Jodhpur, Rajasthan',
+        shipping: 'Ships within 2-3 business days',
+        delivery: '5-7 days pan India',
+        returns: '7-day easy returns',
+        usp: ['Set of 3 trays', 'Honey finish', 'Graduating sizes', 'Handcrafted in Jodhpur'],
+        sustainability: 'Sustainably sourced wood',
+        story: 'The honey finish on this tray isn\'t applied from a bottle — it\'s the natural warmth of acacia wood, brought out by our artisans in Jodhpur.',
+        care: 'Hand wash with mild soap. Do not soak.',
+        maintenance: 'Apply mineral oil periodically'
+      }
+    },
+    {
+      id: 'SAC02_L',
+      name: 'Acacia Wood Rectangle Serving Tray, Honey Finish, Large',
+      price: 1125,
+      originalPrice: 1499,
+      description: 'A large honey-finish acacia serving tray built for proper entertaining - generous enough for a full charcuterie board, strong enough to carry drinks across the room.',
+      image: '/images/serving-tray-honey-large.jpg',
+      category: 'Home Decor',
+      room: 'kitchen',
+      inStock: true,
+      rating: 4.8,
+      reviews: 145,
+      details: {
+        materials: 'Acacia wood',
+        finish: 'Honey finish',
+        origin: 'Made in Jodhpur, Rajasthan',
+        shipping: 'Ships within 2-3 business days',
+        delivery: '5-7 days pan India',
+        returns: '7-day easy returns',
+        usp: ['Large size', 'Honey finish', 'Perfect for entertaining', 'Handcrafted in Jodhpur'],
+        sustainability: 'Sustainably sourced wood',
+        story: 'The honey finish on this tray isn\'t applied from a bottle — it\'s the natural warmth of acacia wood, brought out by our artisans in Jodhpur.',
+        care: 'Hand wash with mild soap. Do not soak.',
+        maintenance: 'Apply mineral oil periodically'
+      }
+    },
+    {
+      id: 'SAC02_M',
+      name: 'Acacia Wood Rectangle Serving Tray, Honey Finish, Medium',
+      price: 1035,
+      originalPrice: 1299,
+      description: 'This medium rectangle honey-finish tray is a kitchen and dining staple - the right size for a breakfast spread, an afternoon tea, or a curated charcuterie arrangement.',
+      image: '/images/serving-tray-honey-medium.jpg',
+      category: 'Home Decor',
+      room: 'kitchen',
+      inStock: true,
+      rating: 4.7,
+      reviews: 123,
+      details: {
+        materials: 'Acacia wood',
+        finish: 'Honey finish',
+        origin: 'Made in Jodhpur, Rajasthan',
+        shipping: 'Ships within 2-3 business days',
+        delivery: '5-7 days pan India',
+        returns: '7-day easy returns',
+        usp: ['Medium size', 'Honey finish', 'Kitchen staple', 'Handcrafted in Jodhpur'],
+        sustainability: 'Sustainably sourced wood',
+        story: 'The honey finish on this tray isn\'t applied from a bottle — it\'s the natural warmth of acacia wood, brought out by our artisans in Jodhpur.',
+        care: 'Hand wash with mild soap. Do not soak.',
+        maintenance: 'Apply mineral oil periodically'
+      }
+    },
+    {
+      id: 'SAC02_S',
+      name: 'Acacia Wood Rectangle Serving Tray, Honey Finish, Small',
+      price: 999,
+      originalPrice: 999,
+      description: 'A small honey-finish acacia tray with the warm, golden tone that comes from careful kiln-drying and natural oil finishing. Compact enough for a single serving.',
+      image: '/images/serving-tray-honey-small.jpg',
+      category: 'Home Decor',
+      room: 'kitchen',
+      inStock: true,
+      rating: 4.6,
+      reviews: 89,
+      details: {
+        materials: 'Acacia wood',
+        finish: 'Honey finish',
+        origin: 'Made in Jodhpur, Rajasthan',
+        shipping: 'Ships within 2-3 business days',
+        delivery: '5-7 days pan India',
+        returns: '7-day easy returns',
+        usp: ['Small size', 'Honey finish', 'Golden tone', 'Handcrafted in Jodhpur'],
+        sustainability: 'Sustainably sourced wood',
+        story: 'The honey finish on this tray isn\'t applied from a bottle — it\'s the natural warmth of acacia wood, brought out by our artisans in Jodhpur.',
+        care: 'Hand wash with mild soap. Do not soak.',
+        maintenance: 'Apply mineral oil periodically'
+      }
+    },
+    {
+      id: 'SAC03-Antique Checkers-Set of 3',
+      name: 'Acacia Wood Antique Checkers Rectangle Serving Trays, Set of 3',
+      price: 2500,
+      originalPrice: 2999,
+      description: 'Three antique checkers rectangle trays in graduating sizes, each built from alternating light and dark acacia planks for a natural geometric pattern that needs no paint or decoration.',
+      image: '/images/serving-trays-checkers-set3.jpg',
+      category: 'Serving Trays',
+      room: 'kitchen',
+      inStock: true,
+      rating: 4.9,
+      reviews: 178,
+      details: {
+        materials: 'Acacia wood',
+        finish: 'Antique checkers finish',
+        origin: 'Made in Jodhpur, Rajasthan',
+        shipping: 'Ships within 2-3 business days',
+        delivery: '5-7 days pan India',
+        returns: '7-day easy returns',
+        usp: ['Set of 3 trays', 'Antique checkers pattern', 'Natural geometric design', 'Handcrafted in Jodhpur'],
+        sustainability: 'Sustainably sourced wood',
+        story: 'There is a certain kind of object that gets better the more you use it. This tray is one of them.',
+        care: 'Hand wash with mild soap. Do not soak.',
+        maintenance: 'Apply mineral oil periodically'
+      }
+    },
+    {
+      id: 'SAC03_L',
+      name: 'Acacia Wood Antique Checkers Rectangle Serving Tray, Large',
+      price: 1260,
+      originalPrice: 1799,
+      description: 'This large antique checkers tray makes a statement at the dining table with its alternating light and dark acacia grain pattern, created without dyes or synthetic finishes.',
+      image: '/images/serving-tray-checkers-large.jpg',
+      category: 'Serving Trays',
+      room: 'kitchen',
+      inStock: true,
+      rating: 4.8,
+      reviews: 145,
+      details: {
+        materials: 'Natural wood',
+        finish: 'Antique checkers finish',
+        origin: 'Made in Jodhpur, Rajasthan',
+        shipping: 'Ships within 2-3 business days',
+        delivery: '5-7 days pan India',
+        returns: '7-day easy returns',
+        usp: ['Large size', 'Antique checkers pattern', 'No synthetic finishes', 'Handcrafted in Jodhpur'],
+        sustainability: 'Sustainably sourced wood',
+        story: 'There is a certain kind of object that gets better the more you use it. This tray is one of them.',
+        care: 'Hand wash with mild soap. Do not soak.',
+        maintenance: 'Apply mineral oil periodically'
+      }
+    },
+    {
+      id: 'SAC03_M',
+      name: 'Acacia Wood Antique Checkers Rectangle Serving Tray, Medium',
+      price: 1125,
+      originalPrice: 1599,
+      description: 'A medium antique checkers acacia tray that brings visual interest to the table without any artificial decoration - the pattern comes entirely from alternating light and dark acacia planks.',
+      image: '/images/serving-tray-checkers-medium.jpg',
+      category: 'Serving Trays',
+      room: 'kitchen',
+      inStock: true,
+      rating: 4.7,
+      reviews: 123,
+      details: {
+        materials: 'Natural wood',
+        finish: 'Antique checkers finish',
+        origin: 'Made in Jodhpur, Rajasthan',
+        shipping: 'Ships within 2-3 business days',
+        delivery: '5-7 days pan India',
+        returns: '7-day easy returns',
+        usp: ['Medium size', 'Antique checkers pattern', 'Natural design', 'Handcrafted in Jodhpur'],
+        sustainability: 'Sustainably sourced wood',
+        story: 'There is a certain kind of object that gets better the more you use it. This tray is one of them.',
+        care: 'Hand wash with mild soap. Do not soak.',
+        maintenance: 'Apply mineral oil periodically'
+      }
+    },
+    {
+      id: 'SAC03_S',
+      name: 'Acacia Wood Antique Checkers Rectangle Serving Tray, Small',
+      price: 788,
+      originalPrice: 1099,
+      description: 'The antique checkers pattern on this small acacia tray is created by laying alternating planks of lighter and darker acacia wood side by side.',
+      image: '/images/serving-tray-checkers-small.jpg',
+      category: 'Serving Trays',
+      room: 'kitchen',
+      inStock: true,
+      rating: 4.6,
+      reviews: 89,
+      details: {
+        materials: 'Natural wood',
+        finish: 'Antique checkers finish',
+        origin: 'Made in Jodhpur, Rajasthan',
+        shipping: 'Ships within 2-3 business days',
+        delivery: '5-7 days pan India',
+        returns: '7-day easy returns',
+        usp: ['Small size', 'Antique checkers pattern', 'No dyes or paint', 'Handcrafted in Jodhpur'],
+        sustainability: 'Sustainably sourced wood',
+        story: 'There is a certain kind of object that gets better the more you use it. This tray is one of them.',
+        care: 'Hand wash with mild soap. Do not soak.',
+        maintenance: 'Apply mineral oil periodically'
+      }
+    },
+    {
+      id: 'SAC036',
+      name: 'Mango Wood Stripe Chopping and Serving Board, Brown',
+      price: 999,
+      originalPrice: 1999,
+      description: 'A mango wood stripe cutting and serving board with a unique shape and a rich brown-toned grain. The stripe pattern is created from alternating planks of natural mango wood.',
+      image: '/images/chopping-board-mango.jpg',
+      category: 'Chopping & Serving Boards',
+      room: 'kitchen',
+      inStock: true,
+      rating: 4.8,
+      reviews: 167,
+      details: {
+        materials: 'Mango wood',
+        finish: 'Natural grain finish, food-safe mineral oil',
+        origin: 'Made in Jodhpur, Rajasthan',
+        shipping: 'Ships within 2-3 business days',
+        delivery: '5-7 days pan India',
+        returns: '7-day easy returns',
+        usp: ['Mango wood construction', 'Stripe pattern', 'Unique shape', 'Sustainable material'],
+        sustainability: 'Sustainably sourced wood',
+        story: 'Mango wood is one of India\'s most abundant and sustainable hardwoods — and at Sugan, we think it\'s also one of the most beautiful.',
+        care: 'Hand wash with mild soap. Do not soak.',
+        maintenance: 'Apply mineral oil periodically'
+      }
+    },
+  ],
+  living: [
+    {
+      id: 'SAC020',
+      name: 'Foldable Round Acacia Wood Side Table, Natural Finish',
+      price: 1778,
+      originalPrice: 3499,
+      description: 'This foldable round side table in natural acacia is handcrafted in Jodhpur with a design that moves easily between living room, bedroom, and balcony. The fold-flat base makes it easy to store when not in use.',
+      image: '/images/side-table-natural.jpg',
+      category: 'Side Tables',
+      room: 'living',
+      inStock: true,
+      rating: 4.9,
+      reviews: 234,
+      details: {
+        materials: 'Natural wood',
+        finish: 'Natural grain finish, food-safe mineral oil',
+        origin: 'Made in Jodhpur, Rajasthan',
+        shipping: 'Ships within 2-3 business days',
+        delivery: '5-7 days pan India',
+        returns: '7-day easy returns',
+        usp: ['Foldable design', 'Natural finish', 'Versatile use', 'Handcrafted in Jodhpur'],
+        sustainability: 'Sustainably sourced wood',
+        story: 'A good side table should disappear into your room — and this one does, until you look closely and realise how well it\'s made.',
+        care: 'Hand wash with mild soap. Do not soak.',
+        maintenance: 'Apply mineral oil periodically'
+      }
+    },
+    {
+      id: 'SAC021',
+      name: 'Foldable Round Acacia Wood Side Table, Grey Wash',
+      price: 1778,
+      originalPrice: 3399,
+      description: 'The grey-wash finish on this foldable round side table gives the acacia wood a soft, cooled tone that works well in both contemporary and neutral interiors.',
+      image: '/images/side-table-grey.jpg',
+      category: 'Side Tables',
+      room: 'living',
+      inStock: true,
+      rating: 4.8,
+      reviews: 189,
+      details: {
+        materials: 'Natural wood',
+        finish: 'Grey wash finish',
+        origin: 'Made in Jodhpur, Rajasthan',
+        shipping: 'Ships within 2-3 business days',
+        delivery: '5-7 days pan India',
+        returns: '7-day easy returns',
+        usp: ['Grey wash finish', 'Foldable design', 'Contemporary style', 'Handcrafted in Jodhpur'],
+        sustainability: 'Sustainably sourced wood',
+        story: 'Grey wash is not a coat of paint — it\'s a slow, patient process that our artisans in Jodhpur apply by hand.',
+        care: 'Hand wash with mild soap. Do not soak.',
+        maintenance: 'Apply mineral oil periodically'
+      }
+    },
+    {
+      id: 'SAC022',
+      name: 'Foldable Round Acacia Wood Side Table, Dark Brown',
+      price: 1778,
+      originalPrice: 3999,
+      description: 'This dark-brown foldable round side table is made from solid acacia wood in Jodhpur, with a rich, deep-toned finish that suits warm-toned and darker interiors equally well.',
+      image: '/images/side-table-dark.jpg',
+      category: 'Side Tables',
+      room: 'living',
+      inStock: true,
+      rating: 4.9,
+      reviews: 212,
+      details: {
+        materials: 'Natural wood',
+        finish: 'Dark brown finish',
+        origin: 'Made in Jodhpur, Rajasthan',
+        shipping: 'Ships within 2-3 business days',
+        delivery: '5-7 days pan India',
+        returns: '7-day easy returns',
+        usp: ['Dark brown finish', 'Rich tone', 'Foldable design', 'Handcrafted in Jodhpur'],
+        sustainability: 'Sustainably sourced wood',
+        story: 'Dark, rich, and unmistakably handmade — this side table carries the character of the wood it\'s made from.',
+        care: 'Hand wash with mild soap. Do not soak.',
+        maintenance: 'Apply mineral oil periodically'
+      }
+    },
+    {
+      id: 'SAC030',
+      name: 'Rajasthani Hand-Embossed Multicolour Wooden Serving Tray, Medium',
+      price: 999,
+      originalPrice: 2200,
+      description: 'Hand-embossed and painted by artisans in Jodhpur using traditional Rajasthani techniques, this multicoloured wooden serving tray carries centuries of craft in its surface.',
+      image: '/images/serving-tray-embossed.jpg',
+      category: 'Serving Trays',
+      room: 'living',
+      inStock: true,
+      rating: 4.8,
+      reviews: 145,
+      details: {
+        materials: 'Natural wood',
+        finish: 'Hand-painted Rajasthani artwork',
+        origin: 'Made in Jodhpur, Rajasthan',
+        shipping: 'Ships within 2-3 business days',
+        delivery: '5-7 days pan India',
+        returns: '7-day easy returns',
+        usp: ['Hand-embossed', 'Traditional Rajasthani techniques', 'Multicolour design', 'Living heritage'],
+        sustainability: 'Sustainably sourced wood',
+        story: 'Every tray Sugan makes carries the spirit of Jodhpur with it. This hand-embossed, hand-painted tray is made by master artisans.',
+        care: 'Hand wash with mild soap. Do not soak.',
+        maintenance: 'Apply mineral oil periodically'
+      }
+    },
+  ],
+  bedroom: [
+    {
+      id: 'SAC026',
+      name: 'Hand-Painted Rajasthani Wooden Jewellery and Storage Box, 2.5 kg',
+      price: 1999,
+      originalPrice: 1999,
+      description: 'This hand-painted Rajasthani wooden box is made by artisans in Jodhpur using traditional motifs passed down through generations of craft. A functional object made with living heritage.',
+      image: '/images/jewellery-box-painted.jpg',
+      category: 'Storage & Boxes',
+      room: 'bedroom',
+      inStock: true,
+      rating: 4.9,
+      reviews: 178,
+      details: {
+        materials: 'Natural wood',
+        finish: 'Hand-painted Rajasthani artwork',
+        origin: 'Made in Jodhpur, Rajasthan',
+        shipping: 'Ships within 2-3 business days',
+        delivery: '5-7 days pan India',
+        returns: '7-day easy returns',
+        usp: ['Hand-painted', 'Traditional motifs', 'Jewellery storage', 'Living heritage'],
+        sustainability: 'Sustainably sourced wood',
+        story: 'Jodhpur has been painting stories onto wood for longer than most cities have existed. This jewellery and storage box carries that tradition.',
+        care: 'Hand wash with mild soap. Do not soak.',
+        maintenance: 'Apply mineral oil periodically'
+      }
+    },
+  ],
+  pooja: [
+    {
+      id: 'SAC031',
+      name: 'Rajasthani Hand-Painted Wooden Bajot Chowki with Brass Plating, Large',
+      price: 2199,
+      originalPrice: 2599,
+      description: 'This square bajot chowki is made from solid wood and hand-decorated with traditional Rajasthani artwork, then finished with brass plating on the frame details.',
+      image: '/images/bajot-chowki-brass.jpg',
+      category: 'Pooja & Temple',
+      room: 'pooja',
+      inStock: true,
+      rating: 4.9,
+      reviews: 234,
+      details: {
+        materials: 'Natural wood',
+        finish: 'Hand-painted Rajasthani artwork',
+        origin: 'Made in Jodhpur, Rajasthan',
+        shipping: 'Ships within 2-3 business days',
+        delivery: '5-7 days pan India',
+        returns: '7-day easy returns',
+        usp: ['Hand-painted', 'Brass plating', 'Traditional artwork', 'Pooja room essential'],
+        sustainability: 'Sustainably sourced wood',
+        story: 'The chowki is the most sacred surface in an Indian home — and at Sugan, we believe it should reflect that.',
+        care: 'Hand wash with mild soap. Do not soak.',
+        maintenance: 'Apply mineral oil periodically'
+      }
+    },
+    {
+      id: 'SAC032-NEW',
+      name: 'Rajasthani Hand-Painted Wooden Bajot Chowki for Pooja, Large',
+      price: 2000,
+      originalPrice: 2599,
+      description: 'A square bajot chowki handcrafted in Jodhpur with vivid hand-painted Rajasthani artwork across its surface and solid wood construction throughout.',
+      image: '/images/bajot-chowki-painted.jpg',
+      category: 'Pooja & Temple',
+      room: 'pooja',
+      inStock: true,
+      rating: 4.8,
+      reviews: 189,
+      details: {
+        materials: 'Natural wood',
+        finish: 'Hand-painted Rajasthani artwork',
+        origin: 'Made in Jodhpur, Rajasthan',
+        shipping: 'Ships within 2-3 business days',
+        delivery: '5-7 days pan India',
+        returns: '7-day easy returns',
+        usp: ['Hand-painted', 'Vivid Rajasthani artwork', 'Solid wood', 'Sacred space'],
+        sustainability: 'Sustainably sourced wood',
+        story: 'Some objects carry meaning beyond their function. This chowki is one of them.',
+        care: 'Hand wash with mild soap. Do not soak.',
+        maintenance: 'Apply mineral oil periodically'
+      }
+    },
+  ],
   dining: [],
   office: [],
   library: [],
-  pooja: [],
   outdoor: [],
 };
 
@@ -113,52 +987,3 @@ export const testimonials: Testimonial[] = [
     text: 'Fast delivery and the product exceeded my expectations. The quality is outstanding. Beautiful work!',
   },
 ];
-
-// ============================================
-// EXAMPLE PRODUCT TEMPLATE
-// ============================================
-// Use this as a reference when adding products:
-/*
-{
-  id: 'k1',
-  name: 'Artisan Chopping Board',
-  price: 2499,
-  originalPrice: 2999,
-  image: '/images/chopping-board.jpg',
-  category: 'Kitchen',
-  room: 'kitchen',
-  inStock: true,
-  rating: 4.8,
-  reviews: 127,
-  description: 'Handcrafted from premium dark walnut wood...',
-  details: {
-    materials: 'Dark walnut wood, food-safe mineral oil finish',
-    dimensions: { 
-      length: '40 cm', 
-      width: '30 cm', 
-      height: '2.5 cm', 
-      weight: '1.2 kg' 
-    },
-    care: 'Hand wash with mild soap. Do not soak. Apply mineral oil monthly to maintain finish.',
-    usp: [
-      'Handcrafted by artisans in Jodhpur',
-      'Anti-bacterial natural wood properties',
-      'Juice groove prevents mess',
-      'Reversible design'
-    ],
-    shipping: 'Ships within 2-3 business days',
-    warranty: '25-year warranty against manufacturing defects',
-    photos: [
-      '/images/chopping-board-1.jpg',
-      '/images/chopping-board-2.jpg',
-      '/images/chopping-board-3.jpg'
-    ],
-    videos: ['/videos/chopping-board-demo.mp4'],
-    colors: ['Natural Walnut', 'Dark Oak'],
-    variants: [
-      { size: 'Medium (30x40cm)', price: 2499 },
-      { size: 'Large (40x50cm)', price: 3499 }
-    ]
-  }
-}
-*/
