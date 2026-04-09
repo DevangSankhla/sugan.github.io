@@ -91,6 +91,13 @@ export interface Product {
   
   // EXTENDED DETAILS (for product detail page)
   details?: ProductDetails;
+  
+  // RELATED PRODUCTS
+  relatedSizes?: {               // Links to same product in different sizes
+    size: string;
+    productId: string;
+    price: number;
+  }[];
 }
 
 // ============================================

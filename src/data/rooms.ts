@@ -41,7 +41,14 @@ export const roomProducts: Record<string, Product[]> = {
         story: 'At Sugan, we set out to change how India thinks about everyday pet products. Your pet eats from this bowl twice a day — so why should it be made of cheap plastic that scratches, stains, and harbors ba...',
         care: 'Hand wash with mild soap. Do not soak.',
         maintenance: 'Apply mineral oil periodically'
-      }
+      },
+      relatedSizes: [
+        {
+                'size': 'Small',
+                'productId': 'SAC041S',
+                'price': 1599
+        }
+]
     },
     {
       id: 'BM-UQ5U-IU9U',
@@ -67,7 +74,19 @@ export const roomProducts: Record<string, Product[]> = {
         story: 'We started Sugan with a simple belief: everyday objects in your home should be beautiful, safe, and built to last. This pet feeder combines high-grade acacia wood — one of the hardest, most water-resi...',
         care: 'Hand wash with mild soap. Do not soak.',
         maintenance: 'Apply mineral oil periodically'
-      }
+      },
+      relatedSizes: [
+        {
+                'size': 'Small',
+                'productId': 'M0-5FJV-JJ1Q',
+                'price': 1499
+        },
+        {
+                'size': 'Large',
+                'productId': 'ZF-S7K4-NAVG',
+                'price': 2499
+        }
+]
     },
     {
       id: 'M0-5FJV-JJ1Q',
@@ -93,7 +112,19 @@ export const roomProducts: Record<string, Product[]> = {
         story: 'We started Sugan with a simple belief: everyday objects in your home should be beautiful, safe, and built to last. This pet feeder combines high-grade acacia wood — one of the hardest, most water-resi...',
         care: 'Hand wash with mild soap. Do not soak.',
         maintenance: 'Apply mineral oil periodically'
-      }
+      },
+      relatedSizes: [
+        {
+                'size': 'Medium',
+                'productId': 'BM-UQ5U-IU9U',
+                'price': 1999
+        },
+        {
+                'size': 'Large',
+                'productId': 'ZF-S7K4-NAVG',
+                'price': 2499
+        }
+]
     },
     {
       id: 'OF-T4QC-3ZZ3',
@@ -119,7 +150,34 @@ export const roomProducts: Record<string, Product[]> = {
         story: 'The idea behind Sugan was to replace the ordinary with something worth keeping. This stripe-design crate feeder is hand-built from sustainably sourced acacia wood, with each plank fitted and finished ...',
         care: 'Hand wash with mild soap. Do not soak.',
         maintenance: 'Apply mineral oil periodically'
-      }
+      },
+      relatedSizes: [
+        {
+                'size': 'Small',
+                'productId': 'SAC08_S',
+                'price': 1799
+        },
+        {
+                'size': 'Medium',
+                'productId': 'SAC08_M',
+                'price': 2099
+        },
+        {
+                'size': 'Large',
+                'productId': 'SAC08_L',
+                'price': 2399
+        },
+        {
+                'size': 'Medium',
+                'productId': 'TS-YFCT-J4WR',
+                'price': 1799
+        },
+        {
+                'size': 'Large (Crate)',
+                'productId': 'SAC037_L',
+                'price': 2399
+        }
+]
     },
     {
       id: 'SAC033',
@@ -145,7 +203,14 @@ export const roomProducts: Record<string, Product[]> = {
         story: 'At Sugan, we set out to change how India thinks about everyday pet products. Your pet eats from this bowl twice a day — so why should it be made of cheap plastic that scratches, stains, and harbors ba...',
         care: 'Hand wash with mild soap. Do not soak.',
         maintenance: 'Apply mineral oil periodically'
-      }
+      },
+      relatedSizes: [
+        {
+                'size': 'Medium',
+                'productId': 'SAC034',
+                'price': 999
+        }
+]
     },
     {
       id: 'SAC034',
@@ -171,7 +236,14 @@ export const roomProducts: Record<string, Product[]> = {
         story: 'At Sugan, we set out to change how India thinks about everyday pet products. Your pet eats from this bowl twice a day — so why should it be made of cheap plastic that scratches, stains, and harbors ba...',
         care: 'Hand wash with mild soap. Do not soak.',
         maintenance: 'Apply mineral oil periodically'
-      }
+      },
+      relatedSizes: [
+        {
+                'size': 'Small',
+                'productId': 'SAC033',
+                'price': 799
+        }
+]
     },
     {
       id: 'SAC037_L',
@@ -197,7 +269,34 @@ export const roomProducts: Record<string, Product[]> = {
         story: 'The idea behind Sugan was to replace the ordinary with something worth keeping. This stripe-design crate feeder is hand-built from sustainably sourced acacia wood, with each plank fitted and finished ...',
         care: 'Hand wash with mild soap. Do not soak.',
         maintenance: 'Apply mineral oil periodically'
-      }
+      },
+      relatedSizes: [
+        {
+                'size': 'Small',
+                'productId': 'SAC08_S',
+                'price': 1799
+        },
+        {
+                'size': 'Medium',
+                'productId': 'SAC08_M',
+                'price': 2099
+        },
+        {
+                'size': 'Large',
+                'productId': 'SAC08_L',
+                'price': 2399
+        },
+        {
+                'size': 'Small (Crate)',
+                'productId': 'OF-T4QC-3ZZ3',
+                'price': 1499
+        },
+        {
+                'size': 'Medium',
+                'productId': 'TS-YFCT-J4WR',
+                'price': 1799
+        }
+]
     },
     {
       id: 'SAC039',
@@ -223,7 +322,24 @@ export const roomProducts: Record<string, Product[]> = {
         story: 'At Sugan, we set out to change how India thinks about everyday pet products. Your pet eats from this bowl twice a day — so why should it be made of cheap plastic that scratches, stains, and harbors ba...',
         care: 'Hand wash with mild soap. Do not soak.',
         maintenance: 'Apply mineral oil periodically'
-      }
+      },
+      relatedSizes: [
+        {
+                'size': 'Small',
+                'productId': 'SAC039S',
+                'price': 1499
+        },
+        {
+                'size': 'Medium',
+                'productId': 'SAC039M',
+                'price': 1999
+        },
+        {
+                'size': 'Large',
+                'productId': 'SAC039L',
+                'price': 2399
+        }
+]
     },
     {
       id: 'SAC039L',
@@ -249,7 +365,24 @@ export const roomProducts: Record<string, Product[]> = {
         story: 'The idea behind Sugan was to replace the ordinary with something worth keeping. This stripe-design crate feeder is hand-built from sustainably sourced acacia wood, with each plank fitted and finished ...',
         care: 'Hand wash with mild soap. Do not soak.',
         maintenance: 'Apply mineral oil periodically'
-      }
+      },
+      relatedSizes: [
+        {
+                'size': 'Small',
+                'productId': 'SAC039S',
+                'price': 1499
+        },
+        {
+                'size': 'Medium',
+                'productId': 'SAC039M',
+                'price': 1999
+        },
+        {
+                'size': 'Medium (Alt)',
+                'productId': 'SAC039',
+                'price': 1999
+        }
+]
     },
     {
       id: 'SAC039M',
@@ -275,7 +408,24 @@ export const roomProducts: Record<string, Product[]> = {
         story: 'The idea behind Sugan was to replace the ordinary with something worth keeping. This stripe-design crate feeder is hand-built from sustainably sourced acacia wood, with each plank fitted and finished ...',
         care: 'Hand wash with mild soap. Do not soak.',
         maintenance: 'Apply mineral oil periodically'
-      }
+      },
+      relatedSizes: [
+        {
+                'size': 'Small',
+                'productId': 'SAC039S',
+                'price': 1499
+        },
+        {
+                'size': 'Medium (Alt)',
+                'productId': 'SAC039',
+                'price': 1999
+        },
+        {
+                'size': 'Large',
+                'productId': 'SAC039L',
+                'price': 2399
+        }
+]
     },
     {
       id: 'SAC039S',
@@ -301,7 +451,24 @@ export const roomProducts: Record<string, Product[]> = {
         story: 'The idea behind Sugan was to replace the ordinary with something worth keeping. This stripe-design crate feeder is hand-built from sustainably sourced acacia wood, with each plank fitted and finished ...',
         care: 'Hand wash with mild soap. Do not soak.',
         maintenance: 'Apply mineral oil periodically'
-      }
+      },
+      relatedSizes: [
+        {
+                'size': 'Medium',
+                'productId': 'SAC039M',
+                'price': 1999
+        },
+        {
+                'size': 'Medium (Alt)',
+                'productId': 'SAC039',
+                'price': 1999
+        },
+        {
+                'size': 'Large',
+                'productId': 'SAC039L',
+                'price': 2399
+        }
+]
     },
     {
       id: 'SAC040L',
@@ -327,7 +494,14 @@ export const roomProducts: Record<string, Product[]> = {
         story: 'At Sugan, we set out to change how India thinks about everyday pet products. Your pet eats from this bowl twice a day — so why should it be made of cheap plastic that scratches, stains, and harbors ba...',
         care: 'Hand wash with mild soap. Do not soak.',
         maintenance: 'Apply mineral oil periodically'
-      }
+      },
+      relatedSizes: [
+        {
+                'size': 'Small',
+                'productId': 'SAC040S',
+                'price': 1999
+        }
+]
     },
     {
       id: 'SAC040S',
@@ -353,7 +527,14 @@ export const roomProducts: Record<string, Product[]> = {
         story: 'At Sugan, we set out to change how India thinks about everyday pet products. Your pet eats from this bowl twice a day — so why should it be made of cheap plastic that scratches, stains, and harbors ba...',
         care: 'Hand wash with mild soap. Do not soak.',
         maintenance: 'Apply mineral oil periodically'
-      }
+      },
+      relatedSizes: [
+        {
+                'size': 'Large',
+                'productId': 'SAC040L',
+                'price': 2399
+        }
+]
     },
     {
       id: 'SAC041S',
@@ -379,7 +560,14 @@ export const roomProducts: Record<string, Product[]> = {
         story: 'At Sugan, we set out to change how India thinks about everyday pet products. Your pet eats from this bowl twice a day — so why should it be made of cheap plastic that scratches, stains, and harbors ba...',
         care: 'Hand wash with mild soap. Do not soak.',
         maintenance: 'Apply mineral oil periodically'
-      }
+      },
+      relatedSizes: [
+        {
+                'size': 'Medium',
+                'productId': '9U-D6EU-J9Y5',
+                'price': 1999
+        }
+]
     },
     {
       id: 'SAC048L',
@@ -405,7 +593,19 @@ export const roomProducts: Record<string, Product[]> = {
         story: 'We started Sugan because we believed your pet deserved better than a plastic bowl on the floor. This feeder pairs hand-selected mango wood — sustainably sourced from forests across India — with a natu...',
         care: 'Hand wash with mild soap. Do not soak.',
         maintenance: 'Apply mineral oil periodically'
-      }
+      },
+      relatedSizes: [
+        {
+                'size': 'Small',
+                'productId': 'SAC048S',
+                'price': 1999
+        },
+        {
+                'size': 'Medium',
+                'productId': 'SAC048M',
+                'price': 2499
+        }
+]
     },
     {
       id: 'SAC048M',
@@ -431,7 +631,19 @@ export const roomProducts: Record<string, Product[]> = {
         story: 'We started Sugan because we believed your pet deserved better than a plastic bowl on the floor. This feeder pairs hand-selected mango wood — sustainably sourced from forests across India — with a natu...',
         care: 'Hand wash with mild soap. Do not soak.',
         maintenance: 'Apply mineral oil periodically'
-      }
+      },
+      relatedSizes: [
+        {
+                'size': 'Small',
+                'productId': 'SAC048S',
+                'price': 1999
+        },
+        {
+                'size': 'Large',
+                'productId': 'SAC048L',
+                'price': 2999
+        }
+]
     },
     {
       id: 'SAC048S',
@@ -457,7 +669,19 @@ export const roomProducts: Record<string, Product[]> = {
         story: 'We started Sugan because we believed your pet deserved better than a plastic bowl on the floor. This feeder pairs hand-selected mango wood — sustainably sourced from forests across India — with a natu...',
         care: 'Hand wash with mild soap. Do not soak.',
         maintenance: 'Apply mineral oil periodically'
-      }
+      },
+      relatedSizes: [
+        {
+                'size': 'Medium',
+                'productId': 'SAC048M',
+                'price': 2499
+        },
+        {
+                'size': 'Large',
+                'productId': 'SAC048L',
+                'price': 2999
+        }
+]
     },
     {
       id: 'SAC08XS',
@@ -509,7 +733,34 @@ export const roomProducts: Record<string, Product[]> = {
         story: 'The idea behind Sugan was to replace the ordinary with something worth keeping. This stripe-design crate feeder is hand-built from sustainably sourced acacia wood, with each plank fitted and finished ...',
         care: 'Hand wash with mild soap. Do not soak.',
         maintenance: 'Apply mineral oil periodically'
-      }
+      },
+      relatedSizes: [
+        {
+                'size': 'Small',
+                'productId': 'SAC08_S',
+                'price': 1799
+        },
+        {
+                'size': 'Medium',
+                'productId': 'SAC08_M',
+                'price': 2099
+        },
+        {
+                'size': 'Small (Crate)',
+                'productId': 'OF-T4QC-3ZZ3',
+                'price': 1499
+        },
+        {
+                'size': 'Medium',
+                'productId': 'TS-YFCT-J4WR',
+                'price': 1799
+        },
+        {
+                'size': 'Large (Crate)',
+                'productId': 'SAC037_L',
+                'price': 2399
+        }
+]
     },
     {
       id: 'SAC08_M',
@@ -535,7 +786,34 @@ export const roomProducts: Record<string, Product[]> = {
         story: 'The idea behind Sugan was to replace the ordinary with something worth keeping. This stripe-design crate feeder is hand-built from sustainably sourced acacia wood, with each plank fitted and finished ...',
         care: 'Hand wash with mild soap. Do not soak.',
         maintenance: 'Apply mineral oil periodically'
-      }
+      },
+      relatedSizes: [
+        {
+                'size': 'Small',
+                'productId': 'SAC08_S',
+                'price': 1799
+        },
+        {
+                'size': 'Large',
+                'productId': 'SAC08_L',
+                'price': 2399
+        },
+        {
+                'size': 'Small (Crate)',
+                'productId': 'OF-T4QC-3ZZ3',
+                'price': 1499
+        },
+        {
+                'size': 'Medium',
+                'productId': 'TS-YFCT-J4WR',
+                'price': 1799
+        },
+        {
+                'size': 'Large (Crate)',
+                'productId': 'SAC037_L',
+                'price': 2399
+        }
+]
     },
     {
       id: 'SAC08_S',
@@ -561,7 +839,34 @@ export const roomProducts: Record<string, Product[]> = {
         story: 'The idea behind Sugan was to replace the ordinary with something worth keeping. This stripe-design crate feeder is hand-built from sustainably sourced acacia wood, with each plank fitted and finished ...',
         care: 'Hand wash with mild soap. Do not soak.',
         maintenance: 'Apply mineral oil periodically'
-      }
+      },
+      relatedSizes: [
+        {
+                'size': 'Medium',
+                'productId': 'SAC08_M',
+                'price': 2099
+        },
+        {
+                'size': 'Large',
+                'productId': 'SAC08_L',
+                'price': 2399
+        },
+        {
+                'size': 'Small (Crate)',
+                'productId': 'OF-T4QC-3ZZ3',
+                'price': 1499
+        },
+        {
+                'size': 'Medium',
+                'productId': 'TS-YFCT-J4WR',
+                'price': 1799
+        },
+        {
+                'size': 'Large (Crate)',
+                'productId': 'SAC037_L',
+                'price': 2399
+        }
+]
     },
     {
       id: 'SAC09XS',
@@ -613,7 +918,19 @@ export const roomProducts: Record<string, Product[]> = {
         story: 'The idea behind Sugan was to replace the ordinary with something worth keeping. This stripe-design crate feeder is hand-built from sustainably sourced acacia wood, with each plank fitted and finished ...',
         care: 'Hand wash with mild soap. Do not soak.',
         maintenance: 'Apply mineral oil periodically'
-      }
+      },
+      relatedSizes: [
+        {
+                'size': 'Small',
+                'productId': 'SAC09_S',
+                'price': 1499
+        },
+        {
+                'size': 'Medium',
+                'productId': 'SAC09_M',
+                'price': 1699
+        }
+]
     },
     {
       id: 'SAC09_M',
@@ -639,7 +956,19 @@ export const roomProducts: Record<string, Product[]> = {
         story: 'The idea behind Sugan was to replace the ordinary with something worth keeping. This stripe-design crate feeder is hand-built from sustainably sourced acacia wood, with each plank fitted and finished ...',
         care: 'Hand wash with mild soap. Do not soak.',
         maintenance: 'Apply mineral oil periodically'
-      }
+      },
+      relatedSizes: [
+        {
+                'size': 'Small',
+                'productId': 'SAC09_S',
+                'price': 1499
+        },
+        {
+                'size': 'Large',
+                'productId': 'SAC09_L',
+                'price': 1799
+        }
+]
     },
     {
       id: 'SAC09_S',
@@ -665,7 +994,19 @@ export const roomProducts: Record<string, Product[]> = {
         story: 'The idea behind Sugan was to replace the ordinary with something worth keeping. This stripe-design crate feeder is hand-built from sustainably sourced acacia wood, with each plank fitted and finished ...',
         care: 'Hand wash with mild soap. Do not soak.',
         maintenance: 'Apply mineral oil periodically'
-      }
+      },
+      relatedSizes: [
+        {
+                'size': 'Medium',
+                'productId': 'SAC09_M',
+                'price': 1699
+        },
+        {
+                'size': 'Large',
+                'productId': 'SAC09_L',
+                'price': 1799
+        }
+]
     },
     {
       id: 'TS-YFCT-J4WR',
@@ -691,7 +1032,34 @@ export const roomProducts: Record<string, Product[]> = {
         story: 'The idea behind Sugan was to replace the ordinary with something worth keeping. This stripe-design crate feeder is hand-built from sustainably sourced acacia wood, with each plank fitted and finished ...',
         care: 'Hand wash with mild soap. Do not soak.',
         maintenance: 'Apply mineral oil periodically'
-      }
+      },
+      relatedSizes: [
+        {
+                'size': 'Small',
+                'productId': 'SAC08_S',
+                'price': 1799
+        },
+        {
+                'size': 'Medium',
+                'productId': 'SAC08_M',
+                'price': 2099
+        },
+        {
+                'size': 'Large',
+                'productId': 'SAC08_L',
+                'price': 2399
+        },
+        {
+                'size': 'Small (Crate)',
+                'productId': 'OF-T4QC-3ZZ3',
+                'price': 1499
+        },
+        {
+                'size': 'Large (Crate)',
+                'productId': 'SAC037_L',
+                'price': 2399
+        }
+]
     },
     {
       id: 'ZF-S7K4-NAVG',
@@ -717,7 +1085,19 @@ export const roomProducts: Record<string, Product[]> = {
         story: 'We started Sugan with a simple belief: everyday objects in your home should be beautiful, safe, and built to last. This pet feeder combines high-grade acacia wood — one of the hardest, most water-resi...',
         care: 'Hand wash with mild soap. Do not soak.',
         maintenance: 'Apply mineral oil periodically'
-      }
+      },
+      relatedSizes: [
+        {
+                'size': 'Small',
+                'productId': 'M0-5FJV-JJ1Q',
+                'price': 1499
+        },
+        {
+                'size': 'Medium',
+                'productId': 'BM-UQ5U-IU9U',
+                'price': 1999
+        }
+]
     },
   ],
   kitchen: [
@@ -875,7 +1255,19 @@ export const roomProducts: Record<string, Product[]> = {
         story: 'Sugan exists because we believed everyday objects in Indian homes could be made without plastic, without harmful chemicals, and without compromising on beauty. This serving tray is hand-crafted in Jod...',
         care: 'Hand wash with mild soap. Do not soak.',
         maintenance: 'Apply mineral oil periodically'
-      }
+      },
+      relatedSizes: [
+        {
+                'size': 'Small',
+                'productId': 'SAC01_S',
+                'price': 699
+        },
+        {
+                'size': 'Medium',
+                'productId': 'SAC01_M',
+                'price': 899
+        }
+]
     },
     {
       id: 'SAC01_M',
@@ -901,7 +1293,19 @@ export const roomProducts: Record<string, Product[]> = {
         story: 'Sugan exists because we believed everyday objects in Indian homes could be made without plastic, without harmful chemicals, and without compromising on beauty. This serving tray is hand-crafted in Jod...',
         care: 'Hand wash with mild soap. Do not soak.',
         maintenance: 'Apply mineral oil periodically'
-      }
+      },
+      relatedSizes: [
+        {
+                'size': 'Small',
+                'productId': 'SAC01_S',
+                'price': 699
+        },
+        {
+                'size': 'Large',
+                'productId': 'SAC01_L',
+                'price': 1099
+        }
+]
     },
     {
       id: 'SAC01_S',
@@ -927,7 +1331,19 @@ export const roomProducts: Record<string, Product[]> = {
         story: 'Sugan exists because we believed everyday objects in Indian homes could be made without plastic, without harmful chemicals, and without compromising on beauty. This serving tray is hand-crafted in Jod...',
         care: 'Hand wash with mild soap. Do not soak.',
         maintenance: 'Apply mineral oil periodically'
-      }
+      },
+      relatedSizes: [
+        {
+                'size': 'Medium',
+                'productId': 'SAC01_M',
+                'price': 899
+        },
+        {
+                'size': 'Large',
+                'productId': 'SAC01_L',
+                'price': 1099
+        }
+]
     },
     {
       id: 'SAC02_Combo_Set of 3-S',
@@ -979,7 +1395,19 @@ export const roomProducts: Record<string, Product[]> = {
         story: 'The honey finish on this tray isn\'t applied from a bottle — it\'s the natural warmth of acacia wood, brought out by our artisans in Jodhpur through careful sanding and food-safe mineral oil finishing...',
         care: 'Hand wash with mild soap. Do not soak.',
         maintenance: 'Apply mineral oil periodically'
-      }
+      },
+      relatedSizes: [
+        {
+                'size': 'Small',
+                'productId': 'SAC02_S',
+                'price': 799
+        },
+        {
+                'size': 'Medium',
+                'productId': 'SAC02_M',
+                'price': 999
+        }
+]
     },
     {
       id: 'SAC02_M',
@@ -1005,7 +1433,19 @@ export const roomProducts: Record<string, Product[]> = {
         story: 'The honey finish on this tray isn\'t applied from a bottle — it\'s the natural warmth of acacia wood, brought out by our artisans in Jodhpur through careful sanding and food-safe mineral oil finishing...',
         care: 'Hand wash with mild soap. Do not soak.',
         maintenance: 'Apply mineral oil periodically'
-      }
+      },
+      relatedSizes: [
+        {
+                'size': 'Small',
+                'productId': 'SAC02_S',
+                'price': 799
+        },
+        {
+                'size': 'Large',
+                'productId': 'SAC02_L',
+                'price': 1199
+        }
+]
     },
     {
       id: 'SAC02_S',
@@ -1031,7 +1471,19 @@ export const roomProducts: Record<string, Product[]> = {
         story: 'The honey finish on this tray isn\'t applied from a bottle — it\'s the natural warmth of acacia wood, brought out by our artisans in Jodhpur through careful sanding and food-safe mineral oil finishing...',
         care: 'Hand wash with mild soap. Do not soak.',
         maintenance: 'Apply mineral oil periodically'
-      }
+      },
+      relatedSizes: [
+        {
+                'size': 'Medium',
+                'productId': 'SAC02_M',
+                'price': 999
+        },
+        {
+                'size': 'Large',
+                'productId': 'SAC02_L',
+                'price': 1199
+        }
+]
     },
     {
       id: 'SAC03-Antique Checkers-Set of 3',
@@ -1109,7 +1561,19 @@ export const roomProducts: Record<string, Product[]> = {
         story: 'There is a certain kind of object that gets better the more you use it. This tray is one of them. Sugan was built on the idea that India shouldn\'t have to choose between beautiful design and responsi...',
         care: 'Hand wash with mild soap. Do not soak.',
         maintenance: 'Apply mineral oil periodically'
-      }
+      },
+      relatedSizes: [
+        {
+                'size': 'Small',
+                'productId': 'SAC03_S',
+                'price': 899
+        },
+        {
+                'size': 'Medium',
+                'productId': 'SAC03_M',
+                'price': 1099
+        }
+]
     },
     {
       id: 'SAC03_M',
@@ -1135,7 +1599,19 @@ export const roomProducts: Record<string, Product[]> = {
         story: 'There is a certain kind of object that gets better the more you use it. This tray is one of them. Sugan was built on the idea that India shouldn\'t have to choose between beautiful design and responsi...',
         care: 'Hand wash with mild soap. Do not soak.',
         maintenance: 'Apply mineral oil periodically'
-      }
+      },
+      relatedSizes: [
+        {
+                'size': 'Small',
+                'productId': 'SAC03_S',
+                'price': 899
+        },
+        {
+                'size': 'Large',
+                'productId': 'SAC03_L',
+                'price': 1299
+        }
+]
     },
     {
       id: 'SAC03_S',
@@ -1161,7 +1637,19 @@ export const roomProducts: Record<string, Product[]> = {
         story: 'There is a certain kind of object that gets better the more you use it. This tray is one of them. Sugan was built on the idea that India shouldn\'t have to choose between beautiful design and responsi...',
         care: 'Hand wash with mild soap. Do not soak.',
         maintenance: 'Apply mineral oil periodically'
-      }
+      },
+      relatedSizes: [
+        {
+                'size': 'Medium',
+                'productId': 'SAC03_M',
+                'price': 1099
+        },
+        {
+                'size': 'Large',
+                'productId': 'SAC03_L',
+                'price': 1299
+        }
+]
     },
     {
       id: 'SAC04-Natural Tray-Set of 3',
@@ -1343,7 +1831,19 @@ export const roomProducts: Record<string, Product[]> = {
         story: 'Sugan exists because we believed everyday objects in Indian homes could be made without plastic, without harmful chemicals, and without compromising on beauty. This serving tray is hand-crafted in Jod...',
         care: 'Hand wash with mild soap. Do not soak.',
         maintenance: 'Apply mineral oil periodically'
-      }
+      },
+      relatedSizes: [
+        {
+                'size': 'Small',
+                'productId': 'SAC04_S',
+                'price': 799
+        },
+        {
+                'size': 'Medium',
+                'productId': 'SAC04_M',
+                'price': 999
+        }
+]
     },
     {
       id: 'SAC04_M',
@@ -1369,7 +1869,19 @@ export const roomProducts: Record<string, Product[]> = {
         story: 'Sugan exists because we believed everyday objects in Indian homes could be made without plastic, without harmful chemicals, and without compromising on beauty. This serving tray is hand-crafted in Jod...',
         care: 'Hand wash with mild soap. Do not soak.',
         maintenance: 'Apply mineral oil periodically'
-      }
+      },
+      relatedSizes: [
+        {
+                'size': 'Small',
+                'productId': 'SAC04_S',
+                'price': 799
+        },
+        {
+                'size': 'Large',
+                'productId': 'SAC04_L',
+                'price': 1199
+        }
+]
     },
     {
       id: 'SAC04_S',
@@ -1395,7 +1907,19 @@ export const roomProducts: Record<string, Product[]> = {
         story: 'Sugan exists because we believed everyday objects in Indian homes could be made without plastic, without harmful chemicals, and without compromising on beauty. This serving tray is hand-crafted in Jod...',
         care: 'Hand wash with mild soap. Do not soak.',
         maintenance: 'Apply mineral oil periodically'
-      }
+      },
+      relatedSizes: [
+        {
+                'size': 'Medium',
+                'productId': 'SAC04_M',
+                'price': 999
+        },
+        {
+                'size': 'Large',
+                'productId': 'SAC04_L',
+                'price': 1199
+        }
+]
     },
     {
       id: 'SAC05_L',
@@ -1421,7 +1945,19 @@ export const roomProducts: Record<string, Product[]> = {
         story: 'A serving bowl is one of the most used objects in an Indian kitchen — so at Sugan, we decided it should also be one of the most beautiful. Hand-carved from premium acacia wood by artisans in Jodhpur, ...',
         care: 'Hand wash with mild soap. Do not soak.',
         maintenance: 'Apply mineral oil periodically'
-      }
+      },
+      relatedSizes: [
+        {
+                'size': 'Small',
+                'productId': 'SAC05_S',
+                'price': 599
+        },
+        {
+                'size': 'Medium',
+                'productId': 'SAC05_M',
+                'price': 799
+        }
+]
     },
     {
       id: 'SAC05_M',
@@ -1447,7 +1983,19 @@ export const roomProducts: Record<string, Product[]> = {
         story: 'A serving bowl is one of the most used objects in an Indian kitchen — so at Sugan, we decided it should also be one of the most beautiful. Hand-carved from premium acacia wood by artisans in Jodhpur, ...',
         care: 'Hand wash with mild soap. Do not soak.',
         maintenance: 'Apply mineral oil periodically'
-      }
+      },
+      relatedSizes: [
+        {
+                'size': 'Small',
+                'productId': 'SAC05_S',
+                'price': 599
+        },
+        {
+                'size': 'Large',
+                'productId': 'SAC05_L',
+                'price': 999
+        }
+]
     },
     {
       id: 'SAC05_Pack of 3',
@@ -1499,7 +2047,19 @@ export const roomProducts: Record<string, Product[]> = {
         story: 'A serving bowl is one of the most used objects in an Indian kitchen — so at Sugan, we decided it should also be one of the most beautiful. Hand-carved from premium acacia wood by artisans in Jodhpur, ...',
         care: 'Hand wash with mild soap. Do not soak.',
         maintenance: 'Apply mineral oil periodically'
-      }
+      },
+      relatedSizes: [
+        {
+                'size': 'Medium',
+                'productId': 'SAC05_M',
+                'price': 799
+        },
+        {
+                'size': 'Large',
+                'productId': 'SAC05_L',
+                'price': 999
+        }
+]
     },
     {
       id: 'SAC06',
@@ -1577,7 +2137,19 @@ export const roomProducts: Record<string, Product[]> = {
         story: 'Sugan exists because we believed everyday objects in Indian homes could be made without plastic, without harmful chemicals, and without compromising on beauty. This serving tray is hand-crafted in Jod...',
         care: 'Hand wash with mild soap. Do not soak.',
         maintenance: 'Apply mineral oil periodically'
-      }
+      },
+      relatedSizes: [
+        {
+                'size': 'Small',
+                'productId': 'SAC07_S',
+                'price': 899
+        },
+        {
+                'size': 'Medium',
+                'productId': 'SAC07_M',
+                'price': 1099
+        }
+]
     },
     {
       id: 'SAC07_M',
@@ -1603,7 +2175,19 @@ export const roomProducts: Record<string, Product[]> = {
         story: 'Sugan exists because we believed everyday objects in Indian homes could be made without plastic, without harmful chemicals, and without compromising on beauty. This serving tray is hand-crafted in Jod...',
         care: 'Hand wash with mild soap. Do not soak.',
         maintenance: 'Apply mineral oil periodically'
-      }
+      },
+      relatedSizes: [
+        {
+                'size': 'Small',
+                'productId': 'SAC07_S',
+                'price': 899
+        },
+        {
+                'size': 'Large',
+                'productId': 'SAC07_L',
+                'price': 1299
+        }
+]
     },
     {
       id: 'SAC07_S',
@@ -1629,7 +2213,19 @@ export const roomProducts: Record<string, Product[]> = {
         story: 'Sugan exists because we believed everyday objects in Indian homes could be made without plastic, without harmful chemicals, and without compromising on beauty. This serving tray is hand-crafted in Jod...',
         care: 'Hand wash with mild soap. Do not soak.',
         maintenance: 'Apply mineral oil periodically'
-      }
+      },
+      relatedSizes: [
+        {
+                'size': 'Medium',
+                'productId': 'SAC07_M',
+                'price': 1099
+        },
+        {
+                'size': 'Large',
+                'productId': 'SAC07_L',
+                'price': 1299
+        }
+]
     },
     {
       id: 'SAC024',

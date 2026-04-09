@@ -228,6 +228,33 @@ export default function ProductDetail() {
               </div>
             )}
 
+            {/* Size Variants - Links to other sizes */}
+            {product.relatedSizes && product.relatedSizes.length > 0 && (
+              <div className="mb-6">
+                <label className="block text-sm font-medium text-sugan-brown mb-2">
+                  Also Available In
+                </label>
+                <div className="flex flex-wrap gap-2">
+                  {/* Current Size (active) */}
+                  <span className="px-4 py-2 rounded-lg border-2 border-sugan-gold bg-sugan-gold/10 text-sm font-body text-sugan-brown">
+                    {product.name.match(/(Small|Medium|Large|Extra Small)/)?.[0] || 'Current'}
+                    <span className="font-semibold ml-2">₹{product.price.toLocaleString()}</span>
+                  </span>
+                  {/* Other Sizes */}
+                  {product.relatedSizes.map((variant, idx) => (
+                    <Link
+                      key={idx}
+                      to={`/product/${variant.productId}`}
+                      className="px-4 py-2 rounded-lg border-2 border-sugan-brown/20 hover:border-sugan-gold transition-colors text-sm font-body text-sugan-brown"
+                    >
+                      {variant.size}
+                      <span className="font-semibold ml-2">₹{variant.price.toLocaleString()}</span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {/* Quick Info Badges */}
             <div className="flex flex-wrap gap-3 mb-6">
               {product.details?.materials && (
