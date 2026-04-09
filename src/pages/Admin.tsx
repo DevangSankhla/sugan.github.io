@@ -9,10 +9,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { 
-  Package, Users, DollarSign, ShoppingCart, Search, Edit
+  Package, Users, DollarSign, ShoppingCart, Search, Edit, Save, X, User
 } from 'lucide-react';
 import { db } from '@/lib/firebase';
 import { collection, query, onSnapshot, doc, updateDoc } from 'firebase/firestore';
+import { allProducts } from '@/data/rooms';
 import type { Product } from '@/types';
 
 interface Order {
@@ -26,6 +27,14 @@ interface Order {
   shippingAddress: any;
 }
 
+interface UserData {
+  uid: string;
+  email: string;
+  name: string;
+  isAdmin: boolean;
+  createdAt: any;
+}
+
 interface DashboardStats {
   totalOrders: number;
   totalRevenue: number;
@@ -37,17 +46,18 @@ export default function Admin() {
   const navigate = useNavigate();
   const { isAdmin, user } = useAuth();
   const [orders, setOrders] = useState<Order[]>([]);
-  const [products, setProducts] = useState<Product[]>([]);
-  const [, setUsers] = useState<any[]>([]);
+  const [products, setProducts] = useState<Product[]>(allProducts);
+  const [users, setUsers] = useState<UserData[]>([]);
   const [stats, setStats] = useState<DashboardStats>({
     totalOrders: 0,
     totalRevenue: 0,
-    totalProducts: 0,
+    totalProducts: allProducts.length,
     totalUsers: 0
   });
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+  const [editingUser, setEditingUser] = useState<UserData | null>(null);
 
   // Redirect if not admin
   useEffect(() => {
@@ -61,7 +71,7 @@ export default function Admin() {
     }
   }, [user, isAdmin, navigate]);
 
-  // Fetch data
+  // Fetch data from Firestore
   useEffect(() => {
     if (!isAdmin) return;
 
@@ -82,35 +92,23 @@ export default function Admin() {
       }));
     });
 
-    // Fetch products
-    const productsQuery = query(collection(db, 'products'));
-    const unsubscribeProducts = onSnapshot(productsQuery, (snapshot) => {
-      const productsData = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      })) as Product[];
-      setProducts(productsData);
-      setStats(prev => ({
-        ...prev,
-        totalProducts: productsData.length
-      }));
-      setLoading(false);
-    });
-
     // Fetch users
     const usersQuery = query(collection(db, 'users'));
     const unsubscribeUsers = onSnapshot(usersQuery, (snapshot) => {
-      const usersData = snapshot.docs.map(doc => doc.data());
+      const usersData = snapshot.docs.map(doc => ({
+        uid: doc.id,
+        ...doc.data()
+      })) as UserData[];
       setUsers(usersData);
       setStats(prev => ({
         ...prev,
         totalUsers: usersData.length
       }));
+      setLoading(false);
     });
 
     return () => {
       unsubscribeOrders();
-      unsubscribeProducts();
       unsubscribeUsers();
     };
   }, [isAdmin]);
@@ -119,12 +117,10 @@ export default function Admin() {
     await updateDoc(doc(db, 'orders', orderId), { status });
   };
 
-  const updateProduct = async (productId: string, data: Partial<Product>) => {
-    await updateDoc(doc(db, 'products', productId), data);
-    setEditingProduct(null);
+  const updateUser = async (userId: string, data: Partial<UserData>) => {
+    await updateDoc(doc(db, 'users', userId), data);
+    setEditingUser(null);
   };
-
-
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -225,7 +221,7 @@ export default function Admin() {
         </div>
 
         <Tabs defaultValue="products" className="space-y-6">
-          <TabsList className="bg-white border border-sugan-brown/10 p-1">
+          <TabsList className="bg-white border border-sugan-brown/10 p-1 flex flex-wrap">
             <TabsTrigger value="products" className="font-body data-[state=active]:bg-sugan-brown data-[state=active]:text-white">
               <Package className="w-4 h-4 mr-2" />
               Products
@@ -234,6 +230,10 @@ export default function Admin() {
               <ShoppingCart className="w-4 h-4 mr-2" />
               Orders
             </TabsTrigger>
+            <TabsTrigger value="users" className="font-body data-[state=active]:bg-sugan-brown data-[state=active]:text-white">
+              <User className="w-4 h-4 mr-2" />
+              Users
+            </TabsTrigger>
           </TabsList>
 
           {/* Products Tab */}
@@ -241,7 +241,7 @@ export default function Admin() {
             <Card>
               <CardHeader className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <CardTitle className="font-display text-xl text-sugan-brown">
-                  Manage Products
+                  Manage Products ({filteredProducts.length})
                 </CardTitle>
                 <div className="flex gap-3">
                   <div className="relative">
@@ -275,9 +275,12 @@ export default function Admin() {
                               <img
                                 src={product.image}
                                 alt={product.name}
-                                className="w-10 h-10 object-cover rounded"
+                                className="w-12 h-12 object-cover rounded"
                               />
-                              <span className="font-body text-sugan-brown">{product.name}</span>
+                              <div>
+                                <p className="font-body text-sugan-brown font-medium">{product.name}</p>
+                                <p className="text-xs text-sugan-brown/50">{product.category}</p>
+                              </div>
                             </div>
                           </td>
                           <td className="py-3 px-4 font-body text-sm text-sugan-brown/60">
@@ -292,35 +295,43 @@ export default function Admin() {
                             </Badge>
                           </td>
                           <td className="py-3 px-4 text-right">
-                            <div className="flex justify-end gap-2">
-                              <Dialog>
-                                <DialogTrigger asChild>
-                                  <Button
-                                    size="sm"
-                                    variant="outline"
-                                    className="font-body"
-                                    onClick={() => setEditingProduct(product)}
-                                  >
-                                    <Edit className="w-3 h-3 mr-1" />
-                                    Edit
-                                  </Button>
-                                </DialogTrigger>
-                                <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-                                  <DialogHeader>
-                                    <DialogTitle className="font-display text-xl">
-                                      Edit Product
-                                    </DialogTitle>
-                                  </DialogHeader>
-                                  {editingProduct && (
-                                    <ProductEditForm
-                                      product={editingProduct}
-                                      onSave={(data) => updateProduct(product.id, data)}
-                                      onCancel={() => setEditingProduct(null)}
-                                    />
-                                  )}
-                                </DialogContent>
-                              </Dialog>
-                            </div>
+                            <Dialog>
+                              <DialogTrigger asChild>
+                                <Button
+                                  size="sm"
+                                  variant="outline"
+                                  className="font-body"
+                                  onClick={() => setEditingProduct(product)}
+                                >
+                                  <Edit className="w-3 h-3 mr-1" />
+                                  Edit
+                                </Button>
+                              </DialogTrigger>
+                              <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+                                <DialogHeader>
+                                  <DialogTitle className="font-display text-xl">
+                                    Edit Product
+                                  </DialogTitle>
+                                </DialogHeader>
+                                {editingProduct?.id === product.id && (
+                                  <ProductEditForm
+                                    product={product}
+                                    onSave={(updatedProduct) => {
+                                      // Update local state
+                                      setProducts(prev => prev.map(p => 
+                                        p.id === updatedProduct.id ? updatedProduct : p
+                                      ));
+                                      // Also update in Firestore if it exists there
+                                      updateDoc(doc(db, 'products', product.id), { ...updatedProduct }).catch(() => {
+                                        // Product might not exist in Firestore yet
+                                      });
+                                      setEditingProduct(null);
+                                    }}
+                                    onCancel={() => setEditingProduct(null)}
+                                  />
+                                )}
+                              </DialogContent>
+                            </Dialog>
                           </td>
                         </tr>
                       ))}
@@ -360,7 +371,7 @@ export default function Admin() {
                             <select
                               value={order.status}
                               onChange={(e) => updateOrderStatus(order.id, e.target.value)}
-                              className="font-body text-sm border border-sugan-brown/20 rounded-md px-3 py-1"
+                              className="font-body text-sm border border-sugan-brown/20 rounded-md px-3 py-1 bg-white"
                             >
                               <option value="pending">Pending</option>
                               <option value="processing">Processing</option>
@@ -385,6 +396,80 @@ export default function Admin() {
               </CardContent>
             </Card>
           </TabsContent>
+
+          {/* Users Tab */}
+          <TabsContent value="users">
+            <Card>
+              <CardHeader>
+                <CardTitle className="font-display text-xl text-sugan-brown">
+                  All Users ({users.length})
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {users.map((userData) => (
+                    <Card key={userData.uid} className="border-sugan-brown/10">
+                      <CardContent className="p-4">
+                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                          <div className="flex items-center gap-4">
+                            <div className="w-10 h-10 bg-sugan-brown/10 rounded-full flex items-center justify-center">
+                              <User className="w-5 h-5 text-sugan-brown" />
+                            </div>
+                            <div>
+                              <p className="font-body text-sugan-brown font-medium">
+                                {userData.name || 'No Name'}
+                              </p>
+                              <p className="font-body text-sm text-sugan-brown/60">
+                                {userData.email}
+                              </p>
+                              {userData.isAdmin && (
+                                <Badge className="bg-sugan-gold text-white mt-1">Admin</Badge>
+                              )}
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-3">
+                            <Dialog>
+                              <DialogTrigger asChild>
+                                <Button
+                                  size="sm"
+                                  variant="outline"
+                                  className="font-body"
+                                  onClick={() => setEditingUser(userData)}
+                                >
+                                  <Edit className="w-3 h-3 mr-1" />
+                                  Edit
+                                </Button>
+                              </DialogTrigger>
+                              <DialogContent className="max-w-md">
+                                <DialogHeader>
+                                  <DialogTitle className="font-display text-xl">
+                                    Edit User
+                                  </DialogTitle>
+                                </DialogHeader>
+                                {editingUser?.uid === userData.uid && (
+                                  <UserEditForm
+                                    user={userData}
+                                    onSave={(data) => updateUser(userData.uid, data)}
+                                    onCancel={() => setEditingUser(null)}
+                                  />
+                                )}
+                              </DialogContent>
+                            </Dialog>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                  {users.length === 0 && (
+                    <div className="text-center py-12">
+                      <Users className="w-12 h-12 text-sugan-brown/20 mx-auto mb-4" />
+                      <p className="font-body text-sugan-brown/60">No users yet</p>
+                    </div>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
         </Tabs>
       </div>
     </div>
@@ -398,36 +483,42 @@ function ProductEditForm({
   onCancel 
 }: { 
   product: Product; 
-  onSave: (data: Partial<Product>) => void;
+  onSave: (product: Product) => void;
   onCancel: () => void;
 }) {
-  const [formData, setFormData] = useState({
-    name: product.name || '',
-    price: product.price || 0,
-    description: product.description || '',
-    inStock: product.inStock || false,
-    category: product.category || '',
-    details: {
-      materials: product.details?.materials || '',
-      finish: product.details?.finish || '',
-      origin: product.details?.origin || '',
-      dimensions: {
-        length: product.details?.dimensions?.length || '',
-        width: product.details?.dimensions?.width || '',
-        height: product.details?.dimensions?.height || ''
-      },
-      care: product.details?.care || '',
-      maintenance: product.details?.maintenance || ''
-    }
-  });
+  const [formData, setFormData] = useState<Product>({ ...product });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSave(formData);
   };
 
+  const updateDetail = (key: string, value: any) => {
+    setFormData(prev => ({
+      ...prev,
+      details: {
+        ...prev.details,
+        [key]: value
+      }
+    }));
+  };
+
+  const updateDimension = (key: string, value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      details: {
+        ...prev.details,
+        dimensions: {
+          ...prev.details?.dimensions,
+          [key]: value
+        }
+      }
+    }));
+  };
+
   return (
     <form onSubmit={handleSubmit} className="space-y-6 mt-4">
+      {/* Basic Info */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-2">
           <Label className="font-body">Product Name</Label>
@@ -457,6 +548,34 @@ function ProductEditForm({
         />
       </div>
 
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="space-y-2">
+          <Label className="font-body">Category</Label>
+          <Input
+            value={formData.category || ''}
+            onChange={(e) => setFormData({...formData, category: e.target.value})}
+            className="font-body"
+          />
+        </div>
+        <div className="space-y-2">
+          <Label className="font-body">Room</Label>
+          <select
+            value={formData.room}
+            onChange={(e) => setFormData({...formData, room: e.target.value})}
+            className="w-full h-10 px-3 border border-sugan-brown/20 rounded-md font-body text-sm"
+          >
+            <option value="kitchen">Kitchen</option>
+            <option value="living">Living Room</option>
+            <option value="bedroom">Bedroom</option>
+            <option value="dining">Dining</option>
+            <option value="office">Office</option>
+            <option value="pooja">Pooja</option>
+            <option value="outdoor">Outdoor</option>
+            <option value="pet">Pet</option>
+          </select>
+        </div>
+      </div>
+
       {/* Dimensions Section */}
       <div className="border-t border-sugan-brown/10 pt-4">
         <h4 className="font-display text-lg text-sugan-brown mb-4">Dimensions (inches)</h4>
@@ -465,14 +584,8 @@ function ProductEditForm({
             <Label className="font-body">Length</Label>
             <Input
               placeholder="e.g., 12"
-              value={formData.details.dimensions.length}
-              onChange={(e) => setFormData({
-                ...formData,
-                details: {
-                  ...formData.details,
-                  dimensions: { ...formData.details.dimensions, length: e.target.value }
-                }
-              })}
+              value={formData.details?.dimensions?.length || ''}
+              onChange={(e) => updateDimension('length', e.target.value)}
               className="font-body"
             />
           </div>
@@ -480,14 +593,8 @@ function ProductEditForm({
             <Label className="font-body">Width</Label>
             <Input
               placeholder="e.g., 8"
-              value={formData.details.dimensions.width}
-              onChange={(e) => setFormData({
-                ...formData,
-                details: {
-                  ...formData.details,
-                  dimensions: { ...formData.details.dimensions, width: e.target.value }
-                }
-              })}
+              value={formData.details?.dimensions?.width || ''}
+              onChange={(e) => updateDimension('width', e.target.value)}
               className="font-body"
             />
           </div>
@@ -495,75 +602,147 @@ function ProductEditForm({
             <Label className="font-body">Height</Label>
             <Input
               placeholder="e.g., 4"
-              value={formData.details.dimensions.height}
-              onChange={(e) => setFormData({
-                ...formData,
-                details: {
-                  ...formData.details,
-                  dimensions: { ...formData.details.dimensions, height: e.target.value }
-                }
-              })}
+              value={formData.details?.dimensions?.height || ''}
+              onChange={(e) => updateDimension('height', e.target.value)}
               className="font-body"
             />
           </div>
         </div>
       </div>
 
+      {/* Product Details */}
       <div className="border-t border-sugan-brown/10 pt-4">
         <h4 className="font-display text-lg text-sugan-brown mb-4">Product Details</h4>
         <div className="space-y-4">
           <div className="space-y-2">
             <Label className="font-body">Materials</Label>
             <Input
-              value={formData.details.materials}
-              onChange={(e) => setFormData({
-                ...formData,
-                details: { ...formData.details, materials: e.target.value }
-              })}
+              value={formData.details?.materials || ''}
+              onChange={(e) => updateDetail('materials', e.target.value)}
               className="font-body"
             />
           </div>
           <div className="space-y-2">
             <Label className="font-body">Finish</Label>
             <Input
-              value={formData.details.finish}
-              onChange={(e) => setFormData({
-                ...formData,
-                details: { ...formData.details, finish: e.target.value }
-              })}
+              value={formData.details?.finish || ''}
+              onChange={(e) => updateDetail('finish', e.target.value)}
+              className="font-body"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label className="font-body">Origin</Label>
+            <Input
+              value={formData.details?.origin || ''}
+              onChange={(e) => updateDetail('origin', e.target.value)}
               className="font-body"
             />
           </div>
           <div className="space-y-2">
             <Label className="font-body">Care Instructions</Label>
             <Input
-              value={formData.details.care}
-              onChange={(e) => setFormData({
-                ...formData,
-                details: { ...formData.details, care: e.target.value }
-              })}
+              value={formData.details?.care || ''}
+              onChange={(e) => updateDetail('care', e.target.value)}
+              className="font-body"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label className="font-body">Maintenance</Label>
+            <Input
+              value={formData.details?.maintenance || ''}
+              onChange={(e) => updateDetail('maintenance', e.target.value)}
               className="font-body"
             />
           </div>
         </div>
       </div>
 
-      <div className="flex items-center gap-2 pt-4">
+      {/* Stock Status */}
+      <div className="flex items-center gap-2 pt-4 border-t border-sugan-brown/10">
         <input
           type="checkbox"
           id="inStock"
           checked={formData.inStock}
           onChange={(e) => setFormData({...formData, inStock: e.target.checked})}
-          className="rounded border-sugan-brown/20"
+          className="w-4 h-4 rounded border-sugan-brown/20"
         />
         <Label htmlFor="inStock" className="font-body">In Stock</Label>
       </div>
 
       <div className="flex justify-end gap-3 pt-4 border-t border-sugan-brown/10">
         <Button type="button" variant="outline" onClick={onCancel} className="font-body">
+          <X className="w-4 h-4 mr-1" />
           Cancel
         </Button>
         <Button type="submit" className="bg-sugan-brown hover:bg-sugan-brown/90 font-body">
+          <Save className="w-4 h-4 mr-1" />
+          Save Changes
+        </Button>
+      </div>
+    </form>
+  );
+}
+
+// User Edit Form Component
+function UserEditForm({ 
+  user, 
+  onSave, 
+  onCancel 
+}: { 
+  user: UserData; 
+  onSave: (data: Partial<UserData>) => void;
+  onCancel: () => void;
+}) {
+  const [formData, setFormData] = useState({
+    name: user.name || '',
+    isAdmin: user.isAdmin || false
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onSave(formData);
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4 mt-4">
+      <div className="space-y-2">
+        <Label className="font-body">Full Name</Label>
+        <Input
+          value={formData.name}
+          onChange={(e) => setFormData({...formData, name: e.target.value})}
+          className="font-body"
+          placeholder="User's full name"
+        />
+      </div>
+
+      <div className="space-y-2">
+        <Label className="font-body">Email</Label>
+        <Input
+          value={user.email}
+          disabled
+          className="font-body bg-gray-100"
+        />
+        <p className="text-xs text-sugan-brown/50">Email cannot be changed</p>
+      </div>
+
+      <div className="flex items-center gap-2 pt-2">
+        <input
+          type="checkbox"
+          id="isAdmin"
+          checked={formData.isAdmin}
+          onChange={(e) => setFormData({...formData, isAdmin: e.target.checked})}
+          className="w-4 h-4 rounded border-sugan-brown/20"
+        />
+        <Label htmlFor="isAdmin" className="font-body">Admin Access</Label>
+      </div>
+
+      <div className="flex justify-end gap-3 pt-4 border-t border-sugan-brown/10">
+        <Button type="button" variant="outline" onClick={onCancel} className="font-body">
+          <X className="w-4 h-4 mr-1" />
+          Cancel
+        </Button>
+        <Button type="submit" className="bg-sugan-brown hover:bg-sugan-brown/90 font-body">
+          <Save className="w-4 h-4 mr-1" />
           Save Changes
         </Button>
       </div>
