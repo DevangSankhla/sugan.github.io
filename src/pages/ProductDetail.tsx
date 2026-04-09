@@ -143,16 +143,7 @@ export default function ProductDetail() {
               <span className="font-display text-3xl font-semibold text-sugan-brown">
                 ₹{displayPrice.toLocaleString()}
               </span>
-              {product.originalPrice && product.originalPrice > displayPrice && (
-                <>
-                  <span className="text-xl text-sugan-brown/40 line-through">
-                    ₹{product.originalPrice.toLocaleString()}
-                  </span>
-                  <span className="bg-sugan-gold text-white text-xs px-2 py-1 rounded">
-                    Save ₹{(product.originalPrice - displayPrice).toLocaleString()}
-                  </span>
-                </>
-              )}
+
             </div>
 
             {/* Short Description */}

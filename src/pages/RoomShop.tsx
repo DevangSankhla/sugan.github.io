@@ -149,11 +149,7 @@ export default function RoomShop() {
                       alt={product.name}
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
-                    {product.originalPrice && (
-                      <span className="absolute top-3 left-3 bg-sugan-gold text-white text-xs font-body px-2 py-1 rounded">
-                        Sale
-                      </span>
-                    )}
+
                     {/* Quick Add Button */}
                     <div 
                       className="absolute inset-0 bg-sugan-brown/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
@@ -201,11 +197,7 @@ export default function RoomShop() {
                       <span className="font-display text-xl font-semibold text-sugan-brown">
                         ₹{product.price.toLocaleString()}
                       </span>
-                      {product.originalPrice && (
-                        <span className="text-sm text-sugan-brown/40 line-through">
-                          ₹{product.originalPrice.toLocaleString()}
-                        </span>
-                      )}
+
                     </div>
                   </div>
                 </div>
