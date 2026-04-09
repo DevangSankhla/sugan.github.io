@@ -126,7 +126,7 @@ export const roomProducts: Record<string, Product[]> = {
     {
       id: 'SAC033',
       name: 'Wooden Cat Feeder with Detachable Stainless Steel Bowls, Small',
-      price: 749,
+      price: 799,
       originalPrice: 899,
       description: 'A small wooden cat feeder with two detachable stainless steel bowls, made for kittens and cats who deserve something better than plastic at mealtimes. The natural wood stand raises the bowls to a comfortable height, reducing neck strain during eating, and the non-toxic finish keeps every meal safe.',
       image: '/images/cat-feeder-small.jpg',
@@ -414,7 +414,7 @@ export const roomProducts: Record<string, Product[]> = {
     {
       id: 'SAC01_Combo_Set of 3-S',
       name: 'Acacia Wood Square Serving Trays, Natural Finish, Set of 3',
-      price: 2500,
+      price: 2499,
       originalPrice: 3299,
       description: 'Three graduating square acacia trays, each cut from solid natural hardwood and finished with food-safe mineral oil - a complete set for anyone who values both function and warmth in the kitchen.',
       image: '/images/serving-trays-square-set3.jpg',
@@ -440,7 +440,7 @@ export const roomProducts: Record<string, Product[]> = {
     {
       id: 'SAC01_L',
       name: 'Acacia Wood Square Serving Tray, Natural Finish, Large',
-      price: 1260,
+      price: 1299,
       originalPrice: 1999,
       description: 'This large square acacia tray is a versatile piece - generous enough to carry a full tea service, elegant enough to display fruit on a sideboard, and durable enough for daily kitchen use.',
       image: '/images/serving-tray-square-large.jpg',
@@ -466,7 +466,7 @@ export const roomProducts: Record<string, Product[]> = {
     {
       id: 'SAC01_M',
       name: 'Acacia Wood Square Serving Tray, Natural Finish, Medium',
-      price: 1035,
+      price: 1099,
       originalPrice: 1999,
       description: 'A medium square acacia serving tray with a natural grain finish, sized for everyday use as a breakfast tray, snack plate, or countertop organiser.',
       image: '/images/serving-tray-square-medium.jpg',
@@ -492,7 +492,7 @@ export const roomProducts: Record<string, Product[]> = {
     {
       id: 'SAC01_S',
       name: 'Acacia Wood Square Serving Tray, Natural Finish, Small',
-      price: 788,
+      price: 799,
       originalPrice: 999,
       description: 'This small square acacia tray from Jodhpur is cut from a single plank of natural hardwood, finished with food-safe mineral oil, and built to handle daily use in the kitchen or on the dining table.',
       image: '/images/serving-tray-square-small.jpg',
@@ -518,7 +518,7 @@ export const roomProducts: Record<string, Product[]> = {
     {
       id: 'SAC02_Combo_Set of 3-S',
       name: 'Acacia Wood Rectangle Serving Trays, Honey Finish, Set of 3',
-      price: 2200,
+      price: 2199,
       originalPrice: 3299,
       description: 'Three rectangle honey-finish acacia trays in graduating sizes, each made from solid natural hardwood and finished with food-safe mineral oil. The warm golden tone makes the set cohesive and welcoming.',
       image: '/images/serving-trays-honey-set3.jpg',
@@ -544,7 +544,7 @@ export const roomProducts: Record<string, Product[]> = {
     {
       id: 'SAC02_L',
       name: 'Acacia Wood Rectangle Serving Tray, Honey Finish, Large',
-      price: 1125,
+      price: 1199,
       originalPrice: 1499,
       description: 'A large honey-finish acacia serving tray built for proper entertaining - generous enough for a full charcuterie board, strong enough to carry drinks across the room.',
       image: '/images/serving-tray-honey-large.jpg',
@@ -570,7 +570,7 @@ export const roomProducts: Record<string, Product[]> = {
     {
       id: 'SAC02_M',
       name: 'Acacia Wood Rectangle Serving Tray, Honey Finish, Medium',
-      price: 1035,
+      price: 1099,
       originalPrice: 1299,
       description: 'This medium rectangle honey-finish tray is a kitchen and dining staple - the right size for a breakfast spread, an afternoon tea, or a curated charcuterie arrangement.',
       image: '/images/serving-tray-honey-medium.jpg',
@@ -622,7 +622,7 @@ export const roomProducts: Record<string, Product[]> = {
     {
       id: 'SAC03-Antique Checkers-Set of 3',
       name: 'Acacia Wood Antique Checkers Rectangle Serving Trays, Set of 3',
-      price: 2500,
+      price: 2499,
       originalPrice: 2999,
       description: 'Three antique checkers rectangle trays in graduating sizes, each built from alternating light and dark acacia planks for a natural geometric pattern that needs no paint or decoration.',
       image: '/images/serving-trays-checkers-set3.jpg',
@@ -648,7 +648,7 @@ export const roomProducts: Record<string, Product[]> = {
     {
       id: 'SAC03_L',
       name: 'Acacia Wood Antique Checkers Rectangle Serving Tray, Large',
-      price: 1260,
+      price: 1299,
       originalPrice: 1799,
       description: 'This large antique checkers tray makes a statement at the dining table with its alternating light and dark acacia grain pattern, created without dyes or synthetic finishes.',
       image: '/images/serving-tray-checkers-large.jpg',
@@ -674,7 +674,7 @@ export const roomProducts: Record<string, Product[]> = {
     {
       id: 'SAC03_M',
       name: 'Acacia Wood Antique Checkers Rectangle Serving Tray, Medium',
-      price: 1125,
+      price: 1199,
       originalPrice: 1599,
       description: 'A medium antique checkers acacia tray that brings visual interest to the table without any artificial decoration - the pattern comes entirely from alternating light and dark acacia planks.',
       image: '/images/serving-tray-checkers-medium.jpg',
@@ -700,7 +700,7 @@ export const roomProducts: Record<string, Product[]> = {
     {
       id: 'SAC03_S',
       name: 'Acacia Wood Antique Checkers Rectangle Serving Tray, Small',
-      price: 788,
+      price: 799,
       originalPrice: 1099,
       description: 'The antique checkers pattern on this small acacia tray is created by laying alternating planks of lighter and darker acacia wood side by side.',
       image: '/images/serving-tray-checkers-small.jpg',
@@ -754,7 +754,7 @@ export const roomProducts: Record<string, Product[]> = {
     {
       id: 'SAC020',
       name: 'Foldable Round Acacia Wood Side Table, Natural Finish',
-      price: 1778,
+      price: 1799,
       originalPrice: 3499,
       description: 'This foldable round side table in natural acacia is handcrafted in Jodhpur with a design that moves easily between living room, bedroom, and balcony. The fold-flat base makes it easy to store when not in use.',
       image: '/images/side-table-natural.jpg',
@@ -780,7 +780,7 @@ export const roomProducts: Record<string, Product[]> = {
     {
       id: 'SAC021',
       name: 'Foldable Round Acacia Wood Side Table, Grey Wash',
-      price: 1778,
+      price: 1799,
       originalPrice: 3399,
       description: 'The grey-wash finish on this foldable round side table gives the acacia wood a soft, cooled tone that works well in both contemporary and neutral interiors.',
       image: '/images/side-table-grey.jpg',
@@ -806,7 +806,7 @@ export const roomProducts: Record<string, Product[]> = {
     {
       id: 'SAC022',
       name: 'Foldable Round Acacia Wood Side Table, Dark Brown',
-      price: 1778,
+      price: 1799,
       originalPrice: 3999,
       description: 'This dark-brown foldable round side table is made from solid acacia wood in Jodhpur, with a rich, deep-toned finish that suits warm-toned and darker interiors equally well.',
       image: '/images/side-table-dark.jpg',
@@ -833,7 +833,7 @@ export const roomProducts: Record<string, Product[]> = {
       id: 'SAC030',
       name: 'Rajasthani Hand-Embossed Multicolour Wooden Serving Tray, Medium',
       price: 999,
-      originalPrice: 2200,
+      originalPrice: 2199,
       description: 'Hand-embossed and painted by artisans in Jodhpur using traditional Rajasthani techniques, this multicoloured wooden serving tray carries centuries of craft in its surface.',
       image: '/images/serving-tray-embossed.jpg',
       category: 'Serving Trays',
@@ -914,7 +914,7 @@ export const roomProducts: Record<string, Product[]> = {
     {
       id: 'SAC032-NEW',
       name: 'Rajasthani Hand-Painted Wooden Bajot Chowki for Pooja, Large',
-      price: 2000,
+      price: 1999,
       originalPrice: 2599,
       description: 'A square bajot chowki handcrafted in Jodhpur with vivid hand-painted Rajasthani artwork across its surface and solid wood construction throughout.',
       image: '/images/bajot-chowki-painted.jpg',
