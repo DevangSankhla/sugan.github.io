@@ -19,6 +19,8 @@ import ProductDetail from '@/pages/ProductDetail';
 import ShippingInfo from '@/pages/ShippingInfo';
 import ReturnsRefunds from '@/pages/ReturnsRefunds';
 import FAQ from '@/pages/FAQ';
+import PrivacyPolicy from '@/pages/PrivacyPolicy';
+import ContactUs from '@/pages/ContactUs';
 import Login from '@/pages/Login';
 import Signup from '@/pages/Signup';
 import Account from '@/pages/Account';
@@ -88,9 +90,11 @@ function App() {
             <Route path="/shop" element={<><Shop /><Footer /></>} />
             <Route path="/shop/:roomId" element={<><RoomShop /><Footer /></>} />
             <Route path="/product/:id" element={<><ProductDetail /><Footer /></>} />
-            <Route path="/shipping" element={<ShippingInfo />} />
-            <Route path="/returns" element={<ReturnsRefunds />} />
-            <Route path="/faq" element={<FAQ />} />
+            <Route path="/shipping" element={<><ShippingInfo /><Footer /></>} />
+            <Route path="/returns" element={<><ReturnsRefunds /><Footer /></>} />
+            <Route path="/faq" element={<><FAQ /><Footer /></>} />
+            <Route path="/privacy" element={<><PrivacyPolicy /><Footer /></>} />
+            <Route path="/contact" element={<><ContactUs /><Footer /></>} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/account" element={<Account />} />

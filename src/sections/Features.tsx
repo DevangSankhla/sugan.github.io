@@ -14,15 +14,15 @@ const features = [
   },
   {
     icon: Truck,
-    title: 'Free Shipping',
+    title: 'Free Shipping over ₹1999',
     description:
-      'Enjoy complimentary delivery across India. Fast, reliable, and right to your doorstep.',
+      'Enjoy complimentary delivery across India on orders above ₹1999. Fast, reliable, and right to your doorstep.',
   },
   {
     icon: ShieldCheck,
     title: 'Secure Payment',
     description:
-      'Shop with confidence using Amazon\'s trusted payment gateway. 100% secure transactions guaranteed.',
+      'Shop with confidence using PayU secure payment gateway. 100% safe transactions with multiple payment options.',
   },
   {
     icon: Leaf,

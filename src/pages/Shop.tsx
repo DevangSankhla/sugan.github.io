@@ -20,6 +20,16 @@ const categories = [
   { id: 'decor', name: 'Home Decor', icon: 'Home' },
 ];
 
+// Helper to get unique products by name (for category view to avoid duplicates)
+const getUniqueProductsByName = (products: Product[]): Product[] => {
+  const seen = new Set<string>();
+  return products.filter(p => {
+    if (seen.has(p.name)) return false;
+    seen.add(p.name);
+    return true;
+  });
+};
+
 export default function Shop() {
   const [activeView, setActiveView] = useState<'home' | 'rooms' | 'category'>('home');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -49,28 +59,39 @@ export default function Shop() {
     return () => ctx.revert();
   }, [activeView, selectedCategory]);
 
-  // Get products by category
+  // Get products by category - returns unique products only
   const getCategoryProducts = (categoryId: string): Product[] => {
+    let products: Product[] = [];
     switch(categoryId) {
       case 'pet-feeders':
-        return roomProducts['pet'] || [];
+        products = roomProducts['pet'] || [];
+        break;
       case 'trays':
-        return allProducts.filter(p => p.name.toLowerCase().includes('tray'));
+        products = allProducts.filter(p => p.name.toLowerCase().includes('tray'));
+        break;
       case 'bowls':
-        return allProducts.filter(p => p.name.toLowerCase().includes('bowl'));
+        products = allProducts.filter(p => p.name.toLowerCase().includes('bowl'));
+        break;
       case 'coasters':
-        return allProducts.filter(p => p.name.toLowerCase().includes('coaster'));
+        products = allProducts.filter(p => p.name.toLowerCase().includes('coaster'));
+        break;
       case 'cutlery':
-        return allProducts.filter(p => p.name.toLowerCase().includes('cutlery') || p.name.toLowerCase().includes('organizer'));
+        products = allProducts.filter(p => p.name.toLowerCase().includes('cutlery') || p.name.toLowerCase().includes('organizer'));
+        break;
       case 'chopping-boards':
-        return allProducts.filter(p => p.name.toLowerCase().includes('chopping') || p.name.toLowerCase().includes('board'));
+        products = allProducts.filter(p => p.name.toLowerCase().includes('chopping') || p.name.toLowerCase().includes('board'));
+        break;
       case 'pooja':
-        return roomProducts['pooja'] || [];
+        products = roomProducts['pooja'] || [];
+        break;
       case 'decor':
-        return allProducts.filter(p => p.category?.toLowerCase().includes('decor'));
+        products = allProducts.filter(p => p.category?.toLowerCase().includes('decor'));
+        break;
       default:
-        return [];
+        products = [];
     }
+    // Return unique products only to avoid duplicates from size variants
+    return getUniqueProductsByName(products);
   };
 
   // Filter out shop-all from rooms display
@@ -157,7 +178,7 @@ export default function Shop() {
         </section>
       )}
 
-      {/* Shop by Room View */}
+      {/* Shop by Room View - Shows Room Buttons */}
       {activeView === 'rooms' && (
         <section ref={sectionRef} className="py-12 section-padding">
           <div className="max-w-7xl mx-auto">
@@ -170,54 +191,31 @@ export default function Shop() {
             </button>
 
             <h2 className="font-display text-3xl text-sugan-brown mb-8">Shop by Room</h2>
+            
+            {/* Room Buttons Grid */}
+            <div ref={gridRef} className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+              {displayRooms.map((room) => {
+                const roomProds = roomProducts[room.id] || [];
+                if (roomProds.length === 0) return null;
+                
+                const uniqueProducts = getUniqueProductsByName(roomProds);
+                const IconComponent = (Icons as unknown as Record<string, React.ComponentType<{ className?: string }>>)[room.icon];
 
-            {displayRooms.map((room) => {
-              const roomProds = roomProducts[room.id] || [];
-              if (roomProds.length === 0) return null;
-
-              return (
-                <div key={room.id} className="mb-12">
-                  <div className="flex items-center justify-between mb-6">
-                    <div className="flex items-center gap-4">
-                      {(() => {
-                        const IconComponent = (Icons as unknown as Record<string, React.ComponentType<{ className?: string }>>)[room.icon];
-                        return IconComponent ? <IconComponent className="w-8 h-8 text-sugan-gold" /> : null;
-                      })()}
-                      <h3 className="font-display text-2xl text-sugan-brown">{room.name}</h3>
+                return (
+                  <Link
+                    key={room.id}
+                    to={`/shop/${room.id}`}
+                    className="item-card group bg-white rounded-2xl p-6 text-center hover:shadow-gold-lg transition-all hover:-translate-y-1"
+                  >
+                    <div className="w-16 h-16 bg-sugan-brown/5 rounded-2xl flex items-center justify-center mx-auto mb-4 transition-colors group-hover:bg-sugan-gold/10">
+                      {IconComponent && <IconComponent className="w-8 h-8 text-sugan-brown group-hover:text-sugan-gold transition-colors" />}
                     </div>
-                    <Link 
-                      to={`/shop/${room.id}`}
-                      className="text-sugan-gold font-body hover:underline"
-                    >
-                      View All ({roomProds.length})
-                    </Link>
-                  </div>
-                  
-                  <div ref={gridRef} className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                    {roomProds.slice(0, 5).map((product) => (
-                      <Link
-                        key={product.id}
-                        to={`/product/${product.id}`}
-                        className="item-card group bg-white rounded-xl overflow-hidden hover:shadow-lg transition-all"
-                      >
-                        <div className="aspect-square overflow-hidden bg-sugan-cream-dark">
-                          <img
-                            src={product.image}
-                            alt={product.name}
-                            className="w-full h-full object-cover transition-transform group-hover:scale-105"
-                          />
-                        </div>
-                        <div className="p-3">
-                          <p className="text-xs text-sugan-gold font-body uppercase">{product.category}</p>
-                          <h4 className="font-body text-sm text-sugan-brown line-clamp-2">{product.name}</h4>
-                          <p className="font-display text-sugan-brown font-semibold mt-1">₹{product.price.toLocaleString()}</p>
-                        </div>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              );
-            })}
+                    <h3 className="font-display text-lg text-sugan-brown group-hover:text-sugan-gold transition-colors">{room.name}</h3>
+                    <p className="text-sm text-sugan-brown/50 font-body mt-1">{uniqueProducts.length} products</p>
+                  </Link>
+                );
+              })}
+            </div>
           </div>
         </section>
       )}

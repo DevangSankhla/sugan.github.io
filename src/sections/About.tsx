@@ -65,8 +65,8 @@ export default function About() {
           <div ref={imageRef} className="relative">
             <div className="aspect-square rounded-lg overflow-hidden">
               <img
-                src="/images/about-bowl.jpg"
-                alt="Handcrafted wooden bowl with lid"
+                src="/images/Crafting Excellence hero.jpeg"
+                alt="Crafting Excellence - Sugan Heritage"
                 className="w-full h-full object-cover"
               />
             </div>

@@ -81,11 +81,26 @@ export default function ProductDetail() {
     setIsCartOpen(true);
   };
 
-  // Get all images (main + additional)
-  const allImages = [
-    product.image,
-    ...(product.details?.photos || [])
-  ];
+  // Get all images (main + _02 variant + additional from details)
+  // Products use naming convention: SKU_01.png, SKU_02.png
+  const getAllImages = (): string[] => {
+    const images: string[] = [product.image];
+    
+    // Check for _02.png variant by replacing _01.png with _02.png
+    if (product.image.includes('_01.png')) {
+      const secondImage = product.image.replace('_01.png', '_02.png');
+      images.push(secondImage);
+    }
+    
+    // Add any additional photos from product details
+    if (product.details?.photos) {
+      images.push(...product.details.photos);
+    }
+    
+    return images;
+  };
+  
+  const allImages = getAllImages();
 
   const toggleSection = (section: string) => {
     setExpandedSection(expandedSection === section ? null : section);

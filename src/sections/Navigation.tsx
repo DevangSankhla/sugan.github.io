@@ -107,9 +107,6 @@ export default function Navigation() {
                   <button onClick={() => scrollToSection('about')} className="nav-link">
                     About
                   </button>
-                  <button onClick={() => scrollToSection('testimonials')} className="nav-link">
-                    Reviews
-                  </button>
                   <button onClick={() => scrollToSection('contact')} className="nav-link">
                     Contact
                   </button>
@@ -124,9 +121,6 @@ export default function Navigation() {
                   </Link>
                   <Link to="/#about" className="nav-link">
                     About
-                  </Link>
-                  <Link to="/#testimonials" className="nav-link">
-                    Reviews
                   </Link>
                   <Link to="/#contact" className="nav-link">
                     Contact
@@ -201,12 +195,6 @@ export default function Navigation() {
             className="font-display text-3xl text-sugan-brown hover:text-sugan-gold transition-colors"
           >
             About
-          </button>
-          <button
-            onClick={() => scrollToSection('testimonials')}
-            className="font-display text-3xl text-sugan-brown hover:text-sugan-gold transition-colors"
-          >
-            Reviews
           </button>
           <button
             onClick={() => scrollToSection('contact')}

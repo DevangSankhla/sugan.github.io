@@ -79,18 +79,6 @@ export default function Footer() {
                     About Us
                   </button>
                 </li>
-                <li>
-                  <button
-                    onClick={() =>
-                      document
-                        .getElementById('testimonials')
-                        ?.scrollIntoView({ behavior: 'smooth' })
-                    }
-                    className="text-sugan-cream/60 font-body text-sm hover:text-sugan-gold transition-colors hover:translate-x-1 inline-block"
-                  >
-                    Reviews
-                  </button>
-                </li>
               </ul>
             </div>
 
@@ -132,6 +120,14 @@ export default function Footer() {
                     Shop All
                   </Link>
                 </li>
+                <li>
+                  <Link
+                    to="/privacy"
+                    className="text-sugan-cream/60 font-body text-sm hover:text-sugan-gold transition-colors hover:translate-x-1 inline-block"
+                  >
+                    Privacy Policy
+                  </Link>
+                </li>
               </ul>
             </div>
 
@@ -166,6 +162,15 @@ export default function Footer() {
                   >
                     sac280422@gmail.com
                   </a>
+                </li>
+                <li className="flex items-center gap-3">
+                  <span className="w-5 h-5 flex items-center justify-center text-sugan-gold flex-shrink-0">→</span>
+                  <Link
+                    to="/contact"
+                    className="text-sugan-cream/60 font-body text-sm hover:text-sugan-gold transition-colors"
+                  >
+                    Contact Form
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -210,9 +215,7 @@ export default function Footer() {
               <span className="text-sugan-cream/20">|</span>
               <button
                 onClick={() =>
-                  document
-                    .getElementById('home')
-                    ?.scrollIntoView({ behavior: 'smooth' })
+                  window.scrollTo({ top: 0, behavior: 'smooth' })
                 }
                 className="text-sugan-cream/40 font-body text-xs hover:text-sugan-gold transition-colors"
               >
