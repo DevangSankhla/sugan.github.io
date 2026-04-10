@@ -15,12 +15,11 @@ import {
   generateTxnId
 } from '@/lib/payu';
 import { 
-  calculateShippingRates, 
   checkPincodeServiceability,
   createShiprocketOrder,
   updateOrderShipping
 } from '@/lib/shiprocket';
-import { MapPin, Phone, User, Home, Building, Navigation, CreditCard, Banknote, Truck, Shield, AlertCircle, Star, Package, Clock } from 'lucide-react';
+import { MapPin, Phone, User, Home, Building, Navigation, CreditCard, Banknote, Truck, Shield, AlertCircle, Package } from 'lucide-react';
 
 type PaymentMethod = 'payu' | 'cod';
 
@@ -33,14 +32,6 @@ interface ShippingAddress {
   state: string;
   pincode: string;
   landmark?: string;
-}
-
-interface ShippingRate {
-  courier_name: string;
-  rate: number;
-  cod: number;
-  etd: string;
-  rating: number;
 }
 
 export default function Checkout() {
@@ -61,9 +52,6 @@ export default function Checkout() {
   });
   const [pincodeError, setPincodeError] = useState('');
   const [isPincodeValid, setIsPincodeValid] = useState(false);
-  const [shippingRates, setShippingRates] = useState<ShippingRate[]>([]);
-  const [selectedCourier, setSelectedCourier] = useState<string>('');
-  const [isLoadingRates, setIsLoadingRates] = useState(false);
   const [codAvailable, setCodAvailable] = useState(true);
 
   // Redirect if not logged in or cart is empty
@@ -77,51 +65,35 @@ export default function Checkout() {
     return null;
   }
 
-  // Calculate total weight (mock calculation)
-  const totalWeight = items.reduce((sum, item) => sum + (item.quantity * 500), 0);
+  // Simple shipping cost logic
+  const shippingCost = totalPrice > 1999 ? 0 : 99;
+  const codCharge = paymentMethod === 'cod' ? 50 : 0;
+  const finalTotal = totalPrice + shippingCost + codCharge;
 
-  // Validate pincode and fetch shipping rates
+  // Validate pincode and check COD availability
   useEffect(() => {
-    const fetchShippingData = async () => {
+    const checkServiceability = async () => {
       if (address.pincode.length === 6) {
         const isValid = /^[1-9][0-9]{5}$/.test(address.pincode);
         setIsPincodeValid(isValid);
         setPincodeError(isValid ? '' : 'Invalid pincode');
         
         if (isValid) {
-          setIsLoadingRates(true);
           try {
-            // Check COD availability
             const serviceability = await checkPincodeServiceability(address.pincode);
             setCodAvailable(serviceability.cod);
-            
-            // Fetch shipping rates (using Jodhpur pincode as pickup)
-            const rates = await calculateShippingRates('342012', address.pincode, totalWeight, paymentMethod === 'cod');
-            setShippingRates(rates);
-            if (rates.length > 0 && !selectedCourier) {
-              setSelectedCourier(rates[0].courier_name);
-            }
           } catch (error) {
-            console.error('Error fetching shipping rates:', error);
-          } finally {
-            setIsLoadingRates(false);
+            console.error('Error checking serviceability:', error);
           }
         }
       } else {
         setIsPincodeValid(false);
         setPincodeError('');
-        setShippingRates([]);
       }
     };
 
-    fetchShippingData();
-  }, [address.pincode, totalWeight, paymentMethod]);
-
-  // Get selected shipping rate
-  const selectedRate = shippingRates.find(r => r.courier_name === selectedCourier);
-  const shippingCost = totalPrice > 1999 ? 0 : (selectedRate?.rate || 99);
-  const codCharge = paymentMethod === 'cod' ? (selectedRate?.cod || 50) : 0;
-  const finalTotal = totalPrice + shippingCost + codCharge;
+    checkServiceability();
+  }, [address.pincode]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -141,7 +113,7 @@ export default function Checkout() {
         })),
         subtotal: totalPrice,
         shipping: shippingCost,
-        shippingCourier: selectedCourier,
+        shippingCourier: 'Shiprocket',
         codCharge: codCharge,
         total: finalTotal,
         status: 'pending',
@@ -154,8 +126,7 @@ export default function Checkout() {
       const orderId = await createOrder(orderData);
 
       // Create Shiprocket order for shipping
-      if (selectedCourier) {
-        try {
+      try {
           const shiprocketResult = await createShiprocketOrder({
             orderId,
             items: items.map(item => ({
@@ -187,7 +158,7 @@ export default function Checkout() {
 
           if (shiprocketResult.success) {
             await updateOrderShipping(orderId, {
-              courier: selectedCourier,
+              courier: 'Shiprocket',
               awb: shiprocketResult.awb || '',
               shipmentId: shiprocketResult.shipmentId || '',
               label: shiprocketResult.label,
@@ -197,7 +168,6 @@ export default function Checkout() {
           console.error('Shiprocket order creation error:', shipError);
           // Continue with order even if shiprocket fails - can be created later
         }
-      }
 
       if (paymentMethod === 'cod') {
         // Process Cash on Delivery
@@ -232,7 +202,7 @@ export default function Checkout() {
   };
 
   const isFormValid = address.fullName && address.phone && address.addressLine1 && 
-                      address.city && address.state && isPincodeValid && selectedCourier;
+                      address.city && address.state && isPincodeValid;
 
   return (
     <div className="min-h-screen bg-sugan-cream py-24">
@@ -366,88 +336,55 @@ export default function Checkout() {
               </CardContent>
             </Card>
 
-            {/* Shipping Method */}
-            {shippingRates.length > 0 && (
-              <Card>
-                <CardHeader>
-                  <CardTitle className="font-display text-xl text-sugan-brown flex items-center gap-2">
-                    <Package className="w-5 h-5 text-sugan-gold" />
-                    Shipping Method
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  {isLoadingRates ? (
-                    <div className="flex items-center justify-center py-8">
-                      <div className="w-8 h-8 border-4 border-sugan-gold border-t-transparent rounded-full animate-spin" />
-                      <span className="ml-3 text-sugan-brown/60 font-body">Calculating shipping rates...</span>
-                    </div>
-                  ) : (
-                    <div className="space-y-3">
-                      {shippingRates.map((rate) => (
-                        <button
-                          key={rate.courier_name}
-                          type="button"
-                          onClick={() => setSelectedCourier(rate.courier_name)}
-                          className={`w-full p-4 rounded-xl border-2 text-left transition-all ${
-                            selectedCourier === rate.courier_name
-                              ? 'border-sugan-gold bg-sugan-gold/5'
-                              : 'border-sugan-brown/10 hover:border-sugan-brown/30'
-                          }`}
-                        >
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-3">
-                              <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
-                                selectedCourier === rate.courier_name ? 'border-sugan-gold' : 'border-sugan-brown/30'
-                              }`}>
-                                {selectedCourier === rate.courier_name && <div className="w-2.5 h-2.5 bg-sugan-gold rounded-full" />}
-                              </div>
-                              <div>
-                                <div className="flex items-center gap-2">
-                                  <span className="font-body font-medium text-sugan-brown">{rate.courier_name}</span>
-                                  <div className="flex items-center gap-1">
-                                    <Star className="w-3 h-3 text-sugan-gold fill-sugan-gold" />
-                                    <span className="text-xs text-sugan-brown/60">{rate.rating}</span>
-                                  </div>
-                                </div>
-                                <div className="flex items-center gap-2 text-xs text-sugan-brown/60 font-body mt-1">
-                                  <Clock className="w-3 h-3" />
-                                  <span>Delivery: {rate.etd}</span>
-                                </div>
-                              </div>
-                            </div>
-                            <div className="text-right">
-                              <span className="font-display text-lg text-sugan-brown">
-                                ₹{totalPrice > 1999 ? 'FREE' : rate.rate}
-                              </span>
-                              {paymentMethod === 'cod' && rate.cod > 0 && (
-                                <p className="text-xs text-sugan-brown/50 font-body">+ ₹{rate.cod} COD</p>
-                              )}
-                            </div>
-                          </div>
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                  
-                  {totalPrice > 1999 && (
-                    <div className="mt-4 p-3 bg-green-50 rounded-lg">
-                      <p className="text-sm text-green-700 font-body flex items-center gap-2">
-                        <Truck className="w-4 h-4" />
-                        Free shipping on orders above ₹1999!
-                      </p>
-                    </div>
-                  )}
-                  
-                  {!codAvailable && paymentMethod === 'cod' && (
-                    <div className="mt-4 p-3 bg-red-50 rounded-lg">
-                      <p className="text-sm text-red-700 font-body">
-                        COD is not available for this pincode. Please choose online payment.
-                      </p>
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
-            )}
+            {/* Shipping Info */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="font-display text-xl text-sugan-brown flex items-center gap-2">
+                  <Truck className="w-5 h-5 text-sugan-gold" />
+                  Shipping
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="flex items-center gap-3 p-4 bg-sugan-cream rounded-xl">
+                  <Package className="w-10 h-10 text-sugan-gold" />
+                  <div>
+                    <p className="font-body font-medium text-sugan-brown">Standard Delivery</p>
+                    <p className="text-sm text-sugan-brown/60 font-body">
+                      Ships within 2-3 business days
+                    </p>
+                    <p className="text-xs text-sugan-brown/50 font-body mt-1">
+                      via Shiprocket
+                    </p>
+                  </div>
+                </div>
+                
+                {totalPrice > 1999 ? (
+                  <div className="mt-4 p-3 bg-green-50 rounded-lg">
+                    <p className="text-sm text-green-700 font-body flex items-center gap-2">
+                      <Truck className="w-4 h-4" />
+                      Free shipping on orders above ₹1999!
+                    </p>
+                  </div>
+                ) : (
+                  <div className="mt-4 p-3 bg-sugan-cream rounded-lg">
+                    <p className="text-sm text-sugan-brown/60 font-body">
+                      Shipping: <span className="font-medium text-sugan-brown">₹99</span>
+                    </p>
+                    <p className="text-xs text-sugan-brown/40 font-body mt-1">
+                      Free shipping on orders above ₹1999
+                    </p>
+                  </div>
+                )}
+                
+                {!codAvailable && paymentMethod === 'cod' && (
+                  <div className="mt-4 p-3 bg-red-50 rounded-lg">
+                    <p className="text-sm text-red-700 font-body">
+                      COD is not available for this pincode. Please choose online payment.
+                    </p>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
 
             {/* Payment Method */}
             <Card>
