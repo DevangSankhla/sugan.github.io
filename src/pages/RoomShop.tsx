@@ -23,7 +23,18 @@ export default function RoomShop() {
     ? Object.values(roomProducts).flat()
     : roomProducts[roomId || ''] || [];
 
-  const filteredProducts = products.filter((p) => {
+  // Filter to show only unique base products (not all size variants)
+  // Products with relatedSizes are considered variants of the same product
+  const uniqueProducts = products.reduce((acc: Product[], product) => {
+    // Check if this product is already represented by another product with the same name
+    const isDuplicate = acc.some(p => p.name === product.name);
+    if (!isDuplicate) {
+      acc.push(product);
+    }
+    return acc;
+  }, []);
+
+  const filteredProducts = uniqueProducts.filter((p) => {
     const matchesSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          p.description.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesSearch;
