@@ -9,7 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { 
-  Package, Users, DollarSign, ShoppingCart, Search, Edit, Save, X, User
+  Package, Users, DollarSign, ShoppingCart, Search, Edit, Save, X, User, Mail, MessageSquare
 } from 'lucide-react';
 import { db } from '@/lib/firebase';
 import { collection, query, onSnapshot, doc, updateDoc } from 'firebase/firestore';
@@ -40,6 +40,22 @@ interface DashboardStats {
   totalRevenue: number;
   totalProducts: number;
   totalUsers: number;
+  totalMessages: number;
+}
+
+interface ContactSubmission {
+  id: string;
+  name: string;
+  email: string;
+  phone?: string;
+  company?: string;
+  subject?: string;
+  message: string;
+  type: 'general_contact' | 'bulk_order';
+  status: 'new' | 'read' | 'replied';
+  createdAt: any;
+  orderType?: string;
+  quantity?: string;
 }
 
 export default function Admin() {
@@ -48,11 +64,13 @@ export default function Admin() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [products, setProducts] = useState<Product[]>(allProducts);
   const [users, setUsers] = useState<UserData[]>([]);
+  const [submissions, setSubmissions] = useState<ContactSubmission[]>([]);
   const [stats, setStats] = useState<DashboardStats>({
     totalOrders: 0,
     totalRevenue: 0,
     totalProducts: allProducts.length,
-    totalUsers: 0
+    totalUsers: 0,
+    totalMessages: 0
   });
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
@@ -104,17 +122,36 @@ export default function Admin() {
         ...prev,
         totalUsers: usersData.length
       }));
+    });
+
+    // Fetch contact submissions
+    const submissionsQuery = query(collection(db, 'contactSubmissions'));
+    const unsubscribeSubmissions = onSnapshot(submissionsQuery, (snapshot) => {
+      const submissionsData = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      })) as ContactSubmission[];
+      setSubmissions(submissionsData.sort((a, b) => b.createdAt?.seconds - a.createdAt?.seconds));
+      setStats(prev => ({
+        ...prev,
+        totalMessages: submissionsData.length
+      }));
       setLoading(false);
     });
 
     return () => {
       unsubscribeOrders();
       unsubscribeUsers();
+      unsubscribeSubmissions();
     };
   }, [isAdmin]);
 
   const updateOrderStatus = async (orderId: string, status: string) => {
     await updateDoc(doc(db, 'orders', orderId), { status });
+  };
+
+  const updateSubmissionStatus = async (submissionId: string, status: string) => {
+    await updateDoc(doc(db, 'contactSubmissions', submissionId), { status });
   };
 
   const updateUser = async (userId: string, data: Partial<UserData>) => {
@@ -218,6 +255,17 @@ export default function Admin() {
               </div>
             </CardContent>
           </Card>
+          <Card>
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="font-body text-sm text-sugan-brown/60">Messages</p>
+                  <p className="font-display text-2xl text-sugan-brown">{stats.totalMessages}</p>
+                </div>
+                <Mail className="w-8 h-8 text-sugan-gold" />
+              </div>
+            </CardContent>
+          </Card>
         </div>
 
         <Tabs defaultValue="products" className="space-y-6">
@@ -233,6 +281,15 @@ export default function Admin() {
             <TabsTrigger value="users" className="font-body data-[state=active]:bg-sugan-brown data-[state=active]:text-white">
               <User className="w-4 h-4 mr-2" />
               Users
+            </TabsTrigger>
+            <TabsTrigger value="messages" className="font-body data-[state=active]:bg-sugan-brown data-[state=active]:text-white">
+              <MessageSquare className="w-4 h-4 mr-2" />
+              Messages
+              {submissions.filter(s => s.status === 'new').length > 0 && (
+                <span className="ml-2 bg-sugan-gold text-white text-xs px-2 py-0.5 rounded-full">
+                  {submissions.filter(s => s.status === 'new').length}
+                </span>
+              )}
             </TabsTrigger>
           </TabsList>
 
@@ -276,6 +333,7 @@ export default function Admin() {
                                 src={product.image}
                                 alt={product.name}
                                 className="w-12 h-12 object-cover rounded"
+                                loading="lazy"
                               />
                               <div>
                                 <p className="font-body text-sugan-brown font-medium">{product.name}</p>
@@ -464,6 +522,127 @@ export default function Admin() {
                     <div className="text-center py-12">
                       <Users className="w-12 h-12 text-sugan-brown/20 mx-auto mb-4" />
                       <p className="font-body text-sugan-brown/60">No users yet</p>
+                    </div>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Messages Tab */}
+          <TabsContent value="messages">
+            <Card>
+              <CardHeader>
+                <CardTitle className="font-display text-xl text-sugan-brown">
+                  Contact Submissions ({submissions.length})
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {submissions.map((submission) => (
+                    <Card key={submission.id} className={`border-sugan-brown/10 ${submission.status === 'new' ? 'bg-sugan-gold/5' : ''}`}>
+                      <CardContent className="p-4">
+                        <div className="flex flex-col gap-4">
+                          {/* Header */}
+                          <div className="flex flex-col md:flex-row md:items-center justify-between gap-2">
+                            <div className="flex items-center gap-3">
+                              <div className="w-10 h-10 bg-sugan-brown/10 rounded-full flex items-center justify-center">
+                                <Mail className="w-5 h-5 text-sugan-brown" />
+                              </div>
+                              <div>
+                                <p className="font-body text-sugan-brown font-medium">
+                                  {submission.name}
+                                  {submission.company && (
+                                    <span className="text-sugan-brown/60"> ({submission.company})</span>
+                                  )}
+                                </p>
+                                <p className="font-body text-sm text-sugan-brown/60">
+                                  {submission.email}
+                                  {submission.phone && ` • ${submission.phone}`}
+                                </p>
+                              </div>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <Badge className={`font-body capitalize ${
+                                submission.type === 'bulk_order' 
+                                  ? 'bg-sugan-gold text-white' 
+                                  : 'bg-blue-100 text-blue-700'
+                              }`}>
+                                {submission.type === 'bulk_order' ? 'Bulk Order' : 'General'}
+                              </Badge>
+                              <Badge className={`font-body capitalize ${
+                                submission.status === 'new' 
+                                  ? 'bg-green-100 text-green-700' 
+                                  : submission.status === 'replied'
+                                  ? 'bg-blue-100 text-blue-700'
+                                  : 'bg-gray-100 text-gray-700'
+                              }`}>
+                                {submission.status}
+                              </Badge>
+                            </div>
+                          </div>
+
+                          {/* Message Content */}
+                          <div className="bg-sugan-cream/50 rounded-lg p-4">
+                            {submission.subject && (
+                              <p className="font-body font-medium text-sugan-brown mb-2">
+                                Subject: {submission.subject}
+                              </p>
+                            )}
+                            {submission.orderType && (
+                              <div className="flex gap-4 mb-2 text-sm">
+                                <span className="text-sugan-brown/60">
+                                  <strong>Type:</strong> {submission.orderType.replace(/_/g, ' ')}
+                                </span>
+                                {submission.quantity && (
+                                  <span className="text-sugan-brown/60">
+                                    <strong>Qty:</strong> {submission.quantity}
+                                  </span>
+                                )}
+                              </div>
+                            )}
+                            <p className="font-body text-sugan-brown/80 whitespace-pre-wrap">
+                              {submission.message}
+                            </p>
+                          </div>
+
+                          {/* Footer */}
+                          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                            <p className="text-xs text-sugan-brown/40 font-body">
+                              {submission.createdAt?.toDate?.().toLocaleString('en-IN', {
+                                day: 'numeric',
+                                month: 'short',
+                                year: 'numeric',
+                                hour: '2-digit',
+                                minute: '2-digit'
+                              }) || 'Date not available'}
+                            </p>
+                            <div className="flex items-center gap-2">
+                              <select
+                                value={submission.status}
+                                onChange={(e) => updateSubmissionStatus(submission.id, e.target.value)}
+                                className="px-3 py-1.5 border border-sugan-brown/20 rounded-lg font-body text-sm bg-white focus:outline-none focus:border-sugan-gold"
+                              >
+                                <option value="new">New</option>
+                                <option value="read">Read</option>
+                                <option value="replied">Replied</option>
+                              </select>
+                              <a 
+                                href={`mailto:${submission.email}?subject=Re: ${submission.subject || 'Your inquiry'}`}
+                                className="px-4 py-1.5 bg-sugan-brown text-sugan-cream rounded-lg font-body text-sm hover:bg-sugan-brown/90 transition-colors"
+                              >
+                                Reply
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                  {submissions.length === 0 && (
+                    <div className="text-center py-12">
+                      <Mail className="w-12 h-12 text-sugan-brown/20 mx-auto mb-4" />
+                      <p className="font-body text-sugan-brown/60">No messages yet</p>
                     </div>
                   )}
                 </div>

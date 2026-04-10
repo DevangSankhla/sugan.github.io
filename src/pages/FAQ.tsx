@@ -83,7 +83,7 @@ const faqCategories: { [key: string]: FAQItem[] } = {
   'Bulk & Custom Orders': [
     {
       question: 'Do you accept bulk orders?',
-      answer: 'Yes! We specialize in bulk orders for hotels, restaurants, corporate gifting, and events. For bulk inquiries, please visit www.artisanalliance.in or contact us directly.'
+      answer: 'Yes! We specialize in bulk orders for hotels, restaurants, corporate gifting, and events. Visit our Bulk Orders page to request a custom quote, or contact us directly at sac280422@gmail.com or +91 6367677255.'
     },
     {
       question: 'Can I customize products?',

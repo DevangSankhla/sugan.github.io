@@ -489,6 +489,7 @@ export default function Checkout() {
                         src={item.image}
                         alt={item.name}
                         className="w-16 h-16 object-cover rounded-lg"
+                        loading="lazy"
                       />
                       <div className="flex-1">
                         <h4 className="font-body text-sugan-brown font-medium line-clamp-1">{item.name}</h4>

@@ -31,6 +31,7 @@ export default function ImageGallery({ images, productName }: ImageGalleryProps)
             isZoomed ? 'scale-150 cursor-zoom-out' : 'cursor-zoom-in'
           }`}
           onClick={() => setIsZoomed(!isZoomed)}
+          loading="eager"
         />
         
         {/* Zoom Icon */}
@@ -87,6 +88,7 @@ export default function ImageGallery({ images, productName }: ImageGalleryProps)
                 src={image}
                 alt={`${productName} thumbnail ${index + 1}`}
                 className="w-full h-full object-cover"
+                loading="lazy"
               />
             </button>
           ))}

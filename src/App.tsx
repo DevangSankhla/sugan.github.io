@@ -21,6 +21,7 @@ import ReturnsRefunds from '@/pages/ReturnsRefunds';
 import FAQ from '@/pages/FAQ';
 import PrivacyPolicy from '@/pages/PrivacyPolicy';
 import ContactUs from '@/pages/ContactUs';
+import BulkOrders from '@/pages/BulkOrders';
 import Login from '@/pages/Login';
 import Signup from '@/pages/Signup';
 import Account from '@/pages/Account';
@@ -95,6 +96,7 @@ function App() {
             <Route path="/faq" element={<><FAQ /><Footer /></>} />
             <Route path="/privacy" element={<><PrivacyPolicy /><Footer /></>} />
             <Route path="/contact" element={<><ContactUs /><Footer /></>} />
+            <Route path="/bulk-orders" element={<><BulkOrders /><Footer /></>} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/account" element={<Account />} />

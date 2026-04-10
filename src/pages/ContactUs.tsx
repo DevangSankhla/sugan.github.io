@@ -1,6 +1,8 @@
-import { ArrowLeft, Mail, Phone, MapPin, Clock, Send, Instagram } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, Mail, Phone, MapPin, Clock, Send, Instagram, ArrowRight } from 'lucide-react';
+import { useNavigate, Link } from 'react-router-dom';
 import { useState } from 'react';
+import { db } from '@/lib/firebase';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
 export default function ContactUs() {
   const navigate = useNavigate();
@@ -11,15 +13,26 @@ export default function ContactUs() {
     message: ''
   });
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // In a real implementation, this would send the data to a server
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
+    setSubmitting(true);
+    
+    try {
+      await addDoc(collection(db, 'contactSubmissions'), {
+        ...formData,
+        type: 'general_contact',
+        status: 'new',
+        createdAt: serverTimestamp()
+      });
+      setSubmitted(true);
       setFormData({ name: '', email: '', subject: '', message: '' });
-    }, 3000);
+    } catch (error) {
+      console.error('Error submitting form:', error);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -126,17 +139,15 @@ export default function ContactUs() {
               <h3 className="font-display text-xl mb-2">Bulk Orders?</h3>
               <p className="text-sugan-cream/80 font-body text-sm mb-4">
                 For hotel supplies, corporate gifting, or wholesale inquiries, 
-                visit our B2B portal:
+                get special pricing and custom solutions:
               </p>
-              <a 
-                href="https://www.artisanalliance.in"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link 
+                to="/bulk-orders"
                 className="inline-flex items-center gap-2 text-sugan-gold hover:underline font-body"
               >
-                www.artisanalliance.in
-                <Send className="w-4 h-4" />
-              </a>
+                Request a Quote
+                <ArrowRight className="w-4 h-4" />
+              </Link>
             </div>
           </div>
 
@@ -223,10 +234,20 @@ export default function ContactUs() {
 
                 <button
                   type="submit"
-                  className="w-full py-4 bg-sugan-brown text-sugan-cream rounded-lg font-body font-medium hover:bg-sugan-brown/90 transition-colors flex items-center justify-center gap-2"
+                  disabled={submitting}
+                  className="w-full py-4 bg-sugan-brown text-sugan-cream rounded-lg font-body font-medium hover:bg-sugan-brown/90 transition-colors flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Send Message
-                  <Send className="w-4 h-4" />
+                  {submitting ? (
+                    <>
+                      <div className="w-5 h-5 border-2 border-sugan-cream/30 border-t-sugan-cream rounded-full animate-spin" />
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      Send Message
+                      <Send className="w-4 h-4" />
+                    </>
+                  )}
                 </button>
               </form>
             )}

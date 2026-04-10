@@ -183,15 +183,13 @@ export default function Footer() {
         <div className="section-padding py-4">
           <div className="max-w-7xl mx-auto text-center">
             <p className="text-sugan-cream/80 font-body text-sm">
-              Want to place a big order? Visit{' '}
-              <a
-                href="https://www.artisanalliance.in"
-                target="_blank"
-                rel="noopener noreferrer"
+              Want to place a big order?{' '}
+              <Link
+                to="/bulk-orders"
                 className="text-sugan-gold hover:text-sugan-cream underline underline-offset-2 transition-colors font-medium"
               >
-                www.artisanalliance.in
-              </a>
+                Get a custom quote for bulk orders
+              </Link>
             </p>
           </div>
         </div>

@@ -68,6 +68,7 @@ export default function About() {
                 src="/images/Crafting Excellence hero.jpeg"
                 alt="Crafting Excellence - Sugan Heritage"
                 className="w-full h-full object-cover"
+                loading="lazy"
               />
             </div>
             {/* Floating Badge */}

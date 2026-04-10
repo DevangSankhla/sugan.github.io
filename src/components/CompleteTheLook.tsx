@@ -48,6 +48,7 @@ export default function CompleteTheLook({ currentProduct }: CompleteTheLookProps
               src={currentProduct.image}
               alt={currentProduct.name}
               className="w-full h-full object-cover"
+              loading="lazy"
             />
           </div>
           <div className="flex-1 min-w-0">
@@ -75,6 +76,7 @@ export default function CompleteTheLook({ currentProduct }: CompleteTheLookProps
                 src={product.image}
                 alt={product.name}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                loading="lazy"
               />
             </div>
             <div className="flex-1 min-w-0">

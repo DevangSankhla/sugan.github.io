@@ -288,6 +288,7 @@ export default function Account() {
                               src={item.image}
                               alt={item.name}
                               className="w-20 h-20 object-cover rounded-lg"
+                              loading="lazy"
                             />
                             <div className="flex-1">
                               <h4 className="font-body font-medium text-sugan-brown">

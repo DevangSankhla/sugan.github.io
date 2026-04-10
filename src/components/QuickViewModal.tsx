@@ -30,6 +30,7 @@ export default function QuickViewModal({ product, isOpen, onClose }: QuickViewMo
               src={product.image}
               alt={product.name}
               className="w-full h-full object-cover"
+              loading="lazy"
             />
           </div>
 
