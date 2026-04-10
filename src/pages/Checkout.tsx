@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { useCart } from '@/context/CartContext';
@@ -6,9 +6,17 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { db } from '@/lib/firebase';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { MapPin, Phone, User, Home, Building, Navigation } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { 
+  preparePayUForm, 
+  submitPayUPayment, 
+  processCOD, 
+  createOrder,
+  generateTxnId
+} from '@/lib/payu';
+import { MapPin, Phone, User, Home, Building, Navigation, CreditCard, Banknote, Truck, Shield, AlertCircle } from 'lucide-react';
+
+type PaymentMethod = 'payu' | 'cod';
 
 interface ShippingAddress {
   fullName: string;
@@ -26,6 +34,7 @@ export default function Checkout() {
   const { user } = useAuth();
   const { items, totalPrice, clearCart } = useCart();
   const [loading, setLoading] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('payu');
   const [address, setAddress] = useState<ShippingAddress>({
     fullName: '',
     phone: '',
@@ -36,6 +45,8 @@ export default function Checkout() {
     pincode: '',
     landmark: ''
   });
+  const [pincodeError, setPincodeError] = useState('');
+  const [isPincodeValid, setIsPincodeValid] = useState(false);
 
   // Redirect if not logged in or cart is empty
   if (!user) {
@@ -48,12 +59,28 @@ export default function Checkout() {
     return null;
   }
 
+  // Validate pincode
+  useEffect(() => {
+    if (address.pincode.length === 6) {
+      // Simple validation - Indian pincodes are 6 digits
+      const isValid = /^[1-9][0-9]{5}$/.test(address.pincode);
+      setIsPincodeValid(isValid);
+      setPincodeError(isValid ? '' : 'Invalid pincode');
+    } else {
+      setIsPincodeValid(false);
+      setPincodeError('');
+    }
+  }, [address.pincode]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      // Create order in Firestore
+      const shippingCost = totalPrice > 1999 ? 0 : 99;
+      const finalTotal = totalPrice + shippingCost;
+
+      // Create order in Firestore first
       const orderData = {
         userId: user.uid,
         userEmail: user.email,
@@ -64,19 +91,42 @@ export default function Checkout() {
           quantity: item.quantity,
           image: item.image
         })),
-        total: totalPrice,
+        subtotal: totalPrice,
+        shipping: shippingCost,
+        total: finalTotal,
         status: 'pending',
+        paymentStatus: 'pending',
+        paymentMethod: paymentMethod === 'cod' ? 'COD' : 'PayU',
         shippingAddress: address,
-        createdAt: serverTimestamp()
+        txnid: paymentMethod === 'payu' ? generateTxnId() : null,
       };
 
-      const orderRef = await addDoc(collection(db, 'orders'), orderData);
-      
-      // Clear cart
-      clearCart();
-      
-      // Redirect to order confirmation
-      navigate(`/account?order=${orderRef.id}`);
+      const orderId = await createOrder(orderData);
+
+      if (paymentMethod === 'cod') {
+        // Process Cash on Delivery
+        await processCOD(orderId);
+        clearCart();
+        navigate(`/account?order=${orderId}&cod=true`);
+      } else {
+        // Process PayU Payment
+        const payuFormData = preparePayUForm({
+          orderId,
+          userId: user.uid,
+          amount: finalTotal,
+          customerName: address.fullName,
+          customerEmail: user.email || '',
+          customerPhone: address.phone,
+          productInfo: `Order from Sugan (${items.length} items)`
+        });
+
+        // Store order ID in session storage for retrieval after payment
+        sessionStorage.setItem('pendingOrderId', orderId);
+        
+        // Submit to PayU
+        submitPayUPayment(payuFormData);
+        // Note: Page will redirect to PayU, no need to clear cart yet
+      }
     } catch (error) {
       console.error('Error creating order:', error);
       alert('Failed to place order. Please try again.');
@@ -87,6 +137,8 @@ export default function Checkout() {
 
   const shippingCost = totalPrice > 1999 ? 0 : 99;
   const finalTotal = totalPrice + shippingCost;
+  const isFormValid = address.fullName && address.phone && address.addressLine1 && 
+                      address.city && address.state && isPincodeValid;
 
   return (
     <div className="min-h-screen bg-sugan-cream py-24">
@@ -94,16 +146,18 @@ export default function Checkout() {
         <h1 className="font-display text-3xl text-sugan-brown mb-8">Checkout</h1>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Shipping Form */}
-          <div>
+          {/* Left Column - Shipping & Payment */}
+          <div className="space-y-6">
+            {/* Shipping Address */}
             <Card>
               <CardHeader>
-                <CardTitle className="font-display text-xl text-sugan-brown">
+                <CardTitle className="font-display text-xl text-sugan-brown flex items-center gap-2">
+                  <MapPin className="w-5 h-5 text-sugan-gold" />
                   Shipping Address
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form className="space-y-4">
                   <div className="space-y-2">
                     <Label className="font-body">Full Name</Label>
                     <div className="relative">
@@ -191,12 +245,15 @@ export default function Checkout() {
                         <Input
                           value={address.pincode}
                           onChange={(e) => setAddress({...address, pincode: e.target.value})}
-                          className="pl-10 font-body"
+                          className={`pl-10 font-body ${pincodeError ? 'border-red-500' : ''}`}
                           placeholder="6-digit PIN"
                           required
                           pattern="[0-9]{6}"
                         />
                       </div>
+                      {pincodeError && (
+                        <p className="text-xs text-red-500 font-body">{pincodeError}</p>
+                      )}
                     </div>
                     <div className="space-y-2">
                       <Label className="font-body">Landmark (Optional)</Label>
@@ -211,22 +268,99 @@ export default function Checkout() {
                       </div>
                     </div>
                   </div>
-
-                  <Button
-                    type="submit"
-                    className="w-full h-12 bg-sugan-brown hover:bg-sugan-brown/90 font-body mt-6"
-                    disabled={loading}
-                  >
-                    {loading ? 'Placing Order...' : `Place Order • ₹${finalTotal.toLocaleString()}`}
-                  </Button>
                 </form>
+              </CardContent>
+            </Card>
+
+            {/* Payment Method */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="font-display text-xl text-sugan-brown flex items-center gap-2">
+                  <CreditCard className="w-5 h-5 text-sugan-gold" />
+                  Payment Method
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3">
+                  {/* PayU Online Payment */}
+                  <button
+                    type="button"
+                    onClick={() => setPaymentMethod('payu')}
+                    className={`w-full p-4 rounded-xl border-2 text-left transition-all ${
+                      paymentMethod === 'payu'
+                        ? 'border-sugan-gold bg-sugan-gold/5'
+                        : 'border-sugan-brown/10 hover:border-sugan-brown/30'
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
+                        paymentMethod === 'payu' ? 'border-sugan-gold' : 'border-sugan-brown/30'
+                      }`}>
+                        {paymentMethod === 'payu' && <div className="w-2.5 h-2.5 bg-sugan-gold rounded-full" />}
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2">
+                          <span className="font-body font-medium text-sugan-brown">Pay Online</span>
+                          <Badge className="bg-green-100 text-green-700 text-xs">Secure</Badge>
+                        </div>
+                        <p className="text-xs text-sugan-brown/60 font-body mt-1">
+                          UPI, Cards, Net Banking, Wallets
+                        </p>
+                      </div>
+                      <div className="flex gap-1">
+                        <div className="w-8 h-5 bg-sugan-brown/10 rounded" />
+                        <div className="w-8 h-5 bg-sugan-brown/10 rounded" />
+                      </div>
+                    </div>
+                  </button>
+
+                  {/* Cash on Delivery */}
+                  <button
+                    type="button"
+                    onClick={() => setPaymentMethod('cod')}
+                    className={`w-full p-4 rounded-xl border-2 text-left transition-all ${
+                      paymentMethod === 'cod'
+                        ? 'border-sugan-gold bg-sugan-gold/5'
+                        : 'border-sugan-brown/10 hover:border-sugan-brown/30'
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
+                        paymentMethod === 'cod' ? 'border-sugan-gold' : 'border-sugan-brown/30'
+                      }`}>
+                        {paymentMethod === 'cod' && <div className="w-2.5 h-2.5 bg-sugan-gold rounded-full" />}
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2">
+                          <span className="font-body font-medium text-sugan-brown">Cash on Delivery</span>
+                          <Badge className="bg-blue-100 text-blue-700 text-xs">COD</Badge>
+                        </div>
+                        <p className="text-xs text-sugan-brown/60 font-body mt-1">
+                          Pay when you receive the product
+                        </p>
+                      </div>
+                      <Banknote className="w-8 h-8 text-sugan-brown/20" />
+                    </div>
+                  </button>
+
+                  {/* COD Notice */}
+                  {paymentMethod === 'cod' && (
+                    <div className="flex items-start gap-2 p-3 bg-yellow-50 rounded-lg">
+                      <AlertCircle className="w-4 h-4 text-yellow-600 flex-shrink-0 mt-0.5" />
+                      <p className="text-xs text-yellow-700 font-body">
+                        A ₹50 COD fee will be added to your order total. 
+                        Please keep exact change ready at the time of delivery.
+                      </p>
+                    </div>
+                  )}
+                </div>
               </CardContent>
             </Card>
           </div>
 
-          {/* Order Summary */}
+          {/* Right Column - Order Summary */}
           <div>
-            <Card>
+            <Card className="sticky top-24">
               <CardHeader>
                 <CardTitle className="font-display text-xl text-sugan-brown">
                   Order Summary
@@ -234,6 +368,7 @@ export default function Checkout() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
+                  {/* Items */}
                   {items.map((item) => (
                     <div key={item.id} className="flex gap-4">
                       <img
@@ -242,7 +377,7 @@ export default function Checkout() {
                         className="w-16 h-16 object-cover rounded-lg"
                       />
                       <div className="flex-1">
-                        <h4 className="font-body text-sugan-brown font-medium">{item.name}</h4>
+                        <h4 className="font-body text-sugan-brown font-medium line-clamp-1">{item.name}</h4>
                         <p className="text-sm text-sugan-brown/60 font-body">
                           Qty: {item.quantity}
                         </p>
@@ -253,6 +388,7 @@ export default function Checkout() {
                     </div>
                   ))}
 
+                  {/* Totals */}
                   <div className="border-t border-sugan-brown/10 pt-4 space-y-2">
                     <div className="flex justify-between font-body text-sugan-brown/60">
                       <span>Subtotal</span>
@@ -262,17 +398,53 @@ export default function Checkout() {
                       <span>Shipping</span>
                       <span>{shippingCost === 0 ? 'FREE' : `₹${shippingCost}`}</span>
                     </div>
+                    {paymentMethod === 'cod' && (
+                      <div className="flex justify-between font-body text-sugan-brown/60">
+                        <span>COD Fee</span>
+                        <span>₹50</span>
+                      </div>
+                    )}
                     <div className="flex justify-between font-body text-sugan-brown font-semibold text-lg pt-2 border-t border-sugan-brown/10">
                       <span>Total</span>
-                      <span>₹{finalTotal.toLocaleString()}</span>
+                      <span>₹{(finalTotal + (paymentMethod === 'cod' ? 50 : 0)).toLocaleString()}</span>
                     </div>
                   </div>
 
-                  {shippingCost === 0 && (
-                    <p className="text-green-600 text-sm font-body text-center">
-                      🎉 You got FREE shipping!
-                    </p>
-                  )}
+                  {/* Security Badges */}
+                  <div className="flex items-center justify-center gap-4 pt-4 border-t border-sugan-brown/10">
+                    <div className="flex items-center gap-1 text-xs text-sugan-brown/50 font-body">
+                      <Shield className="w-4 h-4" />
+                      Secure Payment
+                    </div>
+                    <div className="flex items-center gap-1 text-xs text-sugan-brown/50 font-body">
+                      <Truck className="w-4 h-4" />
+                      Free Shipping above ₹1999
+                    </div>
+                  </div>
+
+                  {/* Place Order Button */}
+                  <Button
+                    onClick={handleSubmit}
+                    disabled={!isFormValid || loading}
+                    className="w-full h-14 bg-sugan-brown hover:bg-sugan-brown/90 font-body text-lg"
+                  >
+                    {loading ? (
+                      <span className="flex items-center gap-2">
+                        <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                        Processing...
+                      </span>
+                    ) : paymentMethod === 'cod' ? (
+                      'Place Order (COD)'
+                    ) : (
+                      'Proceed to Pay'
+                    )}
+                  </Button>
+
+                  {/* Trust Note */}
+                  <p className="text-xs text-sugan-brown/50 font-body text-center">
+                    By placing this order, you agree to our Terms of Service and Privacy Policy.
+                    All transactions are secured by PayU.
+                  </p>
                 </div>
               </CardContent>
             </Card>

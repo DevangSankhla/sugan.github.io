@@ -24,6 +24,8 @@ import Signup from '@/pages/Signup';
 import Account from '@/pages/Account';
 import Admin from '@/pages/Admin';
 import Checkout from '@/pages/Checkout';
+import PaymentSuccess from '@/pages/PaymentSuccess';
+import PaymentFailure from '@/pages/PaymentFailure';
 import MobileCartButton from '@/components/MobileCartButton';
 import './App.css';
 
@@ -94,6 +96,8 @@ function App() {
             <Route path="/account" element={<Account />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="/checkout" element={<Checkout />} />
+            <Route path="/payment/success" element={<PaymentSuccess />} />
+            <Route path="/payment/failure" element={<PaymentFailure />} />
           </Routes>
 
           {/* Cart Drawer */}
