@@ -2,6 +2,7 @@ import type { Product, Testimonial, Room } from '@/types';
 
 // Room categories for Indian homes
 export const rooms: Room[] = [
+ { id: 'shop-all', name: 'Shop All', icon: 'Grid3X3', description: 'Browse our complete collection' },
  { id: 'kitchen', name: 'Kitchen', icon: 'ChefHat', description: 'Essential tools for your cooking space' },
  { id: 'living', name: 'Living Room', icon: 'Sofa', description: 'Elegant decor for your main space' },
  { id: 'bedroom', name: 'Bedroom', icon: 'Bed', description: 'Comfort and style for your personal space' },
@@ -11,7 +12,6 @@ export const rooms: Room[] = [
  { id: 'pooja', name: 'Pooja Room', icon: 'Sparkles', description: 'Sacred space essentials' },
  { id: 'outdoor', name: 'Outdoor/Balcony', icon: 'Sun', description: 'Open air living solutions' },
  { id: 'pet', name: 'Pet', icon: 'Heart', description: 'Premium products for your pets' },
- { id: 'shop-all', name: 'Shop All', icon: 'Grid3X3', description: 'Browse our complete collection' },
 ];
 
 // Products organized by room
