@@ -14,7 +14,13 @@ import {
   createOrder,
   generateTxnId
 } from '@/lib/payu';
-import { MapPin, Phone, User, Home, Building, Navigation, CreditCard, Banknote, Truck, Shield, AlertCircle } from 'lucide-react';
+import { 
+  calculateShippingRates, 
+  checkPincodeServiceability,
+  createShiprocketOrder,
+  updateOrderShipping
+} from '@/lib/shiprocket';
+import { MapPin, Phone, User, Home, Building, Navigation, CreditCard, Banknote, Truck, Shield, AlertCircle, Star, Package, Clock } from 'lucide-react';
 
 type PaymentMethod = 'payu' | 'cod';
 
@@ -27,6 +33,14 @@ interface ShippingAddress {
   state: string;
   pincode: string;
   landmark?: string;
+}
+
+interface ShippingRate {
+  courier_name: string;
+  rate: number;
+  cod: number;
+  etd: string;
+  rating: number;
 }
 
 export default function Checkout() {
@@ -47,6 +61,10 @@ export default function Checkout() {
   });
   const [pincodeError, setPincodeError] = useState('');
   const [isPincodeValid, setIsPincodeValid] = useState(false);
+  const [shippingRates, setShippingRates] = useState<ShippingRate[]>([]);
+  const [selectedCourier, setSelectedCourier] = useState<string>('');
+  const [isLoadingRates, setIsLoadingRates] = useState(false);
+  const [codAvailable, setCodAvailable] = useState(true);
 
   // Redirect if not logged in or cart is empty
   if (!user) {
@@ -59,27 +77,57 @@ export default function Checkout() {
     return null;
   }
 
-  // Validate pincode
+  // Calculate total weight (mock calculation)
+  const totalWeight = items.reduce((sum, item) => sum + (item.quantity * 500), 0);
+
+  // Validate pincode and fetch shipping rates
   useEffect(() => {
-    if (address.pincode.length === 6) {
-      // Simple validation - Indian pincodes are 6 digits
-      const isValid = /^[1-9][0-9]{5}$/.test(address.pincode);
-      setIsPincodeValid(isValid);
-      setPincodeError(isValid ? '' : 'Invalid pincode');
-    } else {
-      setIsPincodeValid(false);
-      setPincodeError('');
-    }
-  }, [address.pincode]);
+    const fetchShippingData = async () => {
+      if (address.pincode.length === 6) {
+        const isValid = /^[1-9][0-9]{5}$/.test(address.pincode);
+        setIsPincodeValid(isValid);
+        setPincodeError(isValid ? '' : 'Invalid pincode');
+        
+        if (isValid) {
+          setIsLoadingRates(true);
+          try {
+            // Check COD availability
+            const serviceability = await checkPincodeServiceability(address.pincode);
+            setCodAvailable(serviceability.cod);
+            
+            // Fetch shipping rates (using Jodhpur pincode as pickup)
+            const rates = await calculateShippingRates('342012', address.pincode, totalWeight, paymentMethod === 'cod');
+            setShippingRates(rates);
+            if (rates.length > 0 && !selectedCourier) {
+              setSelectedCourier(rates[0].courier_name);
+            }
+          } catch (error) {
+            console.error('Error fetching shipping rates:', error);
+          } finally {
+            setIsLoadingRates(false);
+          }
+        }
+      } else {
+        setIsPincodeValid(false);
+        setPincodeError('');
+        setShippingRates([]);
+      }
+    };
+
+    fetchShippingData();
+  }, [address.pincode, totalWeight, paymentMethod]);
+
+  // Get selected shipping rate
+  const selectedRate = shippingRates.find(r => r.courier_name === selectedCourier);
+  const shippingCost = totalPrice > 1999 ? 0 : (selectedRate?.rate || 99);
+  const codCharge = paymentMethod === 'cod' ? (selectedRate?.cod || 50) : 0;
+  const finalTotal = totalPrice + shippingCost + codCharge;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      const shippingCost = totalPrice > 1999 ? 0 : 99;
-      const finalTotal = totalPrice + shippingCost;
-
       // Create order in Firestore first
       const orderData = {
         userId: user.uid,
@@ -93,6 +141,8 @@ export default function Checkout() {
         })),
         subtotal: totalPrice,
         shipping: shippingCost,
+        shippingCourier: selectedCourier,
+        codCharge: codCharge,
         total: finalTotal,
         status: 'pending',
         paymentStatus: 'pending',
@@ -102,6 +152,52 @@ export default function Checkout() {
       };
 
       const orderId = await createOrder(orderData);
+
+      // Create Shiprocket order for shipping
+      if (selectedCourier) {
+        try {
+          const shiprocketResult = await createShiprocketOrder({
+            orderId,
+            items: items.map(item => ({
+              name: item.name,
+              sku: item.id,
+              units: item.quantity,
+              selling_price: item.price,
+            })),
+            pickupLocation: {
+              name: 'Sugan Warehouse',
+              address: 'III Phase, Boranada',
+              city: 'Jodhpur',
+              state: 'Rajasthan',
+              pincode: '342012',
+              phone: '6367677255',
+            },
+            shippingAddress: {
+              name: address.fullName,
+              address: address.addressLine1,
+              address_2: address.addressLine2,
+              city: address.city,
+              state: address.state,
+              pincode: address.pincode,
+              phone: address.phone,
+            },
+            paymentMethod: paymentMethod === 'cod' ? 'COD' : 'Prepaid',
+            totalAmount: finalTotal,
+          });
+
+          if (shiprocketResult.success) {
+            await updateOrderShipping(orderId, {
+              courier: selectedCourier,
+              awb: shiprocketResult.awb || '',
+              shipmentId: shiprocketResult.shipmentId || '',
+              label: shiprocketResult.label,
+            });
+          }
+        } catch (shipError) {
+          console.error('Shiprocket order creation error:', shipError);
+          // Continue with order even if shiprocket fails - can be created later
+        }
+      }
 
       if (paymentMethod === 'cod') {
         // Process Cash on Delivery
@@ -135,10 +231,8 @@ export default function Checkout() {
     }
   };
 
-  const shippingCost = totalPrice > 1999 ? 0 : 99;
-  const finalTotal = totalPrice + shippingCost;
   const isFormValid = address.fullName && address.phone && address.addressLine1 && 
-                      address.city && address.state && isPincodeValid;
+                      address.city && address.state && isPincodeValid && selectedCourier;
 
   return (
     <div className="min-h-screen bg-sugan-cream py-24">
@@ -272,6 +366,89 @@ export default function Checkout() {
               </CardContent>
             </Card>
 
+            {/* Shipping Method */}
+            {shippingRates.length > 0 && (
+              <Card>
+                <CardHeader>
+                  <CardTitle className="font-display text-xl text-sugan-brown flex items-center gap-2">
+                    <Package className="w-5 h-5 text-sugan-gold" />
+                    Shipping Method
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  {isLoadingRates ? (
+                    <div className="flex items-center justify-center py-8">
+                      <div className="w-8 h-8 border-4 border-sugan-gold border-t-transparent rounded-full animate-spin" />
+                      <span className="ml-3 text-sugan-brown/60 font-body">Calculating shipping rates...</span>
+                    </div>
+                  ) : (
+                    <div className="space-y-3">
+                      {shippingRates.map((rate) => (
+                        <button
+                          key={rate.courier_name}
+                          type="button"
+                          onClick={() => setSelectedCourier(rate.courier_name)}
+                          className={`w-full p-4 rounded-xl border-2 text-left transition-all ${
+                            selectedCourier === rate.courier_name
+                              ? 'border-sugan-gold bg-sugan-gold/5'
+                              : 'border-sugan-brown/10 hover:border-sugan-brown/30'
+                          }`}
+                        >
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                              <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
+                                selectedCourier === rate.courier_name ? 'border-sugan-gold' : 'border-sugan-brown/30'
+                              }`}>
+                                {selectedCourier === rate.courier_name && <div className="w-2.5 h-2.5 bg-sugan-gold rounded-full" />}
+                              </div>
+                              <div>
+                                <div className="flex items-center gap-2">
+                                  <span className="font-body font-medium text-sugan-brown">{rate.courier_name}</span>
+                                  <div className="flex items-center gap-1">
+                                    <Star className="w-3 h-3 text-sugan-gold fill-sugan-gold" />
+                                    <span className="text-xs text-sugan-brown/60">{rate.rating}</span>
+                                  </div>
+                                </div>
+                                <div className="flex items-center gap-2 text-xs text-sugan-brown/60 font-body mt-1">
+                                  <Clock className="w-3 h-3" />
+                                  <span>Delivery: {rate.etd}</span>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="text-right">
+                              <span className="font-display text-lg text-sugan-brown">
+                                ₹{totalPrice > 1999 ? 'FREE' : rate.rate}
+                              </span>
+                              {paymentMethod === 'cod' && rate.cod > 0 && (
+                                <p className="text-xs text-sugan-brown/50 font-body">+ ₹{rate.cod} COD</p>
+                              )}
+                            </div>
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                  
+                  {totalPrice > 1999 && (
+                    <div className="mt-4 p-3 bg-green-50 rounded-lg">
+                      <p className="text-sm text-green-700 font-body flex items-center gap-2">
+                        <Truck className="w-4 h-4" />
+                        Free shipping on orders above ₹1999!
+                      </p>
+                    </div>
+                  )}
+                  
+                  {!codAvailable && paymentMethod === 'cod' && (
+                    <div className="mt-4 p-3 bg-red-50 rounded-lg">
+                      <p className="text-sm text-red-700 font-body">
+                        COD is not available for this pincode. Please choose online payment.
+                      </p>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            )}
+
             {/* Payment Method */}
             <Card>
               <CardHeader>
@@ -344,11 +521,11 @@ export default function Checkout() {
                   </button>
 
                   {/* COD Notice */}
-                  {paymentMethod === 'cod' && (
+                  {paymentMethod === 'cod' && codCharge > 0 && (
                     <div className="flex items-start gap-2 p-3 bg-yellow-50 rounded-lg">
                       <AlertCircle className="w-4 h-4 text-yellow-600 flex-shrink-0 mt-0.5" />
                       <p className="text-xs text-yellow-700 font-body">
-                        A ₹50 COD fee will be added to your order total. 
+                        A ₹{codCharge} COD fee will be added to your order total. 
                         Please keep exact change ready at the time of delivery.
                       </p>
                     </div>
@@ -398,15 +575,15 @@ export default function Checkout() {
                       <span>Shipping</span>
                       <span>{shippingCost === 0 ? 'FREE' : `₹${shippingCost}`}</span>
                     </div>
-                    {paymentMethod === 'cod' && (
+                    {codCharge > 0 && (
                       <div className="flex justify-between font-body text-sugan-brown/60">
                         <span>COD Fee</span>
-                        <span>₹50</span>
+                        <span>₹{codCharge}</span>
                       </div>
                     )}
                     <div className="flex justify-between font-body text-sugan-brown font-semibold text-lg pt-2 border-t border-sugan-brown/10">
                       <span>Total</span>
-                      <span>₹{(finalTotal + (paymentMethod === 'cod' ? 50 : 0)).toLocaleString()}</span>
+                      <span>₹{finalTotal.toLocaleString()}</span>
                     </div>
                   </div>
 
