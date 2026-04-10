@@ -6,6 +6,13 @@ import { useAuth } from '@/context/AuthContext';
 import { useState, useEffect } from 'react';
 import { db } from '@/lib/firebase';
 import { collection, query, where, onSnapshot, addDoc, deleteDoc, doc } from 'firebase/firestore';
+import ImageGallery from '@/components/ImageGallery';
+import TrustBadges from '@/components/TrustBadges';
+import ArtisanStory from '@/components/ArtisanStory';
+import SizeGuide from '@/components/SizeGuide';
+import RatingBreakdown from '@/components/RatingBreakdown';
+import CompleteTheLook from '@/components/CompleteTheLook';
+import RecentlyViewed, { addToRecentlyViewed } from '@/components/RecentlyViewed';
 
 export default function ProductDetail() {
   const { id } = useParams<{ id: string }>();
@@ -13,7 +20,6 @@ export default function ProductDetail() {
   const { addToCart, setIsCartOpen } = useCart();
   const { user } = useAuth();
   const [quantity, setQuantity] = useState(1);
-  const [selectedImage, setSelectedImage] = useState(0);
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
   const [selectedVariant, setSelectedVariant] = useState<number>(0);
   const [isInWishlist, setIsInWishlist] = useState(false);
@@ -43,6 +49,13 @@ export default function ProductDetail() {
 
     return unsubscribe;
   }, [user, product]);
+
+  // Add to recently viewed
+  useEffect(() => {
+    if (product) {
+      addToRecentlyViewed(product.id);
+    }
+  }, [product]);
 
   if (!product) {
     return (
@@ -101,33 +114,7 @@ export default function ProductDetail() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Image Gallery */}
-          <div className="space-y-4">
-            {/* Main Image */}
-            <div className="aspect-square bg-sugan-cream-dark rounded-lg overflow-hidden">
-              <img
-                src={allImages[selectedImage]}
-                alt={product.name}
-                className="w-full h-full object-cover"
-              />
-            </div>
-            
-            {/* Thumbnail Gallery */}
-            {allImages.length > 1 && (
-              <div className="flex gap-2 overflow-x-auto">
-                {allImages.map((img, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setSelectedImage(idx)}
-                    className={`w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 border-2 transition-colors ${
-                      selectedImage === idx ? 'border-sugan-gold' : 'border-transparent'
-                    }`}
-                  >
-                    <img src={img} alt={`${product.name} ${idx + 1}`} className="w-full h-full object-cover" />
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
+          <ImageGallery images={allImages} productName={product.name} />
 
           {/* Product Details */}
           <div className="flex flex-col">
@@ -655,9 +642,33 @@ export default function ProductDetail() {
                 Chat on WhatsApp
               </a>
             </div>
+
+            {/* Trust Badges */}
+            <TrustBadges variant="vertical" />
+
+            {/* Size Guide */}
+            <SizeGuide dimensions={product.details?.dimensions} />
+
+            {/* Rating Breakdown */}
+            {product.rating && product.reviews && (
+              <RatingBreakdown rating={product.rating} reviews={product.reviews} />
+            )}
+
+            {/* Complete the Look */}
+            <CompleteTheLook currentProduct={product} />
+
+            {/* Artisan Story */}
+            <ArtisanStory 
+              artisan={product.details?.artisan}
+              story={product.details?.story}
+              origin={product.details?.origin}
+            />
           </div>
         </div>
       </div>
+
+      {/* Recently Viewed */}
+      <RecentlyViewed />
     </div>
   );
 }

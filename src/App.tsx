@@ -24,6 +24,7 @@ import Signup from '@/pages/Signup';
 import Account from '@/pages/Account';
 import Admin from '@/pages/Admin';
 import Checkout from '@/pages/Checkout';
+import MobileCartButton from '@/components/MobileCartButton';
 import './App.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -97,6 +98,9 @@ function App() {
 
           {/* Cart Drawer */}
           <CartDrawer />
+
+          {/* Mobile Cart Button */}
+          <MobileCartButton />
         </div>
       </BrowserRouter>
     </CartProvider>
