@@ -14,10 +14,12 @@ export default function ContactUs() {
   });
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
+    setError(null);
     
     try {
       await addDoc(collection(db, 'contactSubmissions'), {
@@ -28,8 +30,9 @@ export default function ContactUs() {
       });
       setSubmitted(true);
       setFormData({ name: '', email: '', subject: '', message: '' });
-    } catch (error) {
-      console.error('Error submitting form:', error);
+    } catch (err: any) {
+      console.error('Error submitting form:', err);
+      setError(err.message || 'Failed to send message. Please try again or contact us directly at sac280422@gmail.com');
     } finally {
       setSubmitting(false);
     }
@@ -167,6 +170,17 @@ export default function ContactUs() {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
+                {error && (
+                  <div className="bg-red-50 border border-red-200 rounded-xl p-4">
+                    <p className="text-red-700 font-body text-sm">{error}</p>
+                    <p className="text-red-600 font-body text-xs mt-2">
+                      Please email us directly at{' '}
+                      <a href="mailto:sac280422@gmail.com" className="underline">sac280422@gmail.com</a>
+                      {' '}or call{' '}
+                      <a href="tel:+916367677255" className="underline">+91 6367677255</a>
+                    </p>
+                  </div>
+                )}
                 <div>
                   <label htmlFor="name" className="block font-body text-sm text-sugan-brown mb-2">
                     Your Name
