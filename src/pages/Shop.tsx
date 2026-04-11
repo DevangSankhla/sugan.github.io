@@ -280,6 +280,7 @@ export default function Shop() {
                     <Link
                       key={product.id}
                       to={`/product/${product.id}`}
+                      state={{ from: '/shop', category: selectedCategory }}
                       className="item-card group bg-white rounded-xl overflow-hidden hover:shadow-lg transition-all"
                     >
                       <div className="aspect-square overflow-hidden bg-sugan-cream-dark">

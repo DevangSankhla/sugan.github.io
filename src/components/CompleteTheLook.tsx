@@ -69,6 +69,7 @@ export default function CompleteTheLook({ currentProduct }: CompleteTheLookProps
           <Link
             key={product.id}
             to={`/product/${product.id}`}
+            state={{ from: `/product/${currentProduct.id}` }}
             className="flex items-center gap-4 p-3 bg-white rounded-lg hover:shadow-md transition-shadow group"
           >
             <div className="w-16 h-16 bg-sugan-cream-dark rounded-lg overflow-hidden flex-shrink-0">

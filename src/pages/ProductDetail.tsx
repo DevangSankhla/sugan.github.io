@@ -1,4 +1,4 @@
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, useNavigate, Link, useLocation } from 'react-router-dom';
 import { ArrowLeft, ShoppingCart, Star, Minus, Plus, Heart, Share2, Package, Ruler, Sparkles, Shield, Truck, ChevronDown, ChevronUp } from 'lucide-react';
 import { allProducts } from '@/data/rooms';
 import { useCart } from '@/context/CartContext';
@@ -17,6 +17,8 @@ import RecentlyViewed, { addToRecentlyViewed } from '@/components/RecentlyViewed
 export default function ProductDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const location = useLocation();
+  const fromPage = location.state?.from as string | undefined;
   const { addToCart, setIsCartOpen } = useCart();
   const { user } = useAuth();
   const [quantity, setQuantity] = useState(1);
@@ -116,11 +118,25 @@ export default function ProductDetail() {
       <div className="bg-white border-b border-sugan-brown/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
           <button
-            onClick={() => navigate(-1)}
+            onClick={() => {
+              if (fromPage) {
+                navigate(fromPage);
+              } else if (product.room) {
+                navigate(`/shop/${product.room}`);
+              } else {
+                navigate('/shop');
+              }
+            }}
             className="flex items-center gap-2 text-sugan-brown/60 hover:text-sugan-gold transition-colors text-sm font-body"
           >
             <ArrowLeft className="w-4 h-4" />
-            Back to {product.room.charAt(0).toUpperCase() + product.room.slice(1)}
+            Back to {fromPage 
+              ? fromPage.includes('/shop/') 
+                ? fromPage.split('/shop/')[1].charAt(0).toUpperCase() + fromPage.split('/shop/')[1].slice(1)
+                : 'Shop'
+              : product.room 
+                ? product.room.charAt(0).toUpperCase() + product.room.slice(1)
+                : 'Shop'}
           </button>
         </div>
       </div>
@@ -253,6 +269,7 @@ export default function ProductDetail() {
                         <Link
                           key={idx}
                           to={`/product/${variant.productId}`}
+                          state={{ from: fromPage || `/shop/${product.room}` }}
                           className="px-4 py-2 rounded-lg border-2 border-sugan-brown/20 hover:border-sugan-gold transition-colors text-sm font-body text-sugan-brown"
                         >
                           {variant.size}

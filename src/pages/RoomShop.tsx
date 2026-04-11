@@ -157,7 +157,7 @@ export default function RoomShop() {
                   className="product-card group bg-white rounded-lg overflow-hidden transition-all duration-500 hover:shadow-gold-lg"
                 >
                   {/* Image */}
-                  <Link to={`/product/${product.id}`} className="block relative aspect-square overflow-hidden bg-sugan-cream-dark">
+                  <Link to={`/product/${product.id}`} state={{ from: `/shop/${roomId}` }} className="block relative aspect-square overflow-hidden bg-sugan-cream-dark">
                     <img
                       src={product.image}
                       alt={product.name}
@@ -195,7 +195,7 @@ export default function RoomShop() {
                     <p className="text-sugan-gold text-xs font-body uppercase tracking-wider mb-1">
                       {product.category}
                     </p>
-                    <Link to={`/product/${product.id}`}>
+                    <Link to={`/product/${product.id}`} state={{ from: `/shop/${roomId}` }}>
                       <h3 className="font-display text-lg font-medium text-sugan-brown mb-2 group-hover:text-sugan-gold transition-colors">
                         {product.name}
                       </h3>

@@ -1,5 +1,5 @@
 import { X, ShoppingCart, Star } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useCart } from '@/context/CartContext';
 import type { Product } from '@/types';
 
@@ -11,6 +11,7 @@ interface QuickViewModalProps {
 
 export default function QuickViewModal({ product, isOpen, onClose }: QuickViewModalProps) {
   const { addToCart, setIsCartOpen } = useCart();
+  const location = useLocation();
 
   if (!isOpen || !product) return null;
 
@@ -116,6 +117,7 @@ export default function QuickViewModal({ product, isOpen, onClose }: QuickViewMo
               </button>
               <Link
                 to={`/product/${product.id}`}
+                state={{ from: location.pathname }}
                 onClick={onClose}
                 className="flex-1 border-2 border-sugan-brown text-sugan-brown py-3 px-6 rounded-lg font-body hover:bg-sugan-brown hover:text-sugan-cream transition-colors text-center"
               >
