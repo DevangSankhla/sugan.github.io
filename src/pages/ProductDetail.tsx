@@ -9,7 +9,7 @@ import { collection, query, where, onSnapshot, addDoc, deleteDoc, doc } from 'fi
 import ImageGallery from '@/components/ImageGallery';
 import TrustBadges from '@/components/TrustBadges';
 import ArtisanStory from '@/components/ArtisanStory';
-import SizeGuide from '@/components/SizeGuide';
+
 import RatingBreakdown from '@/components/RatingBreakdown';
 import CompleteTheLook from '@/components/CompleteTheLook';
 import RecentlyViewed, { addToRecentlyViewed } from '@/components/RecentlyViewed';
@@ -677,9 +677,6 @@ export default function ProductDetail() {
 
             {/* Trust Badges */}
             <TrustBadges variant="vertical" />
-
-            {/* Size Guide */}
-            <SizeGuide dimensions={product.details?.dimensions} />
 
             {/* Rating Breakdown */}
             {product.rating && product.reviews && (

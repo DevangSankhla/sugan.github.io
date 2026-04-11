@@ -1260,12 +1260,12 @@ export const roomProducts: Record<string, Product[]> = {
     {
         'size': 'Small',
         'productId': 'SAC01_S',
-        'price': 699
+        'price': 799
     },
     {
         'size': 'Medium',
         'productId': 'SAC01_M',
-        'price': 899
+        'price': 1099
     }
 ]
   },
@@ -1298,12 +1298,12 @@ export const roomProducts: Record<string, Product[]> = {
     {
         'size': 'Small',
         'productId': 'SAC01_S',
-        'price': 699
+        'price': 799
     },
     {
         'size': 'Large',
         'productId': 'SAC01_L',
-        'price': 1099
+        'price': 1299
     }
 ]
   },
@@ -1336,12 +1336,12 @@ export const roomProducts: Record<string, Product[]> = {
     {
         'size': 'Medium',
         'productId': 'SAC01_M',
-        'price': 899
+        'price': 1099
     },
     {
         'size': 'Large',
         'productId': 'SAC01_L',
-        'price': 1099
+        'price': 1299
     }
 ]
   },
@@ -1400,12 +1400,12 @@ export const roomProducts: Record<string, Product[]> = {
     {
         'size': 'Small',
         'productId': 'SAC02_S',
-        'price': 799
+        'price': 999
     },
     {
         'size': 'Medium',
         'productId': 'SAC02_M',
-        'price': 999
+        'price': 1099
     }
 ]
   },
@@ -1438,7 +1438,7 @@ export const roomProducts: Record<string, Product[]> = {
     {
         'size': 'Small',
         'productId': 'SAC02_S',
-        'price': 799
+        'price': 999
     },
     {
         'size': 'Large',
@@ -1476,7 +1476,7 @@ export const roomProducts: Record<string, Product[]> = {
     {
         'size': 'Medium',
         'productId': 'SAC02_M',
-        'price': 999
+        'price': 1099
     },
     {
         'size': 'Large',
@@ -1566,12 +1566,12 @@ export const roomProducts: Record<string, Product[]> = {
     {
         'size': 'Small',
         'productId': 'SAC03_S',
-        'price': 899
+        'price': 799
     },
     {
         'size': 'Medium',
         'productId': 'SAC03_M',
-        'price': 1099
+        'price': 1199
     }
 ]
   },
@@ -1604,7 +1604,7 @@ export const roomProducts: Record<string, Product[]> = {
     {
         'size': 'Small',
         'productId': 'SAC03_S',
-        'price': 899
+        'price': 799
     },
     {
         'size': 'Large',
@@ -1642,7 +1642,7 @@ export const roomProducts: Record<string, Product[]> = {
     {
         'size': 'Medium',
         'productId': 'SAC03_M',
-        'price': 1099
+        'price': 1199
     },
     {
         'size': 'Large',
@@ -1836,12 +1836,12 @@ export const roomProducts: Record<string, Product[]> = {
     {
         'size': 'Small',
         'productId': 'SAC04_S',
-        'price': 799
+        'price': 999
     },
     {
         'size': 'Medium',
         'productId': 'SAC04_M',
-        'price': 999
+        'price': 1099
     }
 ]
   },
@@ -1874,7 +1874,7 @@ export const roomProducts: Record<string, Product[]> = {
     {
         'size': 'Small',
         'productId': 'SAC04_S',
-        'price': 799
+        'price': 999
     },
     {
         'size': 'Large',
@@ -1912,7 +1912,7 @@ export const roomProducts: Record<string, Product[]> = {
     {
         'size': 'Medium',
         'productId': 'SAC04_M',
-        'price': 999
+        'price': 1099
     },
     {
         'size': 'Large',
@@ -1950,12 +1950,12 @@ export const roomProducts: Record<string, Product[]> = {
     {
         'size': 'Small',
         'productId': 'SAC05_S',
-        'price': 599
+        'price': 799
     },
     {
         'size': 'Medium',
         'productId': 'SAC05_M',
-        'price': 799
+        'price': 1099
     }
 ]
   },
@@ -1988,12 +1988,12 @@ export const roomProducts: Record<string, Product[]> = {
     {
         'size': 'Small',
         'productId': 'SAC05_S',
-        'price': 599
+        'price': 799
     },
     {
         'size': 'Large',
         'productId': 'SAC05_L',
-        'price': 999
+        'price': 1199
     }
 ]
   },
@@ -2052,12 +2052,12 @@ export const roomProducts: Record<string, Product[]> = {
     {
         'size': 'Medium',
         'productId': 'SAC05_M',
-        'price': 799
+        'price': 1099
     },
     {
         'size': 'Large',
         'productId': 'SAC05_L',
-        'price': 999
+        'price': 1199
     }
 ]
   },
@@ -2142,12 +2142,12 @@ export const roomProducts: Record<string, Product[]> = {
     {
         'size': 'Small',
         'productId': 'SAC07_S',
-        'price': 899
+        'price': 599
     },
     {
         'size': 'Medium',
         'productId': 'SAC07_M',
-        'price': 1099
+        'price': 899
     }
 ]
   },
@@ -2180,12 +2180,12 @@ export const roomProducts: Record<string, Product[]> = {
     {
         'size': 'Small',
         'productId': 'SAC07_S',
-        'price': 899
+        'price': 599
     },
     {
         'size': 'Large',
         'productId': 'SAC07_L',
-        'price': 1299
+        'price': 1099
     }
 ]
   },
@@ -2218,12 +2218,12 @@ export const roomProducts: Record<string, Product[]> = {
     {
         'size': 'Medium',
         'productId': 'SAC07_M',
-        'price': 1099
+        'price': 899
     },
     {
         'size': 'Large',
         'productId': 'SAC07_L',
-        'price': 1299
+        'price': 1099
     }
 ]
   },
@@ -2341,7 +2341,7 @@ export const roomProducts: Record<string, Product[]> = {
    description: 'Hand-embossed and painted by artisans in Jodhpur using traditional Rajasthani techniques, this multicoloured wooden serving tray carries centuries of craft in its surface. Each tray is made individually, which means small variations in colour and pattern are natural signs of a handmade object rather...',
    image: '/images/SAC030_01.png',
    category: 'Serving Trays',
-   room: 'living',
+   room: 'kitchen',
    inStock: true,
    rating: 5.0,
    reviews: 150,

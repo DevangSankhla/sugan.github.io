@@ -12,7 +12,7 @@ gsap.registerPlugin(ScrollTrigger);
 const categories = [
   { id: 'pet-feeders', name: 'Pet Feeders', icon: 'Heart' },
   { id: 'trays', name: 'Serving Trays', icon: 'LayoutGrid' },
-  { id: 'bowls', name: 'Serving Bowls', icon: 'Circle' },
+  { id: 'bowls', name: 'Bowls', icon: 'Circle' },
   { id: 'coasters', name: 'Coasters', icon: 'Square' },
   { id: 'cutlery', name: 'Cutlery & Organizers', icon: 'Utensils' },
   { id: 'chopping-boards', name: 'Chopping Boards', icon: 'Square' },
@@ -70,7 +70,7 @@ export default function Shop() {
         products = allProducts.filter(p => p.name.toLowerCase().includes('tray'));
         break;
       case 'bowls':
-        products = allProducts.filter(p => p.name.toLowerCase().includes('bowl'));
+        products = allProducts.filter(p => p.name.toLowerCase().includes('bowl') && p.room !== 'pet');
         break;
       case 'coasters':
         products = allProducts.filter(p => p.name.toLowerCase().includes('coaster'));

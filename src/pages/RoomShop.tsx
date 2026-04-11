@@ -1,13 +1,13 @@
 import { useState, useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ShoppingCart, Star, Search, ArrowLeft, Eye } from 'lucide-react';
+import { Star, Search, ArrowLeft } from 'lucide-react';
 import { roomProducts, rooms } from '@/data/rooms';
-import { useCart } from '@/context/CartContext';
+
 import type { Product } from '@/types';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import * as Icons from 'lucide-react';
-import QuickViewModal from '@/components/QuickViewModal';
+
 import MobileCartButton from '@/components/MobileCartButton';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -16,8 +16,8 @@ export default function RoomShop() {
   const { roomId } = useParams<{ roomId: string }>();
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
-  const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
-  const { addToCart, setIsCartOpen } = useCart();
+
+
   const sectionRef = useRef<HTMLDivElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
 
@@ -71,11 +71,6 @@ export default function RoomShop() {
 
     return () => ctx.revert();
   }, [filteredProducts]);
-
-  const handleAddToCart = (product: Product) => {
-    addToCart(product);
-    setIsCartOpen(true);
-  };
 
   if (!room) {
     return (
@@ -164,30 +159,6 @@ export default function RoomShop() {
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                       loading="lazy"
                     />
-
-                    {/* Quick Actions */}
-                    <div 
-                      className="absolute inset-0 bg-sugan-brown/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                      }}
-                    >
-                      <button
-                        onClick={() => handleAddToCart(product)}
-                        className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-sugan-brown hover:bg-sugan-gold hover:text-white transition-colors"
-                        title="Add to Cart"
-                      >
-                        <ShoppingCart className="w-5 h-5" />
-                      </button>
-                      <button
-                        onClick={() => setQuickViewProduct(product)}
-                        className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-sugan-brown hover:bg-sugan-gold hover:text-white transition-colors"
-                        title="Quick View"
-                      >
-                        <Eye className="w-5 h-5" />
-                      </button>
-                    </div>
                   </Link>
 
                   {/* Content */}
@@ -228,13 +199,6 @@ export default function RoomShop() {
           )}
         </div>
       </section>
-
-      {/* Quick View Modal */}
-      <QuickViewModal 
-        product={quickViewProduct}
-        isOpen={!!quickViewProduct}
-        onClose={() => setQuickViewProduct(null)}
-      />
 
       {/* Mobile Cart Button */}
       <MobileCartButton />
