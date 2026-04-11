@@ -55,13 +55,19 @@ export default function Checkout() {
   const [codAvailable, setCodAvailable] = useState(true);
 
   // Redirect if not logged in or cart is empty
-  if (!user) {
-    navigate('/login?redirect=/checkout');
-    return null;
-  }
+  useEffect(() => {
+    if (!user) {
+      navigate('/login?redirect=/checkout');
+      return;
+    }
+    if (items.length === 0) {
+      navigate('/shop');
+      return;
+    }
+  }, [user, items.length, navigate]);
 
-  if (items.length === 0) {
-    navigate('/shop');
+  // Don't render if redirecting
+  if (!user || items.length === 0) {
     return null;
   }
 

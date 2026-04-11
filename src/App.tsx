@@ -30,6 +30,7 @@ import Checkout from '@/pages/Checkout';
 import PaymentSuccess from '@/pages/PaymentSuccess';
 import PaymentFailure from '@/pages/PaymentFailure';
 import MobileCartButton from '@/components/MobileCartButton';
+import ErrorBoundary from '@/components/ErrorBoundary';
 import './App.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -86,6 +87,7 @@ function App() {
           <Navigation />
 
           {/* Routes */}
+          <ErrorBoundary>
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/shop" element={<><Shop /><Footer /></>} />
@@ -105,6 +107,7 @@ function App() {
             <Route path="/payment/success" element={<PaymentSuccess />} />
             <Route path="/payment/failure" element={<PaymentFailure />} />
           </Routes>
+          </ErrorBoundary>
 
           {/* Cart Drawer */}
           <CartDrawer />

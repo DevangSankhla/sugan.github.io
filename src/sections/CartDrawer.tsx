@@ -40,6 +40,7 @@ export default function CartDrawer() {
             )}
           </div>
           <button
+            type="button"
             onClick={() => setIsCartOpen(false)}
             className="w-10 h-10 rounded-full bg-sugan-brown/5 flex items-center justify-center text-sugan-brown hover:bg-sugan-brown/10 transition-colors"
             aria-label="Close cart"
@@ -62,6 +63,7 @@ export default function CartDrawer() {
                 Discover our beautiful handcrafted wooden products
               </p>
               <button
+                type="button"
                 onClick={() => {
                   setIsCartOpen(false);
                   document
@@ -102,6 +104,7 @@ export default function CartDrawer() {
                         </h4>
                       </div>
                       <button
+                        type="button"
                         onClick={() => removeFromCart(item.id)}
                         className="text-sugan-brown/40 hover:text-sugan-brown transition-colors"
                         aria-label="Remove item"
@@ -114,6 +117,7 @@ export default function CartDrawer() {
                       {/* Quantity */}
                       <div className="flex items-center gap-2">
                         <button
+                          type="button"
                           onClick={() =>
                             updateQuantity(item.id, item.quantity - 1)
                           }
@@ -126,6 +130,7 @@ export default function CartDrawer() {
                           {item.quantity}
                         </span>
                         <button
+                          type="button"
                           onClick={() =>
                             updateQuantity(item.id, item.quantity + 1)
                           }
@@ -169,6 +174,7 @@ export default function CartDrawer() {
             {/* Checkout Buttons */}
             <div className="space-y-3">
               <button
+                type="button"
                 onClick={() => {
                   setIsCartOpen(false);
                   navigate('/checkout');
