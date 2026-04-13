@@ -2469,22 +2469,52 @@ export function getBaseProductName(name: string): string {
 
 
 
-// Get all products in the same family (same base name)
+// Get all products in the same family (same base name OR linked via relatedSizes)
 function getProductFamily(product: Product): Product[] {
   const baseName = getBaseProductName(product.name);
-  return allProducts.filter(p => getBaseProductName(p.name) === baseName);
+  const byName = allProducts.filter(p => getBaseProductName(p.name) === baseName);
+  
+  // If we found multiple products by name, return them
+  if (byName.length > 1) return byName;
+  
+  // Otherwise, check relatedSizes to find linked products (for SAC09XS case)
+  const linkedIds = new Set<string>();
+  linkedIds.add(product.id);
+  
+  // Add all product IDs from relatedSizes
+  if (product.relatedSizes) {
+    product.relatedSizes.forEach(rs => linkedIds.add(rs.productId));
+  }
+  
+  // Find all products that reference this product in their relatedSizes
+  allProducts.forEach(p => {
+    if (p.relatedSizes?.some(rs => rs.productId === product.id)) {
+      linkedIds.add(p.id);
+    }
+  });
+  
+  const byLinks = allProducts.filter(p => linkedIds.has(p.id));
+  return byLinks.length > 1 ? byLinks : [product];
 }
 
-// Get the display product for shop pages (small variant if available)
+// Get the display product for shop pages (XS variant if available, otherwise Small)
 export function getDisplayProduct(product: Product): Product {
   const family = getProductFamily(product);
   if (family.length <= 1) return product;
   
-  // Find the small variant
+  // Find the XS/Extra Small variant first (if available)
+  const xsVariant = family.find(p => {
+    const id = p.id.toLowerCase();
+    return id.includes('xs');
+  });
+  
+  if (xsVariant) return xsVariant;
+  
+  // Otherwise find the small variant
   const smallVariant = family.find(p => {
     const id = p.id.toLowerCase();
     const name = p.name.toLowerCase();
-    return id.endsWith('s') || name.includes('small');
+    return id.endsWith('_s') || name.includes('small');
   });
   
   return smallVariant || product;
@@ -2495,8 +2525,8 @@ export function getAllSizeVariants(product: Product): { size: string; product: P
   const family = getProductFamily(product);
   if (family.length <= 1) return [];
   
-  // Sort: Small first, then Medium, then Large
-  const sizeOrder: { [key: string]: number } = { 'small': 1, 'medium': 2, 'large': 3, 'extra small': 0, 'xs': 0 };
+  // Sort: XS first, then Small, then Medium, then Large
+  const sizeOrder: { [key: string]: number } = { 'extra small': 0, 'xs': 0, 'small': 1, 'medium': 2, 'large': 3 };
   
   return family
     .map(p => {
@@ -2504,10 +2534,12 @@ export function getAllSizeVariants(product: Product): { size: string; product: P
       const id = p.id.toLowerCase();
       const name = p.name.toLowerCase();
       
-      if (name.includes('extra small') || id.includes('xs')) size = 'Extra Small';
-      else if (name.includes('small') || id.endsWith('_s') || id.endsWith('s')) size = 'Small';
-      else if (name.includes('medium') || id.endsWith('_m') || id.endsWith('m')) size = 'Medium';
-      else if (name.includes('large') || id.endsWith('_l') || id.endsWith('l')) size = 'Large';
+      // Check for XS first (specific pattern like SAC09XS)
+      if (id.includes('xs') && !id.includes('_')) size = 'Extra Small';
+      else if (name.includes('extra small')) size = 'Extra Small';
+      else if (name.includes('small') || id.endsWith('_s')) size = 'Small';
+      else if (name.includes('medium') || id.endsWith('_m')) size = 'Medium';
+      else if (name.includes('large') || id.endsWith('_l')) size = 'Large';
       
       return { size, product: p };
     })
