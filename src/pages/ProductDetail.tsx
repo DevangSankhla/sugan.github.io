@@ -1,6 +1,6 @@
 import { useParams, useNavigate, Link, useLocation } from 'react-router-dom';
 import { ArrowLeft, ShoppingCart, Star, Minus, Plus, Heart, Share2, Package, Ruler, Sparkles, Shield, Truck, ChevronDown, ChevronUp } from 'lucide-react';
-import { allProducts } from '@/data/rooms';
+import { allProducts, getAllSizeVariants, getBaseProductName, hasSizeVariants } from '@/data/rooms';
 import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
 import { useState, useEffect } from 'react';
@@ -161,7 +161,7 @@ export default function ProductDetail() {
             
             {/* Name */}
             <h1 className="font-display text-3xl sm:text-4xl text-sugan-brown mb-4">
-              {product.name}
+              {getBaseProductName(product.name)}
             </h1>
             
             {/* Rating */}
@@ -247,36 +247,33 @@ export default function ProductDetail() {
             )}
 
             {/* Size Variants - Links to other sizes */}
-            {product.relatedSizes && product.relatedSizes.length > 0 && (
+            {hasSizeVariants(product) && (
               <div className="mb-6">
                 <label className="block text-sm font-medium text-sugan-brown mb-2">
-                  Also Available In
+                  Select Size
                 </label>
                 <div className="flex flex-wrap gap-2">
-                  {/* All sizes including current, sorted by price ascending */}
-                  {[...product.relatedSizes, { size: product.name.match(/(Small|Medium|Large|Extra Small)/)?.[0] || 'Current', productId: product.id, price: product.price }]
-                    .sort((a, b) => a.price - b.price)
-                    .map((variant, idx) => (
-                      variant.productId === product.id ? (
-                        <span
-                          key={idx}
-                          className="px-4 py-2 rounded-lg border-2 border-sugan-gold bg-sugan-gold/10 text-sm font-body text-sugan-brown"
-                        >
-                          {variant.size}
-                          <span className="font-semibold ml-2">₹{variant.price.toLocaleString()}</span>
-                        </span>
-                      ) : (
-                        <Link
-                          key={idx}
-                          to={`/product/${variant.productId}`}
-                          state={{ from: fromPage || `/shop/${product.room}` }}
-                          className="px-4 py-2 rounded-lg border-2 border-sugan-brown/20 hover:border-sugan-gold transition-colors text-sm font-body text-sugan-brown"
-                        >
-                          {variant.size}
-                          <span className="font-semibold ml-2">₹{variant.price.toLocaleString()}</span>
-                        </Link>
-                      )
-                    ))}
+                  {getAllSizeVariants(product).map((variant) => (
+                    variant.product.id === product.id ? (
+                      <span
+                        key={variant.product.id}
+                        className="px-4 py-2 rounded-lg border-2 border-sugan-gold bg-sugan-gold/10 text-sm font-body text-sugan-brown"
+                      >
+                        {variant.size}
+                        <span className="font-semibold ml-2">₹{variant.product.price.toLocaleString()}</span>
+                      </span>
+                    ) : (
+                      <Link
+                        key={variant.product.id}
+                        to={`/product/${variant.product.id}`}
+                        state={{ from: fromPage || `/shop/${product.room}` }}
+                        className="px-4 py-2 rounded-lg border-2 border-sugan-brown/20 hover:border-sugan-gold transition-colors text-sm font-body text-sugan-brown"
+                      >
+                        {variant.size}
+                        <span className="font-semibold ml-2">₹{variant.product.price.toLocaleString()}</span>
+                      </Link>
+                    )
+                  ))}
                 </div>
               </div>
             )}

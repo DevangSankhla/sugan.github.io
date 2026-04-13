@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { rooms, roomProducts, allProducts } from '@/data/rooms';
+import { rooms, roomProducts, allProducts, getDisplayProduct, hasSizeVariants, getSizeVariantCount, getBaseProductName } from '@/data/rooms';
 import { Link } from 'react-router-dom';
 import * as Icons from 'lucide-react';
 import type { Product } from '@/types';
@@ -20,14 +20,18 @@ const categories = [
   { id: 'decor', name: 'Home Decor', icon: 'Home' },
 ];
 
-// Helper to get unique products by name (for category view to avoid duplicates)
+// Helper to get unique products by base name (for category view to avoid duplicates)
+// Shows only small variant for products with multiple sizes
 const getUniqueProductsByName = (products: Product[]): Product[] => {
   const seen = new Set<string>();
-  return products.filter(p => {
-    if (seen.has(p.name)) return false;
-    seen.add(p.name);
-    return true;
-  });
+  return products
+    .map(p => getDisplayProduct(p)) // Get small variant if available
+    .filter(p => {
+      const baseName = getBaseProductName(p.name);
+      if (seen.has(baseName)) return false;
+      seen.add(baseName);
+      return true;
+    });
 };
 
 export default function Shop() {
@@ -293,8 +297,11 @@ export default function Shop() {
                       </div>
                       <div className="p-3">
                         <p className="text-xs text-sugan-gold font-body uppercase">{product.category}</p>
-                        <h4 className="font-body text-sm text-sugan-brown line-clamp-2">{product.name}</h4>
+                        <h4 className="font-body text-sm text-sugan-brown line-clamp-2">{getBaseProductName(product.name)}</h4>
                         <p className="font-display text-sugan-brown font-semibold mt-1">₹{product.price.toLocaleString()}</p>
+                        {hasSizeVariants(product) && (
+                          <p className="text-xs text-sugan-brown/50 font-body mt-1">{getSizeVariantCount(product)} sizes available</p>
+                        )}
                       </div>
                     </Link>
                   ))}

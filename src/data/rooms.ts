@@ -2451,6 +2451,77 @@ export const roomProducts: Record<string, Product[]> = {
 // All products combined
 export const allProducts: Product[] = Object.values(roomProducts).flat();
 
+// ============================================
+// SIZE VARIANT HELPERS
+// ============================================
+
+// Get base product name (remove size indicators)
+export function getBaseProductName(name: string): string {
+  // Remove common size suffixes and patterns
+  return name
+    .replace(/,\s*(Small|Medium|Large|Extra Small|XS|S|M|L)(?:\s*[-–]\s*\d+[xX]?\d*\s*cm)?$/i, '')
+    .replace(/\s*-\s*(Small|Medium|Large|Extra Small|XS|S|M|L)(?:\s*[-–]\s*\d+[xX]?\d*\s*cm)?$/i, '')
+    .replace(/\s*\(\s*(Small|Medium|Large|Extra Small|XS|S|M|L)\s*\)/i, '')
+    .trim();
+}
+
+
+
+// Get all products in the same family (same base name)
+function getProductFamily(product: Product): Product[] {
+  const baseName = getBaseProductName(product.name);
+  return allProducts.filter(p => getBaseProductName(p.name) === baseName);
+}
+
+// Get the display product for shop pages (small variant if available)
+export function getDisplayProduct(product: Product): Product {
+  const family = getProductFamily(product);
+  if (family.length <= 1) return product;
+  
+  // Find the small variant
+  const smallVariant = family.find(p => {
+    const id = p.id.toLowerCase();
+    const name = p.name.toLowerCase();
+    return id.endsWith('s') || name.includes('small');
+  });
+  
+  return smallVariant || product;
+}
+
+// Get all size variants for a product family
+export function getAllSizeVariants(product: Product): { size: string; product: Product }[] {
+  const family = getProductFamily(product);
+  if (family.length <= 1) return [];
+  
+  // Sort: Small first, then Medium, then Large
+  const sizeOrder: { [key: string]: number } = { 'small': 1, 'medium': 2, 'large': 3, 'extra small': 0, 'xs': 0 };
+  
+  return family
+    .map(p => {
+      let size = 'Standard';
+      const id = p.id.toLowerCase();
+      const name = p.name.toLowerCase();
+      
+      if (name.includes('extra small') || id.includes('xs')) size = 'Extra Small';
+      else if (name.includes('small') || id.endsWith('_s') || id.endsWith('s')) size = 'Small';
+      else if (name.includes('medium') || id.endsWith('_m') || id.endsWith('m')) size = 'Medium';
+      else if (name.includes('large') || id.endsWith('_l') || id.endsWith('l')) size = 'Large';
+      
+      return { size, product: p };
+    })
+    .sort((a, b) => (sizeOrder[a.size.toLowerCase()] || 99) - (sizeOrder[b.size.toLowerCase()] || 99));
+}
+
+// Check if product has size variants
+export function hasSizeVariants(product: Product): boolean {
+  return getProductFamily(product).length > 1;
+}
+
+// Get size variant count
+export function getSizeVariantCount(product: Product): number {
+  return getProductFamily(product).length;
+}
+
 // Legacy exports
 export const products = allProducts;
 export const categories = [

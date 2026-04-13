@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Star, Search, ArrowLeft } from 'lucide-react';
-import { roomProducts, rooms } from '@/data/rooms';
+import { roomProducts, rooms, getDisplayProduct, hasSizeVariants, getSizeVariantCount, getBaseProductName } from '@/data/rooms';
 
 import type { Product } from '@/types';
 import { Link, useParams, useNavigate } from 'react-router-dom';
@@ -26,13 +26,15 @@ export default function RoomShop() {
     ? Object.values(roomProducts).flat()
     : roomProducts[roomId || ''] || [];
 
-  // Filter to show only unique base products (not all size variants)
-  // Products with relatedSizes are considered variants of the same product
+  // Filter to show only unique base products (small variant if available)
   const uniqueProducts = products.reduce((acc: Product[], product) => {
-    // Check if this product is already represented by another product with the same name
-    const isDuplicate = acc.some(p => p.name === product.name);
+    const displayProduct = getDisplayProduct(product);
+    const baseName = getBaseProductName(displayProduct.name);
+    
+    // Check if we already have this base product
+    const isDuplicate = acc.some(p => getBaseProductName(p.name) === baseName);
     if (!isDuplicate) {
-      acc.push(product);
+      acc.push(displayProduct);
     }
     return acc;
   }, []);
@@ -168,7 +170,7 @@ export default function RoomShop() {
                     </p>
                     <Link to={`/product/${product.id}`} state={{ from: `/shop/${roomId}` }}>
                       <h3 className="font-display text-lg font-medium text-sugan-brown mb-2 group-hover:text-sugan-gold transition-colors">
-                        {product.name}
+                        {getBaseProductName(product.name)}
                       </h3>
                     </Link>
                     <div className="flex items-center gap-1 mb-3">
@@ -190,8 +192,10 @@ export default function RoomShop() {
                       <span className="font-display text-xl font-semibold text-sugan-brown">
                         ₹{product.price.toLocaleString()}
                       </span>
-
                     </div>
+                    {hasSizeVariants(product) && (
+                      <p className="text-xs text-sugan-brown/50 font-body mt-2">{getSizeVariantCount(product)} sizes available</p>
+                    )}
                   </div>
                 </div>
               ))}
