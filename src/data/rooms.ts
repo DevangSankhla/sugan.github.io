@@ -2469,10 +2469,77 @@ export function getBaseProductName(name: string): string {
 
 
 
-// Get all products in the same family (same base name)
+// Check if a product ID follows the standard pattern (PREFIX_S, PREFIX_M, PREFIX_L, etc.)
+function hasStandardSizePattern(id: string): boolean {
+  return /^[A-Z0-9]+_[SMLX]+$/.test(id);
+}
+
+// Check if a product has siblings with standard size patterns
+function hasStandardSiblings(productId: string): boolean {
+  const idPrefix = productId.split('_')[0];
+  if (!idPrefix || !productId.includes('_')) return false;
+  
+  return allProducts.some(p => {
+    if (p.id === productId) return false;
+    const pPrefix = p.id.split('_')[0];
+    return pPrefix === idPrefix && hasStandardSizePattern(p.id);
+  });
+}
+
+// Get all products in the same family (products with the same ID prefix OR linked via relatedSizes)
+// e.g., SAC08_S, SAC08_M, SAC08_L are in the same family
 function getProductFamily(product: Product): Product[] {
-  const baseName = getBaseProductName(product.name);
-  return allProducts.filter(p => getBaseProductName(p.name) === baseName);
+  // Strategy 1: Check for products with the same ID prefix and size suffix
+  // e.g., SAC08_S, SAC08_M, SAC08_L
+  const idPrefix = product.id.split('_')[0];
+  if (idPrefix && product.id.includes('_')) {
+    const siblings = allProducts.filter(p => {
+      if (p.id === product.id) return false;
+      const pPrefix = p.id.split('_')[0];
+      // Match prefix and ensure the product has a size suffix
+      return pPrefix === idPrefix && hasStandardSizePattern(p.id);
+    });
+    
+    if (siblings.length > 0) {
+      // Return all products with the same prefix
+      return allProducts.filter(p => {
+        const pPrefix = p.id.split('_')[0];
+        return pPrefix === idPrefix;
+      });
+    }
+  }
+  
+  // Strategy 2: Use relatedSizes for products without standard pattern siblings
+  // This handles: M0-5FJV-JJ1Q family and standalone products like SAC037_L
+  if (product.relatedSizes && product.relatedSizes.length > 0) {
+    const relatedIds = new Set<string>();
+    
+    product.relatedSizes.forEach(rs => {
+      // Include related products that don't have their own standard siblings
+      // (This prevents pulling in SAC08_S/M/L which form their own family)
+      if (!hasStandardSiblings(rs.productId)) {
+        relatedIds.add(rs.productId);
+      }
+    });
+    
+    // Also find products that link back to this one
+    allProducts.forEach(p => {
+      if (p.relatedSizes?.some(rs => rs.productId === product.id)) {
+        // Only include if this product doesn't have its own standard siblings
+        if (!hasStandardSiblings(p.id)) {
+          relatedIds.add(p.id);
+        }
+      }
+    });
+    
+    if (relatedIds.size > 0) {
+      const related = allProducts.filter(p => relatedIds.has(p.id));
+      return [product, ...related];
+    }
+  }
+  
+  // No family found
+  return [product];
 }
 
 // Get the display product for shop pages (small variant if available)
@@ -2500,14 +2567,39 @@ export function getAllSizeVariants(product: Product): { size: string; product: P
   
   return family
     .map(p => {
+      // First check this product's relatedSizes for the size label
+      const relatedEntry = product.relatedSizes?.find(rs => rs.productId === p.id);
+      if (relatedEntry) {
+        return { size: relatedEntry.size, product: p };
+      }
+      
+      // Check if the target product's relatedSizes contains this product
+      const otherRelatedEntry = p.relatedSizes?.find(rs => rs.productId === product.id);
+      if (otherRelatedEntry) {
+        // Look for this product's entry in its own relatedSizes
+        const selfEntry = p.relatedSizes?.find(rs => rs.productId === p.id);
+        if (selfEntry) return { size: selfEntry.size, product: p };
+      }
+      
+      // Search all products in the family for relatedSizes entries that reference this product
+      for (const familyProduct of family) {
+        if (familyProduct.relatedSizes) {
+          const entry = familyProduct.relatedSizes.find(rs => rs.productId === p.id);
+          if (entry) {
+            return { size: entry.size, product: p };
+          }
+        }
+      }
+      
+      // Fallback to detecting from name/ID
       let size = 'Standard';
       const id = p.id.toLowerCase();
       const name = p.name.toLowerCase();
       
       if (name.includes('extra small') || id.includes('xs')) size = 'Extra Small';
-      else if (name.includes('small') || id.endsWith('_s') || id.endsWith('s')) size = 'Small';
-      else if (name.includes('medium') || id.endsWith('_m') || id.endsWith('m')) size = 'Medium';
-      else if (name.includes('large') || id.endsWith('_l') || id.endsWith('l')) size = 'Large';
+      else if (name.includes('small') || id.endsWith('_s')) size = 'Small';
+      else if (name.includes('medium') || id.endsWith('_m')) size = 'Medium';
+      else if (name.includes('large') || id.endsWith('_l')) size = 'Large';
       
       return { size, product: p };
     })
