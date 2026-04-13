@@ -2458,10 +2458,12 @@ export const allProducts: Product[] = Object.values(roomProducts).flat();
 // Get base product name (remove size indicators)
 export function getBaseProductName(name: string): string {
   // Remove common size suffixes and patterns
+  // Handle patterns like " - 46x23x18 cm" or " - Small" or "(Large)"
   return name
     .replace(/,\s*(Small|Medium|Large|Extra Small|XS|S|M|L)(?:\s*[-–]\s*\d+[xX]?\d*\s*cm)?$/i, '')
     .replace(/\s*-\s*(Small|Medium|Large|Extra Small|XS|S|M|L)(?:\s*[-–]\s*\d+[xX]?\d*\s*cm)?$/i, '')
     .replace(/\s*\(\s*(Small|Medium|Large|Extra Small|XS|S|M|L)\s*\)/i, '')
+    .replace(/\s*[-–]\s*\d+\s*x\s*\d+\s*x?\s*\d*\s*cm$/i, '') // Remove "- 46x23x18 cm" or "- 53x27x29 cm"
     .trim();
 }
 
