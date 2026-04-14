@@ -170,7 +170,7 @@ export default function Hero() {
             className="absolute inset-0 lg:inset-y-0 lg:right-0 lg:left-[-10%]"
           >
             <img
-              src="/images/SAC030_01.png"
+              src="/images/SAC030.jpeg"
               alt="Handcrafted wooden product"
               className="w-full h-full object-cover"
             />
