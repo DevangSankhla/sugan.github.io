@@ -1,12 +1,14 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
-import { ArrowRight, Award, Users, TreePine } from 'lucide-react';
+import { ArrowRight, Award, Users, TreePine, Building2 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 export default function Hero() {
   const heroRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const statsRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -102,14 +104,11 @@ export default function Hero() {
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </button>
               <button
-                onClick={() =>
-                  document
-                    .getElementById('about')
-                    ?.scrollIntoView({ behavior: 'smooth' })
-                }
-                className="btn-outline"
+                onClick={() => navigate('/bulk-orders')}
+                className="btn-outline flex items-center justify-center gap-2 group"
               >
-                Our Story
+                <Building2 className="w-4 h-4" />
+                Bulk Orders
               </button>
             </div>
 
@@ -171,8 +170,8 @@ export default function Hero() {
             className="absolute inset-0 lg:inset-y-0 lg:right-0 lg:left-[-10%]"
           >
             <img
-              src="/images/hero-stool.jpg"
-              alt="Handcrafted wooden stool"
+              src="/images/SAC030_01.png"
+              alt="Handcrafted wooden product"
               className="w-full h-full object-cover"
             />
             {/* Gradient overlay for mobile */}

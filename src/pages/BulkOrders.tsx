@@ -65,7 +65,7 @@ export default function BulkOrders() {
             Bulk Orders
           </h1>
           <p className="text-sugan-cream/70 font-body mt-2">
-            Corporate gifting, hotel supplies, wholesale inquiries & more
+            Corporate gifting, hotel & restaurant supplies, big project finishing, wholesale inquiries & more
           </p>
         </div>
       </div>
@@ -73,7 +73,7 @@ export default function BulkOrders() {
       {/* Content */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
         {/* Benefits */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           <div className="bg-white rounded-2xl p-6 text-center shadow-sm">
             <div className="w-14 h-14 bg-sugan-gold/10 rounded-xl flex items-center justify-center mx-auto mb-4">
               <Building2 className="w-7 h-7 text-sugan-gold" />
@@ -99,6 +99,15 @@ export default function BulkOrders() {
             <h3 className="font-display text-lg text-sugan-brown mb-2">Wholesale Partnership</h3>
             <p className="text-sugan-brown/60 font-body text-sm">
               Become a reseller of Sugan products with exclusive wholesale pricing and marketing support.
+            </p>
+          </div>
+          <div className="bg-white rounded-2xl p-6 text-center shadow-sm">
+            <div className="w-14 h-14 bg-sugan-gold/10 rounded-xl flex items-center justify-center mx-auto mb-4">
+              <Building2 className="w-7 h-7 text-sugan-gold" />
+            </div>
+            <h3 className="font-display text-lg text-sugan-brown mb-2">Big Project Finishing</h3>
+            <p className="text-sugan-brown/60 font-body text-sm">
+              Custom orders for hotels, cafes, resorts, restaurants - complete interior woodwork solutions.
             </p>
           </div>
         </div>
@@ -272,6 +281,7 @@ export default function BulkOrders() {
                       <option value="">Select type</option>
                       <option value="corporate_gifting">Corporate Gifting</option>
                       <option value="hotel_supplies">Hotel/Restaurant Supplies</option>
+                      <option value="big_project_finishing">Big Project Finishing (Hotels/Cafes/Resorts)</option>
                       <option value="reseller">Reseller/Wholesale</option>
                       <option value="wedding_events">Wedding/Events</option>
                       <option value="other">Other</option>

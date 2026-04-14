@@ -432,15 +432,30 @@ export default function Admin() {
                   {orders.map((order) => (
                     <Card key={order.id} className="border-sugan-brown/10">
                       <CardContent className="p-4">
-                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                          <div>
+                        <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
+                          <div className="flex-1">
                             <p className="font-body text-sm text-sugan-brown/60">
                               Order #{order.id.slice(-8).toUpperCase()}
                             </p>
                             <p className="font-body text-sugan-brown">
                               {order.userEmail} • {order.items?.length} items
                             </p>
-                            <p className="font-body text-sugan-gold font-semibold">
+                            {/* Order Items with SKUs */}
+                            <div className="mt-2 space-y-1">
+                              {order.items?.map((item: any, idx: number) => (
+                                <div key={idx} className="flex items-center gap-2 text-sm">
+                                  <span className="text-sugan-brown/60">•</span>
+                                  <span className="font-body text-sugan-brown">{item.name}</span>
+                                  <span className="font-body text-xs text-sugan-brown/40 bg-sugan-brown/5 px-2 py-0.5 rounded">
+                                    SKU: {item.id}
+                                  </span>
+                                  <span className="font-body text-xs text-sugan-brown/60">
+                                    x{item.quantity}
+                                  </span>
+                                </div>
+                              ))}
+                            </div>
+                            <p className="font-body text-sugan-gold font-semibold mt-2">
                               ₹{order.total?.toLocaleString()}
                             </p>
                           </div>
