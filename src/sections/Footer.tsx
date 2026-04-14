@@ -29,7 +29,7 @@ export default function Footer() {
               {/* Social Links */}
               <div className="flex gap-3">
                 <a
-                  href="https://www.instagram.com/visit_sugan.shop?igsh=a3ZsOGJ3a2VmYndt&utm_source=qr"
+                  href="https://www.instagram.com/wwwsuganshop/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-10 h-10 rounded-full bg-sugan-cream/10 flex items-center justify-center hover:bg-sugan-gold transition-colors"

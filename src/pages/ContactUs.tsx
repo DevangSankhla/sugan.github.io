@@ -126,12 +126,12 @@ export default function ContactUs() {
                 <div>
                   <h3 className="font-body font-medium text-sugan-brown mb-1">Instagram</h3>
                   <a 
-                    href="https://instagram.com/sugan.india" 
+                    href="https://www.instagram.com/wwwsuganshop/" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="text-sugan-brown/70 font-body hover:text-sugan-gold transition-colors"
                   >
-                    @sugan.india
+                    @wwwsuganshop
                   </a>
                 </div>
               </div>
