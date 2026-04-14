@@ -3,6 +3,7 @@
 
 import { db } from './firebase';
 import { doc, updateDoc, getDoc, collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import SHA512 from 'crypto-js/sha512';
 
 const PAYU_KEY = import.meta.env.VITE_PAYU_MERCHANT_KEY;
 const PAYU_SALT = import.meta.env.VITE_PAYU_SALT;
@@ -79,9 +80,8 @@ export function generateHash(params: {
     PAYU_SALT
   ].join('|');
 
-  // Note: In production, hash should be generated server-side
-  // This is a client-side fallback for static hosting
-  return btoa(hashString); // Simplified - actual PayU uses SHA512
+  // Generate SHA512 hash as required by PayU
+  return SHA512(hashString).toString();
 }
 
 // Verify PayU response hash
@@ -108,7 +108,7 @@ export function verifyResponseHash(response: PayUResponse): boolean {
     PAYU_KEY
   ].join('|');
 
-  const calculatedHash = btoa(hashString); // Simplified
+  const calculatedHash = SHA512(hashString).toString();
   return calculatedHash === response.hash;
 }
 
