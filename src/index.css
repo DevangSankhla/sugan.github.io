@@ -36,16 +36,36 @@
   
   html {
     scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
   }
   
   body {
     @apply bg-sugan-cream text-sugan-brown font-body antialiased;
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    touch-action: manipulation;
+  }
+  
+  /* Mobile touch improvements */
+  @media (pointer: coarse) {
+    * {
+      touch-action: manipulation;
+    }
+    
+    button, a {
+      min-height: 44px;
+      min-width: 44px;
+    }
   }
   
   h1, h2, h3, h4, h5, h6 {
     @apply font-display;
   }
+  
+  /* Prevent pull-to-refresh on mobile */
+  overscroll-behavior-y: none;
 }
 
 @layer components {
@@ -149,6 +169,32 @@
   
   .animation-delay-500 {
     animation-delay: 500ms;
+  }
+  
+  /* Mobile optimizations */
+  .safe-area-inset {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  
+  .touch-manipulation {
+    touch-action: manipulation;
+  }
+  
+  /* Better focus states for accessibility */
+  .focus-ring {
+    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-sugan-gold focus-visible:ring-offset-2;
+  }
+  
+  /* Hide scrollbar but keep functionality */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
   }
 }
 

@@ -54,6 +54,11 @@ export default function Checkout() {
   const [isPincodeValid, setIsPincodeValid] = useState(false);
   const [codAvailable, setCodAvailable] = useState(true);
 
+  // Simple shipping cost logic
+  const shippingCost = totalPrice > 1999 ? 0 : 99;
+  const codCharge = paymentMethod === 'cod' ? 50 : 0;
+  const finalTotal = totalPrice + shippingCost + codCharge;
+
   // Redirect if not logged in or cart is empty
   useEffect(() => {
     if (!user) {
@@ -70,11 +75,6 @@ export default function Checkout() {
   if (!user || items.length === 0) {
     return null;
   }
-
-  // Simple shipping cost logic
-  const shippingCost = totalPrice > 1999 ? 0 : 99;
-  const codCharge = paymentMethod === 'cod' ? 50 : 0;
-  const finalTotal = totalPrice + shippingCost + codCharge;
 
   // Validate pincode and check COD availability
   useEffect(() => {
