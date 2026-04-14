@@ -592,7 +592,8 @@ export const roomProducts: Record<string, Product[]> = {
     sustainability: 'Sustainably sourced wood',
     story: 'We started Sugan because we believed your pet deserved better than a plastic bowl on the floor. This feeder pairs hand-selected mango wood — sustainably sourced from forests across India — with a natu...',
     care: 'Hand wash with mild soap. Do not soak.',
-    maintenance: 'Apply mineral oil periodically'
+    maintenance: 'Apply mineral oil periodically',
+    videos: ['/videos/SAC048L_video.mp4']
    },
    relatedSizes: [
     {
@@ -630,7 +631,8 @@ export const roomProducts: Record<string, Product[]> = {
     sustainability: 'Sustainably sourced wood',
     story: 'We started Sugan because we believed your pet deserved better than a plastic bowl on the floor. This feeder pairs hand-selected mango wood — sustainably sourced from forests across India — with a natu...',
     care: 'Hand wash with mild soap. Do not soak.',
-    maintenance: 'Apply mineral oil periodically'
+    maintenance: 'Apply mineral oil periodically',
+    videos: ['/videos/SAC048M_video.mp4']
    },
    relatedSizes: [
     {
@@ -668,7 +670,8 @@ export const roomProducts: Record<string, Product[]> = {
     sustainability: 'Sustainably sourced wood',
     story: 'We started Sugan because we believed your pet deserved better than a plastic bowl on the floor. This feeder pairs hand-selected mango wood — sustainably sourced from forests across India — with a natu...',
     care: 'Hand wash with mild soap. Do not soak.',
-    maintenance: 'Apply mineral oil periodically'
+    maintenance: 'Apply mineral oil periodically',
+    videos: ['/videos/SAC048S_video.mp4']
    },
    relatedSizes: [
     {
