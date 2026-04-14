@@ -102,7 +102,13 @@ export default function ProductDetail() {
     return images;
   };
   
+  // Get videos from product details
+  const getAllVideos = (): string[] => {
+    return product.details?.videos || [];
+  };
+  
   const allImages = getAllImages();
+  const allVideos = getAllVideos();
 
   const toggleSection = (section: string) => {
     setExpandedSection(expandedSection === section ? null : section);
@@ -145,7 +151,7 @@ export default function ProductDetail() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Image Gallery */}
-          <ImageGallery images={allImages} productName={product.name} />
+          <ImageGallery images={allImages} videos={allVideos} productName={product.name} />
 
           {/* Product Details */}
           <div className="flex flex-col">
