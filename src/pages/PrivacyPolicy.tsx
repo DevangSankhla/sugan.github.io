@@ -27,7 +27,7 @@ export default function PrivacyPolicy() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12">
         <div className="bg-white rounded-2xl p-8 shadow-sm mb-8">
           <p className="text-sugan-brown/70 font-body leading-relaxed mb-6">
-            At Sugan, we value your privacy and are committed to protecting your personal information. 
+            At Sugan Art and Craft, we value your privacy and are committed to protecting your personal information. 
             This Privacy Policy explains how we collect, use, and safeguard your data when you visit 
             our website or make a purchase.
           </p>
@@ -221,6 +221,7 @@ export default function PrivacyPolicy() {
             please contact us:
           </p>
           <div className="space-y-2 font-body">
+            <p><strong>Legal Name:</strong> Sugan Art and Craft</p>
             <p><strong>Email:</strong> sac280422@gmail.com</p>
             <p><strong>Phone:</strong> +91 6367677255</p>
             <p><strong>Address:</strong> III Phase, Boranada, Jodhpur, Rajasthan 342012</p>

@@ -1,4 +1,4 @@
-import { ArrowLeft, RefreshCw, CheckCircle, XCircle, Clock, Package } from 'lucide-react';
+import { ArrowLeft, RefreshCw, CheckCircle, XCircle, Clock, Package, AlertTriangle, Video } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 export default function ReturnsRefunds() {
@@ -25,6 +25,20 @@ export default function ReturnsRefunds() {
 
       {/* Content */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12">
+        {/* Processing Fee Alert */}
+        <div className="bg-amber-50 border border-amber-200 rounded-2xl p-6 mb-8">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="w-6 h-6 text-amber-600 flex-shrink-0 mt-0.5" />
+            <div>
+              <h3 className="font-body font-medium text-amber-800 mb-1">Return Processing Fee</h3>
+              <p className="text-amber-700 font-body text-sm">
+                A processing fee of <strong>₹100</strong> will be deducted from your refund amount for all returns. 
+                This fee covers inspection, restocking, and handling costs.
+              </p>
+            </div>
+          </div>
+        </div>
+
         {/* Policy Overview */}
         <div className="bg-white rounded-2xl p-8 shadow-sm mb-8">
           <h2 className="font-display text-2xl text-sugan-brown mb-4">Our Return Policy</h2>
@@ -45,8 +59,29 @@ export default function ReturnsRefunds() {
             </div>
             <div className="bg-sugan-cream p-4 rounded-xl text-center">
               <CheckCircle className="w-8 h-8 text-sugan-gold mx-auto mb-2" />
-              <p className="font-display text-2xl text-sugan-brown">100%</p>
-              <p className="text-sm text-sugan-brown/60 font-body">Refund</p>
+              <p className="font-display text-2xl text-sugan-brown">-₹100</p>
+              <p className="text-sm text-sugan-brown/60 font-body">Processing Fee</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Unboxing Video Requirement */}
+        <div className="bg-red-50 border border-red-200 rounded-2xl p-6 mb-8">
+          <div className="flex items-start gap-3">
+            <Video className="w-6 h-6 text-red-600 flex-shrink-0 mt-0.5" />
+            <div>
+              <h3 className="font-body font-medium text-red-800 mb-2">Important: Unboxing Video Required for Damaged Items</h3>
+              <p className="text-red-700 font-body text-sm mb-2">
+                For any claims regarding <strong>damaged, defective, or incorrect items</strong>, you must provide 
+                an <strong>unboxing video</strong> as proof. Without this video, we will not be able to process 
+                your return or refund request.
+              </p>
+              <ul className="text-red-700 font-body text-sm list-disc ml-4 space-y-1">
+                <li>Video must show the package condition before opening</li>
+                <li>Video must clearly show the damaged/defective product</li>
+                <li>Video should be taken immediately upon delivery</li>
+                <li>Upload the video when submitting your return request</li>
+              </ul>
             </div>
           </div>
         </div>
@@ -64,7 +99,7 @@ export default function ReturnsRefunds() {
             </li>
             <li className="flex items-start gap-3">
               <span className="w-2 h-2 bg-sugan-gold rounded-full mt-2 flex-shrink-0"></span>
-              <span>Products with manufacturing defects or damage</span>
+              <span>Products with manufacturing defects or damage (with unboxing video proof)</span>
             </li>
             <li className="flex items-start gap-3">
               <span className="w-2 h-2 bg-sugan-gold rounded-full mt-2 flex-shrink-0"></span>
@@ -73,6 +108,10 @@ export default function ReturnsRefunds() {
             <li className="flex items-start gap-3">
               <span className="w-2 h-2 bg-sugan-gold rounded-full mt-2 flex-shrink-0"></span>
               <span>Items that don't match the description</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="w-2 h-2 bg-sugan-gold rounded-full mt-2 flex-shrink-0"></span>
+              <span>Returns requested within 7 days of delivery</span>
             </li>
           </ul>
         </div>
@@ -100,6 +139,10 @@ export default function ReturnsRefunds() {
               <span className="w-2 h-2 bg-sugan-brown/30 rounded-full mt-2 flex-shrink-0"></span>
               <span>Returns requested after 7 days of delivery</span>
             </li>
+            <li className="flex items-start gap-3">
+              <span className="w-2 h-2 bg-sugan-brown/30 rounded-full mt-2 flex-shrink-0"></span>
+              <span>Damaged items without unboxing video proof</span>
+            </li>
           </ul>
         </div>
 
@@ -110,29 +153,43 @@ export default function ReturnsRefunds() {
             <div className="flex gap-4">
               <div className="w-8 h-8 bg-sugan-gold text-white rounded-full flex items-center justify-center font-display flex-shrink-0">1</div>
               <div>
-                <h3 className="font-body font-medium text-sugan-brown mb-1">Contact Us</h3>
-                <p className="text-sugan-brown/60 font-body text-sm">Email us at sac280422@gmail.com or call +91 6367677255 within 7 days of delivery</p>
+                <h3 className="font-body font-medium text-sugan-brown mb-1">Contact Us Within 7 Days</h3>
+                <p className="text-sugan-brown/60 font-body text-sm">Email us at sac280422@gmail.com or call +91 6367677255 within 7 days of delivery. Include your order number and reason for return.</p>
               </div>
             </div>
             <div className="flex gap-4">
               <div className="w-8 h-8 bg-sugan-gold text-white rounded-full flex items-center justify-center font-display flex-shrink-0">2</div>
+              <div>
+                <h3 className="font-body font-medium text-sugan-brown mb-1">Submit Required Proof (if applicable)</h3>
+                <p className="text-sugan-brown/60 font-body text-sm">For damaged/defective items, upload your unboxing video clearly showing the issue.</p>
+              </div>
+            </div>
+            <div className="flex gap-4">
+              <div className="w-8 h-8 bg-sugan-gold text-white rounded-full flex items-center justify-center font-display flex-shrink-0">3</div>
               <div>
                 <h3 className="font-body font-medium text-sugan-brown mb-1">Pack the Item</h3>
                 <p className="text-sugan-brown/60 font-body text-sm">Pack the item securely in its original packaging with all tags and accessories</p>
               </div>
             </div>
             <div className="flex gap-4">
-              <div className="w-8 h-8 bg-sugan-gold text-white rounded-full flex items-center justify-center font-display flex-shrink-0">3</div>
+              <div className="w-8 h-8 bg-sugan-gold text-white rounded-full flex items-center justify-center font-display flex-shrink-0">4</div>
               <div>
                 <h3 className="font-body font-medium text-sugan-brown mb-1">Pickup or Ship</h3>
                 <p className="text-sugan-brown/60 font-body text-sm">We'll arrange a free pickup from your address or provide a return shipping label</p>
               </div>
             </div>
             <div className="flex gap-4">
-              <div className="w-8 h-8 bg-sugan-gold text-white rounded-full flex items-center justify-center font-display flex-shrink-0">4</div>
+              <div className="w-8 h-8 bg-sugan-gold text-white rounded-full flex items-center justify-center font-display flex-shrink-0">5</div>
+              <div>
+                <h3 className="font-body font-medium text-sugan-brown mb-1">Quality Inspection</h3>
+                <p className="text-sugan-brown/60 font-body text-sm">Once received, we inspect the item for condition (2 business days)</p>
+              </div>
+            </div>
+            <div className="flex gap-4">
+              <div className="w-8 h-8 bg-sugan-gold text-white rounded-full flex items-center justify-center font-display flex-shrink-0">6</div>
               <div>
                 <h3 className="font-body font-medium text-sugan-brown mb-1">Refund Processed</h3>
-                <p className="text-sugan-brown/60 font-body text-sm">Once received and inspected, refund will be processed within 5-7 business days</p>
+                <p className="text-sugan-brown/60 font-body text-sm">After successful inspection, refund will be processed within 7-10 business days (minus ₹100 processing fee)</p>
               </div>
             </div>
           </div>
@@ -143,6 +200,10 @@ export default function ReturnsRefunds() {
           <h2 className="font-display text-xl mb-4">Refund Timeline</h2>
           <div className="space-y-4 font-body">
             <div className="flex justify-between items-center py-2 border-b border-sugan-cream/10">
+              <span className="text-sugan-cream/80">Return Request</span>
+              <span className="font-medium">Within 7 days of delivery</span>
+            </div>
+            <div className="flex justify-between items-center py-2 border-b border-sugan-cream/10">
               <span className="text-sugan-cream/80">Product Pickup</span>
               <span className="font-medium">2-3 business days</span>
             </div>
@@ -152,11 +213,15 @@ export default function ReturnsRefunds() {
             </div>
             <div className="flex justify-between items-center py-2 border-b border-sugan-cream/10">
               <span className="text-sugan-cream/80">Refund Processing</span>
-              <span className="font-medium">3-5 business days</span>
+              <span className="font-medium">7-10 business days</span>
+            </div>
+            <div className="flex justify-between items-center py-2 border-b border-sugan-cream/10">
+              <span className="text-sugan-cream/80">Processing Fee</span>
+              <span className="font-medium text-sugan-gold">₹100 deducted</span>
             </div>
             <div className="flex justify-between items-center py-2">
               <span className="text-sugan-cream/80">Total Time</span>
-              <span className="font-medium text-sugan-gold">7-10 business days</span>
+              <span className="font-medium text-sugan-gold">10-15 business days</span>
             </div>
           </div>
         </div>

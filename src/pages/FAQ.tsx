@@ -29,19 +29,27 @@ const faqCategories: { [key: string]: FAQItem[] } = {
   'Returns & Refunds': [
     {
       question: 'What is your return policy?',
-      answer: 'We offer a 7-day hassle-free return policy. If you are not satisfied with your purchase, you can return the item within 7 days of delivery for a full refund, provided it is in unused condition with original packaging.'
+      answer: 'We offer a 7-day hassle-free return policy. If you are not satisfied with your purchase, you can return the item within 7 days of delivery for a refund (minus ₹100 processing fee), provided it is in unused condition with original packaging. For damaged/defective items, an unboxing video is mandatory as proof.'
     },
     {
       question: 'How do I initiate a return?',
-      answer: 'To initiate a return, contact us at sac280422@gmail.com or call +91 6367677255 within 7 days of delivery. Our team will guide you through the process and arrange a pickup.'
+      answer: 'To initiate a return, contact us at sac280422@gmail.com or call +91 6367677255 within 7 days of delivery. Our team will guide you through the process and arrange a pickup. Note: A ₹100 processing fee will be deducted from your refund amount.'
     },
     {
       question: 'When will I receive my refund?',
-      answer: 'Once we receive and inspect the returned item, your refund will be processed within 5-7 business days. The amount will be credited to your original payment method.'
+      answer: 'Once we receive and inspect the returned item (quality check takes 1-2 days), your refund will be processed within 7-10 business days. The amount will be credited to your original payment method minus the ₹100 processing fee.'
     },
     {
       question: 'Are there any items that cannot be returned?',
-      answer: 'Customized or personalized orders cannot be returned unless there is a manufacturing defect. Items that have been used, washed, or damaged due to misuse are also not eligible for return.'
+      answer: 'Customized or personalized orders cannot be returned unless there is a manufacturing defect. Items that have been used, washed, or damaged due to misuse are also not eligible for return. Damaged items without unboxing video proof cannot be returned.'
+    },
+    {
+      question: 'Is there a fee for returning items?',
+      answer: 'Yes, a return processing fee of ₹100 is deducted from your refund amount for all returns. This fee covers inspection, restocking, and handling costs.'
+    },
+    {
+      question: 'What is an unboxing video and why is it required?',
+      answer: 'An unboxing video is a recording showing the package condition before opening and the product immediately after opening. It is mandatory for damaged/defective item claims as proof. Without this video, we cannot process returns for damaged items.'
     }
   ],
   'Products & Care': [

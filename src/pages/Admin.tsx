@@ -131,6 +131,16 @@ export default function Admin() {
           }));
         }, (error) => {
           console.error('Users error:', error);
+          // If permission denied, at least show current user
+          if (user) {
+            setUsers([{
+              uid: user.uid,
+              email: user.email || '',
+              name: user.displayName || 'Current User',
+              isAdmin: true,
+              createdAt: null
+            }]);
+          }
         });
 
         // Fetch contact submissions

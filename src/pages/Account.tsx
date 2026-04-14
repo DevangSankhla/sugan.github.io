@@ -6,9 +6,11 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { 
   Package, Heart, LogOut, User,
-  ShoppingBag, Clock, Truck, CheckCircle 
+  ShoppingBag, Clock, Truck, CheckCircle, RefreshCw,
+  ChevronDown, ChevronUp, AlertTriangle
 } from 'lucide-react';
 import { db } from '@/lib/firebase';
 import { collection, query, where, onSnapshot, doc, deleteDoc } from 'firebase/firestore';
@@ -20,6 +22,8 @@ interface Order {
   total: number;
   status: 'pending' | 'processing' | 'shipped' | 'delivered';
   createdAt: any;
+  shippedAt?: any;
+  deliveredAt?: any;
   shippingAddress: any;
 }
 
@@ -31,6 +35,27 @@ interface WishlistItem {
   image: string;
 }
 
+// Calculate days remaining for return (7 days from delivery or ship date)
+const getReturnDaysRemaining = (order: Order): number | null => {
+  const startDate = order.deliveredAt?.toDate?.() || order.shippedAt?.toDate?.() || order.createdAt?.toDate?.();
+  if (!startDate) return null;
+  
+  const returnDeadline = new Date(startDate);
+  returnDeadline.setDate(returnDeadline.getDate() + 7);
+  
+  const today = new Date();
+  const diffTime = returnDeadline.getTime() - today.getTime();
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  
+  return diffDays > 0 ? diffDays : 0;
+};
+
+// Check if return is eligible (within 7 days)
+const isReturnEligible = (order: Order): boolean => {
+  const daysRemaining = getReturnDaysRemaining(order);
+  return daysRemaining !== null && daysRemaining > 0 && order.status !== 'pending';
+};
+
 export default function Account() {
   const navigate = useNavigate();
   const { user, userData, logout, isAdmin } = useAuth();
@@ -38,6 +63,7 @@ export default function Account() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [wishlist, setWishlist] = useState<WishlistItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [expandedOrder, setExpandedOrder] = useState<string | null>(null);
 
   useEffect(() => {
     if (!user) {
@@ -123,6 +149,10 @@ export default function Account() {
     }
   };
 
+  const toggleOrderExpand = (orderId: string) => {
+    setExpandedOrder(expandedOrder === orderId ? null : orderId);
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-sugan-cream flex items-center justify-center">
@@ -206,48 +236,179 @@ export default function Account() {
                   </div>
                 ) : (
                   <div className="space-y-4">
-                    {orders.map((order) => (
-                      <Card key={order.id} className="border-sugan-brown/10">
-                        <CardContent className="p-4">
-                          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                            <div>
-                              <p className="font-body text-sm text-sugan-brown/60">
-                                Order #{order.id.slice(-8).toUpperCase()}
-                              </p>
-                              <p className="font-body text-sugan-brown">
-                                {order.items?.length} items • ₹{order.total?.toLocaleString()}
-                              </p>
-                              <p className="font-body text-xs text-sugan-brown/40 mt-1">
-                                {order.createdAt?.toDate().toLocaleDateString('en-IN', {
-                                  day: 'numeric',
-                                  month: 'long',
-                                  year: 'numeric'
-                                })}
-                              </p>
+                    {orders.map((order) => {
+                      const daysRemaining = getReturnDaysRemaining(order);
+                      const returnEligible = isReturnEligible(order);
+                      const isExpanded = expandedOrder === order.id;
+                      
+                      return (
+                        <Card key={order.id} className="border-sugan-brown/10">
+                          <CardContent className="p-4">
+                            {/* Order Header */}
+                            <div 
+                              className="flex flex-col md:flex-row md:items-center justify-between gap-4 cursor-pointer"
+                              onClick={() => toggleOrderExpand(order.id)}
+                            >
+                              <div className="flex-1">
+                                <div className="flex items-center gap-2">
+                                  <p className="font-body text-sm text-sugan-brown/60">
+                                    Order #{order.id.slice(-8).toUpperCase()}
+                                  </p>
+                                  {isExpanded ? <ChevronUp className="w-4 h-4 text-sugan-brown/40" /> : <ChevronDown className="w-4 h-4 text-sugan-brown/40" />}
+                                </div>
+                                <p className="font-body text-sugan-brown">
+                                  {order.items?.length} items • ₹{order.total?.toLocaleString()}
+                                </p>
+                                <p className="font-body text-xs text-sugan-brown/40 mt-1">
+                                  {order.createdAt?.toDate().toLocaleDateString('en-IN', {
+                                    day: 'numeric',
+                                    month: 'long',
+                                    year: 'numeric'
+                                  })}
+                                </p>
+                              </div>
+                              <div className="flex items-center gap-3">
+                                <Badge className={`${getStatusColor(order.status)} font-body capitalize w-fit`}>
+                                  <span className="flex items-center gap-1">
+                                    {getStatusIcon(order.status)}
+                                    {order.status}
+                                  </span>
+                                </Badge>
+                              </div>
                             </div>
-                            <Badge className={`${getStatusColor(order.status)} font-body capitalize w-fit`}>
-                              <span className="flex items-center gap-1">
-                                {getStatusIcon(order.status)}
-                                {order.status}
-                              </span>
-                            </Badge>
-                          </div>
-                          {order.status === 'shipped' && (
-                            <div className="mt-3 pt-3 border-t border-sugan-brown/10">
-                              <Button 
-                                variant="outline" 
-                                size="sm"
-                                className="font-body text-xs"
-                                onClick={() => navigate(`/track/${order.id}`)}
-                              >
-                                <Truck className="w-3 h-3 mr-1" />
-                                Track Order
-                              </Button>
-                            </div>
-                          )}
-                        </CardContent>
-                      </Card>
-                    ))}
+
+                            {/* Expanded Order Details */}
+                            {isExpanded && (
+                              <div className="mt-4 pt-4 border-t border-sugan-brown/10">
+                                {/* Order Items with SKUs */}
+                                <div className="space-y-3 mb-4">
+                                  <h4 className="font-body font-medium text-sugan-brown">Order Items</h4>
+                                  {order.items?.map((item: any, idx: number) => (
+                                    <div key={idx} className="flex items-center gap-3 bg-sugan-cream/50 p-3 rounded-lg">
+                                      <img
+                                        src={item.image}
+                                        alt={item.name}
+                                        className="w-16 h-16 object-cover rounded-lg"
+                                      />
+                                      <div className="flex-1">
+                                        <p className="font-body text-sm font-medium text-sugan-brown">{item.name}</p>
+                                        <p className="text-xs text-sugan-brown/60">
+                                          SKU: <span className="font-mono">{item.id}</span>
+                                        </p>
+                                        <p className="text-xs text-sugan-brown/60">
+                                          Qty: {item.quantity} × ₹{item.price?.toLocaleString()}
+                                        </p>
+                                      </div>
+                                      <p className="font-body font-medium text-sugan-brown">
+                                        ₹{(item.price * item.quantity)?.toLocaleString()}
+                                      </p>
+                                    </div>
+                                  ))}
+                                </div>
+
+                                {/* Shipping Address */}
+                                {order.shippingAddress && (
+                                  <div className="mb-4 p-3 bg-sugan-cream/50 rounded-lg">
+                                    <h4 className="font-body font-medium text-sugan-brown mb-2">Shipping Address</h4>
+                                    <p className="font-body text-sm text-sugan-brown/70">
+                                      {order.shippingAddress.fullName}<br />
+                                      {order.shippingAddress.addressLine1}<br />
+                                      {order.shippingAddress.addressLine2 && <>{order.shippingAddress.addressLine2}<br /></>}
+                                      {order.shippingAddress.city}, {order.shippingAddress.state} - {order.shippingAddress.pincode}<br />
+                                      Phone: {order.shippingAddress.phone}
+                                    </p>
+                                  </div>
+                                )}
+
+                                {/* Action Buttons */}
+                                <div className="flex flex-wrap gap-3">
+                                  {order.status === 'shipped' && (
+                                    <Button 
+                                      variant="outline" 
+                                      size="sm"
+                                      className="font-body text-xs"
+                                      onClick={() => navigate(`/track/${order.id}`)}
+                                    >
+                                      <Truck className="w-3 h-3 mr-1" />
+                                      Track Order
+                                    </Button>
+                                  )}
+
+                                  {/* Return Button */}
+                                  {returnEligible && (
+                                    <Dialog>
+                                      <DialogTrigger asChild>
+                                        <Button 
+                                          variant="outline" 
+                                          size="sm"
+                                          className="font-body text-xs border-amber-500 text-amber-700 hover:bg-amber-50"
+                                        >
+                                          <RefreshCw className="w-3 h-3 mr-1" />
+                                          Return Item ({daysRemaining} days left)
+                                        </Button>
+                                      </DialogTrigger>
+                                      <DialogContent className="max-w-md">
+                                        <DialogHeader>
+                                          <DialogTitle className="font-display text-xl text-sugan-brown">
+                                            Return Request
+                                          </DialogTitle>
+                                        </DialogHeader>
+                                        <div className="space-y-4">
+                                          <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
+                                            <div className="flex items-start gap-2">
+                                              <AlertTriangle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+                                              <div>
+                                                <p className="font-body text-sm text-amber-800 font-medium">
+                                                  Return Processing Fee
+                                                </p>
+                                                <p className="font-body text-sm text-amber-700">
+                                                  A fee of <strong>₹100</strong> will be deducted from your refund amount.
+                                                </p>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          
+                                          <div className="space-y-2">
+                                            <p className="font-body text-sm text-sugan-brown/70">
+                                              <strong>Return Window:</strong> {daysRemaining} days remaining
+                                            </p>
+                                            <p className="font-body text-sm text-sugan-brown/70">
+                                              <strong>Refund Timeline:</strong> 7-10 business days after we receive the item
+                                            </p>
+                                          </div>
+
+                                          <div className="bg-red-50 border border-red-200 rounded-lg p-3">
+                                            <p className="font-body text-xs text-red-700">
+                                              <strong>Note:</strong> For damaged/defective items, you must provide an unboxing video as proof.
+                                            </p>
+                                          </div>
+
+                                          <a 
+                                            href={`mailto:sac280422@gmail.com?subject=Return Request - Order ${order.id.slice(-8).toUpperCase()}&body=Order ID: ${order.id}%0AName: ${userData?.name || ''}%0AEmail: ${user?.email}%0A%0AReason for return:%0A`}
+                                          >
+                                            <Button className="w-full bg-sugan-brown hover:bg-sugan-brown/90 font-body">
+                                              <RefreshCw className="w-4 h-4 mr-2" />
+                                              Email Return Request
+                                            </Button>
+                                          </a>
+                                        </div>
+                                      </DialogContent>
+                                    </Dialog>
+                                  )}
+
+                                  {/* Return Window Closed */}
+                                  {order.status === 'delivered' && !returnEligible && (
+                                    <Badge variant="outline" className="text-gray-500 border-gray-300">
+                                      Return window closed
+                                    </Badge>
+                                  )}
+                                </div>
+                              </div>
+                            )}
+                          </CardContent>
+                        </Card>
+                      );
+                    })}
                   </div>
                 )}
               </CardContent>
@@ -300,8 +461,8 @@ export default function Account() {
                               <div className="flex gap-2 mt-2">
                                 <Button
                                   size="sm"
-                                  className="bg-sugan-brown hover:bg-sugan-brown/90 font-body text-xs"
                                   onClick={() => moveToCart(item)}
+                                  className="bg-sugan-brown hover:bg-sugan-brown/90 font-body text-xs"
                                 >
                                   <ShoppingBag className="w-3 h-3 mr-1" />
                                   Add to Cart
@@ -309,8 +470,8 @@ export default function Account() {
                                 <Button
                                   size="sm"
                                   variant="outline"
-                                  className="font-body text-xs border-red-200 text-red-600 hover:bg-red-50"
                                   onClick={() => removeFromWishlist(item.id)}
+                                  className="font-body text-xs border-sugan-brown/20"
                                 >
                                   Remove
                                 </Button>
@@ -334,27 +495,30 @@ export default function Account() {
                   Profile Information
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="font-body text-sm text-sugan-brown/60">Full Name</label>
-                    <p className="font-body text-sugan-brown font-medium">{userData?.name || 'Not set'}</p>
-                  </div>
-                  <div>
-                    <label className="font-body text-sm text-sugan-brown/60">Email</label>
-                    <p className="font-body text-sugan-brown font-medium">{userData?.email}</p>
-                  </div>
-                  <div>
-                    <label className="font-body text-sm text-sugan-brown/60">Account Type</label>
-                    <p className="font-body text-sugan-brown font-medium">
-                      {isAdmin ? 'Administrator' : 'Customer'}
-                    </p>
-                  </div>
-                  <div>
-                    <label className="font-body text-sm text-sugan-brown/60">Member Since</label>
-                    <p className="font-body text-sugan-brown font-medium">
-                      {userData?.createdAt ? new Date().toLocaleDateString('en-IN') : 'N/A'}
-                    </p>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="p-4 bg-sugan-cream/50 rounded-lg">
+                      <p className="text-sm text-sugan-brown/60 font-body mb-1">Name</p>
+                      <p className="font-body text-sugan-brown">{userData?.name || 'Not set'}</p>
+                    </div>
+                    <div className="p-4 bg-sugan-cream/50 rounded-lg">
+                      <p className="text-sm text-sugan-brown/60 font-body mb-1">Email</p>
+                      <p className="font-body text-sugan-brown">{user?.email}</p>
+                    </div>
+                    <div className="p-4 bg-sugan-cream/50 rounded-lg">
+                      <p className="text-sm text-sugan-brown/60 font-body mb-1">Phone</p>
+                      <p className="font-body text-sugan-brown">{(userData as any)?.phone || 'Not set'}</p>
+                    </div>
+                    <div className="p-4 bg-sugan-cream/50 rounded-lg">
+                      <p className="text-sm text-sugan-brown/60 font-body mb-1">Member Since</p>
+                      <p className="font-body text-sugan-brown">
+                        {(userData as any)?.createdAt?.toDate?.() ? (userData as any).createdAt.toDate().toLocaleDateString('en-IN', {
+                          month: 'long',
+                          year: 'numeric'
+                        }) : 'N/A'}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </CardContent>
