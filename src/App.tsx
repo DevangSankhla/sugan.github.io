@@ -30,6 +30,7 @@ import Checkout from '@/pages/Checkout';
 import PaymentSuccess from '@/pages/PaymentSuccess';
 import PaymentFailure from '@/pages/PaymentFailure';
 import MobileCartButton from '@/components/MobileCartButton';
+import BottomNavigation from '@/components/BottomNavigation';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import './App.css';
 
@@ -114,6 +115,9 @@ function App() {
 
           {/* Mobile Cart Button */}
           <MobileCartButton />
+
+          {/* Bottom Navigation (Mobile) */}
+          <BottomNavigation />
         </div>
       </BrowserRouter>
     </CartProvider>

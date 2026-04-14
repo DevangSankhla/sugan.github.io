@@ -13,6 +13,7 @@ import ArtisanStory from '@/components/ArtisanStory';
 import RatingBreakdown from '@/components/RatingBreakdown';
 import CompleteTheLook from '@/components/CompleteTheLook';
 import RecentlyViewed, { addToRecentlyViewed } from '@/components/RecentlyViewed';
+import RelatedProducts from '@/components/RelatedProducts';
 
 export default function ProductDetail() {
   const { id } = useParams<{ id: string }>();
@@ -699,8 +700,71 @@ export default function ProductDetail() {
         </div>
       </div>
 
+      {/* Related Products Carousel */}
+      <RelatedProducts currentProduct={product} />
+
       {/* Recently Viewed */}
       <RecentlyViewed />
+
+      {/* Sticky Mobile Add to Cart Bar */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-sugan-brown/10 p-4 lg:hidden z-50 safe-area-inset">
+        <div className="flex items-center gap-4 max-w-lg mx-auto">
+          {/* Quantity Controls */}
+          <div className="flex items-center gap-2 border border-sugan-brown/20 rounded-lg px-3 py-2">
+            <button
+              onClick={() => setQuantity(Math.max(1, quantity - 1))}
+              className="text-sugan-brown hover:text-sugan-gold transition-colors w-8 h-8 flex items-center justify-center"
+            >
+              <Minus className="w-4 h-4" />
+            </button>
+            <span className="w-8 text-center font-body text-sugan-brown">{quantity}</span>
+            <button
+              onClick={() => setQuantity(quantity + 1)}
+              className="text-sugan-brown hover:text-sugan-gold transition-colors w-8 h-8 flex items-center justify-center"
+            >
+              <Plus className="w-4 h-4" />
+            </button>
+          </div>
+          
+          {/* Add to Cart Button */}
+          <button
+            onClick={handleAddToCart}
+            className="flex-1 bg-sugan-brown text-sugan-cream py-3 px-6 font-body text-sm tracking-wider uppercase transition-all duration-300 hover:bg-sugan-gold flex items-center justify-center gap-2 rounded-lg"
+          >
+            <ShoppingCart className="w-4 h-4" />
+            Add to Cart • ₹{(displayPrice * quantity).toLocaleString()}
+          </button>
+          
+          {/* Wishlist Button */}
+          <button 
+            onClick={async () => {
+              if (!user) {
+                navigate('/login');
+                return;
+              }
+              if (isInWishlist && wishlistId) {
+                await deleteDoc(doc(db, 'wishlists', wishlistId));
+              } else if (product) {
+                await addDoc(collection(db, 'wishlists'), {
+                  userId: user.uid,
+                  productId: product.id,
+                  name: product.name,
+                  price: product.price,
+                  image: product.image,
+                  addedAt: new Date()
+                });
+              }
+            }}
+            className={`w-12 h-12 flex items-center justify-center border-2 rounded-lg transition-colors ${
+              isInWishlist 
+                ? 'border-red-500 text-red-500 bg-red-50' 
+                : 'border-sugan-brown/20 text-sugan-brown/60 hover:border-sugan-gold hover:text-sugan-gold'
+            }`}
+          >
+            <Heart className={`w-5 h-5 ${isInWishlist ? 'fill-current' : ''}`} />
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

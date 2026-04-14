@@ -64,8 +64,6 @@
     @apply font-display;
   }
   
-  /* Prevent pull-to-refresh on mobile */
-  overscroll-behavior-y: none;
 }
 
 @layer components {

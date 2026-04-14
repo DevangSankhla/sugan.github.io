@@ -1,6 +1,9 @@
+import { useState } from 'react';
 import { X, Plus, Minus, ShoppingBag, ArrowRight, CreditCard } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '@/context/CartContext';
+import FreeShippingProgress from '@/components/FreeShippingProgress';
+import CouponCode from '@/components/CouponCode';
 
 export default function CartDrawer() {
   const navigate = useNavigate();
@@ -13,6 +16,21 @@ export default function CartDrawer() {
     isCartOpen,
     setIsCartOpen,
   } = useCart();
+
+  const [appliedCoupon, setAppliedCoupon] = useState<string | null>(null);
+  const [discountAmount, setDiscountAmount] = useState(0);
+
+  const handleApplyCoupon = (discount: number, code: string) => {
+    setDiscountAmount(discount);
+    setAppliedCoupon(code);
+  };
+
+  const handleRemoveCoupon = () => {
+    setDiscountAmount(0);
+    setAppliedCoupon(null);
+  };
+
+  const finalTotal = Math.max(totalPrice - discountAmount, 0);
 
   if (!isCartOpen) return null;
 
@@ -77,6 +95,9 @@ export default function CartDrawer() {
             </div>
           ) : (
             <div className="p-6 space-y-6">
+              {/* Free Shipping Progress */}
+              <FreeShippingProgress />
+
               {items.map((item) => (
                 <div
                   key={item.id}
@@ -156,19 +177,50 @@ export default function CartDrawer() {
         {/* Footer */}
         {items.length > 0 && (
           <div className="border-t border-sugan-brown/10 p-6 space-y-4">
+            {/* Coupon Code */}
+            <CouponCode
+              subtotal={totalPrice}
+              onApplyCoupon={handleApplyCoupon}
+              onRemoveCoupon={handleRemoveCoupon}
+              appliedCoupon={appliedCoupon}
+              discountAmount={discountAmount}
+            />
+
             {/* Subtotal */}
-            <div className="flex items-center justify-between">
-              <span className="text-sugan-brown/60 font-body text-sm">
-                Subtotal ({totalItems} items)
-              </span>
-              <span className="font-display text-xl font-semibold text-sugan-brown">
-                ₹{totalPrice.toLocaleString()}
-              </span>
+            <div className="space-y-2">
+              <div className="flex items-center justify-between text-sm">
+                <span className="text-sugan-brown/60 font-body">
+                  Subtotal ({totalItems} items)
+                </span>
+                <span className="font-body text-sugan-brown">
+                  ₹{totalPrice.toLocaleString()}
+                </span>
+              </div>
+              
+              {discountAmount > 0 && (
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-green-600 font-body">
+                    Discount ({appliedCoupon})
+                  </span>
+                  <span className="font-body text-green-600">
+                    -₹{discountAmount.toLocaleString()}
+                  </span>
+                </div>
+              )}
+
+              <div className="flex items-center justify-between pt-2 border-t border-sugan-brown/10">
+                <span className="text-sugan-brown font-body font-medium">
+                  Total
+                </span>
+                <span className="font-display text-xl font-semibold text-sugan-brown">
+                  ₹{finalTotal.toLocaleString()}
+                </span>
+              </div>
             </div>
 
             {/* Note */}
             <p className="text-sugan-brown/50 font-body text-xs">
-              Shipping and taxes calculated at checkout
+              Shipping calculated at checkout
             </p>
 
             {/* Checkout Buttons */}
