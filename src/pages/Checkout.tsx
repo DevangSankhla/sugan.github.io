@@ -71,11 +71,6 @@ export default function Checkout() {
     }
   }, [user, items.length, navigate]);
 
-  // Don't render if redirecting
-  if (!user || items.length === 0) {
-    return null;
-  }
-
   // Validate pincode and check COD availability
   useEffect(() => {
     const checkServiceability = async () => {
@@ -101,8 +96,11 @@ export default function Checkout() {
     checkServiceability();
   }, [address.pincode]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
+    if (!user) {
+      navigate('/login?redirect=/checkout');
+      return;
+    }
     setLoading(true);
 
     try {
@@ -209,6 +207,11 @@ export default function Checkout() {
 
   const isFormValid = address.fullName && address.phone && address.addressLine1 && 
                       address.city && address.state && isPincodeValid;
+
+  // Don't render if redirecting (must be after all hooks)
+  if (!user || items.length === 0) {
+    return null;
+  }
 
   return (
     <div className="min-h-screen bg-sugan-cream py-24">
@@ -545,6 +548,7 @@ export default function Checkout() {
 
                   {/* Place Order Button */}
                   <Button
+                    type="button"
                     onClick={handleSubmit}
                     disabled={!isFormValid || loading}
                     className="w-full h-14 bg-sugan-brown hover:bg-sugan-brown/90 font-body text-lg"
