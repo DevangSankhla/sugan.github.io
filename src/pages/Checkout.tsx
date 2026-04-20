@@ -59,17 +59,13 @@ export default function Checkout() {
   const codCharge = paymentMethod === 'cod' ? 50 : 0;
   const finalTotal = totalPrice + shippingCost + codCharge;
 
-  // Redirect if not logged in or cart is empty
+  // Redirect if not logged in
   useEffect(() => {
     if (!user) {
       navigate('/login?redirect=/checkout');
       return;
     }
-    if (items.length === 0) {
-      navigate('/shop');
-      return;
-    }
-  }, [user, items.length, navigate]);
+  }, [user, navigate]);
 
   // Validate pincode and check COD availability
   useEffect(() => {

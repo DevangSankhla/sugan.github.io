@@ -13,7 +13,7 @@ import {
   Eye, ArrowRight, MapPin, Phone, CreditCard, Truck, Calendar, Hash, Copy, Check
 } from 'lucide-react';
 import { db } from '@/lib/firebase';
-import { collection, query, onSnapshot, doc, updateDoc } from 'firebase/firestore';
+import { collection, query, onSnapshot, doc, updateDoc, serverTimestamp } from 'firebase/firestore';
 import { allProducts } from '@/data/rooms';
 import type { Product } from '@/types';
 
@@ -135,87 +135,94 @@ export default function Admin() {
       return;
     }
 
-    const fetchData = async () => {
-      try {
-        // Fetch orders
-        const ordersQuery = query(collection(db, 'orders'));
-        const unsubscribeOrders = onSnapshot(ordersQuery, (snapshot) => {
-          const ordersData = snapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data()
-          })) as Order[];
-          setOrders(ordersData);
-          
-          const revenue = ordersData.reduce((sum, order) => sum + (order.total || 0), 0);
-          setStats(prev => ({
-            ...prev,
-            totalOrders: ordersData.length,
-            totalRevenue: revenue
-          }));
-        }, (error) => {
-          console.error('Orders error:', error);
-        });
+    let unsubscribeOrders: (() => void) | undefined;
+    let unsubscribeUsers: (() => void) | undefined;
+    let unsubscribeSubmissions: (() => void) | undefined;
 
-        // Fetch users
-        const usersQuery = query(collection(db, 'users'));
-        const unsubscribeUsers = onSnapshot(usersQuery, (snapshot) => {
-          const usersData = snapshot.docs.map(doc => ({
-            uid: doc.id,
-            ...doc.data()
-          })) as UserData[];
-          setUsers(usersData);
-          setStats(prev => ({
-            ...prev,
-            totalUsers: usersData.length
-          }));
-        }, (error) => {
-          console.error('Users error:', error);
-          // If permission denied, at least show current user
-          if (user) {
-            setUsers([{
-              uid: user.uid,
-              email: user.email || '',
-              name: user.displayName || 'Current User',
-              isAdmin: true,
-              createdAt: null
-            }]);
-          }
-        });
+    try {
+      // Fetch orders
+      const ordersQuery = query(collection(db, 'orders'));
+      unsubscribeOrders = onSnapshot(ordersQuery, (snapshot) => {
+        const ordersData = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        })) as Order[];
+        setOrders(ordersData);
+        
+        const revenue = ordersData.reduce((sum, order) => sum + (order.total || 0), 0);
+        setStats(prev => ({
+          ...prev,
+          totalOrders: ordersData.length,
+          totalRevenue: revenue
+        }));
+      }, (error) => {
+        console.error('Orders error:', error);
+      });
 
-        // Fetch contact submissions
-        const submissionsQuery = query(collection(db, 'contactSubmissions'));
-        const unsubscribeSubmissions = onSnapshot(submissionsQuery, (snapshot) => {
-          const submissionsData = snapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data()
-          })) as ContactSubmission[];
-          setSubmissions(submissionsData.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0)));
-          setStats(prev => ({
-            ...prev,
-            totalMessages: submissionsData.length
-          }));
-        }, (error) => {
-          console.error('Submissions error:', error);
-        });
+      // Fetch users
+      const usersQuery = query(collection(db, 'users'));
+      unsubscribeUsers = onSnapshot(usersQuery, (snapshot) => {
+        const usersData = snapshot.docs.map(doc => ({
+          uid: doc.id,
+          ...doc.data()
+        })) as UserData[];
+        setUsers(usersData);
+        setStats(prev => ({
+          ...prev,
+          totalUsers: usersData.length
+        }));
+      }, (error) => {
+        console.error('Users error:', error);
+        // If permission denied, at least show current user
+        if (user) {
+          setUsers([{
+            uid: user.uid,
+            email: user.email || '',
+            name: user.displayName || 'Current User',
+            isAdmin: true,
+            createdAt: null
+          }]);
+        }
+      });
 
-        setLoading(false);
+      // Fetch contact submissions
+      const submissionsQuery = query(collection(db, 'contactSubmissions'));
+      unsubscribeSubmissions = onSnapshot(submissionsQuery, (snapshot) => {
+        const submissionsData = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        })) as ContactSubmission[];
+        setSubmissions(submissionsData.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0)));
+        setStats(prev => ({
+          ...prev,
+          totalMessages: submissionsData.length
+        }));
+      }, (error) => {
+        console.error('Submissions error:', error);
+      });
 
-        return () => {
-          unsubscribeOrders();
-          unsubscribeUsers();
-          unsubscribeSubmissions();
-        };
-      } catch (error) {
-        console.error('Error fetching admin data:', error);
-        setLoading(false);
-      }
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching admin data:', error);
+      setLoading(false);
+    }
+
+    return () => {
+      unsubscribeOrders?.();
+      unsubscribeUsers?.();
+      unsubscribeSubmissions?.();
     };
-
-    fetchData();
   }, [isAdmin]);
 
   const updateOrderStatus = async (orderId: string, status: string) => {
-    await updateDoc(doc(db, 'orders', orderId), { status });
+    // Optimistic update
+    setOrders(prev => prev.map(o => o.id === orderId ? { ...o, status: status as Order['status'] } : o));
+    try {
+      await updateDoc(doc(db, 'orders', orderId), { status, updatedAt: serverTimestamp() });
+    } catch (error) {
+      console.error('Error updating order status:', error);
+      alert('Failed to update order status. Make sure you have admin permissions.');
+    }
   };
 
   const updateSubmissionStatus = async (submissionId: string, status: string) => {
