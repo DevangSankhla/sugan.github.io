@@ -26,6 +26,7 @@ import Login from '@/pages/Login';
 import Signup from '@/pages/Signup';
 import Account from '@/pages/Account';
 import Admin from '@/pages/Admin';
+import AdminOrders from '@/pages/AdminOrders';
 import Checkout from '@/pages/Checkout';
 import PaymentSuccess from '@/pages/PaymentSuccess';
 import PaymentFailure from '@/pages/PaymentFailure';
@@ -104,6 +105,7 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/account" element={<Account />} />
             <Route path="/admin" element={<Admin />} />
+            <Route path="/admin/orders" element={<AdminOrders />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/payment/success" element={<PaymentSuccess />} />
             <Route path="/payment/failure" element={<PaymentFailure />} />

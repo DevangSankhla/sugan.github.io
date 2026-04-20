@@ -9,22 +9,59 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { 
-  Package, Users, DollarSign, ShoppingCart, Search, Edit, Save, X, User, Mail, MessageSquare
+  Package, Users, DollarSign, ShoppingCart, Search, Edit, Save, X, User, Mail, MessageSquare,
+  Eye, ArrowRight, MapPin, Phone, CreditCard, Truck, Calendar, Hash, Copy, Check
 } from 'lucide-react';
 import { db } from '@/lib/firebase';
 import { collection, query, onSnapshot, doc, updateDoc } from 'firebase/firestore';
 import { allProducts } from '@/data/rooms';
 import type { Product } from '@/types';
 
+interface OrderItem {
+  productId: string;
+  name: string;
+  price: number;
+  quantity: number;
+  image: string;
+}
+
+interface ShippingAddress {
+  fullName: string;
+  phone: string;
+  addressLine1: string;
+  addressLine2?: string;
+  city: string;
+  state: string;
+  pincode: string;
+  landmark?: string;
+}
+
+interface ShippingDetails {
+  courier: string;
+  awb: string;
+  shipmentId: string;
+  label?: string;
+  estimatedDelivery?: string;
+}
+
 interface Order {
   id: string;
   userId: string;
   userEmail: string;
-  items: any[];
+  items: OrderItem[];
+  subtotal: number;
+  shipping: number;
+  shippingCourier: string;
+  codCharge: number;
   total: number;
   status: 'pending' | 'processing' | 'shipped' | 'delivered';
+  paymentStatus: string;
+  paymentMethod: string;
+  shippingAddress: ShippingAddress;
+  txnid: string | null;
   createdAt: any;
-  shippingAddress: any;
+  updatedAt: any;
+  shippingDetails?: ShippingDetails;
 }
 
 interface UserData {
@@ -76,6 +113,8 @@ export default function Admin() {
   const [searchTerm, setSearchTerm] = useState('');
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [editingUser, setEditingUser] = useState<UserData | null>(null);
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
+  const [copiedField, setCopiedField] = useState<string | null>(null);
 
   // Redirect if not admin
   useEffect(() => {
@@ -199,6 +238,25 @@ export default function Admin() {
       default:
         return 'bg-gray-100 text-gray-700';
     }
+  };
+
+  const getPaymentStatusColor = (status: string) => {
+    switch (status) {
+      case 'paid':
+        return 'bg-green-100 text-green-700';
+      case 'cod_pending':
+        return 'bg-orange-100 text-orange-700';
+      case 'failed':
+        return 'bg-red-100 text-red-700';
+      default:
+        return 'bg-gray-100 text-gray-700';
+    }
+  };
+
+  const handleCopy = (text: string, field: string) => {
+    navigator.clipboard.writeText(text);
+    setCopiedField(field);
+    setTimeout(() => setCopiedField(null), 2000);
   };
 
   const filteredProducts = products.filter(p => 
@@ -432,23 +490,50 @@ export default function Admin() {
           {/* Orders Tab */}
           <TabsContent value="orders">
             <Card>
-              <CardHeader>
+              <CardHeader className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <CardTitle className="font-display text-xl text-sugan-brown">
                   All Orders ({orders.length})
                 </CardTitle>
+                <Button
+                  variant="outline"
+                  onClick={() => navigate('/admin/orders')}
+                  className="font-body border-sugan-brown/20"
+                >
+                  View Full Records
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
                   {orders.map((order) => (
-                    <Card key={order.id} className="border-sugan-brown/10">
+                    <Card 
+                      key={order.id} 
+                      className="border-sugan-brown/10 hover:border-sugan-gold/50 cursor-pointer transition-colors"
+                      onClick={() => setSelectedOrder(order)}
+                    >
                       <CardContent className="p-4">
                         <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
                           <div className="flex-1">
-                            <p className="font-body text-sm text-sugan-brown/60">
-                              Order #{order.id.slice(-8).toUpperCase()}
-                            </p>
+                            <div className="flex items-center gap-2">
+                              <p className="font-body text-sm text-sugan-brown/60">
+                                Order #{order.id.slice(-8).toUpperCase()}
+                              </p>
+                              <span className="font-body text-xs text-sugan-brown/40">
+                                {order.createdAt?.toDate?.().toLocaleDateString('en-IN', {
+                                  day: 'numeric',
+                                  month: 'short',
+                                  year: 'numeric'
+                                }) || ''}
+                              </span>
+                            </div>
                             <p className="font-body text-sugan-brown">
                               {order.userEmail} • {order.items?.length} items
+                            </p>
+                            <p className="font-body text-xs text-sugan-brown/50 mt-1">
+                              {order.shippingAddress?.fullName} • {order.shippingAddress?.phone}
+                            </p>
+                            <p className="font-body text-xs text-sugan-brown/40 mt-0.5">
+                              {order.shippingAddress?.city}, {order.shippingAddress?.state} - {order.shippingAddress?.pincode}
                             </p>
                             {/* Order Items with SKUs */}
                             <div className="mt-2 space-y-1">
@@ -465,24 +550,43 @@ export default function Admin() {
                                 </div>
                               ))}
                             </div>
-                            <p className="font-body text-sugan-gold font-semibold mt-2">
-                              ₹{order.total?.toLocaleString()}
-                            </p>
+                            <div className="flex items-center gap-2 mt-2">
+                              <p className="font-body text-sugan-gold font-semibold">
+                                ₹{order.total?.toLocaleString()}
+                              </p>
+                              <Badge className={`${getPaymentStatusColor(order.paymentStatus)} font-body text-xs capitalize`}>
+                                {order.paymentMethod} • {order.paymentStatus}
+                              </Badge>
+                            </div>
                           </div>
-                          <div className="flex items-center gap-3">
-                            <select
-                              value={order.status}
-                              onChange={(e) => updateOrderStatus(order.id, e.target.value)}
-                              className="font-body text-sm border border-sugan-brown/20 rounded-md px-3 py-1 bg-white"
+                          <div className="flex flex-col items-end gap-3">
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              className="font-body"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setSelectedOrder(order);
+                              }}
                             >
-                              <option value="pending">Pending</option>
-                              <option value="processing">Processing</option>
-                              <option value="shipped">Shipped</option>
-                              <option value="delivered">Delivered</option>
-                            </select>
-                            <Badge className={`${getStatusColor(order.status)} font-body capitalize`}>
-                              {order.status}
-                            </Badge>
+                              <Eye className="w-3 h-3 mr-1" />
+                              View Details
+                            </Button>
+                            <div className="flex items-center gap-3">
+                              <select
+                                value={order.status}
+                                onChange={(e) => updateOrderStatus(order.id, e.target.value)}
+                                className="font-body text-sm border border-sugan-brown/20 rounded-md px-3 py-1 bg-white"
+                              >
+                                <option value="pending">Pending</option>
+                                <option value="processing">Processing</option>
+                                <option value="shipped">Shipped</option>
+                                <option value="delivered">Delivered</option>
+                              </select>
+                              <Badge className={`${getStatusColor(order.status)} font-body capitalize`}>
+                                {order.status}
+                              </Badge>
+                            </div>
                           </div>
                         </div>
                       </CardContent>
@@ -694,6 +798,234 @@ export default function Admin() {
             </Card>
           </TabsContent>
         </Tabs>
+
+        {/* Order Detail Dialog */}
+        <Dialog open={!!selectedOrder} onOpenChange={() => setSelectedOrder(null)}>
+          <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle className="font-display text-xl text-sugan-brown">
+                Order Details
+              </DialogTitle>
+            </DialogHeader>
+            {selectedOrder && (
+              <div className="space-y-6 mt-2">
+                {/* Order Header */}
+                <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-sugan-brown/10">
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <Hash className="w-4 h-4 text-sugan-brown/40" />
+                      <span className="font-body text-sm text-sugan-brown/60">
+                        Order #{selectedOrder.id.slice(-8).toUpperCase()}
+                      </span>
+                      <button
+                        onClick={() => handleCopy(selectedOrder.id.slice(-8).toUpperCase(), 'orderId')}
+                        className="text-sugan-brown/40 hover:text-sugan-brown transition-colors"
+                      >
+                        {copiedField === 'orderId' ? (
+                          <Check className="w-3 h-3 text-green-600" />
+                        ) : (
+                          <Copy className="w-3 h-3" />
+                        )}
+                      </button>
+                    </div>
+                    <div className="flex items-center gap-2 mt-1">
+                      <Calendar className="w-4 h-4 text-sugan-brown/40" />
+                      <span className="font-body text-xs text-sugan-brown/50">
+                        {selectedOrder.createdAt?.toDate?.().toLocaleString('en-IN', {
+                          day: 'numeric',
+                          month: 'long',
+                          year: 'numeric',
+                          hour: '2-digit',
+                          minute: '2-digit'
+                        }) || 'Date not available'}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex gap-2">
+                    <Badge className={`${getStatusColor(selectedOrder.status)} font-body capitalize`}>
+                      {selectedOrder.status}
+                    </Badge>
+                    <Badge className={`${getPaymentStatusColor(selectedOrder.paymentStatus)} font-body capitalize`}>
+                      {selectedOrder.paymentStatus}
+                    </Badge>
+                  </div>
+                </div>
+
+                {/* Customer & Address */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="bg-sugan-cream/50 rounded-lg p-4">
+                    <h4 className="font-body font-medium text-sugan-brown mb-3 flex items-center gap-2">
+                      <User className="w-4 h-4 text-sugan-gold" />
+                      Customer
+                    </h4>
+                    <div className="space-y-2">
+                      <p className="font-body text-sm text-sugan-brown">
+                        {selectedOrder.shippingAddress?.fullName || 'N/A'}
+                      </p>
+                      <div className="flex items-center gap-2">
+                        <Mail className="w-3 h-3 text-sugan-brown/40" />
+                        <span className="font-body text-xs text-sugan-brown/60">
+                          {selectedOrder.userEmail || 'N/A'}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Phone className="w-3 h-3 text-sugan-brown/40" />
+                        <span className="font-body text-xs text-sugan-brown/60">
+                          {selectedOrder.shippingAddress?.phone || 'N/A'}
+                        </span>
+                      </div>
+                      <p className="font-body text-xs text-sugan-brown/40 mt-1">
+                        User ID: {selectedOrder.userId}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="bg-sugan-cream/50 rounded-lg p-4">
+                    <h4 className="font-body font-medium text-sugan-brown mb-3 flex items-center gap-2">
+                      <MapPin className="w-4 h-4 text-sugan-gold" />
+                      Shipping Address
+                    </h4>
+                    <div className="space-y-1">
+                      <p className="font-body text-sm text-sugan-brown">
+                        {selectedOrder.shippingAddress?.addressLine1}
+                      </p>
+                      {selectedOrder.shippingAddress?.addressLine2 && (
+                        <p className="font-body text-sm text-sugan-brown/80">
+                          {selectedOrder.shippingAddress.addressLine2}
+                        </p>
+                      )}
+                      <p className="font-body text-sm text-sugan-brown">
+                        {selectedOrder.shippingAddress?.city}, {selectedOrder.shippingAddress?.state} - {selectedOrder.shippingAddress?.pincode}
+                      </p>
+                      {selectedOrder.shippingAddress?.landmark && (
+                        <p className="font-body text-xs text-sugan-brown/50">
+                          Landmark: {selectedOrder.shippingAddress.landmark}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Payment Info */}
+                <div className="bg-sugan-cream/50 rounded-lg p-4">
+                  <h4 className="font-body font-medium text-sugan-brown mb-3 flex items-center gap-2">
+                    <CreditCard className="w-4 h-4 text-sugan-gold" />
+                    Payment Information
+                  </h4>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div>
+                      <p className="font-body text-xs text-sugan-brown/50">Method</p>
+                      <p className="font-body text-sm text-sugan-brown font-medium">{selectedOrder.paymentMethod}</p>
+                    </div>
+                    <div>
+                      <p className="font-body text-xs text-sugan-brown/50">Status</p>
+                      <p className="font-body text-sm text-sugan-brown font-medium capitalize">{selectedOrder.paymentStatus}</p>
+                    </div>
+                    <div>
+                      <p className="font-body text-xs text-sugan-brown/50">Transaction ID</p>
+                      <p className="font-body text-sm text-sugan-brown font-medium">{selectedOrder.txnid || 'N/A'}</p>
+                    </div>
+                    <div>
+                      <p className="font-body text-xs text-sugan-brown/50">Total Paid</p>
+                      <p className="font-body text-sm text-sugan-brown font-medium">₹{selectedOrder.total?.toLocaleString()}</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Order Items */}
+                <div>
+                  <h4 className="font-body font-medium text-sugan-brown mb-3 flex items-center gap-2">
+                    <Package className="w-4 h-4 text-sugan-gold" />
+                    Order Items ({selectedOrder.items?.length || 0})
+                  </h4>
+                  <div className="space-y-3">
+                    {selectedOrder.items?.map((item, idx) => (
+                      <div key={idx} className="flex items-center gap-4 bg-sugan-cream/50 p-3 rounded-lg">
+                        <img
+                          src={item.image}
+                          alt={item.name}
+                          className="w-16 h-16 object-cover rounded-lg"
+                        />
+                        <div className="flex-1">
+                          <p className="font-body text-sm font-medium text-sugan-brown">{item.name}</p>
+                          <p className="font-body text-xs text-sugan-brown/50">SKU: {item.productId}</p>
+                          <p className="font-body text-xs text-sugan-brown/60">
+                            Qty: {item.quantity} × ₹{item.price?.toLocaleString()}
+                          </p>
+                        </div>
+                        <p className="font-body text-sm font-semibold text-sugan-brown">
+                          ₹{(item.price * item.quantity).toLocaleString()}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Order Summary */}
+                <div className="bg-sugan-cream/50 rounded-lg p-4">
+                  <h4 className="font-body font-medium text-sugan-brown mb-3">Order Summary</h4>
+                  <div className="space-y-2">
+                    <div className="flex justify-between font-body text-sm text-sugan-brown/60">
+                      <span>Subtotal</span>
+                      <span>₹{selectedOrder.subtotal?.toLocaleString()}</span>
+                    </div>
+                    <div className="flex justify-between font-body text-sm text-sugan-brown/60">
+                      <span>Shipping</span>
+                      <span>{selectedOrder.shipping === 0 ? 'FREE' : `₹${selectedOrder.shipping}`}</span>
+                    </div>
+                    {selectedOrder.codCharge > 0 && (
+                      <div className="flex justify-between font-body text-sm text-sugan-brown/60">
+                        <span>COD Fee</span>
+                        <span>₹{selectedOrder.codCharge}</span>
+                      </div>
+                    )}
+                    <div className="flex justify-between font-body text-sm font-semibold text-sugan-brown pt-2 border-t border-sugan-brown/10">
+                      <span>Total</span>
+                      <span>₹{selectedOrder.total?.toLocaleString()}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Shipping Details */}
+                {selectedOrder.shippingDetails && (
+                  <div className="bg-sugan-cream/50 rounded-lg p-4">
+                    <h4 className="font-body font-medium text-sugan-brown mb-3 flex items-center gap-2">
+                      <Truck className="w-4 h-4 text-sugan-gold" />
+                      Shipping Details
+                    </h4>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                      <div>
+                        <p className="font-body text-xs text-sugan-brown/50">Courier</p>
+                        <p className="font-body text-sm text-sugan-brown font-medium">{selectedOrder.shippingDetails.courier}</p>
+                      </div>
+                      <div>
+                        <p className="font-body text-xs text-sugan-brown/50">AWB Number</p>
+                        <p className="font-body text-sm text-sugan-brown font-medium">{selectedOrder.shippingDetails.awb || 'N/A'}</p>
+                      </div>
+                      <div>
+                        <p className="font-body text-xs text-sugan-brown/50">Shipment ID</p>
+                        <p className="font-body text-sm text-sugan-brown font-medium">{selectedOrder.shippingDetails.shipmentId || 'N/A'}</p>
+                      </div>
+                      {selectedOrder.shippingDetails.label && (
+                        <div>
+                          <p className="font-body text-xs text-sugan-brown/50">Label</p>
+                          <a
+                            href={selectedOrder.shippingDetails.label}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="font-body text-sm text-blue-600 hover:underline"
+                          >
+                            View Label
+                          </a>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );
