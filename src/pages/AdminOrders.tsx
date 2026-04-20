@@ -451,14 +451,14 @@ export default function AdminOrders() {
         open={!!selectedOrder}
         onOpenChange={() => setSelectedOrder(null)}
       >
-        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+        <DialogContent className="max-w-5xl max-h-[95vh] overflow-y-auto p-8">
           <DialogHeader>
             <DialogTitle className="font-display text-xl text-sugan-brown">
               Order Details
             </DialogTitle>
           </DialogHeader>
           {selectedOrder && (
-            <div className="space-y-6 mt-2">
+            <div className="space-y-8 mt-2">
               {/* Order Header */}
               <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-sugan-brown/10">
                 <div>
@@ -518,9 +518,9 @@ export default function AdminOrders() {
               </div>
 
               {/* Customer & Address */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-sugan-cream/50 rounded-lg p-4">
-                  <h4 className="font-body font-medium text-sugan-brown mb-3 flex items-center gap-2">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div className="bg-sugan-cream/50 rounded-lg p-5">
+                  <h4 className="font-body font-medium text-sugan-brown mb-4 flex items-center gap-2">
                     <User className="w-4 h-4 text-sugan-gold" />
                     Customer
                   </h4>
@@ -546,8 +546,8 @@ export default function AdminOrders() {
                   </div>
                 </div>
 
-                <div className="bg-sugan-cream/50 rounded-lg p-4">
-                  <h4 className="font-body font-medium text-sugan-brown mb-3 flex items-center gap-2">
+                <div className="bg-sugan-cream/50 rounded-lg p-5">
+                  <h4 className="font-body font-medium text-sugan-brown mb-4 flex items-center gap-2">
                     <MapPin className="w-4 h-4 text-sugan-gold" />
                     Shipping Address
                   </h4>
@@ -575,12 +575,12 @@ export default function AdminOrders() {
               </div>
 
               {/* Payment Info */}
-              <div className="bg-sugan-cream/50 rounded-lg p-4">
-                <h4 className="font-body font-medium text-sugan-brown mb-3 flex items-center gap-2">
+              <div className="bg-sugan-cream/50 rounded-lg p-5">
+                <h4 className="font-body font-medium text-sugan-brown mb-4 flex items-center gap-2">
                   <CreditCard className="w-4 h-4 text-sugan-gold" />
                   Payment Information
                 </h4>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                   <div>
                     <p className="font-body text-xs text-sugan-brown/50">
                       Method
@@ -618,11 +618,11 @@ export default function AdminOrders() {
 
               {/* Order Items */}
               <div>
-                <h4 className="font-body font-medium text-sugan-brown mb-3 flex items-center gap-2">
+                <h4 className="font-body font-medium text-sugan-brown mb-4 flex items-center gap-2">
                   <Package className="w-4 h-4 text-sugan-gold" />
                   Order Items ({selectedOrder.items?.length || 0})
                 </h4>
-                <div className="space-y-3">
+                <div className="space-y-4">
                   {selectedOrder.items?.map((item, idx) => (
                     <div
                       key={idx}
@@ -686,12 +686,12 @@ export default function AdminOrders() {
 
               {/* Shipping Details */}
               {selectedOrder.shippingDetails && (
-                <div className="bg-sugan-cream/50 rounded-lg p-4">
-                  <h4 className="font-body font-medium text-sugan-brown mb-3 flex items-center gap-2">
+                <div className="bg-sugan-cream/50 rounded-lg p-5">
+                  <h4 className="font-body font-medium text-sugan-brown mb-4 flex items-center gap-2">
                     <Truck className="w-4 h-4 text-sugan-gold" />
                     Shipping Details
                   </h4>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                     <div>
                       <p className="font-body text-xs text-sugan-brown/50">
                         Courier
