@@ -26,12 +26,14 @@ export default function RoomShop() {
     ? Object.values(roomProducts).flat()
     : roomProducts[roomId || ''] || [];
 
-  // Filter to show only unique base products (small variant if available)
+  const isSetProduct = (p: Product) =>
+    p.name.toLowerCase().includes('set of') || p.name.toLowerCase().includes('pack of');
+
+  // Filter to show unique base products. Set-of-3 products are always kept as separate entries.
   const uniqueProducts = products.reduce((acc: Product[], product) => {
-    const displayProduct = getDisplayProduct(product);
+    const displayProduct = isSetProduct(product) ? product : getDisplayProduct(product);
     const baseName = getBaseProductName(displayProduct.name);
-    
-    // Check if we already have this base product
+
     const isDuplicate = acc.some(p => getBaseProductName(p.name) === baseName);
     if (!isDuplicate) {
       acc.push(displayProduct);

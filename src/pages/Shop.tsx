@@ -17,15 +17,16 @@ const categories = [
   { id: 'cutlery', name: 'Cutlery & Organizers', icon: 'Utensils' },
   { id: 'chopping-boards', name: 'Chopping Boards', icon: 'Square' },
   { id: 'pooja', name: 'Pooja Essentials', icon: 'Sparkles' },
-  { id: 'decor', name: 'Home Decor', icon: 'Home' },
 ];
 
-// Helper to get unique products by base name (for category view to avoid duplicates)
-// Shows only small variant for products with multiple sizes
+const isSetProduct = (p: Product) =>
+  p.name.toLowerCase().includes('set of') || p.name.toLowerCase().includes('pack of');
+
+// Shows set-of-3 as their own entry; collapses other size variants to the small variant.
 const getUniqueProductsByName = (products: Product[]): Product[] => {
   const seen = new Set<string>();
   return products
-    .map(p => getDisplayProduct(p)) // Get small variant if available
+    .map(p => isSetProduct(p) ? p : getDisplayProduct(p))
     .filter(p => {
       const baseName = getBaseProductName(p.name);
       if (seen.has(baseName)) return false;
