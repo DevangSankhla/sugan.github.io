@@ -1,8 +1,8 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Star, Search, ArrowLeft } from 'lucide-react';
-import { roomProducts, rooms, getDisplayProduct, hasSizeVariants, getSizeVariantCount, getBaseProductName } from '@/data/rooms';
+import { roomProducts, rooms, getDisplayProduct, hasSizeVariants, getSizeVariantCount, getBaseProductName, isSetProduct } from '@/data/rooms';
 
 import type { Product } from '@/types';
 import { Link, useParams, useNavigate } from 'react-router-dom';
@@ -26,20 +26,14 @@ export default function RoomShop() {
     ? Object.values(roomProducts).flat()
     : roomProducts[roomId || ''] || [];
 
-  const isSetProduct = (p: Product) =>
-    p.name.toLowerCase().includes('set of') || p.name.toLowerCase().includes('pack of');
-
   // Filter to show unique base products. Set-of-3 products are always kept as separate entries.
-  const uniqueProducts = products.reduce((acc: Product[], product) => {
+  const uniqueProducts = useMemo(() => products.reduce((acc: Product[], product) => {
     const displayProduct = isSetProduct(product) ? product : getDisplayProduct(product);
     const baseName = getBaseProductName(displayProduct.name);
-
     const isDuplicate = acc.some(p => getBaseProductName(p.name) === baseName);
-    if (!isDuplicate) {
-      acc.push(displayProduct);
-    }
+    if (!isDuplicate) acc.push(displayProduct);
     return acc;
-  }, []);
+  }, []), [products]);
 
   const filteredProducts = uniqueProducts.filter((p) => {
     const matchesSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||

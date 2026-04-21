@@ -13,7 +13,7 @@ import {
   Eye, ArrowRight, MapPin, Phone, CreditCard, Truck, Calendar, Hash, Copy, Check
 } from 'lucide-react';
 import { db } from '@/lib/firebase';
-import { collection, query, onSnapshot, doc, updateDoc, serverTimestamp } from 'firebase/firestore';
+import { collection, query, onSnapshot, doc, updateDoc, serverTimestamp, writeBatch } from 'firebase/firestore';
 import { allProducts } from '@/data/rooms';
 import type { Product } from '@/types';
 
@@ -62,6 +62,8 @@ interface Order {
   createdAt: any;
   updatedAt: any;
   shippingDetails?: ShippingDetails;
+  isTrial?: boolean;
+  orderNumber?: string;
 }
 
 interface UserData {
@@ -105,7 +107,8 @@ export default function Admin() {
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [copiedField, setCopiedField] = useState<string | null>(null);
   const [statusError, setStatusError] = useState('');
-  const totalRevenue = useMemo(() => orders.reduce((sum, o) => sum + (o.total || 0), 0), [orders]);
+  const realOrders = useMemo(() => orders.filter(o => !o.isTrial), [orders]);
+  const totalRevenue = useMemo(() => realOrders.reduce((sum, o) => sum + (o.total || 0), 0), [realOrders]);
 
   // Redirect if not admin
   useEffect(() => {
@@ -134,7 +137,10 @@ export default function Admin() {
       // Fetch orders
       const ordersQuery = query(collection(db, 'orders'));
       unsubscribeOrders = onSnapshot(ordersQuery,
-        (snapshot) => setOrders(mapDocs<Order>(snapshot)),
+        (snapshot) => {
+          const data = mapDocs<Order>(snapshot);
+          setOrders(data.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0)));
+        },
         (error) => console.error('Orders error:', error)
       );
 
@@ -201,6 +207,14 @@ export default function Admin() {
     } catch (error) {
       console.error('Error updating user:', error);
     }
+  };
+
+  const markAllAsTrial = async () => {
+    const toMark = orders.filter(o => !o.isTrial);
+    if (toMark.length === 0) return;
+    const batch = writeBatch(db);
+    toMark.forEach(o => batch.update(doc(db, 'orders', o.id), { isTrial: true }));
+    await batch.commit();
   };
 
   const getStatusColor = (status: string) => {
@@ -282,7 +296,7 @@ export default function Admin() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="font-body text-sm text-sugan-brown/60">Total Orders</p>
-                  <p className="font-display text-2xl text-sugan-brown">{orders.length}</p>
+                  <p className="font-display text-2xl text-sugan-brown">{realOrders.length}</p>
                 </div>
                 <ShoppingCart className="w-8 h-8 text-sugan-gold" />
               </div>
@@ -474,15 +488,29 @@ export default function Admin() {
               <CardHeader className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <CardTitle className="font-display text-xl text-sugan-brown">
                   All Orders ({orders.length})
+                  {realOrders.length < orders.length && (
+                    <span className="ml-2 text-sm font-body text-sugan-brown/50">({realOrders.length} real)</span>
+                  )}
                 </CardTitle>
-                <Button
-                  variant="outline"
-                  onClick={() => navigate('/admin/orders')}
-                  className="font-body border-sugan-brown/20"
-                >
-                  View Full Records
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </Button>
+                <div className="flex gap-2">
+                  {orders.some(o => !o.isTrial) && (
+                    <Button
+                      variant="outline"
+                      onClick={markAllAsTrial}
+                      className="font-body border-red-200 text-red-600 hover:bg-red-50"
+                    >
+                      Mark All as Trial
+                    </Button>
+                  )}
+                  <Button
+                    variant="outline"
+                    onClick={() => navigate('/admin/orders')}
+                    className="font-body border-sugan-brown/20"
+                  >
+                    View Full Records
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </Button>
+                </div>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
@@ -495,10 +523,13 @@ export default function Admin() {
                       <CardContent className="p-4">
                         <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
                           <div className="flex-1">
-                            <div className="flex items-center gap-2">
-                              <p className="font-body text-sm text-sugan-brown/60">
-                                Order #{order.id.slice(-8).toUpperCase()}
+                            <div className="flex items-center gap-2 flex-wrap">
+                              <p className="font-body text-sm font-medium text-sugan-brown">
+                                {order.orderNumber || `#${order.id.slice(-8).toUpperCase()}`}
                               </p>
+                              {order.isTrial && (
+                                <Badge className="bg-gray-100 text-gray-500 font-body text-xs">TRIAL</Badge>
+                              )}
                               <span className="font-body text-xs text-sugan-brown/40">
                                 {order.createdAt?.toDate?.().toLocaleString('en-IN', {
                                   day: 'numeric',
@@ -799,7 +830,10 @@ export default function Admin() {
                     <div className="flex items-center gap-2">
                       <Hash className="w-4 h-4 text-sugan-brown/40" />
                       <span className="font-body text-sm text-sugan-brown/60">
-                        Order #{selectedOrder.id.slice(-8).toUpperCase()}
+                        {selectedOrder.orderNumber || `#${selectedOrder.id.slice(-8).toUpperCase()}`}
+                        {selectedOrder.isTrial && (
+                          <Badge className="ml-2 bg-gray-100 text-gray-500 font-body text-xs">TRIAL</Badge>
+                        )}
                       </span>
                       <button
                         onClick={() => handleCopy(selectedOrder.id.slice(-8).toUpperCase(), 'orderId')}

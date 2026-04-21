@@ -2626,6 +2626,10 @@ export const roomProducts: Record<string, Product[]> = {
 // All products combined
 export const allProducts: Product[] = Object.values(roomProducts).flat();
 
+export function isSetProduct(p: { name: string }): boolean {
+  return p.name.toLowerCase().includes('set of') || p.name.toLowerCase().includes('pack of');
+}
+
 // ============================================
 // SIZE VARIANT HELPERS
 // ============================================

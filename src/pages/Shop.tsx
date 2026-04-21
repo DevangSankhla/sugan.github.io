@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { rooms, roomProducts, allProducts, getDisplayProduct, hasSizeVariants, getSizeVariantCount, getBaseProductName } from '@/data/rooms';
+import { rooms, roomProducts, allProducts, getDisplayProduct, hasSizeVariants, getSizeVariantCount, getBaseProductName, isSetProduct } from '@/data/rooms';
 import { Link } from 'react-router-dom';
 import * as Icons from 'lucide-react';
 import type { Product } from '@/types';
@@ -18,9 +18,6 @@ const categories = [
   { id: 'chopping-boards', name: 'Chopping Boards', icon: 'Square' },
   { id: 'pooja', name: 'Pooja Essentials', icon: 'Sparkles' },
 ];
-
-const isSetProduct = (p: Product) =>
-  p.name.toLowerCase().includes('set of') || p.name.toLowerCase().includes('pack of');
 
 // Shows set-of-3 as their own entry; collapses other size variants to the small variant.
 const getUniqueProductsByName = (products: Product[]): Product[] => {

@@ -2,11 +2,11 @@
 // Documentation: https://devguide.payu.in/
 
 import { db } from './firebase';
-import { doc, updateDoc, getDoc, collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { doc, updateDoc, getDoc, collection, serverTimestamp, runTransaction } from 'firebase/firestore';
 import SHA512 from 'crypto-js/sha512';
 
-const PAYU_KEY = import.meta.env.VITE_PAYU_MERCHANT_KEY;
-const PAYU_SALT = import.meta.env.VITE_PAYU_SALT;
+const PAYU_KEY = import.meta.env.VITE_PAYU_MERCHANT_KEY || 'zvbkji';
+const PAYU_SALT = import.meta.env.VITE_PAYU_SALT || 'tdqgzgOQZ5HlWxVa0AL7FVs06pammfvC';
 const PAYU_BASE_URL = import.meta.env.VITE_PAYU_BASE_URL || 'https://secure.payu.in/_payment';
 
 interface PayUTransaction {
@@ -238,13 +238,22 @@ export async function getOrderDetails(orderId: string) {
   return null;
 }
 
-// Create order in Firestore
+// Create order in Firestore with sequential SO# order number
 export async function createOrder(orderData: any): Promise<string> {
-  const ordersRef = collection(db, 'orders');
-  const orderDoc = await addDoc(ordersRef, {
-    ...orderData,
-    createdAt: serverTimestamp(),
-    updatedAt: serverTimestamp()
+  const counterRef = doc(db, 'counters', 'orders');
+  const newOrderRef = doc(collection(db, 'orders'));
+
+  await runTransaction(db, async (transaction) => {
+    const counterSnap = await transaction.get(counterRef);
+    const nextCount = (counterSnap.exists() ? (counterSnap.data().count as number) : 0) + 1;
+    transaction.set(counterRef, { count: nextCount }, { merge: true });
+    transaction.set(newOrderRef, {
+      ...orderData,
+      orderNumber: `SO#${nextCount}`,
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp()
+    });
   });
-  return orderDoc.id;
+
+  return newOrderRef.id;
 }
