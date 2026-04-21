@@ -20,6 +20,7 @@ import {
   updateOrderShipping
 } from '@/lib/shiprocket';
 import { MapPin, Phone, User, Home, Building, Navigation, CreditCard, Banknote, Truck, Shield, AlertCircle, Package } from 'lucide-react';
+import CouponCode from '@/components/CouponCode';
 
 type PaymentMethod = 'payu' | 'cod';
 
@@ -53,11 +54,13 @@ export default function Checkout() {
   const [pincodeError, setPincodeError] = useState('');
   const [isPincodeValid, setIsPincodeValid] = useState(false);
   const [codAvailable, setCodAvailable] = useState(true);
+  const [appliedCoupon, setAppliedCoupon] = useState<string | null>(null);
+  const [discountAmount, setDiscountAmount] = useState(0);
 
   // Simple shipping cost logic
   const shippingCost = totalPrice > 1999 ? 0 : 99;
   const codCharge = paymentMethod === 'cod' ? 50 : 0;
-  const finalTotal = totalPrice + shippingCost + codCharge;
+  const finalTotal = totalPrice - discountAmount + shippingCost + codCharge;
 
   // Redirect if not logged in
   useEffect(() => {
@@ -117,6 +120,8 @@ export default function Checkout() {
           image: item.image
         })),
         subtotal: totalPrice,
+        discount: discountAmount,
+        couponCode: appliedCoupon,
         shipping: shippingCost,
         shippingCourier: 'Shiprocket',
         codCharge: codCharge,
@@ -513,12 +518,27 @@ export default function Checkout() {
                     </div>
                   ))}
 
+                  {/* Coupon */}
+                  <CouponCode
+                    subtotal={totalPrice}
+                    onApplyCoupon={(discount, code) => { setDiscountAmount(discount); setAppliedCoupon(code); }}
+                    onRemoveCoupon={() => { setDiscountAmount(0); setAppliedCoupon(null); }}
+                    appliedCoupon={appliedCoupon}
+                    discountAmount={discountAmount}
+                  />
+
                   {/* Totals */}
                   <div className="border-t border-sugan-brown/10 pt-4 space-y-2">
                     <div className="flex justify-between font-body text-sugan-brown/60">
                       <span>Subtotal</span>
                       <span>₹{totalPrice.toLocaleString()}</span>
                     </div>
+                    {discountAmount > 0 && (
+                      <div className="flex justify-between font-body text-green-600">
+                        <span>Discount ({appliedCoupon})</span>
+                        <span>-₹{discountAmount.toLocaleString()}</span>
+                      </div>
+                    )}
                     <div className="flex justify-between font-body text-sugan-brown/60">
                       <span>Shipping</span>
                       <span>{shippingCost === 0 ? 'FREE' : `₹${shippingCost}`}</span>
