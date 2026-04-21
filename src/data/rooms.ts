@@ -1232,7 +1232,24 @@ export const roomProducts: Record<string, Product[]> = {
     story: 'Sugan exists because we believed everyday objects in Indian homes could be made without plastic, without harmful chemicals, and without compromising on beauty. This serving tray is hand-crafted in Jod...',
     care: 'Hand wash with mild soap. Do not soak.',
     maintenance: 'Apply mineral oil periodically'
-   }
+   },
+   relatedSizes: [
+    {
+        'size': 'Small',
+        'productId': 'SAC01_S',
+        'price': 799
+    },
+    {
+        'size': 'Medium',
+        'productId': 'SAC01_M',
+        'price': 1099
+    },
+    {
+        'size': 'Large',
+        'productId': 'SAC01_L',
+        'price': 1299
+    }
+]
   },
   {
    id: 'SAC01_L',
@@ -1269,6 +1286,11 @@ export const roomProducts: Record<string, Product[]> = {
         'size': 'Medium',
         'productId': 'SAC01_M',
         'price': 1099
+    }
+,    {
+        'size': 'Set of 3',
+        'productId': 'SAC01_Combo_Set of 3-S',
+        'price': 2499
     }
 ]
   },
@@ -1308,6 +1330,11 @@ export const roomProducts: Record<string, Product[]> = {
         'productId': 'SAC01_L',
         'price': 1299
     }
+,    {
+        'size': 'Set of 3',
+        'productId': 'SAC01_Combo_Set of 3-S',
+        'price': 2499
+    }
 ]
   },
   {
@@ -1346,6 +1373,11 @@ export const roomProducts: Record<string, Product[]> = {
         'productId': 'SAC01_L',
         'price': 1299
     }
+,    {
+        'size': 'Set of 3',
+        'productId': 'SAC01_Combo_Set of 3-S',
+        'price': 2499
+    }
 ]
   },
   {
@@ -1372,7 +1404,24 @@ export const roomProducts: Record<string, Product[]> = {
     story: 'The honey finish on this tray isn\'t applied from a bottle — it\'s the natural warmth of acacia wood, brought out by our artisans in Jodhpur through careful sanding and food-safe mineral oil finishing...',
     care: 'Hand wash with mild soap. Do not soak.',
     maintenance: 'Apply mineral oil periodically'
-   }
+   },
+   relatedSizes: [
+    {
+        'size': 'Small',
+        'productId': 'SAC02_S',
+        'price': 899
+    },
+    {
+        'size': 'Medium',
+        'productId': 'SAC02_M',
+        'price': 1199
+    },
+    {
+        'size': 'Large',
+        'productId': 'SAC02_L',
+        'price': 1499
+    }
+]
   },
   {
    id: 'SAC02_L',
@@ -1409,6 +1458,11 @@ export const roomProducts: Record<string, Product[]> = {
         'size': 'Medium',
         'productId': 'SAC02_M',
         'price': 1099
+    }
+,    {
+        'size': 'Set of 3',
+        'productId': 'SAC02_Combo_Set of 3-S',
+        'price': 2199
     }
 ]
   },
@@ -1448,6 +1502,11 @@ export const roomProducts: Record<string, Product[]> = {
         'productId': 'SAC02_L',
         'price': 1199
     }
+,    {
+        'size': 'Set of 3',
+        'productId': 'SAC02_Combo_Set of 3-S',
+        'price': 2199
+    }
 ]
   },
   {
@@ -1486,6 +1545,11 @@ export const roomProducts: Record<string, Product[]> = {
         'productId': 'SAC02_L',
         'price': 1199
     }
+,    {
+        'size': 'Set of 3',
+        'productId': 'SAC02_Combo_Set of 3-S',
+        'price': 2199
+    }
 ]
   },
   {
@@ -1512,7 +1576,24 @@ export const roomProducts: Record<string, Product[]> = {
     story: 'There is a certain kind of object that gets better the more you use it. This tray is one of them. Sugan was built on the idea that India shouldn\'t have to choose between beautiful design and responsi...',
     care: 'Hand wash with mild soap. Do not soak.',
     maintenance: 'Apply mineral oil periodically'
-   }
+   },
+   relatedSizes: [
+    {
+        'size': 'Small',
+        'productId': 'SAC03_S',
+        'price': 799
+    },
+    {
+        'size': 'Medium',
+        'productId': 'SAC03_M',
+        'price': 1099
+    },
+    {
+        'size': 'Large',
+        'productId': 'SAC03_L',
+        'price': 1299
+    }
+]
   },
   {
    id: 'SAC036',
@@ -1576,6 +1657,11 @@ export const roomProducts: Record<string, Product[]> = {
         'productId': 'SAC03_M',
         'price': 1199
     }
+,    {
+        'size': 'Set of 3',
+        'productId': 'SAC03-Antique Checkers-Set of 3',
+        'price': 2499
+    }
 ]
   },
   {
@@ -1613,6 +1699,11 @@ export const roomProducts: Record<string, Product[]> = {
         'size': 'Large',
         'productId': 'SAC03_L',
         'price': 1299
+    }
+,    {
+        'size': 'Set of 3',
+        'productId': 'SAC03-Antique Checkers-Set of 3',
+        'price': 2499
     }
 ]
   },
@@ -1652,6 +1743,11 @@ export const roomProducts: Record<string, Product[]> = {
         'productId': 'SAC03_L',
         'price': 1299
     }
+,    {
+        'size': 'Set of 3',
+        'productId': 'SAC03-Antique Checkers-Set of 3',
+        'price': 2499
+    }
 ]
   },
   {
@@ -1678,7 +1774,24 @@ export const roomProducts: Record<string, Product[]> = {
     story: 'Sugan exists because we believed everyday objects in Indian homes could be made without plastic, without harmful chemicals, and without compromising on beauty. This serving tray is hand-crafted in Jod...',
     care: 'Hand wash with mild soap. Do not soak.',
     maintenance: 'Apply mineral oil periodically'
-   }
+   },
+   relatedSizes: [
+    {
+        'size': 'Small',
+        'productId': 'SAC04_S',
+        'price': 799
+    },
+    {
+        'size': 'Medium',
+        'productId': 'SAC04_M',
+        'price': 999
+    },
+    {
+        'size': 'Large',
+        'productId': 'SAC04_L',
+        'price': 1299
+    }
+]
   },
   {
    id: 'SAC043',
@@ -1846,6 +1959,11 @@ export const roomProducts: Record<string, Product[]> = {
         'productId': 'SAC04_M',
         'price': 1099
     }
+,    {
+        'size': 'Set of 3',
+        'productId': 'SAC04-Natural Tray-Set of 3',
+        'price': 2199
+    }
 ]
   },
   {
@@ -1883,6 +2001,11 @@ export const roomProducts: Record<string, Product[]> = {
         'size': 'Large',
         'productId': 'SAC04_L',
         'price': 1199
+    }
+,    {
+        'size': 'Set of 3',
+        'productId': 'SAC04-Natural Tray-Set of 3',
+        'price': 2199
     }
 ]
   },
@@ -1922,6 +2045,11 @@ export const roomProducts: Record<string, Product[]> = {
         'productId': 'SAC04_L',
         'price': 1199
     }
+,    {
+        'size': 'Set of 3',
+        'productId': 'SAC04-Natural Tray-Set of 3',
+        'price': 2199
+    }
 ]
   },
   {
@@ -1959,6 +2087,11 @@ export const roomProducts: Record<string, Product[]> = {
         'size': 'Medium',
         'productId': 'SAC05_M',
         'price': 1099
+    }
+,    {
+        'size': 'Set of 3',
+        'productId': 'SAC05_Pack of 3',
+        'price': 2399
     }
 ]
   },
@@ -2024,7 +2157,24 @@ export const roomProducts: Record<string, Product[]> = {
     story: 'A serving bowl is one of the most used objects in an Indian kitchen — so at Sugan, we decided it should also be one of the most beautiful. Hand-carved from premium acacia wood by artisans in Jodhpur, ...',
     care: 'Hand wash with mild soap. Do not soak.',
     maintenance: 'Apply mineral oil periodically'
-   }
+   },
+   relatedSizes: [
+    {
+        'size': 'Small',
+        'productId': 'SAC05_S',
+        'price': 899
+    },
+    {
+        'size': 'Medium',
+        'productId': 'SAC05_M',
+        'price': 1199
+    },
+    {
+        'size': 'Large',
+        'productId': 'SAC05_L',
+        'price': 1499
+    }
+]
   },
   {
    id: 'SAC05_S',
@@ -2061,6 +2211,11 @@ export const roomProducts: Record<string, Product[]> = {
         'size': 'Large',
         'productId': 'SAC05_L',
         'price': 1199
+    }
+,    {
+        'size': 'Set of 3',
+        'productId': 'SAC05_Pack of 3',
+        'price': 2399
     }
 ]
   },
@@ -2114,7 +2269,24 @@ export const roomProducts: Record<string, Product[]> = {
     story: 'Sugan exists because we believed everyday objects in Indian homes could be made without plastic, without harmful chemicals, and without compromising on beauty. This serving tray is hand-crafted in Jod...',
     care: 'Hand wash with mild soap. Do not soak.',
     maintenance: 'Apply mineral oil periodically'
-   }
+   },
+   relatedSizes: [
+    {
+        'size': 'Small',
+        'productId': 'SAC07_S',
+        'price': 599
+    },
+    {
+        'size': 'Medium',
+        'productId': 'SAC07_M',
+        'price': 899
+    },
+    {
+        'size': 'Large',
+        'productId': 'SAC07_L',
+        'price': 1099
+    }
+]
   },
   {
    id: 'SAC07_L',
@@ -2514,13 +2686,16 @@ function getProductFamily(product: Product): Product[] {
   
   // Strategy 2: Use relatedSizes for products without standard pattern siblings
   // This handles: M0-5FJV-JJ1Q family and standalone products like SAC037_L
+  const isSetProduct = product.name.toLowerCase().includes('set of') || 
+                       product.name.toLowerCase().includes('pack of');
+  
   if (product.relatedSizes && product.relatedSizes.length > 0) {
     const relatedIds = new Set<string>();
     
     product.relatedSizes.forEach(rs => {
-      // Include related products that don't have their own standard siblings
-      // (This prevents pulling in SAC08_S/M/L which form their own family)
-      if (!hasStandardSiblings(rs.productId)) {
+      // For Set/Pack products, include all related sizes even if they have standard siblings
+      // (This allows SAC07 Set of 3 to link to SAC07_S/M/L)
+      if (isSetProduct || !hasStandardSiblings(rs.productId)) {
         relatedIds.add(rs.productId);
       }
     });
@@ -2528,8 +2703,10 @@ function getProductFamily(product: Product): Product[] {
     // Also find products that link back to this one
     allProducts.forEach(p => {
       if (p.relatedSizes?.some(rs => rs.productId === product.id)) {
-        // Only include if this product doesn't have its own standard siblings
-        if (!hasStandardSiblings(p.id)) {
+        const pIsSet = p.name.toLowerCase().includes('set of') || 
+                       p.name.toLowerCase().includes('pack of');
+        // Include if it's a set product linking to us, or if it doesn't have standard siblings
+        if (isSetProduct || pIsSet || !hasStandardSiblings(p.id)) {
           relatedIds.add(p.id);
         }
       }
@@ -2599,7 +2776,8 @@ export function getAllSizeVariants(product: Product): { size: string; product: P
       const id = p.id.toLowerCase();
       const name = p.name.toLowerCase();
       
-      if (name.includes('extra small') || id.includes('xs')) size = 'Extra Small';
+      if (name.includes('set of 3') || name.includes('pack of 3')) size = 'Set of 3';
+      else if (name.includes('extra small') || id.includes('xs')) size = 'Extra Small';
       else if (name.includes('small') || id.endsWith('_s')) size = 'Small';
       else if (name.includes('medium') || id.endsWith('_m')) size = 'Medium';
       else if (name.includes('large') || id.endsWith('_l')) size = 'Large';
