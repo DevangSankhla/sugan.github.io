@@ -2,7 +2,7 @@
 // Documentation: https://devguide.payu.in/
 
 import { db } from './firebase';
-import { doc, updateDoc, getDoc, collection, serverTimestamp, runTransaction } from 'firebase/firestore';
+import { doc, updateDoc, getDoc, collection, serverTimestamp, runTransaction, addDoc } from 'firebase/firestore';
 import SHA512 from 'crypto-js/sha512';
 
 const PAYU_KEY = import.meta.env.VITE_PAYU_MERCHANT_KEY || 'zvbkji';
@@ -243,17 +243,26 @@ export async function createOrder(orderData: any): Promise<string> {
   const counterRef = doc(db, 'counters', 'orders');
   const newOrderRef = doc(collection(db, 'orders'));
 
-  await runTransaction(db, async (transaction) => {
-    const counterSnap = await transaction.get(counterRef);
-    const nextCount = (counterSnap.exists() ? (counterSnap.data().count as number) : 0) + 1;
-    transaction.set(counterRef, { count: nextCount }, { merge: true });
-    transaction.set(newOrderRef, {
+  try {
+    await runTransaction(db, async (transaction) => {
+      const counterSnap = await transaction.get(counterRef);
+      const nextCount = (counterSnap.exists() ? (counterSnap.data().count as number) : 0) + 1;
+      transaction.set(counterRef, { count: nextCount }, { merge: true });
+      transaction.set(newOrderRef, {
+        ...orderData,
+        orderNumber: `SO#${nextCount}`,
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp()
+      });
+    });
+    return newOrderRef.id;
+  } catch {
+    // Fallback: create order without SO# if counters rule not yet deployed
+    const orderDoc = await addDoc(collection(db, 'orders'), {
       ...orderData,
-      orderNumber: `SO#${nextCount}`,
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp()
     });
-  });
-
-  return newOrderRef.id;
+    return orderDoc.id;
+  }
 }
