@@ -32,6 +32,10 @@ jobs:
 
       - name: Build
         run: npm run build
+        env:
+          VITE_PAYU_MERCHANT_KEY: ${{ secrets.VITE_PAYU_MERCHANT_KEY }}
+          VITE_PAYU_SALT: ${{ secrets.VITE_PAYU_SALT }}
+          VITE_PAYU_BASE_URL: https://secure.payu.in/_payment
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
