@@ -69,27 +69,32 @@ export default function Checkout() {
 
   // Validate pincode and check COD availability
   useEffect(() => {
-    const checkServiceability = async () => {
-      if (address.pincode.length === 6) {
-        const isValid = /^[1-9][0-9]{5}$/.test(address.pincode);
-        setIsPincodeValid(isValid);
-        setPincodeError(isValid ? '' : 'Invalid pincode');
-        
-        if (isValid) {
-          try {
-            const serviceability = await checkPincodeServiceability(address.pincode);
-            setCodAvailable(serviceability.cod);
-          } catch (error) {
-            console.error('Error checking serviceability:', error);
-          }
-        }
-      } else {
-        setIsPincodeValid(false);
-        setPincodeError('');
-      }
-    };
+    if (address.pincode.length !== 6) {
+      setIsPincodeValid(false);
+      setPincodeError('');
+      return;
+    }
 
-    checkServiceability();
+    const isValid = /^[1-9][0-9]{5}$/.test(address.pincode);
+    setIsPincodeValid(isValid);
+    setPincodeError(isValid ? '' : 'Invalid pincode');
+
+    if (!isValid) return;
+
+    let cancelled = false;
+    const timer = setTimeout(async () => {
+      try {
+        const serviceability = await checkPincodeServiceability(address.pincode);
+        if (!cancelled) setCodAvailable(serviceability.cod);
+      } catch (error) {
+        console.error('Error checking serviceability:', error);
+      }
+    }, 400);
+
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
+    };
   }, [address.pincode]);
 
   const handleSubmit = async () => {

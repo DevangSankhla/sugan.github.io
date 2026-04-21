@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { Button } from '@/components/ui/button';
@@ -72,14 +72,6 @@ interface UserData {
   createdAt: any;
 }
 
-interface DashboardStats {
-  totalOrders: number;
-  totalRevenue: number;
-  totalProducts: number;
-  totalUsers: number;
-  totalMessages: number;
-}
-
 interface ContactSubmission {
   id: string;
   name: string;
@@ -95,6 +87,10 @@ interface ContactSubmission {
   quantity?: string;
 }
 
+function mapDocs<T>(snapshot: { docs: { id: string; data(): object }[] }): T[] {
+  return snapshot.docs.map(d => ({ id: d.id, ...d.data() })) as T[];
+}
+
 export default function Admin() {
   const navigate = useNavigate();
   const { isAdmin, user } = useAuth();
@@ -102,19 +98,14 @@ export default function Admin() {
   const [products, setProducts] = useState<Product[]>(allProducts);
   const [users, setUsers] = useState<UserData[]>([]);
   const [submissions, setSubmissions] = useState<ContactSubmission[]>([]);
-  const [stats, setStats] = useState<DashboardStats>({
-    totalOrders: 0,
-    totalRevenue: 0,
-    totalProducts: allProducts.length,
-    totalUsers: 0,
-    totalMessages: 0
-  });
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [editingUser, setEditingUser] = useState<UserData | null>(null);
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [copiedField, setCopiedField] = useState<string | null>(null);
+  const [statusError, setStatusError] = useState('');
+  const totalRevenue = useMemo(() => orders.reduce((sum, o) => sum + (o.total || 0), 0), [orders]);
 
   // Redirect if not admin
   useEffect(() => {
@@ -142,64 +133,32 @@ export default function Admin() {
     try {
       // Fetch orders
       const ordersQuery = query(collection(db, 'orders'));
-      unsubscribeOrders = onSnapshot(ordersQuery, (snapshot) => {
-        const ordersData = snapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
-        })) as Order[];
-        setOrders(ordersData);
-        
-        const revenue = ordersData.reduce((sum, order) => sum + (order.total || 0), 0);
-        setStats(prev => ({
-          ...prev,
-          totalOrders: ordersData.length,
-          totalRevenue: revenue
-        }));
-      }, (error) => {
-        console.error('Orders error:', error);
-      });
+      unsubscribeOrders = onSnapshot(ordersQuery,
+        (snapshot) => setOrders(mapDocs<Order>(snapshot)),
+        (error) => console.error('Orders error:', error)
+      );
 
       // Fetch users
       const usersQuery = query(collection(db, 'users'));
-      unsubscribeUsers = onSnapshot(usersQuery, (snapshot) => {
-        const usersData = snapshot.docs.map(doc => ({
-          uid: doc.id,
-          ...doc.data()
-        })) as UserData[];
-        setUsers(usersData);
-        setStats(prev => ({
-          ...prev,
-          totalUsers: usersData.length
-        }));
-      }, (error) => {
-        console.error('Users error:', error);
-        // If permission denied, at least show current user
-        if (user) {
-          setUsers([{
-            uid: user.uid,
-            email: user.email || '',
-            name: user.displayName || 'Current User',
-            isAdmin: true,
-            createdAt: null
-          }]);
+      unsubscribeUsers = onSnapshot(usersQuery,
+        (snapshot) => setUsers(mapDocs<UserData>(snapshot)),
+        (error) => {
+          console.error('Users error:', error);
+          if (user) {
+            setUsers([{ uid: user.uid, email: user.email || '', name: user.displayName || 'Current User', isAdmin: true, createdAt: null }]);
+          }
         }
-      });
+      );
 
       // Fetch contact submissions
       const submissionsQuery = query(collection(db, 'contactSubmissions'));
-      unsubscribeSubmissions = onSnapshot(submissionsQuery, (snapshot) => {
-        const submissionsData = snapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
-        })) as ContactSubmission[];
-        setSubmissions(submissionsData.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0)));
-        setStats(prev => ({
-          ...prev,
-          totalMessages: submissionsData.length
-        }));
-      }, (error) => {
-        console.error('Submissions error:', error);
-      });
+      unsubscribeSubmissions = onSnapshot(submissionsQuery,
+        (snapshot) => {
+          const data = mapDocs<ContactSubmission>(snapshot);
+          setSubmissions(data.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0)));
+        },
+        (error) => console.error('Submissions error:', error)
+      );
 
       setLoading(false);
     } catch (error) {
@@ -214,24 +173,34 @@ export default function Admin() {
     };
   }, [isAdmin]);
 
-  const updateOrderStatus = async (orderId: string, status: string) => {
-    // Optimistic update
-    setOrders(prev => prev.map(o => o.id === orderId ? { ...o, status: status as Order['status'] } : o));
+  const updateOrderStatus = async (orderId: string, status: Order['status']) => {
+    const prevStatus = orders.find(o => o.id === orderId)?.status;
+    setOrders(prev => prev.map(o => o.id === orderId ? { ...o, status } : o));
     try {
       await updateDoc(doc(db, 'orders', orderId), { status, updatedAt: serverTimestamp() });
+      setStatusError('');
     } catch (error) {
       console.error('Error updating order status:', error);
-      alert('Failed to update order status. Make sure you have admin permissions.');
+      if (prevStatus) setOrders(prev => prev.map(o => o.id === orderId ? { ...o, status: prevStatus } : o));
+      setStatusError('Failed to update status. Check admin permissions.');
     }
   };
 
   const updateSubmissionStatus = async (submissionId: string, status: string) => {
-    await updateDoc(doc(db, 'contactSubmissions', submissionId), { status });
+    try {
+      await updateDoc(doc(db, 'contactSubmissions', submissionId), { status });
+    } catch (error) {
+      console.error('Error updating submission:', error);
+    }
   };
 
   const updateUser = async (userId: string, data: Partial<UserData>) => {
-    await updateDoc(doc(db, 'users', userId), data);
-    setEditingUser(null);
+    try {
+      await updateDoc(doc(db, 'users', userId), data);
+      setEditingUser(null);
+    } catch (error) {
+      console.error('Error updating user:', error);
+    }
   };
 
   const getStatusColor = (status: string) => {
@@ -302,13 +271,18 @@ export default function Admin() {
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        {statusError && (
+          <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700 font-body">
+            {statusError}
+          </div>
+        )}
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
           <Card>
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="font-body text-sm text-sugan-brown/60">Total Orders</p>
-                  <p className="font-display text-2xl text-sugan-brown">{stats.totalOrders}</p>
+                  <p className="font-display text-2xl text-sugan-brown">{orders.length}</p>
                 </div>
                 <ShoppingCart className="w-8 h-8 text-sugan-gold" />
               </div>
@@ -320,7 +294,7 @@ export default function Admin() {
                 <div>
                   <p className="font-body text-sm text-sugan-brown/60">Revenue</p>
                   <p className="font-display text-2xl text-sugan-brown">
-                    ₹{(stats.totalRevenue / 1000).toFixed(1)}k
+                    ₹{(totalRevenue / 1000).toFixed(1)}k
                   </p>
                 </div>
                 <DollarSign className="w-8 h-8 text-sugan-gold" />
@@ -332,7 +306,7 @@ export default function Admin() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="font-body text-sm text-sugan-brown/60">Products</p>
-                  <p className="font-display text-2xl text-sugan-brown">{stats.totalProducts}</p>
+                  <p className="font-display text-2xl text-sugan-brown">{allProducts.length}</p>
                 </div>
                 <Package className="w-8 h-8 text-sugan-gold" />
               </div>
@@ -343,7 +317,7 @@ export default function Admin() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="font-body text-sm text-sugan-brown/60">Users</p>
-                  <p className="font-display text-2xl text-sugan-brown">{stats.totalUsers}</p>
+                  <p className="font-display text-2xl text-sugan-brown">{users.length}</p>
                 </div>
                 <Users className="w-8 h-8 text-sugan-gold" />
               </div>
@@ -354,7 +328,7 @@ export default function Admin() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="font-body text-sm text-sugan-brown/60">Messages</p>
-                  <p className="font-display text-2xl text-sugan-brown">{stats.totalMessages}</p>
+                  <p className="font-display text-2xl text-sugan-brown">{submissions.length}</p>
                 </div>
                 <Mail className="w-8 h-8 text-sugan-gold" />
               </div>
@@ -526,10 +500,12 @@ export default function Admin() {
                                 Order #{order.id.slice(-8).toUpperCase()}
                               </p>
                               <span className="font-body text-xs text-sugan-brown/40">
-                                {order.createdAt?.toDate?.().toLocaleDateString('en-IN', {
+                                {order.createdAt?.toDate?.().toLocaleString('en-IN', {
                                   day: 'numeric',
                                   month: 'short',
-                                  year: 'numeric'
+                                  year: 'numeric',
+                                  hour: '2-digit',
+                                  minute: '2-digit'
                                 }) || ''}
                               </span>
                             </div>
@@ -544,12 +520,12 @@ export default function Admin() {
                             </p>
                             {/* Order Items with SKUs */}
                             <div className="mt-2 space-y-1">
-                              {order.items?.map((item: any, idx: number) => (
+                              {order.items?.map((item: OrderItem, idx: number) => (
                                 <div key={idx} className="flex items-center gap-2 text-sm">
                                   <span className="text-sugan-brown/60">•</span>
                                   <span className="font-body text-sugan-brown">{item.name}</span>
                                   <span className="font-body text-xs text-sugan-brown/40 bg-sugan-brown/5 px-2 py-0.5 rounded">
-                                    SKU: {item.id}
+                                    SKU: {item.productId}
                                   </span>
                                   <span className="font-body text-xs text-sugan-brown/60">
                                     x{item.quantity}
@@ -582,8 +558,9 @@ export default function Admin() {
                             <div className="flex items-center gap-3">
                               <select
                                 value={order.status}
-                                onChange={(e) => updateOrderStatus(order.id, e.target.value)}
-                                className="font-body text-sm border border-sugan-brown/20 rounded-md px-3 py-1 bg-white"
+                                onClick={(e) => e.stopPropagation()}
+                                onChange={(e) => { e.stopPropagation(); updateOrderStatus(order.id, e.target.value as Order['status']); }}
+                                className="font-body text-sm border border-sugan-brown/20 rounded-md px-3 py-1 bg-white cursor-pointer"
                               >
                                 <option value="pending">Pending</option>
                                 <option value="processing">Processing</option>

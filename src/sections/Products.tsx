@@ -51,7 +51,7 @@ export default function Products() {
         {/* Header */}
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-12">
           <div>
-            <p className="text-sugan-gold font-body text-sm tracking-[0.2em] uppercase mb-3">
+            <p className="section-label mb-3">
               Shop by Room
             </p>
             <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-light text-sugan-brown">

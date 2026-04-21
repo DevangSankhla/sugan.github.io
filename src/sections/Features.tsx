@@ -70,7 +70,7 @@ export default function Features() {
     >
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <p className="text-sugan-gold font-body text-sm tracking-[0.2em] uppercase mb-3">
+          <p className="section-label mb-3">
             Why Choose Us
           </p>
           <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-light text-sugan-brown">

@@ -62,8 +62,9 @@ module.exports = {
       },
       boxShadow: {
         xs: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
-        "gold": "0 10px 40px -10px rgba(212, 160, 86, 0.3)",
-        "gold-lg": "0 20px 60px -15px rgba(212, 160, 86, 0.4)",
+        "gold": "0 10px 40px -10px rgba(212, 160, 86, 0.35), 0 2px 8px -2px rgba(44, 24, 16, 0.06)",
+        "gold-lg": "0 24px 70px -12px rgba(212, 160, 86, 0.45), 0 4px 16px -4px rgba(44, 24, 16, 0.08)",
+        "card": "0 1px 4px rgba(44, 24, 16, 0.04), 0 4px 16px -4px rgba(44, 24, 16, 0.06)",
       },
       keyframes: {
         "accordion-down": {

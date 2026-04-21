@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import { CheckCircle, Package, Mail, Phone } from 'lucide-react';
-import { handlePaymentSuccess, getOrderDetails } from '@/lib/payu';
+import { getOrderDetails, handlePaymentSuccess } from '@/lib/payu';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 
@@ -14,28 +14,33 @@ export default function PaymentSuccess() {
   useEffect(() => {
     const processPayment = async () => {
       try {
-        // Get PayU response from URL params
-        const response = {
-          status: searchParams.get('status') as 'success' | 'failure',
+        // orderId is embedded in surl as a GET param — reliable even after PayU's POST redirect
+        const orderId = searchParams.get('orderId') || sessionStorage.getItem('pendingOrderId');
+
+        if (!orderId) {
+          setError('Order not found. Please check your orders page.');
+          return;
+        }
+
+        // Mark order as paid in Firestore (landing on surl means PayU payment succeeded)
+        await handlePaymentSuccess({
+          status: 'success',
           txnid: searchParams.get('txnid') || '',
           amount: searchParams.get('amount') || '',
           productinfo: searchParams.get('productinfo') || '',
           firstname: searchParams.get('firstname') || '',
           email: searchParams.get('email') || '',
           hash: searchParams.get('hash') || '',
-          udf1: searchParams.get('udf1') || '', // orderId
-          udf2: searchParams.get('udf2') || '', // userId
-        };
+          udf1: orderId,
+          udf2: searchParams.get('udf2') || '',
+        });
 
-        if (response.status === 'success' && response.udf1) {
-          await handlePaymentSuccess(response);
-          const order = await getOrderDetails(response.udf1);
-          setOrderDetails(order);
-        } else {
-          setError('Payment verification failed');
-        }
+        const order = await getOrderDetails(orderId);
+        setOrderDetails(order);
+        sessionStorage.removeItem('pendingOrderId');
       } catch (err) {
-        setError('Something went wrong while processing your payment');
+        console.error('Payment processing error:', err);
+        setError('Something went wrong while confirming your order. Please check your orders page.');
       } finally {
         setIsProcessing(false);
       }
@@ -49,7 +54,7 @@ export default function PaymentSuccess() {
       <div className="min-h-screen bg-sugan-cream flex items-center justify-center">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-sugan-gold border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="font-body text-sugan-brown">Processing your payment...</p>
+          <p className="font-body text-sugan-brown">Confirming your payment...</p>
         </div>
       </div>
     );
@@ -83,7 +88,6 @@ export default function PaymentSuccess() {
       <div className="max-w-2xl mx-auto px-4 sm:px-6">
         <Card className="border-none shadow-xl">
           <CardContent className="p-8 md:p-12 text-center">
-            {/* Success Icon */}
             <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
               <CheckCircle className="w-10 h-10 text-green-500" />
             </div>
@@ -95,7 +99,6 @@ export default function PaymentSuccess() {
               Thank you for your purchase. Your order has been confirmed.
             </p>
 
-            {/* Order Details */}
             {orderDetails && (
               <div className="bg-sugan-cream rounded-xl p-6 mb-8 text-left">
                 <div className="grid grid-cols-2 gap-4 mb-4">
@@ -123,7 +126,6 @@ export default function PaymentSuccess() {
               </div>
             )}
 
-            {/* Next Steps */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
               <div className="flex items-start gap-3 p-4 bg-sugan-cream rounded-lg text-left">
                 <Mail className="w-5 h-5 text-sugan-gold flex-shrink-0 mt-0.5" />
@@ -141,7 +143,6 @@ export default function PaymentSuccess() {
               </div>
             </div>
 
-            {/* Actions */}
             <div className="flex flex-col sm:flex-row gap-4">
               <Link to="/account" className="flex-1">
                 <Button className="w-full bg-sugan-brown hover:bg-sugan-brown/90 font-body h-12">
@@ -156,7 +157,6 @@ export default function PaymentSuccess() {
               </Link>
             </div>
 
-            {/* WhatsApp Support */}
             <div className="mt-8 pt-8 border-t border-sugan-brown/10">
               <p className="text-sm text-sugan-brown/60 font-body mb-2">
                 Have questions about your order?

@@ -82,7 +82,7 @@ export default function About() {
 
           {/* Content */}
           <div ref={contentRef}>
-            <p className="animate-item text-sugan-gold font-body text-sm tracking-[0.2em] uppercase mb-3">
+            <p className="animate-item section-label mb-3">
               Our Heritage
             </p>
             <h2 className="animate-item font-display text-3xl sm:text-4xl lg:text-5xl font-light text-sugan-brown mb-6">

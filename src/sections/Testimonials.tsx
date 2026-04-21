@@ -58,7 +58,7 @@ export default function Testimonials() {
       <div className="max-w-5xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
-          <p className="text-sugan-gold font-body text-sm tracking-[0.2em] uppercase mb-3">
+          <p className="section-label mb-3">
             Testimonials
           </p>
           <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-light text-sugan-cream">
