@@ -1,4 +1,4 @@
-import { Mail, Phone, MapPin, Instagram } from 'lucide-react';
+import { Mail, Phone, MapPin, Instagram, Linkedin } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export default function Footer() {
@@ -36,6 +36,15 @@ export default function Footer() {
                   aria-label="Instagram"
                 >
                   <Instagram className="w-4 h-4" />
+                </a>
+                <a
+                  href="https://www.linkedin.com/company/sugan-shop/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 rounded-full bg-sugan-cream/10 flex items-center justify-center hover:bg-sugan-gold transition-colors"
+                  aria-label="LinkedIn"
+                >
+                  <Linkedin className="w-4 h-4" />
                 </a>
 
               </div>
@@ -183,12 +192,12 @@ export default function Footer() {
         <div className="section-padding py-4">
           <div className="max-w-7xl mx-auto text-center">
             <p className="text-sugan-cream/80 font-body text-sm">
-              Want to place a big order?{' '}
+              Need furniture for your resort, hotel, café, school, or business?{' '}
               <Link
                 to="/bulk-orders"
                 className="text-sugan-gold hover:text-sugan-cream underline underline-offset-2 transition-colors font-medium"
               >
-                Get a custom quote for bulk orders
+                Get a custom quote for bulk/trade orders
               </Link>
             </p>
           </div>

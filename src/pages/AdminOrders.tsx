@@ -28,7 +28,7 @@ import {
   Check,
 } from 'lucide-react';
 import { db } from '@/lib/firebase';
-import { collection, query, onSnapshot } from 'firebase/firestore';
+import { collection, query, onSnapshot, doc, updateDoc, serverTimestamp } from 'firebase/firestore';
 
 interface OrderItem {
   productId: string;
@@ -75,6 +75,9 @@ interface Order {
   createdAt: any;
   updatedAt: any;
   shippingDetails?: ShippingDetails;
+  couponCode?: string | null;
+  discount?: number;
+  paidAmount?: number;
 }
 
 export default function AdminOrders() {
@@ -85,6 +88,7 @@ export default function AdminOrders() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [copiedField, setCopiedField] = useState<string | null>(null);
+  const [paymentStatusUpdating, setPaymentStatusUpdating] = useState<string | null>(null);
 
   // Redirect if not admin
   useEffect(() => {
@@ -137,6 +141,22 @@ export default function AdminOrders() {
     navigator.clipboard.writeText(text);
     setCopiedField(field);
     setTimeout(() => setCopiedField(null), 2000);
+  };
+
+  const updatePaymentStatus = async (orderId: string, paymentStatus: string) => {
+    setPaymentStatusUpdating(orderId);
+    try {
+      const orderRef = doc(db, 'orders', orderId);
+      await updateDoc(orderRef, {
+        paymentStatus,
+        updatedAt: serverTimestamp()
+      });
+    } catch (err) {
+      console.error('Failed to update payment status:', err);
+      alert('Failed to update payment status. Please try again.');
+    } finally {
+      setPaymentStatusUpdating(null);
+    }
   };
 
   const exportToCSV = () => {
@@ -394,9 +414,20 @@ export default function AdminOrders() {
                           >
                             {order.paymentMethod}
                           </Badge>
-                          <span className="font-body text-xs text-sugan-brown/50 capitalize">
-                            {order.paymentStatus}
-                          </span>
+                          <select
+                            value={order.paymentStatus}
+                            onChange={(e) => {
+                              e.stopPropagation();
+                              updatePaymentStatus(order.id, e.target.value);
+                            }}
+                            disabled={paymentStatusUpdating === order.id}
+                            className="font-body text-xs bg-white border border-sugan-brown/20 rounded px-2 py-1 capitalize focus:outline-none focus:border-sugan-gold disabled:opacity-50"
+                          >
+                            <option value="pending">Pending</option>
+                            <option value="paid">Paid</option>
+                            <option value="cod_pending">COD Pending</option>
+                            <option value="failed">Failed</option>
+                          </select>
                         </div>
                       </td>
                       <td className="py-3 px-3 text-right">
@@ -442,6 +473,74 @@ export default function AdminOrders() {
                 </tbody>
               </table>
             </div>
+
+            {/* Mobile Cards */}
+            <div className="md:hidden space-y-4">
+              {filteredOrders.map((order) => (
+                <div
+                  key={order.id}
+                  className="bg-white border border-sugan-brown/10 rounded-lg p-4 space-y-3"
+                  onClick={() => setSelectedOrder(order)}
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="font-body text-sm font-medium text-sugan-brown">
+                      #{order.id.slice(-8).toUpperCase()}
+                    </span>
+                    <Badge className={`${getStatusColor(order.status)} font-body capitalize text-xs`}>
+                      {order.status}
+                    </Badge>
+                  </div>
+                  <div className="space-y-1">
+                    <p className="font-body text-sm text-sugan-brown">
+                      {order.shippingAddress?.fullName || 'N/A'}
+                    </p>
+                    <p className="font-body text-xs text-sugan-brown/50">
+                      {order.userEmail}
+                    </p>
+                    <p className="font-body text-xs text-sugan-brown/50">
+                      {order.shippingAddress?.phone}
+                    </p>
+                  </div>
+                  <div className="flex items-center justify-between pt-2 border-t border-sugan-brown/10">
+                    <div className="flex flex-col gap-1">
+                      <Badge className={`${getPaymentStatusColor(order.paymentStatus)} font-body text-xs w-fit`}>
+                        {order.paymentMethod}
+                      </Badge>
+                      <select
+                        value={order.paymentStatus}
+                        onChange={(e) => {
+                          e.stopPropagation();
+                          updatePaymentStatus(order.id, e.target.value);
+                        }}
+                        disabled={paymentStatusUpdating === order.id}
+                        className="font-body text-xs bg-white border border-sugan-brown/20 rounded px-2 py-1 capitalize focus:outline-none focus:border-sugan-gold disabled:opacity-50"
+                      >
+                        <option value="pending">Pending</option>
+                        <option value="paid">Paid</option>
+                        <option value="cod_pending">COD Pending</option>
+                        <option value="failed">Failed</option>
+                      </select>
+                    </div>
+                    <span className="font-body text-sm font-semibold text-sugan-brown">
+                      ₹{order.total?.toLocaleString()}
+                    </span>
+                  </div>
+                  <p className="font-body text-xs text-sugan-brown/40">
+                    {order.createdAt?.toDate?.().toLocaleDateString('en-IN', {
+                      day: 'numeric',
+                      month: 'short',
+                      year: 'numeric'
+                    }) || 'N/A'}
+                  </p>
+                </div>
+              ))}
+              {filteredOrders.length === 0 && (
+                <div className="text-center py-12 text-sugan-brown/60 font-body">
+                  <Package className="w-12 h-12 text-sugan-brown/20 mx-auto mb-4" />
+                  No orders found
+                </div>
+              )}
+            </div>
           </CardContent>
         </Card>
       </div>
@@ -451,7 +550,7 @@ export default function AdminOrders() {
         open={!!selectedOrder}
         onOpenChange={() => setSelectedOrder(null)}
       >
-        <DialogContent className="max-w-5xl max-h-[95vh] overflow-y-auto p-8">
+        <DialogContent className="max-w-full md:max-w-5xl max-h-[95vh] overflow-y-auto p-4 md:p-8 w-full md:w-auto">
           <DialogHeader>
             <DialogTitle className="font-display text-xl text-sugan-brown">
               Order Details
@@ -580,7 +679,7 @@ export default function AdminOrders() {
                   <CreditCard className="w-4 h-4 text-sugan-gold" />
                   Payment Information
                 </h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <div>
                     <p className="font-body text-xs text-sugan-brown/50">
                       Method
@@ -597,11 +696,11 @@ export default function AdminOrders() {
                       {selectedOrder.paymentStatus}
                     </p>
                   </div>
-                  <div>
+                  <div className="sm:col-span-2">
                     <p className="font-body text-xs text-sugan-brown/50">
                       Transaction ID
                     </p>
-                    <p className="font-body text-sm text-sugan-brown font-medium">
+                    <p className="font-body text-sm text-sugan-brown font-medium break-all">
                       {selectedOrder.txnid || 'N/A'}
                     </p>
                   </div>
@@ -610,7 +709,7 @@ export default function AdminOrders() {
                       Total Paid
                     </p>
                     <p className="font-body text-sm text-sugan-brown font-medium">
-                      ₹{selectedOrder.total?.toLocaleString()}
+                      ₹{selectedOrder.paidAmount?.toLocaleString() || selectedOrder.total?.toLocaleString()}
                     </p>
                   </div>
                 </div>
@@ -663,6 +762,12 @@ export default function AdminOrders() {
                     <span>Subtotal</span>
                     <span>₹{selectedOrder.subtotal?.toLocaleString()}</span>
                   </div>
+                  {(selectedOrder.discount ?? 0) > 0 && (
+                    <div className="flex justify-between font-body text-sm text-green-600">
+                      <span>Discount {selectedOrder.couponCode ? `(${selectedOrder.couponCode})` : ''}</span>
+                      <span>-₹{selectedOrder.discount?.toLocaleString()}</span>
+                    </div>
+                  )}
                   <div className="flex justify-between font-body text-sm text-sugan-brown/60">
                     <span>Shipping</span>
                     <span>

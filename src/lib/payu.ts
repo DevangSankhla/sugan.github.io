@@ -132,6 +132,9 @@ export function preparePayUForm(orderData: {
     firstname: orderData.customerName,
     email: orderData.customerEmail,
     phone: orderData.customerPhone,
+    // Note: If using GitHub Pages or similar static hosting, PayU's POST redirect
+    // back to these URLs will return a 405 error. Consider using Firebase Hosting,
+    // Netlify, or Vercel which support POST-to-SPA routing.
     surl: `${window.location.origin}/payment/success?orderId=${orderData.orderId}`,
     furl: `${window.location.origin}/payment/failure?orderId=${orderData.orderId}`,
     curl: `${window.location.origin}/payment/cancel`,

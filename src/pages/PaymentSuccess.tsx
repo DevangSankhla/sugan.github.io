@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
-import { CheckCircle, Package, Mail, Phone } from 'lucide-react';
+import { CheckCircle, Package, Mail, Phone, AlertTriangle } from 'lucide-react';
 import { getOrderDetails, handlePaymentSuccess } from '@/lib/payu';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -10,6 +10,7 @@ export default function PaymentSuccess() {
   const [isProcessing, setIsProcessing] = useState(true);
   const [orderDetails, setOrderDetails] = useState<any>(null);
   const [error, setError] = useState('');
+  const [isHostedOnStatic, setIsHostedOnStatic] = useState(false);
 
   useEffect(() => {
     const processPayment = async () => {
@@ -23,6 +24,8 @@ export default function PaymentSuccess() {
         }
 
         // Mark order as paid in Firestore (landing on surl means PayU payment succeeded)
+        // Note: GitHub Pages returns 405 for POST requests. If you see a 405 error,
+        // consider switching to Firebase Hosting (configured in firebase.json) or Netlify.
         await handlePaymentSuccess({
           status: 'success',
           txnid: searchParams.get('txnid') || '',
@@ -38,8 +41,13 @@ export default function PaymentSuccess() {
         const order = await getOrderDetails(orderId);
         setOrderDetails(order);
         sessionStorage.removeItem('pendingOrderId');
-      } catch (err) {
+      } catch (err: any) {
         console.error('Payment processing error:', err);
+        // Detect if we're on a static host that doesn't support POST (GitHub Pages)
+        if (window.location.hostname.includes('github.io') || 
+            (err.message && err.message.includes('405'))) {
+          setIsHostedOnStatic(true);
+        }
         setError('Something went wrong while confirming your order. Please check your orders page.');
       } finally {
         setIsProcessing(false);
@@ -71,6 +79,23 @@ export default function PaymentSuccess() {
               </div>
               <h1 className="font-display text-2xl text-sugan-brown mb-2">Payment Issue</h1>
               <p className="text-sugan-brown/60 font-body mb-6">{error}</p>
+              {isHostedOnStatic && (
+                <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6 text-left">
+                  <div className="flex items-start gap-2">
+                    <AlertTriangle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <p className="font-body text-sm text-amber-800 font-medium">
+                        Hosting Limitation Detected
+                      </p>
+                      <p className="font-body text-sm text-amber-700">
+                        Your site is on a static host that blocks POST requests from PayU. 
+                        Your order is still safe — please check your orders page. 
+                        Consider switching to Firebase Hosting for full payment redirect support.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
               <Link to="/account">
                 <Button className="bg-sugan-brown hover:bg-sugan-brown/90 font-body">
                   View Orders

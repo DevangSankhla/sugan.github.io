@@ -6,7 +6,10 @@ import {
   signOut,
   type User,
   GoogleAuthProvider,
-  signInWithPopup
+  signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
+  sendPasswordResetEmail
 } from 'firebase/auth';
 import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { auth, db } from '@/lib/firebase';
@@ -29,13 +32,14 @@ interface AuthContextType {
   signup: (email: string, password: string, name: string) => Promise<void>;
   loginWithGoogle: () => Promise<void>;
   logout: () => Promise<void>;
+  resetPassword: (email: string) => Promise<void>;
   isAdmin: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// Admin email
-const ADMIN_EMAIL = 'sac280422@gmail.com';
+// Admin emails
+const ADMIN_EMAILS = ['sac280422@gmail.com', 'artisandevang1234@gmail.com'];
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
@@ -69,7 +73,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
               name: user.displayName,
               photoURL: user.photoURL,
               provider: providerId,
-              isAdmin: user.email === ADMIN_EMAIL,
+              isAdmin: ADMIN_EMAILS.includes(user.email || ''),
               createdAt: serverTimestamp()
             };
             await setDoc(userRef, newUserData);
@@ -100,7 +104,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       email: user.email,
       name,
       provider: 'password',
-      isAdmin: email === ADMIN_EMAIL,
+      isAdmin: ADMIN_EMAILS.includes(email),
       createdAt: serverTimestamp()
     };
 
@@ -110,9 +114,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const loginWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
     provider.setCustomParameters({ prompt: 'select_account' });
-    const { user } = await signInWithPopup(auth, provider);
+    provider.addScope('email');
+    provider.addScope('profile');
 
-    // Ensure user doc exists so Google sign-ins show up in admin dashboard
+    try {
+      // Try popup first (better UX on desktop)
+      const { user } = await signInWithPopup(auth, provider);
+      await syncGoogleUser(user);
+    } catch (popupErr: any) {
+      // Fallback to redirect on mobile or if popup blocked
+      if (popupErr.code === 'auth/popup-blocked' || popupErr.code === 'auth/cancelled-popup-request') {
+        await signInWithRedirect(auth, provider);
+      } else {
+        throw popupErr;
+      }
+    }
+  };
+
+  const syncGoogleUser = async (user: User) => {
     const userRef = doc(db, 'users', user.uid);
     const userDoc = await getDoc(userRef);
     if (!userDoc.exists()) {
@@ -122,12 +141,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         name: user.displayName,
         photoURL: user.photoURL,
         provider: 'google.com',
-        isAdmin: user.email === ADMIN_EMAIL,
+        isAdmin: ADMIN_EMAILS.includes(user.email || ''),
         createdAt: serverTimestamp()
       };
       await setDoc(userRef, userData, { merge: true });
     } else {
-      // Sync latest profile fields from Google
       await setDoc(
         userRef,
         {
@@ -141,8 +159,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  // Handle redirect result on app load
+  useEffect(() => {
+    getRedirectResult(auth).then((result) => {
+      if (result?.user) {
+        syncGoogleUser(result.user);
+      }
+    }).catch((err) => {
+      console.error('Google redirect sign-in error:', err);
+    });
+  }, []);
+
   const logout = async () => {
     await signOut(auth);
+  };
+
+  const resetPassword = async (email: string) => {
+    await sendPasswordResetEmail(auth, email);
   };
 
   const value: AuthContextType = {
@@ -153,6 +186,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     signup,
     loginWithGoogle,
     logout,
+    resetPassword,
     isAdmin: userData?.isAdmin || false
   };
 

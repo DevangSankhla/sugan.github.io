@@ -28,6 +28,7 @@ export default function BottomNavigation() {
   const navItems = [
     { path: '/', icon: Home, label: 'Home' },
     { path: '/shop', icon: ShoppingBag, label: 'Shop' },
+    { path: '/bulk-orders', icon: ShoppingBag, label: 'Bulk/Trade' },
     { path: '/cart', icon: ShoppingCart, label: 'Cart', badge: items.length },
     { path: '/account', icon: User, label: 'Account' },
   ];

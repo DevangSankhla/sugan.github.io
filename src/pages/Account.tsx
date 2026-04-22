@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { useCart } from '@/context/CartContext';
 import { Button } from '@/components/ui/button';
@@ -20,7 +20,15 @@ interface Order {
   id: string;
   items: any[];
   total: number;
+  subtotal?: number;
+  discount?: number;
+  couponCode?: string | null;
+  shipping?: number;
+  codCharge?: number;
   status: 'pending' | 'processing' | 'shipped' | 'delivered';
+  paymentStatus?: string;
+  paymentMethod?: string;
+  txnid?: string | null;
   createdAt: any;
   shippedAt?: any;
   deliveredAt?: any;
@@ -58,17 +66,29 @@ const isReturnEligible = (order: Order): boolean => {
 
 export default function Account() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { user, userData, logout, isAdmin } = useAuth();
   const { addToCart } = useCart();
   const [orders, setOrders] = useState<Order[]>([]);
   const [wishlist, setWishlist] = useState<WishlistItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [expandedOrder, setExpandedOrder] = useState<string | null>(null);
+  const [orderNotification, setOrderNotification] = useState<string | null>(null);
 
   useEffect(() => {
     if (!user) {
       navigate('/login');
       return;
+    }
+
+    // Show order notification from query params
+    const orderId = searchParams.get('order');
+    const isCod = searchParams.get('cod') === 'true';
+    if (orderId) {
+      setOrderNotification(isCod ? 'cod' : 'success');
+      setExpandedOrder(orderId);
+      // Clear query params without reloading
+      window.history.replaceState({}, '', '/account');
     }
 
     // Fetch orders
@@ -219,6 +239,15 @@ export default function Account() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
+                {orderNotification && (
+                  <div className={`p-4 rounded-lg mb-4 ${orderNotification === 'cod' ? 'bg-blue-50 border border-blue-200' : 'bg-green-50 border border-green-200'}`}>
+                    <p className={`font-body text-sm font-medium ${orderNotification === 'cod' ? 'text-blue-800' : 'text-green-800'}`}>
+                      {orderNotification === 'cod' 
+                        ? '✅ Order placed successfully! Cash on Delivery selected.' 
+                        : '✅ Order placed successfully! Payment confirmed.'}
+                    </p>
+                  </div>
+                )}
                 {orders.length === 0 ? (
                   <div className="text-center py-12">
                     <Package className="w-12 h-12 text-sugan-brown/20 mx-auto mb-4" />
@@ -304,6 +333,49 @@ export default function Account() {
                                       </p>
                                     </div>
                                   ))}
+                                </div>
+
+                                {/* Order Summary */}
+                                <div className="mb-4 p-3 bg-sugan-cream/50 rounded-lg">
+                                  <h4 className="font-body font-medium text-sugan-brown mb-2">Order Summary</h4>
+                                  <div className="space-y-1">
+                                    <div className="flex justify-between font-body text-sm text-sugan-brown/60">
+                                      <span>Subtotal</span>
+                                      <span>₹{(order.subtotal ?? order.total)?.toLocaleString()}</span>
+                                    </div>
+                                    {(order.discount ?? 0) > 0 && (
+                                      <div className="flex justify-between font-body text-sm text-green-600">
+                                        <span>Discount {order.couponCode ? `(${order.couponCode})` : ''}</span>
+                                        <span>-₹{order.discount?.toLocaleString()}</span>
+                                      </div>
+                                    )}
+                                    <div className="flex justify-between font-body text-sm text-sugan-brown/60">
+                                      <span>Shipping</span>
+                                      <span>{order.shipping === 0 ? 'FREE' : `₹${order.shipping}`}</span>
+                                    </div>
+                                    {(order.codCharge ?? 0) > 0 && (
+                                      <div className="flex justify-between font-body text-sm text-sugan-brown/60">
+                                        <span>COD Fee</span>
+                                        <span>₹{order.codCharge}</span>
+                                      </div>
+                                    )}
+                                    <div className="flex justify-between font-body text-sm font-semibold text-sugan-brown pt-1 border-t border-sugan-brown/10">
+                                      <span>Total</span>
+                                      <span>₹{order.total?.toLocaleString()}</span>
+                                    </div>
+                                    {order.paymentStatus && (
+                                      <div className="flex justify-between font-body text-sm text-sugan-brown/60 pt-1">
+                                        <span>Payment</span>
+                                        <span className="capitalize">{order.paymentMethod} • {order.paymentStatus}</span>
+                                      </div>
+                                    )}
+                                    {order.txnid && (
+                                      <div className="flex justify-between font-body text-sm text-sugan-brown/60">
+                                        <span>Transaction ID</span>
+                                        <span className="font-mono text-xs">{order.txnid}</span>
+                                      </div>
+                                    )}
+                                  </div>
                                 </div>
 
                                 {/* Shipping Address */}

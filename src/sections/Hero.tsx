@@ -108,7 +108,7 @@ export default function Hero() {
                 className="btn-outline flex items-center justify-center gap-2 group"
               >
                 <Building2 className="w-4 h-4" />
-                Bulk Orders
+                BULK/TRADE ORDERS
               </button>
             </div>
 

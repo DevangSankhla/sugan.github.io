@@ -62,10 +62,10 @@ export default function BulkOrders() {
             Back
           </button>
           <h1 className="font-display text-3xl sm:text-4xl text-sugan-cream">
-            Bulk Orders
+            Bulk/Trade Orders
           </h1>
           <p className="text-sugan-cream/70 font-body mt-2">
-            Corporate gifting, hotel & restaurant supplies, big project finishing, wholesale inquiries & more
+            Corporate gifting, hotel & restaurant supplies, resort & café furnishing, schools, interior projects, wholesale inquiries & more
           </p>
         </div>
       </div>
@@ -115,7 +115,7 @@ export default function BulkOrders() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Why Choose Us */}
           <div>
-            <h2 className="font-display text-2xl text-sugan-brown mb-6">Why Choose Sugan for Bulk Orders?</h2>
+            <h2 className="font-display text-2xl text-sugan-brown mb-6">Why Choose Sugan for Bulk/Trade Orders?</h2>
             
             <div className="space-y-4 mb-8">
               <div className="flex items-start gap-4">
@@ -174,7 +174,7 @@ export default function BulkOrders() {
                 </div>
               </div>
               <p className="text-sugan-cream/60 font-body text-sm mt-4">
-                Our bulk order team is available Monday-Saturday, 10 AM - 7 PM IST
+                We accept venture projects including resort/hotel/café furnishing, schools, offices, and interior woodwork. Our bulk order team is available Monday-Saturday, 10 AM - 7 PM IST
               </p>
             </div>
           </div>

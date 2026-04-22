@@ -1,10 +1,9 @@
-import { useState } from 'react';
+
 import { X, Plus, Minus, ShoppingBag, ArrowRight, CreditCard, LogIn } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
 import FreeShippingProgress from '@/components/FreeShippingProgress';
-import CouponCode from '@/components/CouponCode';
 
 export default function CartDrawer() {
   const navigate = useNavigate();
@@ -19,20 +18,7 @@ export default function CartDrawer() {
     setIsCartOpen,
   } = useCart();
 
-  const [appliedCoupon, setAppliedCoupon] = useState<string | null>(null);
-  const [discountAmount, setDiscountAmount] = useState(0);
-
-  const handleApplyCoupon = (discount: number, code: string) => {
-    setDiscountAmount(discount);
-    setAppliedCoupon(code);
-  };
-
-  const handleRemoveCoupon = () => {
-    setDiscountAmount(0);
-    setAppliedCoupon(null);
-  };
-
-  const finalTotal = Math.max(totalPrice - discountAmount, 0);
+  const finalTotal = totalPrice;
 
   if (!isCartOpen) return null;
 
@@ -179,15 +165,6 @@ export default function CartDrawer() {
         {/* Footer */}
         {items.length > 0 && (
           <div className="border-t border-sugan-brown/10 p-6 space-y-4">
-            {/* Coupon Code */}
-            <CouponCode
-              subtotal={totalPrice}
-              onApplyCoupon={handleApplyCoupon}
-              onRemoveCoupon={handleRemoveCoupon}
-              appliedCoupon={appliedCoupon}
-              discountAmount={discountAmount}
-            />
-
             {/* Subtotal */}
             <div className="space-y-2">
               <div className="flex items-center justify-between text-sm">
@@ -198,17 +175,6 @@ export default function CartDrawer() {
                   ₹{totalPrice.toLocaleString()}
                 </span>
               </div>
-              
-              {discountAmount > 0 && (
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-green-600 font-body">
-                    Discount ({appliedCoupon})
-                  </span>
-                  <span className="font-body text-green-600">
-                    -₹{discountAmount.toLocaleString()}
-                  </span>
-                </div>
-              )}
 
               <div className="flex items-center justify-between pt-2 border-t border-sugan-brown/10">
                 <span className="text-sugan-brown font-body font-medium">

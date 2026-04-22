@@ -104,6 +104,9 @@ export default function Navigation() {
                   <Link to="/shop" className="nav-link">
                     Shop
                   </Link>
+                  <Link to="/bulk-orders" className="nav-link">
+                    Bulk/Trade
+                  </Link>
                   <button onClick={() => scrollToSection('about')} className="nav-link">
                     About
                   </button>
@@ -118,6 +121,9 @@ export default function Navigation() {
                   </Link>
                   <Link to="/shop" className="nav-link">
                     Shop
+                  </Link>
+                  <Link to="/bulk-orders" className="nav-link">
+                    Bulk/Trade
                   </Link>
                   <Link to="/#about" className="nav-link">
                     About
@@ -189,6 +195,13 @@ export default function Navigation() {
             className="font-display text-3xl text-sugan-brown hover:text-sugan-gold transition-colors"
           >
             Shop
+          </Link>
+          <Link
+            to="/bulk-orders"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="font-display text-3xl text-sugan-brown hover:text-sugan-gold transition-colors"
+          >
+            Bulk/Trade
           </Link>
           <button
             onClick={() => scrollToSection('about')}
