@@ -4,6 +4,7 @@ require('dotenv').config();
 const http = require('http');
 const url = require('url');
 const routes = require('./src/api/routes');
+const nodemailer = require('nodemailer');
 
 const PORT = process.env.PORT || 3001;
 
@@ -72,6 +73,69 @@ const server = http.createServer(async (req, res) => {
       const asin = path.split('/')[2];
       mockReq.params.asin = asin;
       await routes.getProduct(mockReq, mockRes);
+    }
+    else if (path === '/notify/order' && req.method === 'POST') {
+      // Email notification endpoint
+      let body = '';
+      req.on('data', chunk => body += chunk);
+      req.on('end', async () => {
+        try {
+          const data = JSON.parse(body);
+          const { to, orderId, orderNumber, customerName, total, items, paymentMethod } = data;
+          
+          if (!to || !orderId) {
+            res.writeHead(400);
+            res.end(JSON.stringify({ success: false, message: 'Missing required fields' }));
+            return;
+          }
+
+          const transporter = nodemailer.createTransport({
+            host: process.env.SMTP_HOST,
+            port: parseInt(process.env.SMTP_PORT || '587'),
+            secure: process.env.SMTP_SECURE === 'true',
+            auth: {
+              user: process.env.SMTP_USER,
+              pass: process.env.SMTP_PASS
+            }
+          });
+
+          const itemsList = (items || []).map(i => 
+            `<li>${i.name} × ${i.quantity} — ₹${(i.price * i.quantity).toLocaleString()}</li>`
+          ).join('');
+
+          await transporter.sendMail({
+            from: `"Sugan Shop" <${process.env.SMTP_USER || 'noreply@sugan.shop'}>`,
+            to,
+            subject: `Order Confirmation — ${orderNumber || orderId.slice(-8).toUpperCase()}`,
+            html: `
+              <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;color:#333;">
+                <h2 style="color:#5D4037;">Thank you for your order!</h2>
+                <p>Hi ${customerName || 'there'},</p>
+                <p>We have received your order and it is being processed.</p>
+                <table style="width:100%;border-collapse:collapse;margin:16px 0;font-size:14px;">
+                  <tr><td style="padding:6px 0;border-bottom:1px solid #eee;"><strong>Order ID</strong></td><td style="padding:6px 0;border-bottom:1px solid #eee;">${orderId}</td></tr>
+                  <tr><td style="padding:6px 0;border-bottom:1px solid #eee;"><strong>Payment Method</strong></td><td style="padding:6px 0;border-bottom:1px solid #eee;">${paymentMethod || 'N/A'}</td></tr>
+                  <tr><td style="padding:6px 0;"><strong>Total</strong></td><td style="padding:6px 0;"><strong>₹${total?.toLocaleString() || '0'}</strong></td></tr>
+                </table>
+                <h3 style="color:#5D4037;">Items</h3>
+                <ul>${itemsList}</ul>
+                <p style="margin-top:24px;font-size:12px;color:#888;">
+                  You can track your order status at any time by visiting your Account page.<br>
+                  For any questions, reply to this email or WhatsApp us at +91 6367677255.
+                </p>
+              </div>
+            `
+          });
+
+          res.writeHead(200);
+          res.end(JSON.stringify({ success: true, message: 'Notification sent' }));
+        } catch (err) {
+          console.error('Email notification error:', err);
+          res.writeHead(500);
+          res.end(JSON.stringify({ success: false, message: err.message }));
+        }
+      });
+      return;
     }
     else {
       res.writeHead(404);

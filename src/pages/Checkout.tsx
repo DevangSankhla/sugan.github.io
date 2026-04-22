@@ -19,7 +19,8 @@ import {
   createShiprocketOrder,
   updateOrderShipping
 } from '@/lib/shiprocket';
-import { MapPin, Phone, User, Home, Building, Navigation, CreditCard, Banknote, Truck, Shield, AlertCircle, Package } from 'lucide-react';
+import { sendOrderEmail } from '@/lib/notifications';
+import { MapPin, Phone, User, Home, Building, Navigation, CreditCard, Banknote, Truck, Shield, AlertCircle, Package, MessageCircle, X, Info, ArrowRight } from 'lucide-react';
 import CouponCode from '@/components/CouponCode';
 
 type PaymentMethod = 'payu' | 'cod';
@@ -56,6 +57,8 @@ export default function Checkout() {
   const [codAvailable, setCodAvailable] = useState(true);
   const [appliedCoupon, setAppliedCoupon] = useState<string | null>(null);
   const [discountAmount, setDiscountAmount] = useState(0);
+  const [showPayUWarning, setShowPayUWarning] = useState(false);
+  const [pendingPayUOrderId, setPendingPayUOrderId] = useState<string | null>(null);
 
   // Simple shipping cost logic
   const shippingCost = totalPrice > 1999 ? 0 : 99;
@@ -182,26 +185,33 @@ export default function Checkout() {
       if (paymentMethod === 'cod') {
         // Process Cash on Delivery
         await processCOD(orderId);
+        
+        // Send email notification
+        try {
+          await sendOrderEmail({
+            to: user.email || '',
+            orderId,
+            customerName: address.fullName,
+            total: finalTotal,
+            items: items.map(item => ({
+              name: item.name,
+              price: item.price,
+              quantity: item.quantity
+            })),
+            paymentMethod: 'Cash on Delivery'
+          });
+        } catch (notifyErr) {
+          console.error('Notification error:', notifyErr);
+        }
+        
         clearCart();
         navigate(`/account?order=${orderId}&cod=true`);
       } else {
-        // Process PayU Payment
-        const payuFormData = preparePayUForm({
-          orderId,
-          userId: user.uid,
-          amount: finalTotal,
-          customerName: address.fullName,
-          customerEmail: user.email || '',
-          customerPhone: address.phone,
-          productInfo: `Order from Sugan (${items.length} items)`
-        });
-
-        // Store order ID in session storage for retrieval after payment
-        sessionStorage.setItem('pendingOrderId', orderId);
-        
-        // Submit to PayU
-        submitPayUPayment(payuFormData);
-        // Note: Page will redirect to PayU, no need to clear cart yet
+        // Show warning before PayU redirect (GitHub Pages blocks POST back)
+        setPendingPayUOrderId(orderId);
+        setShowPayUWarning(true);
+        setLoading(false);
+        return;
       }
     } catch (error) {
       console.error('Error creating order:', error);
@@ -210,6 +220,24 @@ export default function Checkout() {
       setLoading(false);
     }
   };
+
+  const proceedToPayU = () => {
+    if (!pendingPayUOrderId || !user) return;
+    const payuFormData = preparePayUForm({
+      orderId: pendingPayUOrderId,
+      userId: user.uid,
+      amount: finalTotal,
+      customerName: address.fullName,
+      customerEmail: user.email || '',
+      customerPhone: address.phone,
+      productInfo: `Order from Sugan (${items.length} items)`
+    });
+
+    sessionStorage.setItem('pendingOrderId', pendingPayUOrderId);
+    submitPayUPayment(payuFormData);
+  };
+
+
 
   const isFormValid = address.fullName && address.phone && address.addressLine1 && 
                       address.city && address.state && isPincodeValid;
@@ -597,6 +625,135 @@ export default function Checkout() {
           </div>
         </div>
       </div>
+      {/* PayU Redirect Warning Modal */}
+      {showPayUWarning && (
+        <div className="fixed inset-0 z-50 bg-sugan-brown/80 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-sugan-cream rounded-2xl p-6 md:p-8 max-w-md w-full shadow-2xl">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="font-display text-xl text-sugan-brown flex items-center gap-2">
+                <Info className="w-5 h-5 text-sugan-gold" />
+                Important
+              </h3>
+              <button
+                onClick={() => setShowPayUWarning(false)}
+                className="text-sugan-brown/40 hover:text-sugan-brown"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <div className="space-y-4">
+              <p className="font-body text-sugan-brown/80">
+                You are about to be redirected to PayU to complete your payment.
+              </p>
+              <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
+                <p className="font-body text-sm text-amber-800 font-medium mb-1">
+                  After payment, please check your Account → Orders page
+                </p>
+                <p className="font-body text-xs text-amber-700">
+                  Do not refresh or close your browser after payment. Your order confirmation will appear in your account within a few minutes.
+                </p>
+              </div>
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 flex items-start gap-3">
+                <MessageCircle className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+                <div>
+                  <p className="font-body text-sm text-blue-800 font-medium">
+                    Get instant updates on WhatsApp
+                  </p>
+                  <a
+                    href={`https://wa.me/916367677255?text=Hi, I just placed an order on Sugan. Please confirm my payment status. Order ID: ${pendingPayUOrderId?.slice(-8).toUpperCase()}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-sm text-blue-600 font-body hover:underline mt-1"
+                  >
+                    Message us
+                    <ArrowRight className="w-3 h-3" />
+                  </a>
+                </div>
+              </div>
+              <div className="flex flex-col gap-3 pt-2">
+                <Button
+                  onClick={proceedToPayU}
+                  className="w-full h-12 bg-sugan-brown hover:bg-sugan-brown/90 font-body"
+                >
+                  Continue to PayU
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={() => setShowPayUWarning(false)}
+                  className="w-full h-12 font-body border-sugan-brown/20"
+                >
+                  Go Back
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* PayU Redirect Warning Modal */}
+      {showPayUWarning && (
+        <div className="fixed inset-0 z-50 bg-sugan-brown/80 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-sugan-cream rounded-2xl p-6 md:p-8 max-w-md w-full shadow-2xl">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="font-display text-xl text-sugan-brown flex items-center gap-2">
+                <Info className="w-5 h-5 text-sugan-gold" />
+                Important
+              </h3>
+              <button
+                onClick={() => setShowPayUWarning(false)}
+                className="text-sugan-brown/40 hover:text-sugan-brown"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <div className="space-y-4">
+              <p className="font-body text-sugan-brown/80">
+                You are about to be redirected to PayU to complete your payment.
+              </p>
+              <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
+                <p className="font-body text-sm text-amber-800 font-medium mb-1">
+                  After payment, please check your Account → Orders page
+                </p>
+                <p className="font-body text-xs text-amber-700">
+                  Do not refresh or close your browser after payment. Your order confirmation will appear in your account within a few minutes.
+                </p>
+              </div>
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 flex items-start gap-3">
+                <MessageCircle className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+                <div>
+                  <p className="font-body text-sm text-blue-800 font-medium">
+                    Get instant updates on WhatsApp
+                  </p>
+                  <a
+                    href={`https://wa.me/916367677255?text=Hi, I just placed an order on Sugan. Please confirm my payment status. Order ID: ${pendingPayUOrderId?.slice(-8).toUpperCase()}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-sm text-blue-600 font-body hover:underline mt-1"
+                  >
+                    Message us
+                    <ArrowRight className="w-3 h-3" />
+                  </a>
+                </div>
+              </div>
+              <div className="flex flex-col gap-3 pt-2">
+                <Button
+                  onClick={proceedToPayU}
+                  className="w-full h-12 bg-sugan-brown hover:bg-sugan-brown/90 font-body"
+                >
+                  Continue to PayU
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={() => setShowPayUWarning(false)}
+                  className="w-full h-12 font-body border-sugan-brown/20"
+                >
+                  Go Back
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

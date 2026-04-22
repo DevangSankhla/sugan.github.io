@@ -10,7 +10,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { 
   Package, Heart, LogOut, User,
   ShoppingBag, Clock, Truck, CheckCircle, RefreshCw,
-  ChevronDown, ChevronUp, AlertTriangle
+  ChevronDown, ChevronUp, AlertTriangle, MessageCircle
 } from 'lucide-react';
 import { db } from '@/lib/firebase';
 import { collection, query, where, onSnapshot, doc, deleteDoc } from 'firebase/firestore';
@@ -392,8 +392,35 @@ export default function Account() {
                                   </div>
                                 )}
 
+                                {/* Pending Payment Banner */}
+                                {order.paymentStatus === 'pending' && (
+                                  <div className="mb-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
+                                    <p className="font-body text-sm text-amber-800 font-medium flex items-center gap-2">
+                                      <Clock className="w-4 h-4" />
+                                      Payment Pending
+                                    </p>
+                                    <p className="font-body text-xs text-amber-700 mt-1">
+                                      If you completed payment on PayU, it may take a few minutes to reflect here. Please refresh this page or contact us on WhatsApp for instant confirmation.
+                                    </p>
+                                  </div>
+                                )}
+
                                 {/* Action Buttons */}
                                 <div className="flex flex-wrap gap-3">
+                                  <a
+                                    href={`https://wa.me/916367677255?text=Hi, I have a question about my order. Order ID: ${order.id.slice(-8).toUpperCase()}%0AName: ${order.shippingAddress?.fullName || ''}%0AEmail: ${user?.email}%0APayment Status: ${order.paymentStatus || 'N/A'}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                  >
+                                    <Button 
+                                      variant="outline" 
+                                      size="sm"
+                                      className="font-body text-xs border-green-600 text-green-700 hover:bg-green-50"
+                                    >
+                                      <MessageCircle className="w-3 h-3 mr-1" />
+                                      WhatsApp Us
+                                    </Button>
+                                  </a>
                                   {order.status === 'shipped' && (
                                     <Button 
                                       variant="outline" 
