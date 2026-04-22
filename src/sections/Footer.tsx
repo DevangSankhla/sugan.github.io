@@ -166,10 +166,10 @@ export default function Footer() {
                 <li className="flex items-center gap-3">
                   <Mail className="w-5 h-5 text-sugan-gold flex-shrink-0" />
                   <a
-                    href="mailto:sac280422@gmail.com"
+                    href="mailto:contact@sugan.shop"
                     className="text-sugan-cream/60 font-body text-sm hover:text-sugan-gold transition-colors"
                   >
-                    sac280422@gmail.com
+                    contact@sugan.shop
                   </a>
                 </li>
                 <li className="flex items-center gap-3">

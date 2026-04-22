@@ -222,7 +222,7 @@ export default function PrivacyPolicy() {
           </p>
           <div className="space-y-2 font-body">
             <p><strong>Legal Name:</strong> Sugan Art and Craft</p>
-            <p><strong>Email:</strong> sac280422@gmail.com</p>
+            <p><strong>Email:</strong> contact@sugan.shop</p>
             <p><strong>Phone:</strong> +91 6367677255</p>
             <p><strong>Address:</strong> III Phase, Boranada, Jodhpur, Rajasthan 342012</p>
           </div>

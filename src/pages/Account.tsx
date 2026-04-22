@@ -483,7 +483,7 @@ export default function Account() {
                                           </div>
 
                                           <a 
-                                            href={`mailto:sac280422@gmail.com?subject=Return Request - Order ${order.id.slice(-8).toUpperCase()}&body=Order ID: ${order.id}%0AName: ${userData?.name || ''}%0AEmail: ${user?.email}%0A%0AReason for return:%0A`}
+                                            href={`mailto:contact@sugan.shop?subject=Return Request - Order ${order.id.slice(-8).toUpperCase()}&body=Order ID: ${order.id}%0AName: ${userData?.name || ''}%0AEmail: ${user?.email}%0A%0AReason for return:%0A`}
                                           >
                                             <Button className="w-full bg-sugan-brown hover:bg-sugan-brown/90 font-body">
                                               <RefreshCw className="w-4 h-4 mr-2" />

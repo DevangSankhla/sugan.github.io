@@ -52,7 +52,7 @@ export default class ErrorBoundary extends Component<Props, State> {
               </a>
             </div>
             <p className="text-xs text-sugan-brown/40 font-body mt-6">
-              If the problem persists, please contact us at sac280422@gmail.com
+              If the problem persists, please contact us at contact@sugan.shop
             </p>
           </div>
         </div>

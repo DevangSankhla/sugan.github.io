@@ -32,7 +32,7 @@ export default function ContactUs() {
       setFormData({ name: '', email: '', subject: '', message: '' });
     } catch (err: any) {
       console.error('Error submitting form:', err);
-      setError(err.message || 'Failed to send message. Please try again or contact us directly at sac280422@gmail.com');
+      setError(err.message || 'Failed to send message. Please try again or contact us directly at contact@sugan.shop');
     } finally {
       setSubmitting(false);
     }
@@ -86,8 +86,8 @@ export default function ContactUs() {
                 </div>
                 <div>
                   <h3 className="font-body font-medium text-sugan-brown mb-1">Email</h3>
-                  <a href="mailto:sac280422@gmail.com" className="text-sugan-brown/70 font-body hover:text-sugan-gold transition-colors">
-                    sac280422@gmail.com
+                  <a href="mailto:contact@sugan.shop" className="text-sugan-brown/70 font-body hover:text-sugan-gold transition-colors">
+                    contact@sugan.shop
                   </a>
                 </div>
               </div>
@@ -175,7 +175,7 @@ export default function ContactUs() {
                     <p className="text-red-700 font-body text-sm">{error}</p>
                     <p className="text-red-600 font-body text-xs mt-2">
                       Please email us directly at{' '}
-                      <a href="mailto:sac280422@gmail.com" className="underline">sac280422@gmail.com</a>
+                      <a href="mailto:contact@sugan.shop" className="underline">contact@sugan.shop</a>
                       {' '}or call{' '}
                       <a href="tel:+916367677255" className="underline">+91 6367677255</a>
                     </p>

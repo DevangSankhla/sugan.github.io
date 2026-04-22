@@ -33,7 +33,7 @@ const faqCategories: { [key: string]: FAQItem[] } = {
     },
     {
       question: 'How do I initiate a return?',
-      answer: 'To initiate a return, contact us at sac280422@gmail.com or call +91 6367677255 within 7 days of delivery. Our team will guide you through the process and arrange a pickup. Note: A ₹100 processing fee will be deducted from your refund amount.'
+      answer: 'To initiate a return, contact us at contact@sugan.shop or call +91 6367677255 within 7 days of delivery. Our team will guide you through the process and arrange a pickup. Note: A ₹100 processing fee will be deducted from your refund amount.'
     },
     {
       question: 'When will I receive my refund?',
@@ -91,7 +91,7 @@ const faqCategories: { [key: string]: FAQItem[] } = {
   'Bulk & Custom Orders': [
     {
       question: 'Do you accept bulk orders?',
-      answer: 'Yes! We specialize in bulk orders for hotels, restaurants, corporate gifting, and events. Visit our Bulk Orders page to request a custom quote, or contact us directly at sac280422@gmail.com or +91 6367677255.'
+      answer: 'Yes! We specialize in bulk orders for hotels, restaurants, corporate gifting, and events. Visit our Bulk Orders page to request a custom quote, or contact us directly at contact@sugan.shop or +91 6367677255.'
     },
     {
       question: 'Can I customize products?',
@@ -196,7 +196,7 @@ export default function FAQ() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a 
-              href="mailto:sac280422@gmail.com"
+              href="mailto:contact@sugan.shop"
               className="inline-flex items-center justify-center px-6 py-3 bg-sugan-gold text-white rounded-lg font-body hover:bg-sugan-gold/90 transition-colors"
             >
               Email Us

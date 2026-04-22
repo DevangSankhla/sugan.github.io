@@ -154,7 +154,7 @@ export default function ReturnsRefunds() {
               <div className="w-8 h-8 bg-sugan-gold text-white rounded-full flex items-center justify-center font-display flex-shrink-0">1</div>
               <div>
                 <h3 className="font-body font-medium text-sugan-brown mb-1">Contact Us Within 7 Days</h3>
-                <p className="text-sugan-brown/60 font-body text-sm">Email us at sac280422@gmail.com or call +91 6367677255 within 7 days of delivery. Include your order number and reason for return.</p>
+                <p className="text-sugan-brown/60 font-body text-sm">Email us at contact@sugan.shop or call +91 6367677255 within 7 days of delivery. Include your order number and reason for return.</p>
               </div>
             </div>
             <div className="flex gap-4">
@@ -230,7 +230,7 @@ export default function ReturnsRefunds() {
         <div className="text-center mt-12">
           <p className="text-sugan-brown/60 font-body mb-4">Need help with a return?</p>
           <a 
-            href="mailto:sac280422@gmail.com" 
+            href="mailto:contact@sugan.shop"
             className="inline-flex items-center gap-2 text-sugan-gold hover:underline font-body"
           >
             Contact our support team

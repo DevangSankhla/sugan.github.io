@@ -180,7 +180,7 @@ export default function ShippingInfo() {
         <div className="text-center mt-12">
           <p className="text-sugan-brown/60 font-body mb-4">Questions about shipping?</p>
           <a 
-            href="mailto:sac280422@gmail.com" 
+            href="mailto:contact@sugan.shop"
             className="inline-flex items-center gap-2 text-sugan-gold hover:underline font-body"
           >
             Contact our support team

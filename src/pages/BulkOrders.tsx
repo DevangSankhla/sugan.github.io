@@ -168,8 +168,8 @@ export default function BulkOrders() {
                 </div>
                 <div className="flex items-center gap-3">
                   <Mail className="w-5 h-5 text-sugan-gold" />
-                  <a href="mailto:sac280422@gmail.com" className="font-body hover:text-sugan-gold transition-colors">
-                    sac280422@gmail.com
+                  <a href="mailto:contact@sugan.shop" className="font-body hover:text-sugan-gold transition-colors">
+                    contact@sugan.shop
                   </a>
                 </div>
               </div>
@@ -200,7 +200,7 @@ export default function BulkOrders() {
                     <p className="text-red-700 font-body text-sm">{error}</p>
                     <p className="text-red-600 font-body text-xs mt-2">
                       Please email us directly at{' '}
-                      <a href="mailto:sac280422@gmail.com" className="underline">sac280422@gmail.com</a>
+                      <a href="mailto:contact@sugan.shop" className="underline">contact@sugan.shop</a>
                       {' '}or call{' '}
                       <a href="tel:+916367677255" className="underline">+91 6367677252</a>
                     </p>
