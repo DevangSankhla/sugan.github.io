@@ -27,6 +27,7 @@ export default function ProductDetail() {
   const [selectedVariant, setSelectedVariant] = useState<number>(0);
   const [isInWishlist, setIsInWishlist] = useState(false);
   const [wishlistId, setWishlistId] = useState<string | null>(null);
+  const [showFullDescription, setShowFullDescription] = useState(false);
 
   const product = allProducts.find((p) => p.id === id);
 
@@ -74,6 +75,10 @@ export default function ProductDetail() {
   }
 
   const handleAddToCart = () => {
+    if (!user) {
+      navigate(`/login?redirect=${encodeURIComponent(`/product/${product.id}`)}`);
+      return;
+    }
     const itemToAdd = {
       ...product,
       price: product.details?.variants?.[selectedVariant]?.price || product.price,
@@ -200,10 +205,51 @@ export default function ProductDetail() {
 
             </div>
 
-            {/* Short Description */}
-            <p className="text-sugan-brown/70 font-body leading-relaxed mb-6">
-              {product.description}
-            </p>
+            {/* Short Description - Expandable */}
+            {(() => {
+              const rawDesc = product.description || '';
+              const isTruncatedData = rawDesc.trim().endsWith('...');
+              const story = product.details?.story || '';
+              const storyTruncated = story.trim().endsWith('...');
+              // When data is truncated, reveal the story as the "full" read-more content
+              const hasMoreContent = isTruncatedData && story.length > 0;
+              const needsClamp = rawDesc.length > 240 || hasMoreContent;
+
+              return (
+                <div className="mb-6">
+                  <p
+                    className={`text-sugan-brown/70 font-body leading-relaxed ${
+                      !showFullDescription && needsClamp ? 'line-clamp-4' : ''
+                    }`}
+                  >
+                    {rawDesc}
+                  </p>
+                  {showFullDescription && hasMoreContent && (
+                    <p className="text-sugan-brown/70 font-body leading-relaxed mt-3">
+                      {storyTruncated ? story.replace(/\.\.\.\s*$/, '.') : story}
+                    </p>
+                  )}
+                  {needsClamp && (
+                    <button
+                      type="button"
+                      onClick={() => setShowFullDescription((v) => !v)}
+                      className="mt-2 inline-flex items-center gap-1 text-sugan-gold font-body text-sm hover:underline"
+                      aria-expanded={showFullDescription}
+                    >
+                      {showFullDescription ? (
+                        <>
+                          Read less <ChevronUp className="w-3.5 h-3.5" />
+                        </>
+                      ) : (
+                        <>
+                          Read more <ChevronDown className="w-3.5 h-3.5" />
+                        </>
+                      )}
+                    </button>
+                  )}
+                </div>
+              );
+            })()}
 
             {/* Variants Selection */}
             {product.details?.variants && product.details.variants.length > 0 && (

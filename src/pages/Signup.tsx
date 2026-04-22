@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -9,6 +9,7 @@ import { Eye, EyeOff, Mail, Lock, User, Chrome } from 'lucide-react';
 
 export default function Signup() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { signup, loginWithGoogle } = useAuth();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -17,6 +18,11 @@ export default function Signup() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const rawRedirect = searchParams.get('redirect') || '/account';
+  const redirectPath = rawRedirect.startsWith('/') && !rawRedirect.startsWith('//')
+    ? rawRedirect
+    : '/account';
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,7 +42,7 @@ export default function Signup() {
 
     try {
       await signup(email, password, name);
-      navigate('/account');
+      navigate(redirectPath);
     } catch (err: any) {
       setError(err.message || 'Failed to create account');
     } finally {
@@ -48,7 +54,7 @@ export default function Signup() {
     setLoading(true);
     try {
       await loginWithGoogle();
-      navigate('/account');
+      navigate(redirectPath);
     } catch (err: any) {
       setError(err.message || 'Failed to signup with Google');
     } finally {
@@ -185,7 +191,10 @@ export default function Signup() {
 
             <p className="text-center text-sm font-body text-sugan-brown/60">
               Already have an account?{' '}
-              <Link to="/login" className="text-sugan-gold hover:underline">
+              <Link
+                to={redirectPath !== '/account' ? `/login?redirect=${encodeURIComponent(redirectPath)}` : '/login'}
+                className="text-sugan-gold hover:underline"
+              >
                 Sign in
               </Link>
             </p>

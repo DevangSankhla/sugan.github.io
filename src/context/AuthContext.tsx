@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
-import { 
-  onAuthStateChanged, 
+import {
+  onAuthStateChanged,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signOut,
@@ -8,15 +8,17 @@ import {
   GoogleAuthProvider,
   signInWithPopup
 } from 'firebase/auth';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { auth, db } from '@/lib/firebase';
 
 interface UserData {
   uid: string;
   email: string | null;
   name: string | null;
+  photoURL?: string | null;
+  provider?: string;
   isAdmin: boolean;
-  createdAt: Date;
+  createdAt: Date | any;
 }
 
 interface AuthContextType {
@@ -43,28 +45,43 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setUser(user);
-      
+
       if (user) {
-        // Fetch user data from Firestore
-        const userDoc = await getDoc(doc(db, 'users', user.uid));
-        if (userDoc.exists()) {
-          setUserData(userDoc.data() as UserData);
-        } else {
-          // Create user document if it doesn't exist
-          const newUserData: UserData = {
-            uid: user.uid,
-            email: user.email,
-            name: user.displayName,
-            isAdmin: user.email === ADMIN_EMAIL,
-            createdAt: new Date()
-          };
-          await setDoc(doc(db, 'users', user.uid), newUserData);
-          setUserData(newUserData);
+        try {
+          const userRef = doc(db, 'users', user.uid);
+          const userDoc = await getDoc(userRef);
+          if (userDoc.exists()) {
+            const existing = userDoc.data() as UserData;
+            // Keep Firestore record in sync with latest auth profile (esp. Google sign-in)
+            const updates: Partial<UserData> = {};
+            if (user.email && existing.email !== user.email) updates.email = user.email;
+            if (user.displayName && existing.name !== user.displayName) updates.name = user.displayName;
+            if (user.photoURL && existing.photoURL !== user.photoURL) updates.photoURL = user.photoURL;
+            if (Object.keys(updates).length > 0) {
+              await setDoc(userRef, updates, { merge: true });
+            }
+            setUserData({ ...existing, ...updates });
+          } else {
+            const providerId = user.providerData[0]?.providerId || 'password';
+            const newUserData: UserData = {
+              uid: user.uid,
+              email: user.email,
+              name: user.displayName,
+              photoURL: user.photoURL,
+              provider: providerId,
+              isAdmin: user.email === ADMIN_EMAIL,
+              createdAt: serverTimestamp()
+            };
+            await setDoc(userRef, newUserData);
+            setUserData({ ...newUserData, createdAt: new Date() });
+          }
+        } catch (err) {
+          console.error('Failed to sync user profile:', err);
         }
       } else {
         setUserData(null);
       }
-      
+
       setLoading(false);
     });
 
@@ -77,34 +94,50 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const signup = async (email: string, password: string, name: string) => {
     const { user } = await createUserWithEmailAndPassword(auth, email, password);
-    
-    // Create user document in Firestore
+
     const userData: UserData = {
       uid: user.uid,
       email: user.email,
       name,
+      provider: 'password',
       isAdmin: email === ADMIN_EMAIL,
-      createdAt: new Date()
+      createdAt: serverTimestamp()
     };
-    
-    await setDoc(doc(db, 'users', user.uid), userData);
+
+    await setDoc(doc(db, 'users', user.uid), userData, { merge: true });
   };
 
   const loginWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: 'select_account' });
     const { user } = await signInWithPopup(auth, provider);
-    
-    // Check if user document exists
-    const userDoc = await getDoc(doc(db, 'users', user.uid));
+
+    // Ensure user doc exists so Google sign-ins show up in admin dashboard
+    const userRef = doc(db, 'users', user.uid);
+    const userDoc = await getDoc(userRef);
     if (!userDoc.exists()) {
       const userData: UserData = {
         uid: user.uid,
         email: user.email,
         name: user.displayName,
+        photoURL: user.photoURL,
+        provider: 'google.com',
         isAdmin: user.email === ADMIN_EMAIL,
-        createdAt: new Date()
+        createdAt: serverTimestamp()
       };
-      await setDoc(doc(db, 'users', user.uid), userData);
+      await setDoc(userRef, userData, { merge: true });
+    } else {
+      // Sync latest profile fields from Google
+      await setDoc(
+        userRef,
+        {
+          email: user.email,
+          name: user.displayName,
+          photoURL: user.photoURL,
+          provider: 'google.com'
+        },
+        { merge: true }
+      );
     }
   };
 

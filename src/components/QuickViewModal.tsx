@@ -1,6 +1,7 @@
 import { X, ShoppingCart, Star } from 'lucide-react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useCart } from '@/context/CartContext';
+import { useAuth } from '@/context/AuthContext';
 import type { Product } from '@/types';
 
 interface QuickViewModalProps {
@@ -11,11 +12,18 @@ interface QuickViewModalProps {
 
 export default function QuickViewModal({ product, isOpen, onClose }: QuickViewModalProps) {
   const { addToCart, setIsCartOpen } = useCart();
+  const { user } = useAuth();
   const location = useLocation();
+  const navigate = useNavigate();
 
   if (!isOpen || !product) return null;
 
   const handleAddToCart = () => {
+    if (!user) {
+      onClose();
+      navigate(`/login?redirect=${encodeURIComponent(`/product/${product.id}`)}`);
+      return;
+    }
     addToCart(product);
     onClose();
     setIsCartOpen(true);

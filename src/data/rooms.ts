@@ -571,10 +571,10 @@ export const roomProducts: Record<string, Product[]> = {
   },
   {
    id: 'SAC048L',
-   name: 'Marble-Top Mango Wood Pet Feeder with Stainless Steel Bowls',
+   name: 'Marble-Top Acacia Wood Pet Feeder with Stainless Steel Bowls',
    price: 2999,
    originalPrice: 3999,
-   description: 'This large marble-top pet feeder pairs the warmth of mango wood with the cool elegance of natural marble in a piece that looks as much like furniture as it does a feeder. The two stainless steel bowls sit at a height suited to larger breeds, supporting healthy posture and digestion. Every marble sla...',
+   description: 'This large marble-top pet feeder pairs the warmth of acacia wood with the cool elegance of natural marble in a piece that looks as much like furniture as it does a feeder. The two stainless steel bowls sit at a height suited to larger breeds, supporting healthy posture and digestion. Every marble slab is hand-selected for its unique veining, and the acacia wood base is finished with food-safe mineral oil. Non-toxic throughout — safe for daily mealtime, beautiful enough to leave out.',
    image: '/images/SAC048L_01.png',
    category: 'Pet Feeders',
    room: 'pet',
@@ -582,7 +582,7 @@ export const roomProducts: Record<string, Product[]> = {
    rating: 4.9,
    reviews: 238,
    details: {
-    materials: 'Mango wood',
+    materials: 'Acacia wood',
     finish: 'Natural marble top, mineral oil finish',
     origin: 'Made in Jodhpur, Rajasthan',
     shipping: 'Ships within 2-3 business days',
@@ -590,7 +590,7 @@ export const roomProducts: Record<string, Product[]> = {
     returns: '7-day easy returns',
     usp: ['Handcrafted in Jodhpur'],
     sustainability: 'Sustainably sourced wood',
-    story: 'We started Sugan because we believed your pet deserved better than a plastic bowl on the floor. This feeder pairs hand-selected mango wood — sustainably sourced from forests across India — with a natu...',
+    story: 'We started Sugan because we believed your pet deserved better than a plastic bowl on the floor. This feeder pairs hand-selected acacia wood — sustainably sourced from forests across India — with a natural marble top and two detachable stainless steel bowls. The raised stance supports posture-friendly eating for larger breeds, the materials are completely plastic-free, and every piece is handcrafted in our Jodhpur workshop.',
     care: 'Hand wash with mild soap. Do not soak.',
     maintenance: 'Apply mineral oil periodically',
     videos: ['/videos/SAC048L_video.mp4']
@@ -610,10 +610,10 @@ export const roomProducts: Record<string, Product[]> = {
   },
   {
    id: 'SAC048M',
-   name: 'Marble-Top Mango Wood Pet Feeder with Stainless Steel Bowls',
+   name: 'Marble-Top Acacia Wood Pet Feeder with Stainless Steel Bowls',
    price: 2499,
    originalPrice: 3999,
-   description: 'A medium marble-top feeder combining sustainably sourced mango wood with a genuine marble surface and two stainless steel bowls. The elevated design supports comfortable, posture-friendly eating for medium-sized dogs and cats, and the natural materials are completely free from plastics and toxic coa...',
+   description: 'A medium marble-top feeder combining sustainably sourced acacia wood with a genuine marble surface and two stainless steel bowls. The elevated design supports comfortable, posture-friendly eating for medium-sized dogs and cats, and the natural materials are completely free from plastics and toxic coatings. Hand-finished with food-safe mineral oil, this feeder is made to be beautiful on day one and to age well over years of daily use.',
    image: '/images/SAC048M_01.png',
    category: 'Pet Feeders',
    room: 'pet',
@@ -621,7 +621,7 @@ export const roomProducts: Record<string, Product[]> = {
    rating: 4.9,
    reviews: 141,
    details: {
-    materials: 'Mango wood',
+    materials: 'Acacia wood',
     finish: 'Natural marble top, mineral oil finish',
     origin: 'Made in Jodhpur, Rajasthan',
     shipping: 'Ships within 2-3 business days',
@@ -629,7 +629,7 @@ export const roomProducts: Record<string, Product[]> = {
     returns: '7-day easy returns',
     usp: ['Handcrafted in Jodhpur'],
     sustainability: 'Sustainably sourced wood',
-    story: 'We started Sugan because we believed your pet deserved better than a plastic bowl on the floor. This feeder pairs hand-selected mango wood — sustainably sourced from forests across India — with a natu...',
+    story: 'We started Sugan because we believed your pet deserved better than a plastic bowl on the floor. This feeder pairs hand-selected acacia wood — sustainably sourced from forests across India — with a natural marble top and two detachable stainless steel bowls. The medium size is ideal for most dogs and cats, and every piece is handcrafted in our Jodhpur workshop.',
     care: 'Hand wash with mild soap. Do not soak.',
     maintenance: 'Apply mineral oil periodically',
     videos: ['/videos/SAC048M_video.mp4']
@@ -649,10 +649,10 @@ export const roomProducts: Record<string, Product[]> = {
   },
   {
    id: 'SAC048S',
-   name: 'Marble-Top Mango Wood Pet Feeder with Stainless Steel Bowls',
+   name: 'Marble-Top Acacia Wood Pet Feeder with Stainless Steel Bowls',
    price: 1999,
    originalPrice: 3999,
-   description: 'This small marble-top pet feeder is made for cats and compact breeds who deserve beautiful materials at their daily mealtime. Natural mango wood, genuine marble, and stainless steel come together in a piece that sits comfortably on a kitchen floor without looking like an afterthought. Non-toxic thro...',
+   description: 'This small marble-top pet feeder is made for cats and compact breeds who deserve beautiful materials at their daily mealtime. Natural acacia wood, genuine marble, and stainless steel come together in a piece that sits comfortably on a kitchen floor without looking like an afterthought. Non-toxic throughout, easy to clean, and finished with food-safe mineral oil — a piece that looks as intentional as your coffee table.',
    image: '/images/SAC048S_01.png',
    category: 'Pet Feeders',
    room: 'pet',
@@ -660,7 +660,7 @@ export const roomProducts: Record<string, Product[]> = {
    rating: 4.9,
    reviews: 66,
    details: {
-    materials: 'Mango wood',
+    materials: 'Acacia wood',
     finish: 'Natural marble top, mineral oil finish',
     origin: 'Made in Jodhpur, Rajasthan',
     shipping: 'Ships within 2-3 business days',
@@ -668,7 +668,7 @@ export const roomProducts: Record<string, Product[]> = {
     returns: '7-day easy returns',
     usp: ['Handcrafted in Jodhpur'],
     sustainability: 'Sustainably sourced wood',
-    story: 'We started Sugan because we believed your pet deserved better than a plastic bowl on the floor. This feeder pairs hand-selected mango wood — sustainably sourced from forests across India — with a natu...',
+    story: 'We started Sugan because we believed your pet deserved better than a plastic bowl on the floor. This feeder pairs hand-selected acacia wood — sustainably sourced from forests across India — with a natural marble top and two detachable stainless steel bowls. Compact enough for cats and small breeds, and handcrafted in our Jodhpur workshop.',
     care: 'Hand wash with mild soap. Do not soak.',
     maintenance: 'Apply mineral oil periodically',
     videos: ['/videos/SAC048S_video.mp4']

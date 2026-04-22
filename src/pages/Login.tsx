@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -9,12 +9,19 @@ import { Eye, EyeOff, Mail, Lock, Chrome } from 'lucide-react';
 
 export default function Login() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { login, loginWithGoogle } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  // Only accept internal redirect paths to prevent open-redirect attacks
+  const rawRedirect = searchParams.get('redirect') || '/account';
+  const redirectPath = rawRedirect.startsWith('/') && !rawRedirect.startsWith('//')
+    ? rawRedirect
+    : '/account';
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,7 +30,7 @@ export default function Login() {
 
     try {
       await login(email, password);
-      navigate('/account');
+      navigate(redirectPath);
     } catch (err: any) {
       setError(err.message || 'Failed to login');
     } finally {
@@ -35,7 +42,7 @@ export default function Login() {
     setLoading(true);
     try {
       await loginWithGoogle();
-      navigate('/account');
+      navigate(redirectPath);
     } catch (err: any) {
       setError(err.message || 'Failed to login with Google');
     } finally {
@@ -139,7 +146,10 @@ export default function Login() {
 
             <p className="text-center text-sm font-body text-sugan-brown/60">
               Don't have an account?{' '}
-              <Link to="/signup" className="text-sugan-gold hover:underline">
+              <Link
+                to={redirectPath !== '/account' ? `/signup?redirect=${encodeURIComponent(redirectPath)}` : '/signup'}
+                className="text-sugan-gold hover:underline"
+              >
                 Create account
               </Link>
             </p>

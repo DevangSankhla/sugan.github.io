@@ -1,12 +1,14 @@
 import { useState } from 'react';
-import { X, Plus, Minus, ShoppingBag, ArrowRight, CreditCard } from 'lucide-react';
+import { X, Plus, Minus, ShoppingBag, ArrowRight, CreditCard, LogIn } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '@/context/CartContext';
+import { useAuth } from '@/context/AuthContext';
 import FreeShippingProgress from '@/components/FreeShippingProgress';
 import CouponCode from '@/components/CouponCode';
 
 export default function CartDrawer() {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const {
     items,
     removeFromCart,
@@ -225,17 +227,31 @@ export default function CartDrawer() {
 
             {/* Checkout Buttons */}
             <div className="space-y-3">
-              <button
-                type="button"
-                onClick={() => {
-                  setIsCartOpen(false);
-                  navigate('/checkout');
-                }}
-                className="w-full btn-primary flex items-center justify-center gap-2"
-              >
-                Proceed to Checkout
-                <CreditCard className="w-4 h-4" />
-              </button>
+              {user ? (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsCartOpen(false);
+                    navigate('/checkout');
+                  }}
+                  className="w-full btn-primary flex items-center justify-center gap-2"
+                >
+                  Proceed to Checkout
+                  <CreditCard className="w-4 h-4" />
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsCartOpen(false);
+                    navigate('/login?redirect=/checkout');
+                  }}
+                  className="w-full btn-primary flex items-center justify-center gap-2"
+                >
+                  Sign in to Checkout
+                  <LogIn className="w-4 h-4" />
+                </button>
+              )}
               <button
                 onClick={() => setIsCartOpen(false)}
                 className="w-full btn-outline flex items-center justify-center gap-2"
