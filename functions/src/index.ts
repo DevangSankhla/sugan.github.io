@@ -4,17 +4,18 @@ import * as nodemailer from 'nodemailer';
 
 admin.initializeApp();
 
-const adminEmail = process.env.ADMIN_EMAIL || 'sac280422@gmail.com';
-const fromName = process.env.FROM_NAME || 'Sugan Shop';
+const adminEmail = 'sac280422@gmail.com';
+const fromName = 'Sugan Shop';
 
-// Transporter is created lazily so secrets are read at invocation time, not module load
+// Transporter reads credentials from functions.config() at invocation time
 function getTransporter() {
-  const user = process.env.SMTP_USER || '';
-  const pass = process.env.SMTP_PASS || '';
+  const cfg = functions.config();
+  const user: string = (cfg.smtp && cfg.smtp.user) ? cfg.smtp.user : '';
+  const pass: string = (cfg.smtp && cfg.smtp.pass) ? cfg.smtp.pass : '';
   return nodemailer.createTransport({
-    host: process.env.SMTP_HOST || 'smtp.gmail.com',
-    port: parseInt(process.env.SMTP_PORT || '587', 10),
-    secure: process.env.SMTP_SECURE === 'true',
+    host: 'smtp.gmail.com',
+    port: 587,
+    secure: false,
     auth: user && pass ? { user, pass } : undefined,
   });
 }
@@ -96,21 +97,17 @@ async function sendMail({
   subject: string;
   html: string;
 }): Promise<void> {
-  const user = process.env.SMTP_USER || '';
-  const pass = process.env.SMTP_PASS || '';
-  console.log(`SMTP_USER set: ${!!user}, SMTP_PASS set: ${!!pass}`);
-  const fromEmail = process.env.FROM_EMAIL || user || 'contact@sugan.shop';
+  const cfg = functions.config();
+  const user: string = (cfg.smtp && cfg.smtp.user) ? cfg.smtp.user : 'contact@sugan.shop';
   await getTransporter().sendMail({
-    from: `"${fromName}" <${fromEmail}>`,
+    from: `"${fromName}" <${user}>`,
     to,
     subject,
     html,
   });
 }
 
-export const sendOrderPlacedEmail = functions
-  .runWith({ secrets: ['SMTP_USER', 'SMTP_PASS'] })
-  .firestore
+export const sendOrderPlacedEmail = functions.firestore
   .document('orders/{orderId}')
   .onCreate(async (snap, context) => {
     const orderId = context.params.orderId;
@@ -155,9 +152,7 @@ export const sendOrderPlacedEmail = functions
     }
   });
 
-export const sendOrderCompletedEmail = functions
-  .runWith({ secrets: ['SMTP_USER', 'SMTP_PASS'] })
-  .firestore
+export const sendOrderCompletedEmail = functions.firestore
   .document('orders/{orderId}')
   .onUpdate(async (change, context) => {
     const orderId = context.params.orderId;
