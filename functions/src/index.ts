@@ -4,25 +4,20 @@ import * as nodemailer from 'nodemailer';
 
 admin.initializeApp();
 
-const smtpHost = process.env.SMTP_HOST || 'smtp.gmail.com';
-const smtpPort = parseInt(process.env.SMTP_PORT || '587', 10);
-const smtpSecure = process.env.SMTP_SECURE === 'true';
-const smtpUser = process.env.SMTP_USER || '';
-const smtpPass = process.env.SMTP_PASS || '';
 const adminEmail = process.env.ADMIN_EMAIL || 'sac280422@gmail.com';
 const fromName = process.env.FROM_NAME || 'Sugan Shop';
-const fromEmail = process.env.FROM_EMAIL || smtpUser || 'contact@sugan.shop';
 
-const transporter = nodemailer.createTransport({
-  host: smtpHost,
-  port: smtpPort,
-  secure: smtpSecure,
-  auth: smtpUser && smtpPass ? { user: smtpUser, pass: smtpPass } : undefined,
-});
-
-transporter.verify().catch((err) => {
-  console.error('SMTP verification failed:', err.message);
-});
+// Transporter is created lazily so secrets are read at invocation time, not module load
+function getTransporter() {
+  const user = process.env.SMTP_USER || '';
+  const pass = process.env.SMTP_PASS || '';
+  return nodemailer.createTransport({
+    host: process.env.SMTP_HOST || 'smtp.gmail.com',
+    port: parseInt(process.env.SMTP_PORT || '587', 10),
+    secure: process.env.SMTP_SECURE === 'true',
+    auth: user && pass ? { user, pass } : undefined,
+  });
+}
 
 function formatCurrency(amount: number): string {
   return new Intl.NumberFormat('en-IN', {
@@ -101,7 +96,9 @@ async function sendMail({
   subject: string;
   html: string;
 }): Promise<void> {
-  await transporter.sendMail({
+  const user = process.env.SMTP_USER || '';
+  const fromEmail = process.env.FROM_EMAIL || user || 'contact@sugan.shop';
+  await getTransporter().sendMail({
     from: `"${fromName}" <${fromEmail}>`,
     to,
     subject,
