@@ -109,7 +109,9 @@ async function sendMail({
   });
 }
 
-export const sendOrderPlacedEmail = functions.firestore
+export const sendOrderPlacedEmail = functions
+  .runWith({ secrets: ['SMTP_USER', 'SMTP_PASS'] })
+  .firestore
   .document('orders/{orderId}')
   .onCreate(async (snap, context) => {
     const orderId = context.params.orderId;
@@ -154,7 +156,9 @@ export const sendOrderPlacedEmail = functions.firestore
     }
   });
 
-export const sendOrderCompletedEmail = functions.firestore
+export const sendOrderCompletedEmail = functions
+  .runWith({ secrets: ['SMTP_USER', 'SMTP_PASS'] })
+  .firestore
   .document('orders/{orderId}')
   .onUpdate(async (change, context) => {
     const orderId = context.params.orderId;
