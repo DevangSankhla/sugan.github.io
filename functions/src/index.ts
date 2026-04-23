@@ -97,6 +97,8 @@ async function sendMail({
   html: string;
 }): Promise<void> {
   const user = process.env.SMTP_USER || '';
+  const pass = process.env.SMTP_PASS || '';
+  console.log(`SMTP_USER set: ${!!user}, SMTP_PASS set: ${!!pass}`);
   const fromEmail = process.env.FROM_EMAIL || user || 'contact@sugan.shop';
   await getTransporter().sendMail({
     from: `"${fromName}" <${fromEmail}>`,
