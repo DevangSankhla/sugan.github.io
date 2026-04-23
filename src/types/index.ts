@@ -32,6 +32,7 @@ export interface ProductDetails {
   
   // Size & Weight
   dimensions?: ProductDimensions;
+  usesAndMeasurements?: string; // Free-form block: sizing, recommended pet breeds, food math, etc.
   
   // Care Instructions
   care?: string;                // How to clean and maintain

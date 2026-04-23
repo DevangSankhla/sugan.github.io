@@ -251,6 +251,18 @@ export default function ProductDetail() {
               );
             })()}
 
+            {/* Uses & Measurements */}
+            {product.details?.usesAndMeasurements && (
+              <div className="mb-6 p-4 rounded-lg bg-sugan-cream/60 border border-sugan-brown/10">
+                <h3 className="font-display text-base text-sugan-brown mb-2">
+                  Uses & Measurements
+                </h3>
+                <p className="text-sugan-brown/80 font-body text-sm leading-relaxed whitespace-pre-line">
+                  {product.details.usesAndMeasurements}
+                </p>
+              </div>
+            )}
+
             {/* Variants Selection */}
             {product.details?.variants && product.details.variants.length > 0 && (
               <div className="mb-6">

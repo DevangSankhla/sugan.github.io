@@ -593,7 +593,14 @@ export const roomProducts: Record<string, Product[]> = {
     story: 'We started Sugan because we believed your pet deserved better than a plastic bowl on the floor. This feeder pairs hand-selected acacia wood — sustainably sourced from forests across India — with a natural marble top and two detachable stainless steel bowls. The raised stance supports posture-friendly eating for larger breeds, the materials are completely plastic-free, and every piece is handcrafted in our Jodhpur workshop.',
     care: 'Hand wash with mild soap. Do not soak.',
     maintenance: 'Apply mineral oil periodically',
-    videos: ['/videos/SAC048L_video.mp4']
+    videos: ['/videos/SAC048L_video.mp4'],
+    usesAndMeasurements: `50×29×26 cm, 2.5 L
+
+Pet shoulder height: ~45–65 cm
+Pet weight: ~20–35 kg
+Category: Medium-to-large dogs only. Overkill for cats.
+Breeds: Labrador Retriever, Golden Retriever, German Shepherd, Boxer
+Food math: A 25 kg Lab eats ~300–400 g/day (~500–700 ml dry kibble volume), so 2.5 L = ~3–4 days of food. Decent buffer.`
    },
    relatedSizes: [
     {
@@ -632,7 +639,15 @@ export const roomProducts: Record<string, Product[]> = {
     story: 'We started Sugan because we believed your pet deserved better than a plastic bowl on the floor. This feeder pairs hand-selected acacia wood — sustainably sourced from forests across India — with a natural marble top and two detachable stainless steel bowls. The medium size is ideal for most dogs and cats, and every piece is handcrafted in our Jodhpur workshop.',
     care: 'Hand wash with mild soap. Do not soak.',
     maintenance: 'Apply mineral oil periodically',
-    videos: ['/videos/SAC048M_video.mp4']
+    videos: ['/videos/SAC048M_video.mp4'],
+    usesAndMeasurements: `39×23×20 cm, 1.8 L
+
+Pet shoulder height: ~30–45 cm
+Pet weight: ~8–18 kg
+Category: Medium dogs, or large/adult cats that eat a lot.
+Breeds: Beagle, Cocker Spaniel, French Bulldog, medium Indie/Pariah dogs
+Also works for: Maine Coon or other large cat breeds if you want a multi-day refill setup.
+Food math: ~1.8 L = ~4–6 days for a 12 kg dog, well over a week for a cat.`
    },
    relatedSizes: [
     {
@@ -671,7 +686,15 @@ export const roomProducts: Record<string, Product[]> = {
     story: 'We started Sugan because we believed your pet deserved better than a plastic bowl on the floor. This feeder pairs hand-selected acacia wood — sustainably sourced from forests across India — with a natural marble top and two detachable stainless steel bowls. Compact enough for cats and small breeds, and handcrafted in our Jodhpur workshop.',
     care: 'Hand wash with mild soap. Do not soak.',
     maintenance: 'Apply mineral oil periodically',
-    videos: ['/videos/SAC048S_video.mp4']
+    videos: ['/videos/SAC048S_video.mp4'],
+    usesAndMeasurements: `32×18×12 cm, 1 L
+
+Pet shoulder height: ~20–30 cm (dogs) / standard cat height
+Pet weight: ~2–8 kg
+Category: Cats and toy/small dog breeds. The 12 cm height is basically a low-profile bowl — ergonomic for cats and short-legged dogs.
+Cat breeds: Persian, Siamese, Bengal, Indian domestic shorthair
+Small dog breeds: Pug, Shih Tzu, Pomeranian, Lhasa Apso
+Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
    },
    relatedSizes: [
     {
