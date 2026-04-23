@@ -10,12 +10,12 @@ const fromName = 'Sugan Shop';
 // Transporter reads credentials from functions.config() at invocation time
 function getTransporter() {
   const cfg = functions.config();
-  const user: string = (cfg.smtp && cfg.smtp.user) ? cfg.smtp.user : '';
-  const pass: string = (cfg.smtp && cfg.smtp.pass) ? cfg.smtp.pass : '';
+  const user: string = (cfg.smtp && cfg.smtp.user) ? String(cfg.smtp.user).trim() : '';
+  const rawPass: string = (cfg.smtp && cfg.smtp.pass) ? String(cfg.smtp.pass) : '';
+  const pass = rawPass.replace(/\s+/g, '');
+  console.log(`SMTP config — user set: ${!!user} (len=${user.length}), pass set: ${!!pass} (len=${pass.length})`);
   return nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 587,
-    secure: false,
+    service: 'gmail',
     auth: user && pass ? { user, pass } : undefined,
   });
 }
