@@ -79,6 +79,9 @@ export default function ProductDetail() {
       navigate(`/login?redirect=${encodeURIComponent(`/product/${product.id}`)}`);
       return;
     }
+    if (!product.inStock) {
+      return;
+    }
     const itemToAdd = {
       ...product,
       price: product.details?.variants?.[selectedVariant]?.price || product.price,
@@ -387,10 +390,11 @@ export default function ProductDetail() {
               {/* Add to Cart */}
               <button
                 onClick={handleAddToCart}
-                className="flex-1 btn-primary flex items-center justify-center gap-2"
+                disabled={!product.inStock}
+                className={`flex-1 btn-primary flex items-center justify-center gap-2 ${!product.inStock ? 'opacity-50 cursor-not-allowed' : ''}`}
               >
                 <ShoppingCart className="w-4 h-4" />
-                Add to Cart
+                {product.inStock ? 'Add to Cart' : 'Out of Stock'}
               </button>
 
               {/* WhatsApp Inquire */}
@@ -452,6 +456,18 @@ export default function ProductDetail() {
               </button>
             </div>
 
+            {/* Hot Badge for SAC048 Marble Feeders */}
+            {['SAC048S', 'SAC048M', 'SAC048L'].includes(product.id) && (
+              <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+                <p className="font-body text-sm text-red-800 font-medium">
+                  🔥 Hot — 30+ sold today!
+                </p>
+                <p className="font-body text-xs text-red-700">
+                  Code <strong>First10</strong> at checkout for 10% off
+                </p>
+              </div>
+            )}
+
             {/* Stock Status */}
             <div className="flex items-center gap-2 text-sm mb-8">
               <div className={`w-2 h-2 rounded-full ${product.inStock ? 'bg-green-500' : 'bg-red-500'}`} />
@@ -459,6 +475,56 @@ export default function ProductDetail() {
                 {product.inStock ? 'In Stock' : 'Out of Stock'}
               </span>
             </div>
+
+            {/* Out of Stock - Similar Options & Email Request */}
+            {!product.inStock && product.room === 'pet' && (
+              <div className="mb-6 space-y-4">
+                <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
+                  <p className="font-body text-sm text-amber-800 font-medium mb-2">
+                    This item is currently unavailable
+                  </p>
+                  <p className="font-body text-xs text-amber-700 mb-3">
+                    We are restocking soon. Request this product via email and we will notify you when it is back.
+                  </p>
+                  <a
+                    href={`mailto:contact@sugan.shop?subject=Restock Request — ${product.name}&body=Hi Sugan Team,%0A%0AI would like to request the following out-of-stock item:%0A%0AProduct: ${product.name}%0ASKU: ${product.id}%0A%0APlease notify me when it is available again.%0A%0AThank you`}
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-sugan-brown text-sugan-cream rounded-lg font-body text-sm hover:bg-sugan-brown/90 transition-colors"
+                  >
+                    Request via Email
+                  </a>
+                </div>
+
+                {/* Similar Options pointing to SAC048S */}
+                {product.id !== 'SAC048S' && (
+                  <div className="bg-white border border-sugan-brown/10 rounded-lg p-4">
+                    <p className="font-body text-sm text-sugan-brown font-medium mb-2">
+                      Similar Options
+                    </p>
+                    <Link
+                      to="/product/SAC048S"
+                      className="flex items-center gap-3 p-3 bg-sugan-cream/50 rounded-lg hover:bg-sugan-cream transition-colors"
+                    >
+                      <img
+                        src={allProducts.find(p => p.id === 'SAC048S')?.image || ''}
+                        alt="SAC048S"
+                        className="w-14 h-14 object-cover rounded-lg"
+                      />
+                      <div>
+                        <p className="font-body text-sm font-medium text-sugan-brown">
+                          Marble Pet Feeder Stand
+                        </p>
+                        <p className="font-body text-xs text-sugan-brown/60">
+                          Available in 3 sizes — Small, Medium & Large
+                        </p>
+                        <p className="font-body text-xs text-sugan-gold mt-0.5">
+                          View Product →
+                        </p>
+                      </div>
+                    </Link>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </div>
 

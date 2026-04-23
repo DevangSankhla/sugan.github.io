@@ -221,7 +221,7 @@ export const roomProducts: Record<string, Product[]> = {
    image: '/images/SAC034_01.png',
    category: 'Pet Feeders',
    room: 'pet',
-   inStock: true,
+   inStock: false,
    rating: 4.7,
    reviews: 176,
    details: {
@@ -254,7 +254,7 @@ export const roomProducts: Record<string, Product[]> = {
    image: '/images/SAC037L_01.png',
    category: 'Pet Feeders',
    room: 'pet',
-   inStock: true,
+   inStock: false,
    rating: 4.8,
    reviews: 187,
    details: {
@@ -307,7 +307,7 @@ export const roomProducts: Record<string, Product[]> = {
    image: '/images/SAC039_01.png',
    category: 'Pet Feeders',
    room: 'pet',
-   inStock: true,
+   inStock: false,
    rating: 4.9,
    reviews: 209,
    details: {
@@ -479,7 +479,7 @@ export const roomProducts: Record<string, Product[]> = {
    image: '/images/SAC040L_01.png',
    category: 'Pet Feeders',
    room: 'pet',
-   inStock: true,
+   inStock: false,
    rating: 4.8,
    reviews: 219,
    details: {
@@ -512,7 +512,7 @@ export const roomProducts: Record<string, Product[]> = {
    image: '/images/SAC040S_01.png',
    category: 'Pet Feeders',
    room: 'pet',
-   inStock: true,
+   inStock: false,
    rating: 4.7,
    reviews: 122,
    details: {
@@ -545,7 +545,7 @@ export const roomProducts: Record<string, Product[]> = {
    image: '/images/SAC041S_01.png',
    category: 'Pet Feeders',
    room: 'pet',
-   inStock: true,
+   inStock: false,
    rating: 4.5,
    reviews: 126,
    details: {
@@ -744,7 +744,7 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
    image: '/images/SAC08L_01.png',
    category: 'Pet Feeders',
    room: 'pet',
-   inStock: true,
+   inStock: false,
    rating: 4.6,
    reviews: 144,
    details: {
@@ -797,7 +797,7 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
    image: '/images/SAC08M_01.png',
    category: 'Pet Feeders',
    room: 'pet',
-   inStock: true,
+   inStock: false,
    rating: 4.6,
    reviews: 135,
    details: {
@@ -850,7 +850,7 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
    image: '/images/SAC08S_01.png',
    category: 'Pet Feeders',
    room: 'pet',
-   inStock: true,
+   inStock: false,
    rating: 4.9,
    reviews: 149,
    details: {
@@ -929,7 +929,7 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
    image: '/images/SAC09L_01.png',
    category: 'Pet Feeders',
    room: 'pet',
-   inStock: true,
+   inStock: false,
    rating: 4.6,
    reviews: 96,
    details: {
@@ -967,7 +967,7 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
    image: '/images/SAC09M_01.png',
    category: 'Pet Feeders',
    room: 'pet',
-   inStock: true,
+   inStock: false,
    rating: 4.6,
    reviews: 140,
    details: {
@@ -1005,7 +1005,7 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
    image: '/images/SAC09S_01.png',
    category: 'Pet Feeders',
    room: 'pet',
-   inStock: true,
+   inStock: false,
    rating: 4.6,
    reviews: 174,
    details: {
@@ -1043,7 +1043,7 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
    image: '/images/TS-YFCT-J4WR_01.png',
    category: 'Pet Feeders',
    room: 'pet',
-   inStock: true,
+   inStock: false,
    rating: 5.0,
    reviews: 61,
    details: {
