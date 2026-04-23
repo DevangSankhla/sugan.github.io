@@ -38,23 +38,20 @@ const functions = __importStar(require("firebase-functions"));
 const admin = __importStar(require("firebase-admin"));
 const nodemailer = __importStar(require("nodemailer"));
 admin.initializeApp();
-const smtpHost = process.env.SMTP_HOST || 'smtp.gmail.com';
-const smtpPort = parseInt(process.env.SMTP_PORT || '587', 10);
-const smtpSecure = process.env.SMTP_SECURE === 'true';
-const smtpUser = process.env.SMTP_USER || '';
-const smtpPass = process.env.SMTP_PASS || '';
-const adminEmail = process.env.ADMIN_EMAIL || 'sac280422@gmail.com';
-const fromName = process.env.FROM_NAME || 'Sugan Shop';
-const fromEmail = process.env.FROM_EMAIL || smtpUser || 'contact@sugan.shop';
-const transporter = nodemailer.createTransport({
-    host: smtpHost,
-    port: smtpPort,
-    secure: smtpSecure,
-    auth: smtpUser && smtpPass ? { user: smtpUser, pass: smtpPass } : undefined,
-});
-transporter.verify().catch((err) => {
-    console.error('SMTP verification failed:', err.message);
-});
+const adminEmail = 'sac280422@gmail.com';
+const fromName = 'Sugan Shop';
+// Transporter reads credentials from functions.config() at invocation time
+function getTransporter() {
+    const cfg = functions.config();
+    const user = (cfg.smtp && cfg.smtp.user) ? String(cfg.smtp.user).trim() : '';
+    const rawPass = (cfg.smtp && cfg.smtp.pass) ? String(cfg.smtp.pass) : '';
+    const pass = rawPass.replace(/\s+/g, '');
+    console.log(`SMTP config — user set: ${!!user} (len=${user.length}), pass set: ${!!pass} (len=${pass.length})`);
+    return nodemailer.createTransport({
+        service: 'gmail',
+        auth: user && pass ? { user, pass } : undefined,
+    });
+}
 function formatCurrency(amount) {
     return new Intl.NumberFormat('en-IN', {
         style: 'currency',
@@ -102,8 +99,10 @@ function buildItemsTable(items) {
   `;
 }
 async function sendMail({ to, subject, html, }) {
-    await transporter.sendMail({
-        from: `"${fromName}" <${fromEmail}>`,
+    const cfg = functions.config();
+    const user = (cfg.smtp && cfg.smtp.user) ? cfg.smtp.user : 'contact@sugan.shop';
+    await getTransporter().sendMail({
+        from: `"${fromName}" <${user}>`,
         to,
         subject,
         html,
