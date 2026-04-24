@@ -111,41 +111,126 @@ async function sendMail({ to, subject, html, }) {
 exports.sendOrderPlacedEmail = functions.firestore
     .document('orders/{orderId}')
     .onCreate(async (snap, context) => {
-    var _a;
+    var _a, _b;
     const orderId = context.params.orderId;
     const data = snap.data();
-    try {
-        const subject = `🛒 New Order Placed — ${data.orderNumber || orderId.slice(-8).toUpperCase()}`;
-        const html = `
-        <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;color:#333;">
-          <h2 style="color:#5D4037;">New Order Received</h2>
-          <p>A new order has been placed on <strong>Sugan Shop</strong>.</p>
+    const orderRef = data.orderNumber || orderId.slice(-8).toUpperCase();
+    const customerName = ((_a = data.shippingAddress) === null || _a === void 0 ? void 0 : _a.fullName) || 'Customer';
+    // --- Admin notification ---
+    const adminSubject = `🛒 New Order Placed — ${orderRef}`;
+    const adminHtml = `
+      <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;color:#333;">
+        <h2 style="color:#5D4037;">New Order Received</h2>
+        <p>A new order has been placed on <strong>Sugan Shop</strong>.</p>
 
-          <table style="width:100%;border-collapse:collapse;margin:16px 0;font-size:14px;">
-            <tr><td style="padding:6px 0;border-bottom:1px solid #eee;"><strong>Order ID</strong></td><td style="padding:6px 0;border-bottom:1px solid #eee;">${orderId}</td></tr>
-            <tr><td style="padding:6px 0;border-bottom:1px solid #eee;"><strong>Order Number</strong></td><td style="padding:6px 0;border-bottom:1px solid #eee;">${data.orderNumber || 'N/A'}</td></tr>
-            <tr><td style="padding:6px 0;border-bottom:1px solid #eee;"><strong>Customer Email</strong></td><td style="padding:6px 0;border-bottom:1px solid #eee;">${data.userEmail || 'N/A'}</td></tr>
-            <tr><td style="padding:6px 0;border-bottom:1px solid #eee;"><strong>Payment Method</strong></td><td style="padding:6px 0;border-bottom:1px solid #eee;">${data.paymentMethod || 'N/A'}</td></tr>
-            <tr><td style="padding:6px 0;border-bottom:1px solid #eee;"><strong>Payment Status</strong></td><td style="padding:6px 0;border-bottom:1px solid #eee;">${data.paymentStatus || 'N/A'}</td></tr>
-            <tr><td style="padding:6px 0;border-bottom:1px solid #eee;"><strong>Subtotal</strong></td><td style="padding:6px 0;border-bottom:1px solid #eee;">${formatCurrency(data.subtotal || 0)}</td></tr>
-            <tr><td style="padding:6px 0;border-bottom:1px solid #eee;"><strong>Shipping</strong></td><td style="padding:6px 0;border-bottom:1px solid #eee;">${formatCurrency(data.shipping || 0)}</td></tr>
-            <tr><td style="padding:6px 0;border-bottom:1px solid #eee;"><strong>COD Charge</strong></td><td style="padding:6px 0;border-bottom:1px solid #eee;">${formatCurrency(data.codCharge || 0)}</td></tr>
-            <tr><td style="padding:6px 0;"><strong>Grand Total</strong></td><td style="padding:6px 0;"><strong>${formatCurrency(data.total || 0)}</strong></td></tr>
-          </table>
+        <table style="width:100%;border-collapse:collapse;margin:16px 0;font-size:14px;">
+          <tr><td style="padding:6px 0;border-bottom:1px solid #eee;"><strong>Order ID</strong></td><td style="padding:6px 0;border-bottom:1px solid #eee;">${orderId}</td></tr>
+          <tr><td style="padding:6px 0;border-bottom:1px solid #eee;"><strong>Order Number</strong></td><td style="padding:6px 0;border-bottom:1px solid #eee;">${data.orderNumber || 'N/A'}</td></tr>
+          <tr><td style="padding:6px 0;border-bottom:1px solid #eee;"><strong>Customer Email</strong></td><td style="padding:6px 0;border-bottom:1px solid #eee;">${data.userEmail || 'N/A'}</td></tr>
+          <tr><td style="padding:6px 0;border-bottom:1px solid #eee;"><strong>Payment Method</strong></td><td style="padding:6px 0;border-bottom:1px solid #eee;">${data.paymentMethod || 'N/A'}</td></tr>
+          <tr><td style="padding:6px 0;border-bottom:1px solid #eee;"><strong>Payment Status</strong></td><td style="padding:6px 0;border-bottom:1px solid #eee;">${data.paymentStatus || 'N/A'}</td></tr>
+          <tr><td style="padding:6px 0;border-bottom:1px solid #eee;"><strong>Subtotal</strong></td><td style="padding:6px 0;border-bottom:1px solid #eee;">${formatCurrency(data.subtotal || 0)}</td></tr>
+          <tr><td style="padding:6px 0;border-bottom:1px solid #eee;"><strong>Shipping</strong></td><td style="padding:6px 0;border-bottom:1px solid #eee;">${formatCurrency(data.shipping || 0)}</td></tr>
+          <tr><td style="padding:6px 0;border-bottom:1px solid #eee;"><strong>COD Charge</strong></td><td style="padding:6px 0;border-bottom:1px solid #eee;">${formatCurrency(data.codCharge || 0)}</td></tr>
+          <tr><td style="padding:6px 0;"><strong>Grand Total</strong></td><td style="padding:6px 0;"><strong>${formatCurrency(data.total || 0)}</strong></td></tr>
+        </table>
 
-          <h3 style="color:#5D4037;margin-top:24px;">Items Ordered</h3>
-          ${buildItemsTable(data.items || [])}
+        <h3 style="color:#5D4037;margin-top:24px;">Items Ordered</h3>
+        ${buildItemsTable(data.items || [])}
 
-          <h3 style="color:#5D4037;margin-top:24px;">Shipping Address</h3>
-          <pre style="background:#f9f9f9;padding:12px;border-radius:6px;font-family:Arial,sans-serif;white-space:pre-wrap;">${formatAddress(data.shippingAddress)}</pre>
+        <h3 style="color:#5D4037;margin-top:24px;">Shipping Address</h3>
+        <pre style="background:#f9f9f9;padding:12px;border-radius:6px;font-family:Arial,sans-serif;white-space:pre-wrap;">${formatAddress(data.shippingAddress)}</pre>
 
-          <p style="margin-top:24px;font-size:12px;color:#888;">
-            Order time: ${((_a = data.createdAt) === null || _a === void 0 ? void 0 : _a.toDate().toLocaleString('en-IN')) || new Date().toLocaleString('en-IN')}
-          </p>
+        <p style="margin-top:24px;font-size:12px;color:#888;">
+          Order time: ${((_b = data.createdAt) === null || _b === void 0 ? void 0 : _b.toDate().toLocaleString('en-IN')) || new Date().toLocaleString('en-IN')}
+        </p>
+      </div>
+    `;
+    // --- Customer confirmation email ---
+    const isCOD = (data.paymentMethod || '').toUpperCase() === 'COD';
+    const customerSubject = `Your Sugan order is confirmed — ${orderRef}`;
+    const customerHtml = `
+      <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;color:#333;background:#fffdf8;padding:32px;border-radius:12px;">
+
+        <div style="text-align:center;margin-bottom:32px;">
+          <h1 style="font-size:28px;color:#5D4037;margin:0;letter-spacing:1px;">SUGAN</h1>
+          <p style="color:#9E7A5A;font-size:13px;margin:4px 0 0;">Handcrafted for your home</p>
         </div>
-      `;
-        await sendMail({ to: adminEmail, subject, html });
-        console.log(`Order placed email sent for order ${orderId}`);
+
+        <h2 style="color:#2E7D32;font-size:22px;margin-bottom:8px;">Thank you, ${customerName}!</h2>
+        <p style="font-size:15px;color:#555;line-height:1.6;">
+          Your order has been placed successfully and is now being processed.
+          We'll ship it within <strong>2–3 business days</strong> and it will reach you in <strong>5–7 days</strong>.
+        </p>
+
+        <div style="background:#fff;border:1px solid #e8ddd0;border-radius:8px;padding:16px;margin:24px 0;">
+          <p style="margin:0 0 4px;font-size:13px;color:#888;">ORDER NUMBER</p>
+          <p style="margin:0;font-size:20px;font-weight:bold;color:#5D4037;letter-spacing:1px;">${orderRef}</p>
+        </div>
+
+        <h3 style="color:#5D4037;margin:24px 0 12px;">Your Items</h3>
+        ${buildItemsTable(data.items || [])}
+
+        <table style="width:100%;border-collapse:collapse;margin:20px 0;font-size:14px;">
+          <tr>
+            <td style="padding:6px 0;border-bottom:1px solid #eee;color:#777;">Subtotal</td>
+            <td style="padding:6px 0;border-bottom:1px solid #eee;text-align:right;">${formatCurrency(data.subtotal || 0)}</td>
+          </tr>
+          ${(data.discount || 0) > 0 ? `
+          <tr>
+            <td style="padding:6px 0;border-bottom:1px solid #eee;color:#2E7D32;">Discount${data.couponCode ? ` (${data.couponCode})` : ''}</td>
+            <td style="padding:6px 0;border-bottom:1px solid #eee;text-align:right;color:#2E7D32;">−${formatCurrency(data.discount || 0)}</td>
+          </tr>` : ''}
+          <tr>
+            <td style="padding:6px 0;border-bottom:1px solid #eee;color:#777;">Shipping</td>
+            <td style="padding:6px 0;border-bottom:1px solid #eee;text-align:right;">${(data.shipping || 0) === 0 ? 'FREE' : formatCurrency(data.shipping || 0)}</td>
+          </tr>
+          ${isCOD && (data.codCharge || 0) > 0 ? `
+          <tr>
+            <td style="padding:6px 0;border-bottom:1px solid #eee;color:#777;">COD Fee</td>
+            <td style="padding:6px 0;border-bottom:1px solid #eee;text-align:right;">${formatCurrency(data.codCharge || 0)}</td>
+          </tr>` : ''}
+          <tr>
+            <td style="padding:10px 0 0;font-weight:bold;font-size:16px;color:#5D4037;">Total</td>
+            <td style="padding:10px 0 0;text-align:right;font-weight:bold;font-size:16px;color:#5D4037;">${formatCurrency(data.total || 0)}</td>
+          </tr>
+        </table>
+
+        <h3 style="color:#5D4037;margin:24px 0 8px;">Delivering To</h3>
+        <div style="background:#f9f9f9;padding:12px;border-radius:6px;font-size:14px;line-height:1.7;color:#555;">
+          ${formatAddress(data.shippingAddress).replace(/\n/g, '<br>')}
+        </div>
+
+        ${isCOD ? `
+        <div style="background:#FFF8E1;border:1px solid #FFE082;border-radius:8px;padding:14px;margin:20px 0;">
+          <p style="margin:0;font-size:14px;color:#795548;">
+            <strong>Cash on Delivery:</strong> Please keep ${formatCurrency(data.total || 0)} ready at the time of delivery.
+          </p>
+        </div>` : `
+        <div style="background:#E8F5E9;border:1px solid #A5D6A7;border-radius:8px;padding:14px;margin:20px 0;">
+          <p style="margin:0;font-size:14px;color:#2E7D32;">
+            <strong>Payment received.</strong> Your order is confirmed and will be dispatched soon.
+          </p>
+        </div>`}
+
+        <p style="font-size:14px;color:#555;line-height:1.6;margin-top:24px;">
+          Questions? Reply to this email or reach us at
+          <a href="mailto:contact@sugan.shop" style="color:#9E7A5A;">contact@sugan.shop</a>.
+        </p>
+
+        <hr style="border:none;border-top:1px solid #e8ddd0;margin:24px 0;">
+        <p style="font-size:12px;color:#aaa;text-align:center;">
+          Sugan Shop · Handcrafted in Jodhpur, Rajasthan · sugan.shop
+        </p>
+      </div>
+    `;
+    try {
+        const sends = [sendMail({ to: adminEmail, subject: adminSubject, html: adminHtml })];
+        if (data.userEmail) {
+            sends.push(sendMail({ to: data.userEmail, subject: customerSubject, html: customerHtml }));
+        }
+        await Promise.all(sends);
+        console.log(`Order placed emails sent for order ${orderId}`);
     }
     catch (error) {
         console.error(`Failed to send order placed email for ${orderId}:`, error);
