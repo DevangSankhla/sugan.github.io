@@ -242,18 +242,31 @@ export async function getOrderDetails(orderId: string) {
 }
 
 // Create order in Firestore with sequential SO# order number
-export async function createOrder(orderData: any): Promise<string> {
+// applyPromo: atomically decrement promotions/sac048_free_delivery counter if true
+export async function createOrder(orderData: any, applyPromo?: boolean): Promise<string> {
   const counterRef = doc(db, 'counters', 'orders');
   const newOrderRef = doc(collection(db, 'orders'));
+  const promoRef = doc(db, 'promotions', 'sac048_free_delivery');
 
   try {
     await runTransaction(db, async (transaction) => {
       const counterSnap = await transaction.get(counterRef);
       const nextCount = (counterSnap.exists() ? (counterSnap.data().count as number) : 0) + 1;
+
+      let promoApplied = false;
+      if (applyPromo) {
+        const promoSnap = await transaction.get(promoRef);
+        if (promoSnap.exists() && (promoSnap.data().remaining as number) > 0) {
+          transaction.update(promoRef, { remaining: promoSnap.data().remaining - 1 });
+          promoApplied = true;
+        }
+      }
+
       transaction.set(counterRef, { count: nextCount }, { merge: true });
       transaction.set(newOrderRef, {
         ...orderData,
         orderNumber: `SO#${nextCount}`,
+        ...(promoApplied ? { sac048PromoApplied: true } : {}),
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp()
       });

@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { doc, onSnapshot } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
 import { useAuth } from '@/context/AuthContext';
 import { useCart } from '@/context/CartContext';
 import { Button } from '@/components/ui/button';
@@ -59,10 +61,16 @@ export default function Checkout() {
   const [discountAmount, setDiscountAmount] = useState(0);
   const [showPayUWarning, setShowPayUWarning] = useState(false);
   const [pendingPayUOrderId, setPendingPayUOrderId] = useState<string | null>(null);
+  const [promoRemaining, setPromoRemaining] = useState<number | null>(null);
 
-  // Simple shipping cost logic
-  const shippingCost = totalPrice > 1999 ? 0 : 99;
-  const codCharge = paymentMethod === 'cod' ? 50 : 0;
+  const SAC048_SKUS = ['SAC048S', 'SAC048M', 'SAC048L'];
+  const hasSAC048 = items.some(item => SAC048_SKUS.includes(item.id));
+  const promoFreeDelivery = hasSAC048 && promoRemaining !== null && promoRemaining > 0;
+
+  // Shipping cost: free if promo active, or free for orders > ₹1999, else ₹99
+  const shippingCost = promoFreeDelivery ? 0 : (totalPrice > 1999 ? 0 : 99);
+  // COD charge: waived if promo active, else ₹50
+  const codCharge = promoFreeDelivery ? 0 : (paymentMethod === 'cod' ? 50 : 0);
   const finalTotal = totalPrice - discountAmount + shippingCost + codCharge;
 
   // Redirect if not logged in
@@ -103,6 +111,16 @@ export default function Checkout() {
     };
   }, [address.pincode]);
 
+  // Real-time promo counter subscription for SAC048 free delivery
+  useEffect(() => {
+    if (!hasSAC048) return;
+    const promoRef = doc(db, 'promotions', 'sac048_free_delivery');
+    const unsub = onSnapshot(promoRef, (snap) => {
+      setPromoRemaining(snap.exists() ? (snap.data().remaining as number) : null);
+    });
+    return () => unsub();
+  }, [hasSAC048]);
+
   const handleSubmit = async () => {
     if (!user) {
       navigate('/login?redirect=/checkout');
@@ -136,7 +154,7 @@ export default function Checkout() {
         txnid: paymentMethod === 'payu' ? generateTxnId() : null,
       };
 
-      const orderId = await createOrder(orderData);
+      const orderId = await createOrder(orderData, promoFreeDelivery);
 
       // Create Shiprocket order for shipping
       try {
@@ -401,7 +419,28 @@ export default function Checkout() {
                   </div>
                 </div>
                 
-                {totalPrice > 1999 ? (
+                {promoFreeDelivery ? (
+                  <div className="mt-4 p-4 bg-green-50 border-2 border-green-300 rounded-xl">
+                    <p className="font-body font-bold text-green-800">
+                      🎁 Free Delivery — At no extra cost!
+                    </p>
+                    <p className="font-body text-sm text-green-700 mt-1">
+                      <strong>{promoRemaining} left</strong> — Shipping & COD charge both waived
+                    </p>
+                  </div>
+                ) : hasSAC048 && promoRemaining === 0 ? (
+                  <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-xl">
+                    <p className="font-body font-semibold text-red-800 text-sm mb-1">
+                      The first 50 free deliveries are sold out — sorry, you're late!
+                    </p>
+                    <p className="font-body text-sm text-red-700">
+                      Get your next order with us with no extra shipping costs.
+                    </p>
+                    <p className="font-body text-xs text-red-600 mt-2 font-medium">
+                      📸 Screenshot this message and send it to us on WhatsApp before placing your next order.
+                    </p>
+                  </div>
+                ) : totalPrice > 1999 ? (
                   <div className="mt-4 p-3 bg-green-50 rounded-lg">
                     <p className="text-sm text-green-700 font-body flex items-center gap-2">
                       <Truck className="w-4 h-4" />
@@ -418,7 +457,7 @@ export default function Checkout() {
                     </p>
                   </div>
                 )}
-                
+
                 {!codAvailable && paymentMethod === 'cod' && (
                   <div className="mt-4 p-3 bg-red-50 rounded-lg">
                     <p className="text-sm text-red-700 font-body">
@@ -569,14 +608,21 @@ export default function Checkout() {
                     )}
                     <div className="flex justify-between font-body text-sugan-brown/60">
                       <span>Shipping</span>
-                      <span>{shippingCost === 0 ? 'FREE' : `₹${shippingCost}`}</span>
+                      <span className={promoFreeDelivery ? 'text-green-600 font-medium' : ''}>
+                        {shippingCost === 0 ? (promoFreeDelivery ? 'FREE 🎁' : 'FREE') : `₹${shippingCost}`}
+                      </span>
                     </div>
-                    {codCharge > 0 && (
+                    {promoFreeDelivery && paymentMethod === 'cod' ? (
+                      <div className="flex justify-between font-body text-green-600">
+                        <span>COD Fee</span>
+                        <span className="font-medium">FREE 🎁</span>
+                      </div>
+                    ) : codCharge > 0 ? (
                       <div className="flex justify-between font-body text-sugan-brown/60">
                         <span>COD Fee</span>
                         <span>₹{codCharge}</span>
                       </div>
-                    )}
+                    ) : null}
                     <div className="flex justify-between font-body text-sugan-brown font-semibold text-lg pt-2 border-t border-sugan-brown/10">
                       <span>Total</span>
                       <span>₹{finalTotal.toLocaleString()}</span>
@@ -625,71 +671,6 @@ export default function Checkout() {
           </div>
         </div>
       </div>
-      {/* PayU Redirect Warning Modal */}
-      {showPayUWarning && (
-        <div className="fixed inset-0 z-50 bg-sugan-brown/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-sugan-cream rounded-2xl p-6 md:p-8 max-w-md w-full shadow-2xl">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="font-display text-xl text-sugan-brown flex items-center gap-2">
-                <Info className="w-5 h-5 text-sugan-gold" />
-                Important
-              </h3>
-              <button
-                onClick={() => setShowPayUWarning(false)}
-                className="text-sugan-brown/40 hover:text-sugan-brown"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-            <div className="space-y-4">
-              <p className="font-body text-sugan-brown/80">
-                You are about to be redirected to PayU to complete your payment.
-              </p>
-              <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
-                <p className="font-body text-sm text-amber-800 font-medium mb-1">
-                  After payment, please check your Account → Orders page
-                </p>
-                <p className="font-body text-xs text-amber-700">
-                  Do not refresh or close your browser after payment. Your order confirmation will appear in your account within a few minutes.
-                </p>
-              </div>
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 flex items-start gap-3">
-                <MessageCircle className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
-                <div>
-                  <p className="font-body text-sm text-blue-800 font-medium">
-                    Get instant updates on WhatsApp
-                  </p>
-                  <a
-                    href={`https://wa.me/916367677255?text=Hi, I just placed an order on Sugan. Please confirm my payment status. Order ID: ${pendingPayUOrderId?.slice(-8).toUpperCase()}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-sm text-blue-600 font-body hover:underline mt-1"
-                  >
-                    Message us
-                    <ArrowRight className="w-3 h-3" />
-                  </a>
-                </div>
-              </div>
-              <div className="flex flex-col gap-3 pt-2">
-                <Button
-                  onClick={proceedToPayU}
-                  className="w-full h-12 bg-sugan-brown hover:bg-sugan-brown/90 font-body"
-                >
-                  Continue to PayU
-                </Button>
-                <Button
-                  variant="outline"
-                  onClick={() => setShowPayUWarning(false)}
-                  className="w-full h-12 font-body border-sugan-brown/20"
-                >
-                  Go Back
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
       {/* PayU Redirect Warning Modal */}
       {showPayUWarning && (
         <div className="fixed inset-0 z-50 bg-sugan-brown/80 backdrop-blur-sm flex items-center justify-center p-4">

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -13,27 +13,37 @@ import Testimonials from '@/sections/Testimonials';
 import CTA from '@/sections/CTA';
 import Footer from '@/sections/Footer';
 import CartDrawer from '@/sections/CartDrawer';
-import Shop from '@/pages/Shop';
-import RoomShop from '@/pages/RoomShop';
-import ProductDetail from '@/pages/ProductDetail';
-import ShippingInfo from '@/pages/ShippingInfo';
-import ReturnsRefunds from '@/pages/ReturnsRefunds';
-import FAQ from '@/pages/FAQ';
-import PrivacyPolicy from '@/pages/PrivacyPolicy';
-import ContactUs from '@/pages/ContactUs';
-import BulkOrders from '@/pages/BulkOrders';
-import Login from '@/pages/Login';
-import Signup from '@/pages/Signup';
-import Account from '@/pages/Account';
-import Admin from '@/pages/Admin';
-import AdminOrders from '@/pages/AdminOrders';
-import Checkout from '@/pages/Checkout';
-import PaymentSuccess from '@/pages/PaymentSuccess';
-import PaymentFailure from '@/pages/PaymentFailure';
 import MobileCartButton from '@/components/MobileCartButton';
 import BottomNavigation from '@/components/BottomNavigation';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import './App.css';
+
+// Lazy-load all pages so each route only loads its JS when visited
+const Shop = lazy(() => import('@/pages/Shop'));
+const RoomShop = lazy(() => import('@/pages/RoomShop'));
+const ProductDetail = lazy(() => import('@/pages/ProductDetail'));
+const ShippingInfo = lazy(() => import('@/pages/ShippingInfo'));
+const ReturnsRefunds = lazy(() => import('@/pages/ReturnsRefunds'));
+const FAQ = lazy(() => import('@/pages/FAQ'));
+const PrivacyPolicy = lazy(() => import('@/pages/PrivacyPolicy'));
+const ContactUs = lazy(() => import('@/pages/ContactUs'));
+const BulkOrders = lazy(() => import('@/pages/BulkOrders'));
+const Login = lazy(() => import('@/pages/Login'));
+const Signup = lazy(() => import('@/pages/Signup'));
+const Account = lazy(() => import('@/pages/Account'));
+const Admin = lazy(() => import('@/pages/Admin'));
+const AdminOrders = lazy(() => import('@/pages/AdminOrders'));
+const Checkout = lazy(() => import('@/pages/Checkout'));
+const PaymentSuccess = lazy(() => import('@/pages/PaymentSuccess'));
+const PaymentFailure = lazy(() => import('@/pages/PaymentFailure'));
+
+function PageLoader() {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-sugan-cream">
+      <div className="w-8 h-8 border-2 border-sugan-gold border-t-transparent rounded-full animate-spin" />
+    </div>
+  );
+}
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -90,6 +100,7 @@ function App() {
 
           {/* Routes */}
           <ErrorBoundary>
+          <Suspense fallback={<PageLoader />}>
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/shop" element={<><Shop /><Footer /></>} />
@@ -110,6 +121,7 @@ function App() {
             <Route path="/payment/success" element={<PaymentSuccess />} />
             <Route path="/payment/failure" element={<PaymentFailure />} />
           </Routes>
+          </Suspense>
           </ErrorBoundary>
 
           {/* Cart Drawer */}

@@ -42,6 +42,17 @@ service cloud.firestore {
       allow write: if request.auth != null;
     }
 
+    // Promotions - readable by all, customers can only decrement by 1
+    match /promotions/{promoId} {
+      allow read: if true;
+      allow update: if request.auth != null && (
+        (request.resource.data.remaining == resource.data.remaining - 1 && request.resource.data.remaining >= 0) ||
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isAdmin == true
+      );
+      allow create, delete: if request.auth != null &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isAdmin == true;
+    }
+
     // Contact/Bulk Order Submissions - anyone can submit, only admin can read/update
     match /contactSubmissions/{submissionId} {
       allow create: if true;  // Anyone can submit contact forms

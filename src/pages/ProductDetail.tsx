@@ -460,7 +460,7 @@ export default function ProductDetail() {
             {['SAC048S', 'SAC048M', 'SAC048L'].includes(product.id) && (
               <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
                 <p className="font-body text-sm text-red-800 font-medium">
-                  🔥 Hot — 30+ sold today!
+                  🔥 Hot — 800+ sold last month!
                 </p>
                 <p className="font-body text-xs text-red-700">
                   Code <strong>First10</strong> at checkout for 10% off
