@@ -1,5 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Tag, Check, X } from 'lucide-react';
+import { collection, query, where, getDocs, limit } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
+import { useAuth } from '@/context/AuthContext';
 
 interface CouponCodeProps {
   subtotal: number;
@@ -16,27 +19,48 @@ const AVAILABLE_COUPONS = [
   { code: 'SAVE250', discount: 250, type: 'fixed', minOrder: 1999, description: '₹250 off on orders above ₹1999' },
 ];
 
-export default function CouponCode({ 
-  subtotal, 
-  onApplyCoupon, 
-  onRemoveCoupon, 
-  appliedCoupon, 
-  discountAmount 
+export default function CouponCode({
+  subtotal,
+  onApplyCoupon,
+  onRemoveCoupon,
+  appliedCoupon,
+  discountAmount
 }: CouponCodeProps) {
+  const { user } = useAuth();
   const [code, setCode] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [showCoupons, setShowCoupons] = useState(false);
+  const [isFirstOrder, setIsFirstOrder] = useState<boolean | null>(null);
+
+  // Check if this user has ever placed an order before
+  useEffect(() => {
+    if (!user) return;
+    getDocs(query(collection(db, 'orders'), where('userId', '==', user.uid), limit(1)))
+      .then(snap => setIsFirstOrder(snap.empty))
+      .catch(() => setIsFirstOrder(false));
+  }, [user]);
 
   const handleApply = () => {
     setError(null);
     setSuccess(null);
 
     const coupon = AVAILABLE_COUPONS.find(c => c.code.toUpperCase() === code.trim().toUpperCase());
-    
+
     if (!coupon) {
       setError('Invalid coupon code');
       return;
+    }
+
+    if (coupon.code === 'FIRST10') {
+      if (isFirstOrder === null) {
+        setError('Please wait a moment and try again');
+        return;
+      }
+      if (!isFirstOrder) {
+        setError('FIRST10 is only available on your first order — not applicable to your account');
+        return;
+      }
     }
 
     if (subtotal < coupon.minOrder) {
@@ -44,7 +68,7 @@ export default function CouponCode({
       return;
     }
 
-    const discount = coupon.type === 'percent' 
+    const discount = coupon.type === 'percent'
       ? Math.round((subtotal * coupon.discount) / 100)
       : coupon.discount;
 
@@ -119,7 +143,10 @@ export default function CouponCode({
 
           {showCoupons && (
             <div className="mt-3 space-y-2">
-              {AVAILABLE_COUPONS.filter(c => subtotal >= c.minOrder).map((coupon) => (
+              {AVAILABLE_COUPONS.filter(c =>
+                subtotal >= c.minOrder &&
+                !(c.code === 'FIRST10' && isFirstOrder === false)
+              ).map((coupon) => (
                 <div 
                   key={coupon.code}
                   onClick={() => {
