@@ -1,26 +1,48 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Users can read/write their own data
+    // Users can read/write their own data. `isAdmin` cannot be self-elevated:
+    // it may only be created as `true` for allowlisted admin emails, and
+    // regular updates by the owner must not change it.
     match /users/{userId} {
-      allow read, write: if request.auth != null && request.auth.uid == userId;
-      // Allow admin to read all users
-      allow read: if request.auth != null && 
+      allow read: if request.auth != null && request.auth.uid == userId;
+      allow read: if request.auth != null &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isAdmin == true;
+
+      allow create: if request.auth != null && request.auth.uid == userId &&
+        (request.resource.data.isAdmin == false ||
+         (request.resource.data.isAdmin == true &&
+          request.auth.token.email in ['sac280422@gmail.com', 'artisandevang1234@gmail.com']));
+
+      allow update: if request.auth != null && request.auth.uid == userId &&
+        request.resource.data.isAdmin == resource.data.isAdmin;
+
+      allow update, delete: if request.auth != null &&
         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isAdmin == true;
     }
-    
-    // Users can read their own orders, admin can read all
+
+    // Users can read their own orders, admin can read all.
+    // Owner updates are restricted to a safe allowlist of payment/shipping
+    // fields — financial fields (total, subtotal, items, shippingAddress) are
+    // immutable from the client after creation.
     match /orders/{orderId} {
       allow read: if request.auth != null &&
         (request.auth.uid == resource.data.userId ||
          get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isAdmin == true);
       allow create: if request.auth != null && request.auth.uid == request.resource.data.userId;
-      // Owner can update payment fields on their own order; userId must not change
-      allow update: if request.auth != null && (
-        (request.auth.uid == resource.data.userId &&
-         request.resource.data.userId == resource.data.userId) ||
-        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isAdmin == true
-      );
+      allow update: if request.auth != null &&
+        request.auth.uid == resource.data.userId &&
+        request.resource.data.userId == resource.data.userId &&
+        request.resource.data.total == resource.data.total &&
+        request.resource.data.subtotal == resource.data.subtotal &&
+        request.resource.data.items == resource.data.items &&
+        request.resource.data.shippingAddress == resource.data.shippingAddress &&
+        request.resource.data.diff(resource.data).affectedKeys()
+          .hasOnly(['paymentStatus', 'paymentMethod', 'txnid', 'paidAmount',
+                    'paidAt', 'errorMessage', 'updatedAt',
+                    'shippingDetails', 'status', 'shippedAt']);
+      allow update: if request.auth != null &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isAdmin == true;
     }
     
     // Users can read/write their own wishlist

@@ -27,7 +27,18 @@ function formatCurrency(amount: number): string {
   }).format(amount);
 }
 
-function formatAddress(addr: any): string {
+interface ShippingAddress {
+  fullName?: string;
+  phone?: string;
+  addressLine1?: string;
+  addressLine2?: string;
+  landmark?: string;
+  city?: string;
+  state?: string;
+  pincode?: string;
+}
+
+function formatAddress(addr: ShippingAddress | undefined | null): string {
   if (!addr) return 'N/A';
   const parts = [
     addr.fullName,
@@ -40,7 +51,14 @@ function formatAddress(addr: any): string {
   return parts.join('\n');
 }
 
-function buildItemsTable(items: any[]): string {
+interface OrderItem {
+  name?: string;
+  productId?: string;
+  price: number;
+  quantity: number;
+}
+
+function buildItemsTable(items: OrderItem[]): string {
   if (!items || items.length === 0) return '<p>No items</p>';
 
   const rows = items
@@ -75,7 +93,7 @@ interface OrderData {
   orderNumber?: string;
   userEmail?: string;
   userId?: string;
-  items?: any[];
+  items?: OrderItem[];
   subtotal?: number;
   discount?: number;
   couponCode?: string;
@@ -84,7 +102,7 @@ interface OrderData {
   total?: number;
   paymentMethod?: string;
   paymentStatus?: string;
-  shippingAddress?: any;
+  shippingAddress?: ShippingAddress;
   txnid?: string | null;
   createdAt?: admin.firestore.Timestamp;
   paidAt?: admin.firestore.Timestamp;

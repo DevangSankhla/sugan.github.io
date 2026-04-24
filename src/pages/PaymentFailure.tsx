@@ -70,10 +70,10 @@ export default function PaymentFailure() {
                 </Button>
               </Link>
               
-              <Link to="/cart">
+              <Link to="/shop">
                 <Button variant="outline" className="w-full font-body h-12 border-sugan-brown/20">
                   <ShoppingCart className="w-4 h-4 mr-2" />
-                  Back to Cart
+                  Back to Shop
                 </Button>
               </Link>
             </div>

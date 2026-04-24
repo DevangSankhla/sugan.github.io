@@ -9,19 +9,17 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { 
-  preparePayUForm, 
-  submitPayUPayment, 
-  processCOD, 
-  createOrder,
-  generateTxnId
+import {
+  preparePayUForm,
+  submitPayUPayment,
+  processCOD,
+  createOrder
 } from '@/lib/payu';
-import { 
+import {
   checkPincodeServiceability,
   createShiprocketOrder,
   updateOrderShipping
 } from '@/lib/shiprocket';
-import { sendOrderEmail } from '@/lib/notifications';
 import { MapPin, Phone, User, Home, Building, Navigation, CreditCard, Banknote, Truck, Shield, AlertCircle, Package, MessageCircle, X, Info, ArrowRight } from 'lucide-react';
 import CouponCode from '@/components/CouponCode';
 
@@ -151,7 +149,7 @@ export default function Checkout() {
         paymentStatus: 'pending',
         paymentMethod: paymentMethod === 'cod' ? 'COD' : 'PayU',
         shippingAddress: address,
-        txnid: paymentMethod === 'payu' ? generateTxnId() : null,
+        txnid: null,
       };
 
       const orderId = await createOrder(orderData, promoFreeDelivery);
@@ -201,27 +199,9 @@ export default function Checkout() {
         }
 
       if (paymentMethod === 'cod') {
-        // Process Cash on Delivery
+        // Customer confirmation email is handled by the sendOrderPlacedEmail
+        // Cloud Function trigger — no client-side notify call needed.
         await processCOD(orderId);
-        
-        // Send email notification
-        try {
-          await sendOrderEmail({
-            to: user.email || '',
-            orderId,
-            customerName: address.fullName,
-            total: finalTotal,
-            items: items.map(item => ({
-              name: item.name,
-              price: item.price,
-              quantity: item.quantity
-            })),
-            paymentMethod: 'Cash on Delivery'
-          });
-        } catch (notifyErr) {
-          console.error('Notification error:', notifyErr);
-        }
-        
         clearCart();
         navigate(`/account?order=${orderId}&cod=true`);
       } else {
@@ -257,8 +237,9 @@ export default function Checkout() {
 
 
 
-  const isFormValid = address.fullName && address.phone && address.addressLine1 && 
-                      address.city && address.state && isPincodeValid;
+  const isPhoneValid = /^[6-9]\d{9}$/.test(address.phone);
+  const isFormValid = !!address.fullName && isPhoneValid && !!address.addressLine1 &&
+                      !!address.city && !!address.state && isPincodeValid;
 
   // Don't render if redirecting (must be after all hooks)
   if (!user || items.length === 0) {
