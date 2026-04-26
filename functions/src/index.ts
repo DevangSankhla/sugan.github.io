@@ -307,3 +307,282 @@ export const sendOrderCompletedEmail = functions.firestore
       console.error(`Failed to send order confirmed email for ${orderId}:`, error);
     }
   });
+
+// ============================================================================
+// Affiliate / referral system
+// ============================================================================
+
+const RETURN_WINDOW_DAYS = 7;
+const MS_PER_DAY = 24 * 60 * 60 * 1000;
+
+function commissionMonthKey(date: Date): string {
+  // YYYY-MM in IST so the rollup buckets line up with calendar months locally
+  const ist = new Date(date.getTime() + 5.5 * 60 * 60 * 1000);
+  return `${ist.getUTCFullYear()}-${String(ist.getUTCMonth() + 1).padStart(2, '0')}`;
+}
+
+function summarizeItems(items: OrderItem[] | undefined): { count: number; summary: string } {
+  if (!items || items.length === 0) return { count: 0, summary: '0 items' };
+  const count = items.reduce((s, it) => s + (it.quantity || 0), 0);
+  return { count, summary: `${count} item${count === 1 ? '' : 's'}` };
+}
+
+interface OrderWithAffiliate extends OrderData {
+  affiliateCode?: string;
+  affiliateEmail?: string;
+  affiliateCommissionPercent?: number;
+  affiliateCommissionAmount?: number;
+  deliveredAt?: admin.firestore.Timestamp;
+  status?: 'pending' | 'processing' | 'shipped' | 'delivered';
+}
+
+// 1. Mirror affiliate orders on create — also bumps the code's totals
+export const mirrorAffiliateOrderOnCreate = functions.firestore
+  .document('orders/{orderId}')
+  .onCreate(async (snap, context) => {
+    const orderId = context.params.orderId;
+    const data = snap.data() as OrderWithAffiliate;
+    if (!data.affiliateCode || !data.affiliateEmail) return;
+
+    const code = String(data.affiliateCode).toUpperCase();
+    const commission = Number(data.affiliateCommissionAmount || 0);
+    const { count, summary } = summarizeItems(data.items);
+
+    const mirrorRef = admin.firestore().doc(`affiliateOrders/${orderId}`);
+    const codeRef = admin.firestore().doc(`affiliateCodes/${code}`);
+
+    await admin.firestore().runTransaction(async (tx) => {
+      tx.set(mirrorRef, {
+        orderId,
+        orderNumber: data.orderNumber || orderId.slice(-8).toUpperCase(),
+        affiliateCode: code,
+        affiliateEmail: data.affiliateEmail,
+        status: data.status || 'pending',
+        paymentStatus: data.paymentStatus || 'pending',
+        itemCount: count,
+        itemsSummary: summary,
+        commissionAmount: commission,
+        commissionVoided: false,
+        eligibilityDate: null,
+        commissionMonth: null,
+        deliveredAt: null,
+        createdAt: admin.firestore.FieldValue.serverTimestamp(),
+        updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+      });
+      tx.set(codeRef, {
+        totalOrders: admin.firestore.FieldValue.increment(1),
+        totalCommissionAccrued: admin.firestore.FieldValue.increment(commission),
+        updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+      }, { merge: true });
+    });
+    console.log(`affiliate: mirrored new order ${orderId} for ${code}`);
+  });
+
+// 2. Mirror affiliate orders on update — keeps status/payment/delivery in sync
+export const mirrorAffiliateOrderOnUpdate = functions.firestore
+  .document('orders/{orderId}')
+  .onUpdate(async (change, context) => {
+    const orderId = context.params.orderId;
+    const before = change.before.data() as OrderWithAffiliate;
+    const after = change.after.data() as OrderWithAffiliate;
+    if (!after.affiliateCode || !after.affiliateEmail) return;
+
+    const mirrorRef = admin.firestore().doc(`affiliateOrders/${orderId}`);
+    const updates: Record<string, unknown> = {
+      status: after.status || 'pending',
+      paymentStatus: after.paymentStatus || 'pending',
+      updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+    };
+
+    // First-time delivery → stamp deliveredAt + compute eligibility/month
+    const becameDelivered = before.status !== 'delivered' && after.status === 'delivered';
+    if (becameDelivered && !after.deliveredAt) {
+      const now = new Date();
+      const eligibility = new Date(now.getTime() + RETURN_WINDOW_DAYS * MS_PER_DAY);
+      updates.deliveredAt = admin.firestore.Timestamp.fromDate(now);
+      updates.eligibilityDate = admin.firestore.Timestamp.fromDate(eligibility);
+      updates.commissionMonth = commissionMonthKey(eligibility);
+      // Also stamp on the source order so it's queryable
+      await change.after.ref.update({
+        deliveredAt: admin.firestore.Timestamp.fromDate(now),
+        updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+      });
+    } else if (after.deliveredAt && (!before.deliveredAt || becameDelivered)) {
+      // Backfill if deliveredAt is on the order but not yet on the mirror
+      const deliveredDate = after.deliveredAt.toDate();
+      const eligibility = new Date(deliveredDate.getTime() + RETURN_WINDOW_DAYS * MS_PER_DAY);
+      updates.deliveredAt = after.deliveredAt;
+      updates.eligibilityDate = admin.firestore.Timestamp.fromDate(eligibility);
+      updates.commissionMonth = commissionMonthKey(eligibility);
+    }
+
+    await mirrorRef.set(updates, { merge: true });
+  });
+
+// 3. voidAffiliateCommission — admin-only callable
+export const voidAffiliateCommission = functions.https.onCall(async (data, context) => {
+  if (!context.auth) {
+    throw new functions.https.HttpsError('unauthenticated', 'Sign in required');
+  }
+  const callerSnap = await admin.firestore().doc(`users/${context.auth.uid}`).get();
+  if (!callerSnap.exists || callerSnap.data()?.isAdmin !== true) {
+    throw new functions.https.HttpsError('permission-denied', 'Admin only');
+  }
+
+  const orderId: string = data?.orderId;
+  const reason: string = data?.reason || '';
+  if (!orderId) throw new functions.https.HttpsError('invalid-argument', 'orderId required');
+
+  const mirrorRef = admin.firestore().doc(`affiliateOrders/${orderId}`);
+  const mirrorSnap = await mirrorRef.get();
+  if (!mirrorSnap.exists) {
+    throw new functions.https.HttpsError('not-found', 'Affiliate order not found');
+  }
+  const mirror = mirrorSnap.data()!;
+  if (mirror.commissionVoided === true) {
+    return { success: true, alreadyVoided: true };
+  }
+
+  const code = String(mirror.affiliateCode).toUpperCase();
+  const amount = Number(mirror.commissionAmount || 0);
+
+  await admin.firestore().runTransaction(async (tx) => {
+    tx.update(mirrorRef, {
+      commissionVoided: true,
+      voidReason: reason,
+      voidedAt: admin.firestore.FieldValue.serverTimestamp(),
+      voidedBy: context.auth!.uid,
+      updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+    });
+    tx.set(admin.firestore().doc(`affiliateCodes/${code}`), {
+      totalCommissionAccrued: admin.firestore.FieldValue.increment(-amount),
+      updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+    }, { merge: true });
+  });
+
+  // If the rollup for this commissionMonth already exists, recompute it.
+  if (mirror.commissionMonth && mirror.affiliateEmail) {
+    await recomputeMonthlyRollup(mirror.affiliateEmail, mirror.commissionMonth);
+  }
+  return { success: true };
+});
+
+async function recomputeMonthlyRollup(email: string, month: string): Promise<void> {
+  const monthlyRef = admin.firestore()
+    .doc(`affiliateMonthly/${email}/months/${month}`);
+  const existing = await monthlyRef.get();
+  if (!existing.exists) return; // not yet settled — settlement function will compute later
+
+  const snap = await admin.firestore()
+    .collection('affiliateOrders')
+    .where('affiliateEmail', '==', email)
+    .where('commissionMonth', '==', month)
+    .get();
+
+  let ordersDelivered = 0;
+  let ordersSuccessful = 0;
+  let commissionTotal = 0;
+  for (const d of snap.docs) {
+    const o = d.data();
+    if (o.status === 'delivered') ordersDelivered += 1;
+    if (!o.commissionVoided) {
+      ordersSuccessful += 1;
+      commissionTotal += Number(o.commissionAmount || 0);
+    }
+  }
+  await monthlyRef.set({
+    ordersDelivered,
+    ordersSuccessful,
+    commissionTotal,
+    netPayable: commissionTotal,
+    recomputedAt: admin.firestore.FieldValue.serverTimestamp(),
+  }, { merge: true });
+}
+
+// 4. settleMonthlyAffiliateCommissions — runs on the 1st of each month at 00:05 IST
+export const settleMonthlyAffiliateCommissions = functions.pubsub
+  .schedule('5 0 1 * *')
+  .timeZone('Asia/Kolkata')
+  .onRun(async () => {
+    // Compute the previous month's key (in IST)
+    const now = new Date();
+    const istNow = new Date(now.getTime() + 5.5 * 60 * 60 * 1000);
+    const prevMonth = new Date(Date.UTC(istNow.getUTCFullYear(), istNow.getUTCMonth() - 1, 1));
+    const monthKey = `${prevMonth.getUTCFullYear()}-${String(prevMonth.getUTCMonth() + 1).padStart(2, '0')}`;
+
+    const snap = await admin.firestore()
+      .collection('affiliateOrders')
+      .where('commissionMonth', '==', monthKey)
+      .get();
+
+    // Group by affiliate email
+    const byEmail: Record<string, {
+      ordersDelivered: number;
+      ordersSuccessful: number;
+      commissionTotal: number;
+    }> = {};
+    for (const d of snap.docs) {
+      const o = d.data();
+      const email: string = o.affiliateEmail;
+      if (!email) continue;
+      if (!byEmail[email]) {
+        byEmail[email] = { ordersDelivered: 0, ordersSuccessful: 0, commissionTotal: 0 };
+      }
+      if (o.status === 'delivered') byEmail[email].ordersDelivered += 1;
+      if (!o.commissionVoided) {
+        byEmail[email].ordersSuccessful += 1;
+        byEmail[email].commissionTotal += Number(o.commissionAmount || 0);
+      }
+    }
+
+    const writes: Promise<unknown>[] = [];
+    for (const [email, totals] of Object.entries(byEmail)) {
+      const ref = admin.firestore().doc(`affiliateMonthly/${email}/months/${monthKey}`);
+      writes.push(ref.set({
+        email,
+        month: monthKey,
+        ordersDelivered: totals.ordersDelivered,
+        ordersSuccessful: totals.ordersSuccessful,
+        commissionTotal: totals.commissionTotal,
+        netPayable: totals.commissionTotal,
+        status: 'pending',
+        settledAt: admin.firestore.FieldValue.serverTimestamp(),
+      }, { merge: true }));
+
+      // Notify admin and the affiliate
+      writes.push(sendMail({
+        to: adminEmail,
+        subject: `Affiliate payout due — ${email} — ${monthKey}`,
+        html: `
+          <p>Settlement for <strong>${email}</strong> for <strong>${monthKey}</strong>:</p>
+          <ul>
+            <li>Successful orders: ${totals.ordersSuccessful}</li>
+            <li>Commission total: ${formatCurrency(totals.commissionTotal)}</li>
+          </ul>
+          <p>Mark as paid in the Admin → Affiliates panel after the transfer.</p>
+        `,
+      }).catch((e) => console.error('admin payout email failed:', e)));
+
+      writes.push(sendMail({
+        to: email,
+        subject: `Your Sugan affiliate earnings — ${monthKey}`,
+        html: `
+          <div style="font-family:Arial,sans-serif;max-width:560px;margin:0 auto;color:#333;">
+            <h2 style="color:#5D4037;">Your ${monthKey} earnings are ready</h2>
+            <p>Hi! Here's your settlement summary for ${monthKey}:</p>
+            <ul>
+              <li>Successful orders (delivered + return window passed): <strong>${totals.ordersSuccessful}</strong></li>
+              <li>Total commission: <strong>${formatCurrency(totals.commissionTotal)}</strong></li>
+            </ul>
+            <p>You'll receive your payout from us shortly. View live numbers anytime at
+            <a href="https://sugan.shop/affiliate">sugan.shop/affiliate</a>.</p>
+            <p style="color:#888;font-size:12px;">Sugan Shop · Handcrafted in Jodhpur</p>
+          </div>
+        `,
+      }).catch((e) => console.error(`affiliate payout email to ${email} failed:`, e)));
+    }
+
+    await Promise.all(writes);
+    console.log(`affiliate: settled ${Object.keys(byEmail).length} affiliates for ${monthKey}`);
+    return null;
+  });

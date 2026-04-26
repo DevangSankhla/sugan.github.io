@@ -67,7 +67,7 @@ const isReturnEligible = (order: Order): boolean => {
 export default function Account() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const { user, userData, logout, isAdmin } = useAuth();
+  const { user, userData, logout, isAdmin, isAffiliate } = useAuth();
   const { addToCart } = useCart();
   const [orders, setOrders] = useState<Order[]>([]);
   const [wishlist, setWishlist] = useState<WishlistItem[]>([]);
@@ -194,13 +194,21 @@ export default function Account() {
               Welcome back, {userData?.name || 'User'}
             </p>
           </div>
-          <div className="flex gap-3">
+          <div className="flex gap-3 flex-wrap">
             {isAdmin && (
               <Button
                 onClick={() => navigate('/admin')}
                 className="bg-sugan-gold hover:bg-sugan-gold/90 font-body"
               >
                 Admin Dashboard
+              </Button>
+            )}
+            {isAffiliate && (
+              <Button
+                onClick={() => navigate('/affiliate')}
+                className="bg-sugan-brown hover:bg-sugan-brown/90 font-body"
+              >
+                Affiliate Dashboard
               </Button>
             )}
             <Button

@@ -12,8 +12,9 @@ import {
   Package, Users, DollarSign, ShoppingCart, Search, Edit, Save, X, User, Mail, MessageSquare,
   Eye, ArrowRight, MapPin, Phone, CreditCard, Truck, Calendar, Hash, Copy, Check
 } from 'lucide-react';
-import { db } from '@/lib/firebase';
-import { collection, query, onSnapshot, doc, updateDoc, serverTimestamp, writeBatch } from 'firebase/firestore';
+import { db, functions as fns } from '@/lib/firebase';
+import { collection, query, onSnapshot, doc, updateDoc, serverTimestamp, writeBatch, setDoc, deleteDoc } from 'firebase/firestore';
+import { httpsCallable } from 'firebase/functions';
 import { allProducts } from '@/data/rooms';
 import type { Product } from '@/types';
 
@@ -74,6 +75,37 @@ interface UserData {
   createdAt: any;
 }
 
+interface AffiliateCodeRow {
+  id: string;
+  code: string;
+  email: string;
+  name?: string;
+  discountPercent: number;
+  commissionPercent: number;
+  active: boolean;
+  totalOrders?: number;
+  totalCommissionAccrued?: number;
+  createdAt?: any;
+}
+
+interface AffiliateOrderRow {
+  id: string;
+  orderNumber: string;
+  affiliateCode: string;
+  affiliateEmail: string;
+  status: string;
+  paymentStatus: string;
+  itemCount: number;
+  itemsSummary: string;
+  commissionAmount: number;
+  commissionVoided: boolean;
+  voidReason?: string;
+  eligibilityDate?: any;
+  commissionMonth?: string | null;
+  createdAt?: any;
+  deliveredAt?: any;
+}
+
 interface ContactSubmission {
   id: string;
   name: string;
@@ -107,6 +139,12 @@ export default function Admin() {
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [copiedField, setCopiedField] = useState<string | null>(null);
   const [statusError, setStatusError] = useState('');
+  const [affiliateCodes, setAffiliateCodes] = useState<AffiliateCodeRow[]>([]);
+  const [affiliateOrders, setAffiliateOrders] = useState<AffiliateOrderRow[]>([]);
+  const [showCreateAffiliate, setShowCreateAffiliate] = useState(false);
+  const [newAff, setNewAff] = useState({ code: '', email: '', name: '', discountPercent: 10, commissionPercent: 10 });
+  const [affError, setAffError] = useState('');
+  const [voidingId, setVoidingId] = useState<string | null>(null);
   const realOrders = useMemo(() => orders.filter(o => !o.isTrial), [orders]);
   const totalRevenue = useMemo(() => realOrders.reduce((sum, o) => sum + (o.total || 0), 0), [realOrders]);
 
@@ -132,6 +170,8 @@ export default function Admin() {
     let unsubscribeOrders: (() => void) | undefined;
     let unsubscribeUsers: (() => void) | undefined;
     let unsubscribeSubmissions: (() => void) | undefined;
+    let unsubscribeAffiliates: (() => void) | undefined;
+    let unsubscribeAffiliateOrders: (() => void) | undefined;
 
     try {
       // Fetch orders
@@ -166,6 +206,21 @@ export default function Admin() {
         (error) => console.error('Submissions error:', error)
       );
 
+      // Fetch affiliate codes
+      unsubscribeAffiliates = onSnapshot(query(collection(db, 'affiliateCodes')),
+        (snapshot) => setAffiliateCodes(mapDocs<AffiliateCodeRow>(snapshot)),
+        (error) => console.error('Affiliate codes error:', error)
+      );
+
+      // Fetch affiliate order mirror (so admin can see + void)
+      unsubscribeAffiliateOrders = onSnapshot(query(collection(db, 'affiliateOrders')),
+        (snapshot) => {
+          const data = mapDocs<AffiliateOrderRow>(snapshot);
+          setAffiliateOrders(data.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0)));
+        },
+        (error) => console.error('Affiliate orders error:', error)
+      );
+
       setLoading(false);
     } catch (error) {
       console.error('Error fetching admin data:', error);
@@ -176,8 +231,67 @@ export default function Admin() {
       unsubscribeOrders?.();
       unsubscribeUsers?.();
       unsubscribeSubmissions?.();
+      unsubscribeAffiliates?.();
+      unsubscribeAffiliateOrders?.();
     };
   }, [isAdmin]);
+
+  const createAffiliateCode = async () => {
+    setAffError('');
+    const code = newAff.code.trim().toUpperCase();
+    const email = newAff.email.trim().toLowerCase();
+    if (!code || !email) { setAffError('Code and email are required'); return; }
+    if (!/^[A-Z0-9]{3,20}$/.test(code)) { setAffError('Code must be 3–20 letters/numbers'); return; }
+    if (affiliateCodes.some(c => c.id === code)) { setAffError('This code already exists'); return; }
+    try {
+      await setDoc(doc(db, 'affiliateCodes', code), {
+        code,
+        email,
+        name: newAff.name.trim() || null,
+        discountPercent: Number(newAff.discountPercent) || 10,
+        commissionPercent: Number(newAff.commissionPercent) || 10,
+        active: true,
+        totalOrders: 0,
+        totalCommissionAccrued: 0,
+        createdAt: serverTimestamp(),
+        createdBy: user?.uid || null,
+      });
+      setNewAff({ code: '', email: '', name: '', discountPercent: 10, commissionPercent: 10 });
+      setShowCreateAffiliate(false);
+    } catch (err) {
+      console.error(err);
+      setAffError('Could not create code (check Firestore rules)');
+    }
+  };
+
+  const toggleAffiliateActive = async (codeId: string, active: boolean) => {
+    try {
+      await updateDoc(doc(db, 'affiliateCodes', codeId), {
+        active,
+        updatedAt: serverTimestamp(),
+      });
+    } catch (err) { console.error(err); }
+  };
+
+  const deleteAffiliateCode = async (codeId: string) => {
+    if (!window.confirm(`Delete affiliate code ${codeId}? Existing orders keep their commission record.`)) return;
+    try { await deleteDoc(doc(db, 'affiliateCodes', codeId)); } catch (err) { console.error(err); }
+  };
+
+  const voidCommission = async (orderId: string) => {
+    const reason = window.prompt('Reason for voiding commission (e.g. "returned 14 days later"):');
+    if (reason === null) return;
+    setVoidingId(orderId);
+    try {
+      const call = httpsCallable<{ orderId: string; reason: string }, { success: boolean }>(fns, 'voidAffiliateCommission');
+      await call({ orderId, reason });
+    } catch (err) {
+      console.error('Void failed:', err);
+      alert('Failed to void commission. See console for details.');
+    } finally {
+      setVoidingId(null);
+    }
+  };
 
   const updateOrderStatus = async (orderId: string, status: Order['status']) => {
     const prevStatus = orders.find(o => o.id === orderId)?.status;
@@ -372,6 +486,10 @@ export default function Admin() {
                   {submissions.filter(s => s.status === 'new').length}
                 </span>
               )}
+            </TabsTrigger>
+            <TabsTrigger value="affiliates" className="font-body data-[state=active]:bg-sugan-brown data-[state=active]:text-white">
+              <DollarSign className="w-4 h-4 mr-2" />
+              Affiliates
             </TabsTrigger>
           </TabsList>
 
@@ -812,7 +930,218 @@ export default function Admin() {
               </CardContent>
             </Card>
           </TabsContent>
+
+          {/* Affiliates Tab */}
+          <TabsContent value="affiliates">
+            <div className="space-y-6">
+              {/* Codes management */}
+              <Card>
+                <CardHeader className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                  <CardTitle className="font-display text-xl text-sugan-brown">
+                    Affiliate Codes ({affiliateCodes.length})
+                  </CardTitle>
+                  <Button
+                    onClick={() => { setShowCreateAffiliate(true); setAffError(''); }}
+                    className="bg-sugan-brown hover:bg-sugan-brown/90 font-body"
+                  >
+                    + New Code
+                  </Button>
+                </CardHeader>
+                <CardContent>
+                  {affiliateCodes.length === 0 ? (
+                    <p className="font-body text-sugan-brown/60 py-8 text-center">
+                      No affiliate codes yet. Click "+ New Code" to create one.
+                    </p>
+                  ) : (
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-sm font-body">
+                        <thead>
+                          <tr className="text-left text-sugan-brown/60 border-b border-sugan-brown/10">
+                            <th className="py-2 pr-4">Code</th>
+                            <th className="py-2 pr-4">Influencer</th>
+                            <th className="py-2 pr-4">Email</th>
+                            <th className="py-2 pr-4 text-right">Disc / Comm %</th>
+                            <th className="py-2 pr-4 text-right">Orders</th>
+                            <th className="py-2 pr-4 text-right">Commission accrued</th>
+                            <th className="py-2 pr-4">Active</th>
+                            <th className="py-2 pr-4"></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {affiliateCodes.map((c) => (
+                            <tr key={c.id} className="border-b border-sugan-brown/5">
+                              <td className="py-3 pr-4 font-mono font-medium text-sugan-brown">{c.id}</td>
+                              <td className="py-3 pr-4 text-sugan-brown">{c.name || '—'}</td>
+                              <td className="py-3 pr-4 text-sugan-brown/70">{c.email}</td>
+                              <td className="py-3 pr-4 text-right text-sugan-brown/70">
+                                {c.discountPercent}% / {c.commissionPercent}%
+                              </td>
+                              <td className="py-3 pr-4 text-right text-sugan-brown">{c.totalOrders || 0}</td>
+                              <td className="py-3 pr-4 text-right text-sugan-brown">
+                                ₹{(c.totalCommissionAccrued || 0).toLocaleString('en-IN')}
+                              </td>
+                              <td className="py-3 pr-4">
+                                <input
+                                  type="checkbox"
+                                  checked={c.active !== false}
+                                  onChange={(e) => toggleAffiliateActive(c.id, e.target.checked)}
+                                  className="w-4 h-4 accent-sugan-gold"
+                                />
+                              </td>
+                              <td className="py-3 pr-4">
+                                <button
+                                  onClick={() => deleteAffiliateCode(c.id)}
+                                  className="text-red-500 hover:text-red-700 text-xs"
+                                >
+                                  Delete
+                                </button>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+
+              {/* Affiliate orders mirror */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="font-display text-xl text-sugan-brown">
+                    Affiliate Orders ({affiliateOrders.length})
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  {affiliateOrders.length === 0 ? (
+                    <p className="font-body text-sugan-brown/60 py-8 text-center">
+                      No orders have used an affiliate code yet.
+                    </p>
+                  ) : (
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-sm font-body">
+                        <thead>
+                          <tr className="text-left text-sugan-brown/60 border-b border-sugan-brown/10">
+                            <th className="py-2 pr-4">Order</th>
+                            <th className="py-2 pr-4">Code</th>
+                            <th className="py-2 pr-4">Affiliate</th>
+                            <th className="py-2 pr-4">Status</th>
+                            <th className="py-2 pr-4 text-right">Commission</th>
+                            <th className="py-2 pr-4">Eligible (month)</th>
+                            <th className="py-2 pr-4"></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {affiliateOrders.map((o) => (
+                            <tr key={o.id} className="border-b border-sugan-brown/5">
+                              <td className="py-3 pr-4 font-mono text-sugan-brown">{o.orderNumber}</td>
+                              <td className="py-3 pr-4 font-mono text-sugan-gold">{o.affiliateCode}</td>
+                              <td className="py-3 pr-4 text-sugan-brown/70">{o.affiliateEmail}</td>
+                              <td className="py-3 pr-4">
+                                <Badge className={`text-xs ${
+                                  o.status === 'delivered' ? 'bg-green-100 text-green-800' :
+                                  o.status === 'shipped' ? 'bg-blue-100 text-blue-800' :
+                                  o.status === 'processing' ? 'bg-amber-100 text-amber-800' :
+                                  'bg-gray-100 text-gray-700'
+                                }`}>{o.status}</Badge>
+                              </td>
+                              <td className="py-3 pr-4 text-right">
+                                {o.commissionVoided ? (
+                                  <span className="line-through text-sugan-brown/40">₹{(o.commissionAmount || 0).toLocaleString('en-IN')}</span>
+                                ) : (
+                                  <span className="font-medium text-sugan-brown">₹{(o.commissionAmount || 0).toLocaleString('en-IN')}</span>
+                                )}
+                                {o.commissionVoided && o.voidReason && (
+                                  <p className="text-[10px] text-red-500 mt-1">{o.voidReason}</p>
+                                )}
+                              </td>
+                              <td className="py-3 pr-4 text-sugan-brown/60 text-xs">
+                                {o.commissionMonth || '—'}
+                              </td>
+                              <td className="py-3 pr-4">
+                                {!o.commissionVoided && o.commissionMonth && (
+                                  <button
+                                    onClick={() => voidCommission(o.id)}
+                                    disabled={voidingId === o.id}
+                                    className="text-red-500 hover:text-red-700 text-xs disabled:opacity-50"
+                                  >
+                                    {voidingId === o.id ? 'Voiding…' : 'Void'}
+                                  </button>
+                                )}
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </div>
+          </TabsContent>
         </Tabs>
+
+        {/* Create Affiliate Code Dialog */}
+        <Dialog open={showCreateAffiliate} onOpenChange={setShowCreateAffiliate}>
+          <DialogContent className="max-w-md">
+            <DialogHeader>
+              <DialogTitle className="font-display text-2xl text-sugan-brown">New Affiliate Code</DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4">
+              <div className="space-y-1">
+                <Label className="font-body text-sm">Code (uppercase, no spaces)</Label>
+                <Input
+                  value={newAff.code}
+                  onChange={(e) => setNewAff({ ...newAff, code: e.target.value.toUpperCase().replace(/\s/g, '') })}
+                  placeholder="RIYA10"
+                  className="font-mono uppercase"
+                />
+              </div>
+              <div className="space-y-1">
+                <Label className="font-body text-sm">Influencer email (must match their signup)</Label>
+                <Input
+                  type="email"
+                  value={newAff.email}
+                  onChange={(e) => setNewAff({ ...newAff, email: e.target.value.toLowerCase() })}
+                  placeholder="riya@example.com"
+                />
+              </div>
+              <div className="space-y-1">
+                <Label className="font-body text-sm">Display name (optional)</Label>
+                <Input
+                  value={newAff.name}
+                  onChange={(e) => setNewAff({ ...newAff, name: e.target.value })}
+                  placeholder="Riya Sharma"
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-1">
+                  <Label className="font-body text-sm">Discount %</Label>
+                  <Input
+                    type="number"
+                    value={newAff.discountPercent}
+                    onChange={(e) => setNewAff({ ...newAff, discountPercent: Number(e.target.value) })}
+                    min={0} max={100}
+                  />
+                </div>
+                <div className="space-y-1">
+                  <Label className="font-body text-sm">Commission %</Label>
+                  <Input
+                    type="number"
+                    value={newAff.commissionPercent}
+                    onChange={(e) => setNewAff({ ...newAff, commissionPercent: Number(e.target.value) })}
+                    min={0} max={100}
+                  />
+                </div>
+              </div>
+              {affError && <p className="text-sm text-red-600 font-body">{affError}</p>}
+              <div className="flex gap-2 justify-end pt-2">
+                <Button variant="outline" onClick={() => setShowCreateAffiliate(false)} className="font-body">Cancel</Button>
+                <Button onClick={createAffiliateCode} className="bg-sugan-brown hover:bg-sugan-brown/90 font-body">Create</Button>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
 
         {/* Order Detail Dialog */}
         <Dialog open={!!selectedOrder} onOpenChange={() => setSelectedOrder(null)}>

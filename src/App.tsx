@@ -33,6 +33,7 @@ const Signup = lazy(() => import('@/pages/Signup'));
 const Account = lazy(() => import('@/pages/Account'));
 const Admin = lazy(() => import('@/pages/Admin'));
 const AdminOrders = lazy(() => import('@/pages/AdminOrders'));
+const AffiliateDashboard = lazy(() => import('@/pages/AffiliateDashboard'));
 const Checkout = lazy(() => import('@/pages/Checkout'));
 const PaymentSuccess = lazy(() => import('@/pages/PaymentSuccess'));
 const PaymentFailure = lazy(() => import('@/pages/PaymentFailure'));
@@ -117,6 +118,7 @@ function App() {
             <Route path="/account" element={<Account />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="/admin/orders" element={<AdminOrders />} />
+            <Route path="/affiliate" element={<AffiliateDashboard />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/payment/success" element={<PaymentSuccess />} />
             <Route path="/payment/failure" element={<PaymentFailure />} />

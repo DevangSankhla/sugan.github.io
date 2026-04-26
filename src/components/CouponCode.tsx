@@ -1,12 +1,18 @@
 import { useState, useEffect } from 'react';
 import { Tag, Check, X } from 'lucide-react';
-import { collection, query, where, getDocs, limit } from 'firebase/firestore';
+import { collection, query, where, getDocs, limit, doc, getDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { useAuth } from '@/context/AuthContext';
 
+export interface AffiliateMeta {
+  code: string;
+  email: string;
+  commissionPercent: number;
+}
+
 interface CouponCodeProps {
   subtotal: number;
-  onApplyCoupon: (discount: number, code: string) => void;
+  onApplyCoupon: (discount: number, code: string, affiliate?: AffiliateMeta) => void;
   onRemoveCoupon: () => void;
   appliedCoupon: string | null;
   discountAmount: number;
@@ -41,40 +47,71 @@ export default function CouponCode({
       .catch(() => setIsFirstOrder(false));
   }, [user]);
 
-  const handleApply = () => {
+  const handleApply = async () => {
     setError(null);
     setSuccess(null);
 
-    const coupon = AVAILABLE_COUPONS.find(c => c.code.toUpperCase() === code.trim().toUpperCase());
+    const normalized = code.trim().toUpperCase();
+    const coupon = AVAILABLE_COUPONS.find(c => c.code.toUpperCase() === normalized);
 
-    if (!coupon) {
-      setError('Invalid coupon code');
+    if (coupon) {
+      if (coupon.code === 'FIRST10') {
+        if (isFirstOrder === null) {
+          setError('Please wait a moment and try again');
+          return;
+        }
+        if (!isFirstOrder) {
+          setError('FIRST10 is only available on your first order — not applicable to your account');
+          return;
+        }
+      }
+      if (subtotal < coupon.minOrder) {
+        setError(`Minimum order amount is ₹${coupon.minOrder} for this coupon`);
+        return;
+      }
+      const discount = coupon.type === 'percent'
+        ? Math.round((subtotal * coupon.discount) / 100)
+        : coupon.discount;
+      onApplyCoupon(discount, coupon.code);
+      setSuccess(`Coupon applied! You saved ₹${discount.toLocaleString()}`);
+      setCode('');
       return;
     }
 
-    if (coupon.code === 'FIRST10') {
-      if (isFirstOrder === null) {
-        setError('Please wait a moment and try again');
+    // Unknown code — try the affiliate codes collection
+    try {
+      const affSnap = await getDoc(doc(db, 'affiliateCodes', normalized));
+      if (!affSnap.exists()) {
+        setError('Invalid coupon code');
         return;
       }
-      if (!isFirstOrder) {
-        setError('FIRST10 is only available on your first order — not applicable to your account');
+      const aff = affSnap.data() as {
+        active?: boolean;
+        email?: string;
+        discountPercent?: number;
+        commissionPercent?: number;
+      };
+      if (!aff.active) {
+        setError('This code is no longer active');
         return;
       }
+      if (!aff.email || typeof aff.discountPercent !== 'number') {
+        setError('This code is misconfigured — contact support');
+        return;
+      }
+      const discount = Math.round((subtotal * aff.discountPercent) / 100);
+      const meta: AffiliateMeta = {
+        code: normalized,
+        email: aff.email,
+        commissionPercent: typeof aff.commissionPercent === 'number' ? aff.commissionPercent : 10,
+      };
+      onApplyCoupon(discount, normalized, meta);
+      setSuccess(`Coupon applied! You saved ₹${discount.toLocaleString()}`);
+      setCode('');
+    } catch (err) {
+      console.error('Affiliate code lookup failed:', err);
+      setError('Could not verify code right now — please try again');
     }
-
-    if (subtotal < coupon.minOrder) {
-      setError(`Minimum order amount is ₹${coupon.minOrder} for this coupon`);
-      return;
-    }
-
-    const discount = coupon.type === 'percent'
-      ? Math.round((subtotal * coupon.discount) / 100)
-      : coupon.discount;
-
-    onApplyCoupon(discount, coupon.code);
-    setSuccess(`Coupon applied! You saved ₹${discount.toLocaleString()}`);
-    setCode('');
   };
 
   const handleRemove = () => {

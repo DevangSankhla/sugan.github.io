@@ -57,6 +57,11 @@ export default function Checkout() {
   const [codAvailable, setCodAvailable] = useState(true);
   const [appliedCoupon, setAppliedCoupon] = useState<string | null>(null);
   const [discountAmount, setDiscountAmount] = useState(0);
+  const [affiliateMeta, setAffiliateMeta] = useState<{
+    code: string;
+    email: string;
+    commissionPercent: number;
+  } | null>(null);
   const [showPayUWarning, setShowPayUWarning] = useState(false);
   const [pendingPayUOrderId, setPendingPayUOrderId] = useState<string | null>(null);
   const [promoRemaining, setPromoRemaining] = useState<number | null>(null);
@@ -127,6 +132,16 @@ export default function Checkout() {
     setLoading(true);
 
     try {
+      // Affiliate fields snapshot — commission is on listed prices (sum of
+      // items[].price * items[].quantity), independent of customer discount.
+      const itemsTotal = items.reduce((s, it) => s + it.price * it.quantity, 0);
+      const affiliateFields = affiliateMeta ? {
+        affiliateCode: affiliateMeta.code,
+        affiliateEmail: affiliateMeta.email,
+        affiliateCommissionPercent: affiliateMeta.commissionPercent,
+        affiliateCommissionAmount: Math.round(itemsTotal * affiliateMeta.commissionPercent) / 100,
+      } : {};
+
       // Create order in Firestore first
       const orderData = {
         userId: user.uid,
@@ -141,6 +156,7 @@ export default function Checkout() {
         subtotal: totalPrice,
         discount: discountAmount,
         couponCode: appliedCoupon,
+        ...affiliateFields,
         shipping: shippingCost,
         shippingCourier: 'Shiprocket',
         codCharge: codCharge,
@@ -569,8 +585,16 @@ export default function Checkout() {
                   {/* Coupon */}
                   <CouponCode
                     subtotal={totalPrice}
-                    onApplyCoupon={(discount, code) => { setDiscountAmount(discount); setAppliedCoupon(code); }}
-                    onRemoveCoupon={() => { setDiscountAmount(0); setAppliedCoupon(null); }}
+                    onApplyCoupon={(discount, code, aff) => {
+                      setDiscountAmount(discount);
+                      setAppliedCoupon(code);
+                      setAffiliateMeta(aff || null);
+                    }}
+                    onRemoveCoupon={() => {
+                      setDiscountAmount(0);
+                      setAppliedCoupon(null);
+                      setAffiliateMeta(null);
+                    }}
                     appliedCoupon={appliedCoupon}
                     discountAmount={discountAmount}
                   />

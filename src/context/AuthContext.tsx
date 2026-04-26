@@ -11,7 +11,7 @@ import {
   getRedirectResult,
   sendPasswordResetEmail
 } from 'firebase/auth';
-import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs, query, where, limit, setDoc, serverTimestamp } from 'firebase/firestore';
 import { auth, db } from '@/lib/firebase';
 
 interface UserData {
@@ -34,6 +34,8 @@ interface AuthContextType {
   logout: () => Promise<void>;
   resetPassword: (email: string) => Promise<void>;
   isAdmin: boolean;
+  isAffiliate: boolean;
+  affiliateCode: string | null;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -45,6 +47,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [userData, setUserData] = useState<UserData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [affiliateCode, setAffiliateCode] = useState<string | null>(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -91,6 +94,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     return unsubscribe;
   }, []);
+
+  // Detect whether the signed-in user is an affiliate (has an active code)
+  useEffect(() => {
+    let cancelled = false;
+    if (!user?.email) {
+      setAffiliateCode(null);
+      return;
+    }
+    getDocs(query(
+      collection(db, 'affiliateCodes'),
+      where('email', '==', user.email),
+      where('active', '==', true),
+      limit(1),
+    ))
+      .then((snap) => {
+        if (cancelled) return;
+        setAffiliateCode(snap.empty ? null : (snap.docs[0].data().code as string) || snap.docs[0].id);
+      })
+      .catch((err) => {
+        console.error('Affiliate lookup failed:', err);
+        if (!cancelled) setAffiliateCode(null);
+      });
+    return () => { cancelled = true; };
+  }, [user?.email]);
 
   const login = async (email: string, password: string) => {
     await signInWithEmailAndPassword(auth, email, password);
@@ -187,7 +214,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     loginWithGoogle,
     logout,
     resetPassword,
-    isAdmin: userData?.isAdmin || false
+    isAdmin: userData?.isAdmin || false,
+    isAffiliate: !!affiliateCode,
+    affiliateCode,
   };
 
   return (
