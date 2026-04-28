@@ -13,7 +13,7 @@ import {
   Eye, ArrowRight, MapPin, Phone, CreditCard, Truck, Calendar, Hash, Copy, Check
 } from 'lucide-react';
 import { db, functions as fns } from '@/lib/firebase';
-import { collection, query, onSnapshot, doc, updateDoc, serverTimestamp, writeBatch, setDoc, deleteDoc } from 'firebase/firestore';
+import { collection, query, onSnapshot, doc, updateDoc, serverTimestamp, setDoc, deleteDoc } from 'firebase/firestore';
 import { httpsCallable } from 'firebase/functions';
 import { allProducts } from '@/data/rooms';
 import type { Product } from '@/types';
@@ -64,6 +64,7 @@ interface Order {
   updatedAt: any;
   shippingDetails?: ShippingDetails;
   isTrial?: boolean;
+  orderType?: 'regular' | 'trial' | 'creator';
   orderNumber?: string;
 }
 
@@ -145,7 +146,10 @@ export default function Admin() {
   const [newAff, setNewAff] = useState({ code: '', email: '', name: '', discountPercent: 10, commissionPercent: 10 });
   const [affError, setAffError] = useState('');
   const [voidingId, setVoidingId] = useState<string | null>(null);
-  const realOrders = useMemo(() => orders.filter(o => !o.isTrial), [orders]);
+  const realOrders = useMemo(
+    () => orders.filter(o => !o.isTrial && o.orderType !== 'trial' && o.orderType !== 'creator'),
+    [orders]
+  );
   const totalRevenue = useMemo(() => realOrders.reduce((sum, o) => sum + (o.total || 0), 0), [realOrders]);
 
   // Redirect if not admin
@@ -323,12 +327,16 @@ export default function Admin() {
     }
   };
 
-  const markAllAsTrial = async () => {
-    const toMark = orders.filter(o => !o.isTrial);
-    if (toMark.length === 0) return;
-    const batch = writeBatch(db);
-    toMark.forEach(o => batch.update(doc(db, 'orders', o.id), { isTrial: true }));
-    await batch.commit();
+  const updateOrderType = async (orderId: string, orderType: 'regular' | 'trial' | 'creator') => {
+    try {
+      await updateDoc(doc(db, 'orders', orderId), {
+        orderType,
+        isTrial: orderType === 'trial',
+        updatedAt: serverTimestamp(),
+      });
+    } catch (error) {
+      console.error('Error updating order type:', error);
+    }
   };
 
   const getStatusColor = (status: string) => {
@@ -610,25 +618,14 @@ export default function Admin() {
                     <span className="ml-2 text-sm font-body text-sugan-brown/50">({realOrders.length} real)</span>
                   )}
                 </CardTitle>
-                <div className="flex gap-2">
-                  {orders.some(o => !o.isTrial) && (
-                    <Button
-                      variant="outline"
-                      onClick={markAllAsTrial}
-                      className="font-body border-red-200 text-red-600 hover:bg-red-50"
-                    >
-                      Mark All as Trial
-                    </Button>
-                  )}
-                  <Button
-                    variant="outline"
-                    onClick={() => navigate('/admin/orders')}
-                    className="font-body border-sugan-brown/20"
-                  >
-                    View Full Records
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </Button>
-                </div>
+                <Button
+                  variant="outline"
+                  onClick={() => navigate('/admin/orders')}
+                  className="font-body border-sugan-brown/20"
+                >
+                  View Full Records
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
@@ -645,8 +642,11 @@ export default function Admin() {
                               <p className="font-body text-sm font-medium text-sugan-brown">
                                 {order.orderNumber || `#${order.id.slice(-8).toUpperCase()}`}
                               </p>
-                              {order.isTrial && (
+                              {(order.isTrial || order.orderType === 'trial') && (
                                 <Badge className="bg-gray-100 text-gray-500 font-body text-xs">TRIAL</Badge>
+                              )}
+                              {order.orderType === 'creator' && (
+                                <Badge className="bg-purple-100 text-purple-600 font-body text-xs">CREATOR</Badge>
                               )}
                               <span className="font-body text-xs text-sugan-brown/40">
                                 {order.createdAt?.toDate?.().toLocaleString('en-IN', {
@@ -719,6 +719,19 @@ export default function Admin() {
                               <Badge className={`${getStatusColor(order.status)} font-body capitalize`}>
                                 {order.status}
                               </Badge>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <span className="font-body text-xs text-sugan-brown/50">Type:</span>
+                              <select
+                                value={order.orderType || (order.isTrial ? 'trial' : 'regular')}
+                                onClick={(e) => e.stopPropagation()}
+                                onChange={(e) => { e.stopPropagation(); updateOrderType(order.id, e.target.value as 'regular' | 'trial' | 'creator'); }}
+                                className="font-body text-xs border border-sugan-brown/20 rounded-md px-2 py-1 bg-white cursor-pointer"
+                              >
+                                <option value="regular">Regular</option>
+                                <option value="trial">Trial</option>
+                                <option value="creator">Creator</option>
+                              </select>
                             </div>
                           </div>
                         </div>
@@ -1160,8 +1173,11 @@ export default function Admin() {
                       <Hash className="w-4 h-4 text-sugan-brown/40" />
                       <span className="font-body text-sm text-sugan-brown/60">
                         {selectedOrder.orderNumber || `#${selectedOrder.id.slice(-8).toUpperCase()}`}
-                        {selectedOrder.isTrial && (
+                        {(selectedOrder.isTrial || selectedOrder.orderType === 'trial') && (
                           <Badge className="ml-2 bg-gray-100 text-gray-500 font-body text-xs">TRIAL</Badge>
+                        )}
+                        {selectedOrder.orderType === 'creator' && (
+                          <Badge className="ml-2 bg-purple-100 text-purple-600 font-body text-xs">CREATOR</Badge>
                         )}
                       </span>
                       <button
