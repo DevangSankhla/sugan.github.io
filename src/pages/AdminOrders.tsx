@@ -280,14 +280,14 @@ export default function AdminOrders() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-sugan-cream flex items-center justify-center">
-        <div className="text-sugan-brown font-body">Loading orders...</div>
+      <div className="min-h-screen bg-sugan-bone flex items-center justify-center">
+        <div className="text-sugan-ink font-body">Loading orders...</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-sugan-cream pt-24 pb-8">
+    <div className="min-h-screen bg-sugan-bone pt-24 pb-8">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
@@ -296,16 +296,16 @@ export default function AdminOrders() {
               variant="outline"
               size="sm"
               onClick={() => navigate('/admin')}
-              className="font-body border-sugan-brown/20"
+              className="font-body border-sugan-ink/20"
             >
               <ArrowLeft className="w-4 h-4 mr-1" />
               Back
             </Button>
             <div>
-              <h1 className="font-display text-3xl text-sugan-brown">
+              <h1 className="font-display text-3xl text-sugan-ink">
                 All Orders Record
               </h1>
-              <p className="font-body text-sugan-brown/60 mt-1">
+              <p className="font-body text-sugan-ink/60 mt-1">
                 Complete order history with all details
               </p>
             </div>
@@ -314,7 +314,7 @@ export default function AdminOrders() {
             <Button
               variant="outline"
               onClick={exportToCSV}
-              className="font-body border-sugan-brown/20"
+              className="font-body border-sugan-ink/20"
             >
               <Download className="w-4 h-4 mr-2" />
               Export CSV
@@ -326,7 +326,7 @@ export default function AdminOrders() {
         <Card className="mb-6">
           <CardContent className="p-4">
             <div className="relative max-w-md">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-sugan-brown/40" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-sugan-ink/40" />
               <Input
                 placeholder="Search by order ID, email, phone, name, pincode..."
                 value={searchTerm}
@@ -340,7 +340,7 @@ export default function AdminOrders() {
         {/* Orders Table */}
         <Card>
           <CardHeader>
-            <CardTitle className="font-display text-xl text-sugan-brown">
+            <CardTitle className="font-display text-xl text-sugan-ink">
               Orders ({filteredOrders.length})
             </CardTitle>
           </CardHeader>
@@ -348,35 +348,35 @@ export default function AdminOrders() {
             <div className="overflow-x-auto">
               <table className="w-full min-w-[1000px]">
                 <thead>
-                  <tr className="border-b border-sugan-brown/10">
-                    <th className="text-left py-3 px-3 font-body text-sm text-sugan-brown/60">
+                  <tr className="border-b border-sugan-ink/10">
+                    <th className="text-left py-3 px-3 font-body text-sm text-sugan-ink/60">
                       Order #
                     </th>
-                    <th className="text-left py-3 px-3 font-body text-sm text-sugan-brown/60">
+                    <th className="text-left py-3 px-3 font-body text-sm text-sugan-ink/60">
                       Date
                     </th>
-                    <th className="text-left py-3 px-3 font-body text-sm text-sugan-brown/60">
+                    <th className="text-left py-3 px-3 font-body text-sm text-sugan-ink/60">
                       Customer
                     </th>
-                    <th className="text-left py-3 px-3 font-body text-sm text-sugan-brown/60">
+                    <th className="text-left py-3 px-3 font-body text-sm text-sugan-ink/60">
                       Contact
                     </th>
-                    <th className="text-left py-3 px-3 font-body text-sm text-sugan-brown/60">
+                    <th className="text-left py-3 px-3 font-body text-sm text-sugan-ink/60">
                       Address
                     </th>
-                    <th className="text-left py-3 px-3 font-body text-sm text-sugan-brown/60">
+                    <th className="text-left py-3 px-3 font-body text-sm text-sugan-ink/60">
                       Items
                     </th>
-                    <th className="text-left py-3 px-3 font-body text-sm text-sugan-brown/60">
+                    <th className="text-left py-3 px-3 font-body text-sm text-sugan-ink/60">
                       Payment
                     </th>
-                    <th className="text-right py-3 px-3 font-body text-sm text-sugan-brown/60">
+                    <th className="text-right py-3 px-3 font-body text-sm text-sugan-ink/60">
                       Total
                     </th>
-                    <th className="text-center py-3 px-3 font-body text-sm text-sugan-brown/60">
+                    <th className="text-center py-3 px-3 font-body text-sm text-sugan-ink/60">
                       Status
                     </th>
-                    <th className="text-right py-3 px-3 font-body text-sm text-sugan-brown/60">
+                    <th className="text-right py-3 px-3 font-body text-sm text-sugan-ink/60">
                       Actions
                     </th>
                   </tr>
@@ -385,16 +385,16 @@ export default function AdminOrders() {
                   {filteredOrders.map((order) => (
                     <tr
                       key={order.id}
-                      className="border-b border-sugan-brown/5 hover:bg-sugan-brown/5 cursor-pointer transition-colors"
+                      className="border-b border-sugan-ink/5 hover:bg-sugan-ink/5 cursor-pointer transition-colors"
                       onClick={() => setSelectedOrder(order)}
                     >
                       <td className="py-3 px-3">
-                        <span className="font-body text-sm font-medium text-sugan-brown">
+                        <span className="font-body text-sm font-medium text-sugan-ink">
                           #{order.id.slice(-8).toUpperCase()}
                         </span>
                       </td>
                       <td className="py-3 px-3">
-                        <span className="font-body text-xs text-sugan-brown/60">
+                        <span className="font-body text-xs text-sugan-ink/60">
                           {order.createdAt?.toDate?.().toLocaleDateString(
                             'en-IN',
                             {
@@ -407,21 +407,21 @@ export default function AdminOrders() {
                       </td>
                       <td className="py-3 px-3">
                         <div>
-                          <p className="font-body text-sm text-sugan-brown font-medium">
+                          <p className="font-body text-sm text-sugan-ink font-medium">
                             {order.shippingAddress?.fullName || 'N/A'}
                           </p>
-                          <p className="font-body text-xs text-sugan-brown/50">
+                          <p className="font-body text-xs text-sugan-ink/50">
                             {order.userEmail}
                           </p>
                         </div>
                       </td>
                       <td className="py-3 px-3">
-                        <span className="font-body text-sm text-sugan-brown/70">
+                        <span className="font-body text-sm text-sugan-ink/70">
                           {order.shippingAddress?.phone || 'N/A'}
                         </span>
                       </td>
                       <td className="py-3 px-3 max-w-[200px]">
-                        <p className="font-body text-xs text-sugan-brown/60 truncate">
+                        <p className="font-body text-xs text-sugan-ink/60 truncate">
                           {order.shippingAddress?.addressLine1}
                           {order.shippingAddress?.addressLine2 &&
                             `, ${order.shippingAddress.addressLine2}`}
@@ -431,7 +431,7 @@ export default function AdminOrders() {
                         </p>
                       </td>
                       <td className="py-3 px-3">
-                        <span className="font-body text-xs text-sugan-brown/60">
+                        <span className="font-body text-xs text-sugan-ink/60">
                           {order.items?.length || 0} items
                         </span>
                       </td>
@@ -451,7 +451,7 @@ export default function AdminOrders() {
                               updatePaymentStatus(order.id, e.target.value);
                             }}
                             disabled={paymentStatusUpdating === order.id}
-                            className="font-body text-xs bg-white border border-sugan-brown/20 rounded px-2 py-1 capitalize focus:outline-none focus:border-sugan-gold disabled:opacity-50"
+                            className="font-body text-xs bg-white border border-sugan-ink/20 rounded px-2 py-1 capitalize focus:outline-none focus:border-sugan-gold disabled:opacity-50"
                           >
                             <option value="pending">Pending</option>
                             <option value="paid">Paid</option>
@@ -461,7 +461,7 @@ export default function AdminOrders() {
                         </div>
                       </td>
                       <td className="py-3 px-3 text-right">
-                        <span className="font-body text-sm font-semibold text-sugan-brown">
+                        <span className="font-body text-sm font-semibold text-sugan-ink">
                           ₹{order.total?.toLocaleString()}
                         </span>
                       </td>
@@ -507,9 +507,9 @@ export default function AdminOrders() {
                     <tr>
                       <td
                         colSpan={10}
-                        className="text-center py-12 text-sugan-brown/60 font-body"
+                        className="text-center py-12 text-sugan-ink/60 font-body"
                       >
-                        <Package className="w-12 h-12 text-sugan-brown/20 mx-auto mb-4" />
+                        <Package className="w-12 h-12 text-sugan-ink/20 mx-auto mb-4" />
                         No orders found
                       </td>
                     </tr>
@@ -523,11 +523,11 @@ export default function AdminOrders() {
               {filteredOrders.map((order) => (
                 <div
                   key={order.id}
-                  className="bg-white border border-sugan-brown/10 rounded-lg p-4 space-y-3"
+                  className="bg-white border border-sugan-ink/10 rounded-lg p-4 space-y-3"
                   onClick={() => setSelectedOrder(order)}
                 >
                   <div className="flex items-center justify-between">
-                    <span className="font-body text-sm font-medium text-sugan-brown">
+                    <span className="font-body text-sm font-medium text-sugan-ink">
                       #{order.id.slice(-8).toUpperCase()}
                     </span>
                     <Badge className={`${getStatusColor(order.status)} font-body capitalize text-xs`}>
@@ -535,17 +535,17 @@ export default function AdminOrders() {
                     </Badge>
                   </div>
                   <div className="space-y-1">
-                    <p className="font-body text-sm text-sugan-brown">
+                    <p className="font-body text-sm text-sugan-ink">
                       {order.shippingAddress?.fullName || 'N/A'}
                     </p>
-                    <p className="font-body text-xs text-sugan-brown/50">
+                    <p className="font-body text-xs text-sugan-ink/50">
                       {order.userEmail}
                     </p>
-                    <p className="font-body text-xs text-sugan-brown/50">
+                    <p className="font-body text-xs text-sugan-ink/50">
                       {order.shippingAddress?.phone}
                     </p>
                   </div>
-                  <div className="flex items-center justify-between pt-2 border-t border-sugan-brown/10">
+                  <div className="flex items-center justify-between pt-2 border-t border-sugan-ink/10">
                     <div className="flex flex-col gap-1">
                       <Badge className={`${getPaymentStatusColor(order.paymentStatus)} font-body text-xs w-fit`}>
                         {order.paymentMethod}
@@ -557,7 +557,7 @@ export default function AdminOrders() {
                           updatePaymentStatus(order.id, e.target.value);
                         }}
                         disabled={paymentStatusUpdating === order.id}
-                        className="font-body text-xs bg-white border border-sugan-brown/20 rounded px-2 py-1 capitalize focus:outline-none focus:border-sugan-gold disabled:opacity-50"
+                        className="font-body text-xs bg-white border border-sugan-ink/20 rounded px-2 py-1 capitalize focus:outline-none focus:border-sugan-gold disabled:opacity-50"
                       >
                         <option value="pending">Pending</option>
                         <option value="paid">Paid</option>
@@ -565,12 +565,12 @@ export default function AdminOrders() {
                         <option value="failed">Failed</option>
                       </select>
                     </div>
-                    <span className="font-body text-sm font-semibold text-sugan-brown">
+                    <span className="font-body text-sm font-semibold text-sugan-ink">
                       ₹{order.total?.toLocaleString()}
                     </span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <p className="font-body text-xs text-sugan-brown/40">
+                    <p className="font-body text-xs text-sugan-ink/40">
                       {order.createdAt?.toDate?.().toLocaleDateString('en-IN', {
                         day: 'numeric',
                         month: 'short',
@@ -594,8 +594,8 @@ export default function AdminOrders() {
                 </div>
               ))}
               {filteredOrders.length === 0 && (
-                <div className="text-center py-12 text-sugan-brown/60 font-body">
-                  <Package className="w-12 h-12 text-sugan-brown/20 mx-auto mb-4" />
+                <div className="text-center py-12 text-sugan-ink/60 font-body">
+                  <Package className="w-12 h-12 text-sugan-ink/20 mx-auto mb-4" />
                   No orders found
                 </div>
               )}
@@ -611,18 +611,18 @@ export default function AdminOrders() {
       >
         <DialogContent className="max-w-full md:max-w-5xl max-h-[95vh] overflow-y-auto p-4 md:p-8 w-full md:w-auto">
           <DialogHeader>
-            <DialogTitle className="font-display text-xl text-sugan-brown">
+            <DialogTitle className="font-display text-xl text-sugan-ink">
               Order Details
             </DialogTitle>
           </DialogHeader>
           {selectedOrder && (
             <div className="space-y-8 mt-2">
               {/* Order Header */}
-              <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-sugan-brown/10">
+              <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-sugan-ink/10">
                 <div>
                   <div className="flex items-center gap-2">
-                    <Hash className="w-4 h-4 text-sugan-brown/40" />
-                    <span className="font-body text-sm text-sugan-brown/60">
+                    <Hash className="w-4 h-4 text-sugan-ink/40" />
+                    <span className="font-body text-sm text-sugan-ink/60">
                       Order #{selectedOrder.id.slice(-8).toUpperCase()}
                     </span>
                     <button
@@ -632,7 +632,7 @@ export default function AdminOrders() {
                           'orderId'
                         )
                       }
-                      className="text-sugan-brown/40 hover:text-sugan-brown transition-colors"
+                      className="text-sugan-ink/40 hover:text-sugan-ink transition-colors"
                     >
                       {copiedField === 'orderId' ? (
                         <Check className="w-3 h-3 text-green-600" />
@@ -642,8 +642,8 @@ export default function AdminOrders() {
                     </button>
                   </div>
                   <div className="flex items-center gap-2 mt-1">
-                    <Calendar className="w-4 h-4 text-sugan-brown/40" />
-                    <span className="font-body text-xs text-sugan-brown/50">
+                    <Calendar className="w-4 h-4 text-sugan-ink/40" />
+                    <span className="font-body text-xs text-sugan-ink/50">
                       {selectedOrder.createdAt?.toDate?.().toLocaleString(
                         'en-IN',
                         {
@@ -677,54 +677,54 @@ export default function AdminOrders() {
 
               {/* Customer & Address */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                <div className="bg-sugan-cream/50 rounded-lg p-5">
-                  <h4 className="font-body font-medium text-sugan-brown mb-4 flex items-center gap-2">
+                <div className="bg-sugan-bone/50 rounded-lg p-5">
+                  <h4 className="font-body font-medium text-sugan-ink mb-4 flex items-center gap-2">
                     <User className="w-4 h-4 text-sugan-gold" />
                     Customer
                   </h4>
                   <div className="space-y-2">
-                    <p className="font-body text-sm text-sugan-brown">
+                    <p className="font-body text-sm text-sugan-ink">
                       {selectedOrder.shippingAddress?.fullName || 'N/A'}
                     </p>
                     <div className="flex items-center gap-2">
-                      <Mail className="w-3 h-3 text-sugan-brown/40" />
-                      <span className="font-body text-xs text-sugan-brown/60">
+                      <Mail className="w-3 h-3 text-sugan-ink/40" />
+                      <span className="font-body text-xs text-sugan-ink/60">
                         {selectedOrder.userEmail || 'N/A'}
                       </span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Phone className="w-3 h-3 text-sugan-brown/40" />
-                      <span className="font-body text-xs text-sugan-brown/60">
+                      <Phone className="w-3 h-3 text-sugan-ink/40" />
+                      <span className="font-body text-xs text-sugan-ink/60">
                         {selectedOrder.shippingAddress?.phone || 'N/A'}
                       </span>
                     </div>
-                    <p className="font-body text-xs text-sugan-brown/40 mt-1">
+                    <p className="font-body text-xs text-sugan-ink/40 mt-1">
                       User ID: {selectedOrder.userId}
                     </p>
                   </div>
                 </div>
 
-                <div className="bg-sugan-cream/50 rounded-lg p-5">
-                  <h4 className="font-body font-medium text-sugan-brown mb-4 flex items-center gap-2">
+                <div className="bg-sugan-bone/50 rounded-lg p-5">
+                  <h4 className="font-body font-medium text-sugan-ink mb-4 flex items-center gap-2">
                     <MapPin className="w-4 h-4 text-sugan-gold" />
                     Shipping Address
                   </h4>
                   <div className="space-y-1">
-                    <p className="font-body text-sm text-sugan-brown">
+                    <p className="font-body text-sm text-sugan-ink">
                       {selectedOrder.shippingAddress?.addressLine1}
                     </p>
                     {selectedOrder.shippingAddress?.addressLine2 && (
-                      <p className="font-body text-sm text-sugan-brown/80">
+                      <p className="font-body text-sm text-sugan-ink/80">
                         {selectedOrder.shippingAddress.addressLine2}
                       </p>
                     )}
-                    <p className="font-body text-sm text-sugan-brown">
+                    <p className="font-body text-sm text-sugan-ink">
                       {selectedOrder.shippingAddress?.city},{' '}
                       {selectedOrder.shippingAddress?.state} -{' '}
                       {selectedOrder.shippingAddress?.pincode}
                     </p>
                     {selectedOrder.shippingAddress?.landmark && (
-                      <p className="font-body text-xs text-sugan-brown/50">
+                      <p className="font-body text-xs text-sugan-ink/50">
                         Landmark: {selectedOrder.shippingAddress.landmark}
                       </p>
                     )}
@@ -733,41 +733,41 @@ export default function AdminOrders() {
               </div>
 
               {/* Payment Info */}
-              <div className="bg-sugan-cream/50 rounded-lg p-5">
-                <h4 className="font-body font-medium text-sugan-brown mb-4 flex items-center gap-2">
+              <div className="bg-sugan-bone/50 rounded-lg p-5">
+                <h4 className="font-body font-medium text-sugan-ink mb-4 flex items-center gap-2">
                   <CreditCard className="w-4 h-4 text-sugan-gold" />
                   Payment Information
                 </h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <div>
-                    <p className="font-body text-xs text-sugan-brown/50">
+                    <p className="font-body text-xs text-sugan-ink/50">
                       Method
                     </p>
-                    <p className="font-body text-sm text-sugan-brown font-medium">
+                    <p className="font-body text-sm text-sugan-ink font-medium">
                       {selectedOrder.paymentMethod}
                     </p>
                   </div>
                   <div>
-                    <p className="font-body text-xs text-sugan-brown/50">
+                    <p className="font-body text-xs text-sugan-ink/50">
                       Status
                     </p>
-                    <p className="font-body text-sm text-sugan-brown font-medium capitalize">
+                    <p className="font-body text-sm text-sugan-ink font-medium capitalize">
                       {selectedOrder.paymentStatus}
                     </p>
                   </div>
                   <div className="sm:col-span-2">
-                    <p className="font-body text-xs text-sugan-brown/50">
+                    <p className="font-body text-xs text-sugan-ink/50">
                       Transaction ID
                     </p>
-                    <p className="font-body text-sm text-sugan-brown font-medium break-all">
+                    <p className="font-body text-sm text-sugan-ink font-medium break-all">
                       {selectedOrder.txnid || 'N/A'}
                     </p>
                   </div>
                   <div>
-                    <p className="font-body text-xs text-sugan-brown/50">
+                    <p className="font-body text-xs text-sugan-ink/50">
                       Total Paid
                     </p>
-                    <p className="font-body text-sm text-sugan-brown font-medium">
+                    <p className="font-body text-sm text-sugan-ink font-medium">
                       ₹{selectedOrder.paidAmount?.toLocaleString() || selectedOrder.total?.toLocaleString()}
                     </p>
                   </div>
@@ -776,7 +776,7 @@ export default function AdminOrders() {
 
               {/* Order Items */}
               <div>
-                <h4 className="font-body font-medium text-sugan-brown mb-4 flex items-center gap-2">
+                <h4 className="font-body font-medium text-sugan-ink mb-4 flex items-center gap-2">
                   <Package className="w-4 h-4 text-sugan-gold" />
                   Order Items ({selectedOrder.items?.length || 0})
                 </h4>
@@ -784,7 +784,7 @@ export default function AdminOrders() {
                   {selectedOrder.items?.map((item, idx) => (
                     <div
                       key={idx}
-                      className="flex items-center gap-4 bg-sugan-cream/50 p-3 rounded-lg"
+                      className="flex items-center gap-4 bg-sugan-bone/50 p-3 rounded-lg"
                     >
                       <img
                         src={item.image}
@@ -792,18 +792,18 @@ export default function AdminOrders() {
                         className="w-16 h-16 object-cover rounded-lg"
                       />
                       <div className="flex-1">
-                        <p className="font-body text-sm font-medium text-sugan-brown">
+                        <p className="font-body text-sm font-medium text-sugan-ink">
                           {item.name}
                         </p>
-                        <p className="font-body text-xs text-sugan-brown/50">
+                        <p className="font-body text-xs text-sugan-ink/50">
                           SKU: {item.productId}
                         </p>
-                        <p className="font-body text-xs text-sugan-brown/60">
+                        <p className="font-body text-xs text-sugan-ink/60">
                           Qty: {item.quantity} × ₹
                           {item.price?.toLocaleString()}
                         </p>
                       </div>
-                      <p className="font-body text-sm font-semibold text-sugan-brown">
+                      <p className="font-body text-sm font-semibold text-sugan-ink">
                         ₹{(item.price * item.quantity).toLocaleString()}
                       </p>
                     </div>
@@ -812,12 +812,12 @@ export default function AdminOrders() {
               </div>
 
               {/* Order Summary */}
-              <div className="bg-sugan-cream/50 rounded-lg p-4">
-                <h4 className="font-body font-medium text-sugan-brown mb-3">
+              <div className="bg-sugan-bone/50 rounded-lg p-4">
+                <h4 className="font-body font-medium text-sugan-ink mb-3">
                   Order Summary
                 </h4>
                 <div className="space-y-2">
-                  <div className="flex justify-between font-body text-sm text-sugan-brown/60">
+                  <div className="flex justify-between font-body text-sm text-sugan-ink/60">
                     <span>Subtotal</span>
                     <span>₹{selectedOrder.subtotal?.toLocaleString()}</span>
                   </div>
@@ -827,7 +827,7 @@ export default function AdminOrders() {
                       <span>-₹{selectedOrder.discount?.toLocaleString()}</span>
                     </div>
                   )}
-                  <div className="flex justify-between font-body text-sm text-sugan-brown/60">
+                  <div className="flex justify-between font-body text-sm text-sugan-ink/60">
                     <span>Shipping</span>
                     <span>
                       {selectedOrder.shipping === 0
@@ -836,12 +836,12 @@ export default function AdminOrders() {
                     </span>
                   </div>
                   {selectedOrder.codCharge > 0 && (
-                    <div className="flex justify-between font-body text-sm text-sugan-brown/60">
+                    <div className="flex justify-between font-body text-sm text-sugan-ink/60">
                       <span>COD Fee</span>
                       <span>₹{selectedOrder.codCharge}</span>
                     </div>
                   )}
-                  <div className="flex justify-between font-body text-sm font-semibold text-sugan-brown pt-2 border-t border-sugan-brown/10">
+                  <div className="flex justify-between font-body text-sm font-semibold text-sugan-ink pt-2 border-t border-sugan-ink/10">
                     <span>Total</span>
                     <span>₹{selectedOrder.total?.toLocaleString()}</span>
                   </div>
@@ -850,39 +850,39 @@ export default function AdminOrders() {
 
               {/* Shipping Details */}
               {selectedOrder.shippingDetails && (
-                <div className="bg-sugan-cream/50 rounded-lg p-5">
-                  <h4 className="font-body font-medium text-sugan-brown mb-4 flex items-center gap-2">
+                <div className="bg-sugan-bone/50 rounded-lg p-5">
+                  <h4 className="font-body font-medium text-sugan-ink mb-4 flex items-center gap-2">
                     <Truck className="w-4 h-4 text-sugan-gold" />
                     Shipping Details
                   </h4>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                     <div>
-                      <p className="font-body text-xs text-sugan-brown/50">
+                      <p className="font-body text-xs text-sugan-ink/50">
                         Courier
                       </p>
-                      <p className="font-body text-sm text-sugan-brown font-medium">
+                      <p className="font-body text-sm text-sugan-ink font-medium">
                         {selectedOrder.shippingDetails.courier}
                       </p>
                     </div>
                     <div>
-                      <p className="font-body text-xs text-sugan-brown/50">
+                      <p className="font-body text-xs text-sugan-ink/50">
                         AWB Number
                       </p>
-                      <p className="font-body text-sm text-sugan-brown font-medium">
+                      <p className="font-body text-sm text-sugan-ink font-medium">
                         {selectedOrder.shippingDetails.awb || 'N/A'}
                       </p>
                     </div>
                     <div>
-                      <p className="font-body text-xs text-sugan-brown/50">
+                      <p className="font-body text-xs text-sugan-ink/50">
                         Shipment ID
                       </p>
-                      <p className="font-body text-sm text-sugan-brown font-medium">
+                      <p className="font-body text-sm text-sugan-ink font-medium">
                         {selectedOrder.shippingDetails.shipmentId || 'N/A'}
                       </p>
                     </div>
                     {selectedOrder.shippingDetails.label && (
                       <div>
-                        <p className="font-body text-xs text-sugan-brown/50">
+                        <p className="font-body text-xs text-sugan-ink/50">
                           Label
                         </p>
                         <a
@@ -901,7 +901,7 @@ export default function AdminOrders() {
             </div>
           )}
           {selectedOrder && (
-            <div className="pt-6 border-t border-sugan-brown/10 flex justify-end">
+            <div className="pt-6 border-t border-sugan-ink/10 flex justify-end">
               <Button
                 variant="outline"
                 className="font-body border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700"

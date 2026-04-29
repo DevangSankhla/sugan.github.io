@@ -34,7 +34,7 @@ export default function PaymentFailure() {
   const errorMessage = searchParams.get('error_Message') || searchParams.get('error') || 'Your payment could not be processed';
 
   return (
-    <div className="min-h-screen bg-sugan-cream pt-24 pb-12">
+    <div className="min-h-screen bg-sugan-bone pt-24 pb-12">
       <div className="max-w-md mx-auto px-4 sm:px-6">
         <Card className="border-none shadow-xl">
           <CardContent className="p-8 text-center">
@@ -43,17 +43,17 @@ export default function PaymentFailure() {
               <XCircle className="w-10 h-10 text-red-500" />
             </div>
 
-            <h1 className="font-display text-3xl text-sugan-brown mb-2">
+            <h1 className="font-display text-3xl text-sugan-ink mb-2">
               Payment Failed
             </h1>
-            <p className="text-sugan-brown/60 font-body mb-6">
+            <p className="text-sugan-ink/60 font-body mb-6">
               {errorMessage}
             </p>
 
             {/* Possible Reasons */}
-            <div className="bg-sugan-cream rounded-xl p-4 mb-6 text-left">
-              <p className="font-body font-medium text-sugan-brown mb-2">Common reasons:</p>
-              <ul className="text-sm text-sugan-brown/60 font-body space-y-1">
+            <div className="bg-sugan-bone rounded-xl p-4 mb-6 text-left">
+              <p className="font-body font-medium text-sugan-ink mb-2">Common reasons:</p>
+              <ul className="text-sm text-sugan-ink/60 font-body space-y-1">
                 <li>• Insufficient funds in account</li>
                 <li>• Bank server temporarily unavailable</li>
                 <li>• Transaction timed out</li>
@@ -64,14 +64,14 @@ export default function PaymentFailure() {
             {/* Actions */}
             <div className="space-y-3">
               <Link to="/checkout">
-                <Button className="w-full bg-sugan-brown hover:bg-sugan-brown/90 font-body h-12">
+                <Button className="w-full bg-sugan-ink hover:bg-sugan-ink/90 font-body h-12">
                   <RefreshCcw className="w-4 h-4 mr-2" />
                   Try Again
                 </Button>
               </Link>
               
               <Link to="/shop">
-                <Button variant="outline" className="w-full font-body h-12 border-sugan-brown/20">
+                <Button variant="outline" className="w-full font-body h-12 border-sugan-ink/20">
                   <ShoppingCart className="w-4 h-4 mr-2" />
                   Back to Shop
                 </Button>
@@ -79,8 +79,8 @@ export default function PaymentFailure() {
             </div>
 
             {/* Support */}
-            <div className="mt-8 pt-6 border-t border-sugan-brown/10">
-              <p className="text-sm text-sugan-brown/60 font-body mb-3">
+            <div className="mt-8 pt-6 border-t border-sugan-ink/10">
+              <p className="text-sm text-sugan-ink/60 font-body mb-3">
                 Need help with payment?
               </p>
               <a

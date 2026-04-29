@@ -56,7 +56,7 @@ export default function LazyImage({
         />
       )}
       {!isLoaded && (
-        <div className="absolute inset-0 animate-pulse bg-sugan-cream-dark/20" />
+        <div className="absolute inset-0 animate-pulse bg-sugan-bone-dark/20" />
       )}
     </div>
   );

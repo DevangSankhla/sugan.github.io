@@ -27,13 +27,13 @@ export default function StickyFilterBar({
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <div className="sticky top-20 z-30 bg-sugan-cream/95 backdrop-blur-sm border-b border-sugan-brown/10">
+    <div className="sticky top-20 z-30 bg-sugan-bone/95 backdrop-blur-sm border-b border-sugan-ink/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3">
         <div className="flex items-center justify-between gap-4">
           {/* Filter Button (Mobile) */}
           <button
             onClick={() => setIsExpanded(!isExpanded)}
-            className="md:hidden flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-sugan-brown/20 font-body text-sm"
+            className="md:hidden flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-sugan-ink/20 font-body text-sm"
           >
             <SlidersHorizontal className="w-4 h-4" />
             Filters
@@ -48,8 +48,8 @@ export default function StickyFilterBar({
               onClick={() => onSelectCategory(null)}
               className={`px-4 py-2 rounded-full text-sm font-body whitespace-nowrap transition-colors ${
                 !selectedCategory
-                  ? 'bg-sugan-brown text-sugan-cream'
-                  : 'bg-white text-sugan-brown border border-sugan-brown/20 hover:border-sugan-gold'
+                  ? 'bg-sugan-ink text-sugan-bone'
+                  : 'bg-white text-sugan-ink border border-sugan-ink/20 hover:border-sugan-gold'
               }`}
             >
               All ({totalProducts})
@@ -60,8 +60,8 @@ export default function StickyFilterBar({
                 onClick={() => onSelectCategory(cat.id)}
                 className={`px-4 py-2 rounded-full text-sm font-body whitespace-nowrap transition-colors ${
                   selectedCategory === cat.id
-                    ? 'bg-sugan-brown text-sugan-cream'
-                    : 'bg-white text-sugan-brown border border-sugan-brown/20 hover:border-sugan-gold'
+                    ? 'bg-sugan-ink text-sugan-bone'
+                    : 'bg-white text-sugan-ink border border-sugan-ink/20 hover:border-sugan-gold'
                 }`}
               >
                 {cat.label} {cat.count !== undefined && `(${cat.count})`}
@@ -73,7 +73,7 @@ export default function StickyFilterBar({
           <select
             value={sortBy}
             onChange={(e) => onSortChange(e.target.value)}
-            className="px-4 py-2 bg-white rounded-full border border-sugan-brown/20 text-sm font-body focus:outline-none focus:border-sugan-gold"
+            className="px-4 py-2 bg-white rounded-full border border-sugan-ink/20 text-sm font-body focus:outline-none focus:border-sugan-gold"
           >
             <option value="featured">Featured</option>
             <option value="price-low">Price: Low to High</option>
@@ -85,7 +85,7 @@ export default function StickyFilterBar({
 
         {/* Mobile Filter Panel */}
         {isExpanded && (
-          <div className="md:hidden mt-3 pt-3 border-t border-sugan-brown/10">
+          <div className="md:hidden mt-3 pt-3 border-t border-sugan-ink/10">
             <div className="flex flex-wrap gap-2">
               <button
                 onClick={() => {
@@ -94,8 +94,8 @@ export default function StickyFilterBar({
                 }}
                 className={`px-4 py-2 rounded-full text-sm font-body ${
                   !selectedCategory
-                    ? 'bg-sugan-brown text-sugan-cream'
-                    : 'bg-white text-sugan-brown border border-sugan-brown/20'
+                    ? 'bg-sugan-ink text-sugan-bone'
+                    : 'bg-white text-sugan-ink border border-sugan-ink/20'
                 }`}
               >
                 All ({totalProducts})
@@ -109,8 +109,8 @@ export default function StickyFilterBar({
                   }}
                   className={`px-4 py-2 rounded-full text-sm font-body ${
                     selectedCategory === cat.id
-                      ? 'bg-sugan-brown text-sugan-cream'
-                      : 'bg-white text-sugan-brown border border-sugan-brown/20'
+                      ? 'bg-sugan-ink text-sugan-bone'
+                      : 'bg-white text-sugan-ink border border-sugan-ink/20'
                   }`}
                 >
                   {cat.label} {cat.count !== undefined && `(${cat.count})`}
@@ -123,8 +123,8 @@ export default function StickyFilterBar({
         {/* Active Filters */}
         {selectedCategory && (
           <div className="flex items-center gap-2 mt-3">
-            <span className="text-sm text-sugan-brown/60 font-body">Filtered by:</span>
-            <span className="inline-flex items-center gap-1 px-3 py-1 bg-sugan-gold/10 text-sugan-brown text-sm font-body rounded-full">
+            <span className="text-sm text-sugan-ink/60 font-body">Filtered by:</span>
+            <span className="inline-flex items-center gap-1 px-3 py-1 bg-sugan-gold/10 text-sugan-ink text-sm font-body rounded-full">
               {categories.find(c => c.id === selectedCategory)?.label}
               <button
                 onClick={() => onSelectCategory(null)}

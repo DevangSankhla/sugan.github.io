@@ -26,17 +26,17 @@ export default function CartDrawer() {
     <>
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-sugan-brown/50 backdrop-blur-sm z-50 transition-opacity"
+        className="fixed inset-0 bg-sugan-ink/50 backdrop-blur-sm z-50 transition-opacity"
         onClick={() => setIsCartOpen(false)}
       />
 
       {/* Drawer */}
-      <div className="fixed right-0 top-0 h-full w-full sm:w-[420px] bg-sugan-cream z-50 shadow-2xl flex flex-col">
+      <div className="fixed right-0 top-0 h-full w-full sm:w-[420px] bg-sugan-bone z-50 shadow-2xl flex flex-col">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-sugan-brown/10">
+        <div className="flex items-center justify-between p-6 border-b border-sugan-ink/10">
           <div className="flex items-center gap-3">
             <ShoppingBag className="w-5 h-5 text-sugan-gold" />
-            <h2 className="font-display text-xl font-medium text-sugan-brown">
+            <h2 className="font-display text-xl font-medium text-sugan-ink">
               Your Cart
             </h2>
             {totalItems > 0 && (
@@ -48,7 +48,7 @@ export default function CartDrawer() {
           <button
             type="button"
             onClick={() => setIsCartOpen(false)}
-            className="w-10 h-10 rounded-full bg-sugan-brown/5 flex items-center justify-center text-sugan-brown hover:bg-sugan-brown/10 transition-colors"
+            className="w-10 h-10 rounded-full bg-sugan-ink/5 flex items-center justify-center text-sugan-ink hover:bg-sugan-ink/10 transition-colors"
             aria-label="Close cart"
           >
             <X className="w-5 h-5" />
@@ -59,13 +59,13 @@ export default function CartDrawer() {
         <div className="flex-1 overflow-y-auto">
           {items.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full p-8 text-center">
-              <div className="w-20 h-20 bg-sugan-brown/5 rounded-full flex items-center justify-center mb-4">
-                <ShoppingBag className="w-10 h-10 text-sugan-brown/30" />
+              <div className="w-20 h-20 bg-sugan-ink/5 rounded-full flex items-center justify-center mb-4">
+                <ShoppingBag className="w-10 h-10 text-sugan-ink/30" />
               </div>
-              <h3 className="font-display text-xl text-sugan-brown mb-2">
+              <h3 className="font-display text-xl text-sugan-ink mb-2">
                 Your cart is empty
               </h3>
-              <p className="text-sugan-brown/60 font-body text-sm mb-6">
+              <p className="text-sugan-ink/60 font-body text-sm mb-6">
                 Discover our beautiful handcrafted wooden products
               </p>
               <button
@@ -92,7 +92,7 @@ export default function CartDrawer() {
                   className="flex gap-4 bg-white p-4 rounded-lg"
                 >
                   {/* Image */}
-                  <div className="w-20 h-20 bg-sugan-cream-dark rounded overflow-hidden flex-shrink-0">
+                  <div className="w-20 h-20 bg-sugan-bone-dark rounded overflow-hidden flex-shrink-0">
                     <img
                       src={item.image}
                       alt={item.name}
@@ -108,14 +108,14 @@ export default function CartDrawer() {
                         <p className="text-sugan-gold text-xs font-body uppercase tracking-wider">
                           {item.category}
                         </p>
-                        <h4 className="font-display text-base font-medium text-sugan-brown truncate">
+                        <h4 className="font-display text-base font-medium text-sugan-ink truncate">
                           {item.name}
                         </h4>
                       </div>
                       <button
                         type="button"
                         onClick={() => removeFromCart(item.id)}
-                        className="text-sugan-brown/40 hover:text-sugan-brown transition-colors"
+                        className="text-sugan-ink/40 hover:text-sugan-ink transition-colors"
                         aria-label="Remove item"
                       >
                         <X className="w-4 h-4" />
@@ -130,12 +130,12 @@ export default function CartDrawer() {
                           onClick={() =>
                             updateQuantity(item.id, item.quantity - 1)
                           }
-                          className="w-7 h-7 rounded bg-sugan-cream flex items-center justify-center text-sugan-brown hover:bg-sugan-brown hover:text-sugan-cream transition-colors"
+                          className="w-7 h-7 rounded bg-sugan-bone flex items-center justify-center text-sugan-ink hover:bg-sugan-ink hover:text-sugan-bone transition-colors"
                           aria-label="Decrease quantity"
                         >
                           <Minus className="w-3 h-3" />
                         </button>
-                        <span className="w-8 text-center font-body text-sm text-sugan-brown">
+                        <span className="w-8 text-center font-body text-sm text-sugan-ink">
                           {item.quantity}
                         </span>
                         <button
@@ -143,7 +143,7 @@ export default function CartDrawer() {
                           onClick={() =>
                             updateQuantity(item.id, item.quantity + 1)
                           }
-                          className="w-7 h-7 rounded bg-sugan-cream flex items-center justify-center text-sugan-brown hover:bg-sugan-brown hover:text-sugan-cream transition-colors"
+                          className="w-7 h-7 rounded bg-sugan-bone flex items-center justify-center text-sugan-ink hover:bg-sugan-ink hover:text-sugan-bone transition-colors"
                           aria-label="Increase quantity"
                         >
                           <Plus className="w-3 h-3" />
@@ -151,7 +151,7 @@ export default function CartDrawer() {
                       </div>
 
                       {/* Price */}
-                      <span className="font-display text-base font-semibold text-sugan-brown">
+                      <span className="font-display text-base font-semibold text-sugan-ink">
                         ₹{(item.price * item.quantity).toLocaleString()}
                       </span>
                     </div>
@@ -164,30 +164,30 @@ export default function CartDrawer() {
 
         {/* Footer */}
         {items.length > 0 && (
-          <div className="border-t border-sugan-brown/10 p-6 space-y-4">
+          <div className="border-t border-sugan-ink/10 p-6 space-y-4">
             {/* Subtotal */}
             <div className="space-y-2">
               <div className="flex items-center justify-between text-sm">
-                <span className="text-sugan-brown/60 font-body">
+                <span className="text-sugan-ink/60 font-body">
                   Subtotal ({totalItems} items)
                 </span>
-                <span className="font-body text-sugan-brown">
+                <span className="font-body text-sugan-ink">
                   ₹{totalPrice.toLocaleString()}
                 </span>
               </div>
 
-              <div className="flex items-center justify-between pt-2 border-t border-sugan-brown/10">
-                <span className="text-sugan-brown font-body font-medium">
+              <div className="flex items-center justify-between pt-2 border-t border-sugan-ink/10">
+                <span className="text-sugan-ink font-body font-medium">
                   Total
                 </span>
-                <span className="font-display text-xl font-semibold text-sugan-brown">
+                <span className="font-display text-xl font-semibold text-sugan-ink">
                   ₹{finalTotal.toLocaleString()}
                 </span>
               </div>
             </div>
 
             {/* Note */}
-            <p className="text-sugan-brown/50 font-body text-xs">
+            <p className="text-sugan-ink/50 font-body text-xs">
               Shipping calculated at checkout
             </p>
 
@@ -236,7 +236,7 @@ export default function CartDrawer() {
               >
                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
               </svg>
-              <span className="text-sugan-brown/50 text-xs font-body">
+              <span className="text-sugan-ink/50 text-xs font-body">
                 Free shipping on orders above ₹1999
               </span>
             </div>

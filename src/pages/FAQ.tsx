@@ -113,18 +113,18 @@ export default function FAQ() {
   };
 
   return (
-    <div className="min-h-screen bg-sugan-cream pt-20">
+    <div className="min-h-screen bg-sugan-bone pt-20">
       {/* Header */}
-      <div className="bg-sugan-brown py-12">
+      <div className="bg-sugan-ink py-12">
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
           <button
             onClick={() => navigate(-1)}
-            className="flex items-center gap-2 text-sugan-cream/80 hover:text-sugan-gold transition-colors mb-4"
+            className="flex items-center gap-2 text-sugan-bone/80 hover:text-sugan-gold transition-colors mb-4"
           >
             <ArrowLeft className="w-4 h-4" />
             Back
           </button>
-          <h1 className="font-display text-3xl sm:text-4xl text-sugan-cream flex items-center gap-3">
+          <h1 className="font-display text-3xl sm:text-4xl text-sugan-bone flex items-center gap-3">
             <HelpCircle className="w-8 h-8 text-sugan-gold" />
             Frequently Asked Questions
           </h1>
@@ -139,7 +139,7 @@ export default function FAQ() {
             <a
               key={category}
               href={`#${category.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}`}
-              className="px-4 py-2 bg-white rounded-full font-body text-sm text-sugan-brown hover:bg-sugan-gold hover:text-white transition-colors shadow-sm"
+              className="px-4 py-2 bg-white rounded-full font-body text-sm text-sugan-ink hover:bg-sugan-gold hover:text-white transition-colors shadow-sm"
             >
               {category}
             </a>
@@ -154,7 +154,7 @@ export default function FAQ() {
               id={category.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}
               className="bg-white rounded-2xl p-8 shadow-sm"
             >
-              <h2 className="font-display text-xl text-sugan-brown mb-6">{category}</h2>
+              <h2 className="font-display text-xl text-sugan-ink mb-6">{category}</h2>
               <div className="space-y-4">
                 {items.map((item, index) => {
                   const key = `${category}-${index}`;
@@ -162,13 +162,13 @@ export default function FAQ() {
                   return (
                     <div 
                       key={key}
-                      className="border border-sugan-brown/10 rounded-xl overflow-hidden"
+                      className="border border-sugan-ink/10 rounded-xl overflow-hidden"
                     >
                       <button
                         onClick={() => toggleItem(key)}
-                        className="w-full flex items-center justify-between p-4 text-left hover:bg-sugan-cream/50 transition-colors"
+                        className="w-full flex items-center justify-between p-4 text-left hover:bg-sugan-bone/50 transition-colors"
                       >
-                        <span className="font-body font-medium text-sugan-brown pr-4">{item.question}</span>
+                        <span className="font-body font-medium text-sugan-ink pr-4">{item.question}</span>
                         {isOpen ? (
                           <Minus className="w-5 h-5 text-sugan-gold flex-shrink-0" />
                         ) : (
@@ -177,7 +177,7 @@ export default function FAQ() {
                       </button>
                       {isOpen && (
                         <div className="px-4 pb-4">
-                          <p className="text-sugan-brown/70 font-body leading-relaxed">{item.answer}</p>
+                          <p className="text-sugan-ink/70 font-body leading-relaxed">{item.answer}</p>
                         </div>
                       )}
                     </div>
@@ -189,9 +189,9 @@ export default function FAQ() {
         </div>
 
         {/* Still Have Questions */}
-        <div className="bg-sugan-brown text-sugan-cream rounded-2xl p-8 mt-8 text-center">
+        <div className="bg-sugan-ink text-sugan-bone rounded-2xl p-8 mt-8 text-center">
           <h2 className="font-display text-2xl mb-4">Still Have Questions?</h2>
-          <p className="text-sugan-cream/80 font-body mb-6">
+          <p className="text-sugan-bone/80 font-body mb-6">
             Can't find the answer you're looking for? We're here to help!
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -203,7 +203,7 @@ export default function FAQ() {
             </a>
             <a 
               href="tel:+916367677255"
-              className="inline-flex items-center justify-center px-6 py-3 bg-transparent border border-sugan-cream/30 text-sugan-cream rounded-lg font-body hover:bg-sugan-cream/10 transition-colors"
+              className="inline-flex items-center justify-center px-6 py-3 bg-transparent border border-sugan-bone/30 text-sugan-bone rounded-lg font-body hover:bg-sugan-bone/10 transition-colors"
             >
               Call +91 6367677255
             </a>

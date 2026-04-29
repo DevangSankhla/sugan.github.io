@@ -66,14 +66,14 @@ export default function Features() {
   return (
     <section
       ref={sectionRef}
-      className="py-20 lg:py-32 bg-sugan-cream section-padding"
+      className="py-20 lg:py-32 bg-sugan-bone section-padding"
     >
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <p className="section-label mb-3">
             Why Choose Us
           </p>
-          <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-light text-sugan-brown">
+          <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-light text-sugan-ink">
             The Sugan <span className="font-medium">Difference</span>
           </h2>
         </div>
@@ -91,10 +91,10 @@ export default function Features() {
               <div className="feature-icon mb-6">
                 <feature.icon className="w-6 h-6" />
               </div>
-              <h3 className="font-display text-xl font-medium text-sugan-brown mb-3">
+              <h3 className="font-display text-xl font-medium text-sugan-ink mb-3">
                 {feature.title}
               </h3>
-              <p className="text-sugan-brown/60 font-body text-sm leading-relaxed">
+              <p className="text-sugan-ink/60 font-body text-sm leading-relaxed">
                 {feature.description}
               </p>
             </div>

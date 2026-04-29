@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,26 +6,26 @@
 
 @layer base {
   :root {
-    --background: 40 23% 95%;
-    --foreground: 20 30% 10%;
-    --card: 40 23% 95%;
-    --card-foreground: 20 30% 10%;
-    --popover: 40 23% 95%;
-    --popover-foreground: 20 30% 10%;
-    --primary: 38 55% 58%;
-    --primary-foreground: 40 23% 95%;
-    --secondary: 40 15% 90%;
-    --secondary-foreground: 20 30% 10%;
-    --muted: 40 15% 90%;
-    --muted-foreground: 20 10% 40%;
-    --accent: 38 55% 58%;
-    --accent-foreground: 40 23% 95%;
+    --background: 36 33% 97%;
+    --foreground: 30 13% 5%;
+    --card: 36 33% 97%;
+    --card-foreground: 30 13% 5%;
+    --popover: 36 33% 97%;
+    --popover-foreground: 30 13% 5%;
+    --primary: 36 49% 48%;
+    --primary-foreground: 36 33% 97%;
+    --secondary: 36 24% 91%;
+    --secondary-foreground: 30 13% 5%;
+    --muted: 36 24% 91%;
+    --muted-foreground: 28 11% 21%;
+    --accent: 36 49% 48%;
+    --accent-foreground: 36 33% 97%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 40 15% 85%;
-    --input: 40 15% 85%;
-    --ring: 38 55% 58%;
-    --radius: 0.5rem;
+    --border: 30 13% 5% / 0.1;
+    --input: 36 24% 91%;
+    --ring: 36 49% 48%;
+    --radius: 4px;
   }
 }
 
@@ -33,63 +33,77 @@
   * {
     @apply border-border;
   }
-  
+
   html {
-    scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
   }
-  
+
   body {
-    @apply bg-sugan-cream text-sugan-brown font-body antialiased;
+    @apply bg-sugan-bone text-sugan-ink font-body antialiased;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
   }
-  
+
   /* Prevent iOS zoom on input focus */
   input, select, textarea {
     font-size: 16px;
   }
-  
+
   /* Mobile touch improvements */
   @media (pointer: coarse) {
     * {
       touch-action: manipulation;
     }
-    
+
     button, a {
       min-height: 44px;
       min-width: 44px;
     }
   }
-  
+
   h1, h2, h3, h4, h5, h6 {
-    @apply font-display;
-    letter-spacing: -0.01em;
+    @apply font-display font-light;
+    letter-spacing: -0.02em;
   }
-  
 }
 
 @layer components {
   .text-gradient-gold {
     @apply bg-gradient-to-r from-sugan-gold via-sugan-gold-light to-sugan-gold bg-clip-text text-transparent;
   }
-  
+
   .btn-primary {
-    @apply bg-sugan-brown text-sugan-cream px-8 py-4 font-body text-sm tracking-wider uppercase transition-all duration-300 hover:bg-sugan-gold hover:shadow-gold;
+    @apply inline-flex items-center justify-center gap-2 bg-sugan-ink text-sugan-bone
+           px-7 py-4 font-body text-[13px] font-medium tracking-[0.08em] uppercase
+           rounded-pill transition-[transform,background-color] duration-300 ease-apple
+           hover:bg-sugan-gold active:scale-[0.98];
   }
-  
+
   .btn-outline {
-    @apply border-2 border-sugan-brown text-sugan-brown px-8 py-4 font-body text-sm tracking-wider uppercase transition-all duration-300 hover:bg-sugan-brown hover:text-sugan-cream;
+    @apply inline-flex items-center justify-center gap-2 bg-transparent text-sugan-ink
+           border border-sugan-ink/20 px-7 py-4 font-body text-[13px] font-medium
+           tracking-[0.08em] uppercase rounded-pill transition-all duration-300 ease-apple
+           hover:border-sugan-ink hover:bg-sugan-ink hover:text-sugan-bone active:scale-[0.98];
   }
-  
+
+  .btn-ghost {
+    @apply inline-flex items-center gap-1.5 text-sugan-ink font-body text-[13px]
+           tracking-[0.04em] uppercase border-b border-sugan-ink/30 pb-1
+           transition-colors duration-300 ease-apple hover:border-sugan-gold hover:text-sugan-gold;
+  }
+
   .section-padding {
-    @apply px-4 sm:px-6 lg:px-12 xl:px-20;
+    @apply px-section-x;
   }
-  
+
+  .section-y {
+    @apply py-section-y;
+  }
+
   .grain-overlay {
     position: fixed;
     top: -50%;
@@ -104,63 +118,22 @@
     z-index: 9999;
     animation: grain 8s steps(10) infinite;
   }
-  
+
   .nav-link {
-    @apply relative text-sugan-brown font-body text-sm tracking-wide transition-colors duration-300;
+    @apply relative text-sugan-ink font-body text-sm tracking-wide transition-colors duration-300;
   }
-  
+
   .nav-link::after {
     content: '';
     @apply absolute bottom-0 left-0 w-0 h-px bg-sugan-gold transition-all duration-300;
   }
-  
+
   .nav-link:hover::after {
     @apply w-full;
   }
-  
-  .product-card {
-    @apply relative bg-white rounded-xl overflow-hidden transition-all duration-500;
-  }
-
-  .product-card::after {
-    content: '';
-    @apply absolute bottom-0 left-0 right-0 h-0.5 bg-sugan-gold origin-left scale-x-0 transition-transform duration-500;
-  }
-
-  .product-card:hover {
-    @apply shadow-gold-lg -translate-y-1;
-  }
-
-  .product-card:hover::after {
-    @apply scale-x-100;
-  }
-
-  .product-card img {
-    @apply transition-transform duration-700;
-  }
-
-  .product-card:hover img {
-    @apply scale-105;
-  }
-
-  .feature-card {
-    @apply bg-white p-8 rounded-xl transition-all duration-500 border border-transparent;
-  }
-
-  .feature-card:hover {
-    @apply shadow-gold -translate-y-2 border-sugan-gold/20;
-  }
-
-  .feature-icon {
-    @apply w-14 h-14 rounded-full bg-sugan-cream flex items-center justify-center text-sugan-gold transition-all duration-500;
-  }
-
-  .feature-card:hover .feature-icon {
-    @apply bg-sugan-gold text-white rotate-[360deg];
-  }
 
   .section-label {
-    @apply relative inline-flex items-center gap-3 text-sugan-gold font-body text-sm tracking-[0.2em] uppercase;
+    @apply relative inline-flex items-center gap-3 text-sugan-gold font-body text-[11px] tracking-[0.18em] uppercase;
   }
 
   .section-label::before {
@@ -173,74 +146,36 @@
   .text-balance {
     text-wrap: balance;
   }
-  
-  .animation-delay-100 {
-    animation-delay: 100ms;
-  }
-  
-  .animation-delay-200 {
-    animation-delay: 200ms;
-  }
-  
-  .animation-delay-300 {
-    animation-delay: 300ms;
-  }
-  
-  .animation-delay-400 {
-    animation-delay: 400ms;
-  }
-  
-  .animation-delay-500 {
-    animation-delay: 500ms;
-  }
-  
+
   /* Mobile optimizations */
   .safe-area-inset {
     padding-left: env(safe-area-inset-left);
     padding-right: env(safe-area-inset-right);
     padding-bottom: env(safe-area-inset-bottom);
   }
-  
+
   .touch-manipulation {
     touch-action: manipulation;
   }
-  
+
   /* Better focus states for accessibility */
   .focus-ring {
     @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-sugan-gold focus-visible:ring-offset-2;
   }
-  
+
   /* Hide scrollbar but keep functionality */
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
-  
+
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #F5F0E8;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #D4A056;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #B8832F;
-}
-
 /* Selection */
 ::selection {
-  background: rgba(212, 160, 86, 0.3);
-  color: #2C1810;
+  background: rgba(182, 139, 63, 0.3);
+  color: #0F0E0C;
 }

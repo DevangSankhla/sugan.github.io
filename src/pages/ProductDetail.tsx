@@ -63,9 +63,9 @@ export default function ProductDetail() {
 
   if (!product) {
     return (
-      <div className="min-h-screen bg-sugan-cream pt-24 flex items-center justify-center">
+      <div className="min-h-screen bg-sugan-bone pt-24 flex items-center justify-center">
         <div className="text-center">
-          <h1 className="font-display text-2xl text-sugan-brown mb-4">Product Not Found</h1>
+          <h1 className="font-display text-2xl text-sugan-ink mb-4">Product Not Found</h1>
           <Link to="/shop" className="btn-primary">
             Back to Shop
           </Link>
@@ -128,9 +128,9 @@ export default function ProductDetail() {
   const displaySku = product.details?.variants?.[selectedVariant]?.sku || product.id;
 
   return (
-    <div className="min-h-screen bg-sugan-cream pt-24">
+    <div className="min-h-screen bg-sugan-bone pt-24">
       {/* Breadcrumb */}
-      <div className="bg-white border-b border-sugan-brown/10">
+      <div className="bg-white border-b border-sugan-ink/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
           <button
             onClick={() => {
@@ -142,7 +142,7 @@ export default function ProductDetail() {
                 navigate('/shop');
               }
             }}
-            className="flex items-center gap-2 text-sugan-brown/60 hover:text-sugan-gold transition-colors text-sm font-body"
+            className="flex items-center gap-2 text-sugan-ink/60 hover:text-sugan-gold transition-colors text-sm font-body"
           >
             <ArrowLeft className="w-4 h-4" />
             Back to {fromPage 
@@ -170,12 +170,12 @@ export default function ProductDetail() {
                 {product.category}
               </p>
               {displaySku && (
-                <span className="text-sugan-brown/40 text-xs font-body">SKU: {displaySku}</span>
+                <span className="text-sugan-ink/40 text-xs font-body">SKU: {displaySku}</span>
               )}
             </div>
             
             {/* Name */}
-            <h1 className="font-display text-3xl sm:text-4xl text-sugan-brown mb-4">
+            <h1 className="font-display text-3xl sm:text-4xl text-sugan-ink mb-4">
               {getBaseProductName(product.name)}
             </h1>
             
@@ -189,12 +189,12 @@ export default function ProductDetail() {
                       className={`w-4 h-4 ${
                         i < Math.floor(product.rating || 0)
                           ? 'fill-sugan-gold text-sugan-gold'
-                          : 'text-sugan-brown/20'
+                          : 'text-sugan-ink/20'
                       }`}
                     />
                   ))}
                 </div>
-                <span className="text-sm text-sugan-brown/60 font-body">
+                <span className="text-sm text-sugan-ink/60 font-body">
                   {product.rating} ({product.reviews} reviews)
                 </span>
               </div>
@@ -202,7 +202,7 @@ export default function ProductDetail() {
 
             {/* Price */}
             <div className="flex items-center gap-3 mb-6">
-              <span className="font-display text-3xl font-semibold text-sugan-brown">
+              <span className="font-display text-3xl font-semibold text-sugan-ink">
                 ₹{displayPrice.toLocaleString()}
               </span>
 
@@ -221,14 +221,14 @@ export default function ProductDetail() {
               return (
                 <div className="mb-6">
                   <p
-                    className={`text-sugan-brown/70 font-body leading-relaxed ${
+                    className={`text-sugan-ink/70 font-body leading-relaxed ${
                       !showFullDescription && needsClamp ? 'line-clamp-4' : ''
                     }`}
                   >
                     {rawDesc}
                   </p>
                   {showFullDescription && hasMoreContent && (
-                    <p className="text-sugan-brown/70 font-body leading-relaxed mt-3">
+                    <p className="text-sugan-ink/70 font-body leading-relaxed mt-3">
                       {storyTruncated ? story.replace(/\.\.\.\s*$/, '.') : story}
                     </p>
                   )}
@@ -256,11 +256,11 @@ export default function ProductDetail() {
 
             {/* Uses & Measurements */}
             {product.details?.usesAndMeasurements && (
-              <div className="mb-6 p-4 rounded-lg bg-sugan-cream/60 border border-sugan-brown/10">
-                <h3 className="font-display text-base text-sugan-brown mb-2">
+              <div className="mb-6 p-4 rounded-lg bg-sugan-bone/60 border border-sugan-ink/10">
+                <h3 className="font-display text-base text-sugan-ink mb-2">
                   Uses & Measurements
                 </h3>
-                <p className="text-sugan-brown/80 font-body text-sm leading-relaxed whitespace-pre-line">
+                <p className="text-sugan-ink/80 font-body text-sm leading-relaxed whitespace-pre-line">
                   {product.details.usesAndMeasurements}
                 </p>
               </div>
@@ -269,7 +269,7 @@ export default function ProductDetail() {
             {/* Variants Selection */}
             {product.details?.variants && product.details.variants.length > 0 && (
               <div className="mb-6">
-                <label className="block text-sm font-medium text-sugan-brown mb-2">
+                <label className="block text-sm font-medium text-sugan-ink mb-2">
                   Select Variant
                 </label>
                 <div className="flex flex-wrap gap-2">
@@ -280,13 +280,13 @@ export default function ProductDetail() {
                       className={`px-4 py-2 rounded-lg border-2 transition-colors ${
                         selectedVariant === idx
                           ? 'border-sugan-gold bg-sugan-gold/10'
-                          : 'border-sugan-brown/20 hover:border-sugan-gold'
+                          : 'border-sugan-ink/20 hover:border-sugan-gold'
                       }`}
                     >
-                      <span className="text-sm font-body text-sugan-brown">
+                      <span className="text-sm font-body text-sugan-ink">
                         {variant.size || variant.color}
                       </span>
-                      <span className="text-sm font-semibold text-sugan-brown ml-2">
+                      <span className="text-sm font-semibold text-sugan-ink ml-2">
                         ₹{variant.price.toLocaleString()}
                       </span>
                     </button>
@@ -298,14 +298,14 @@ export default function ProductDetail() {
             {/* Color Selection */}
             {product.details?.colors && product.details.colors.length > 0 && (
               <div className="mb-6">
-                <label className="block text-sm font-medium text-sugan-brown mb-2">
+                <label className="block text-sm font-medium text-sugan-ink mb-2">
                   Color
                 </label>
                 <div className="flex flex-wrap gap-2">
                   {product.details.colors.map((color, idx) => (
                     <span
                       key={idx}
-                      className="px-3 py-1 bg-sugan-cream rounded-full text-sm font-body text-sugan-brown"
+                      className="px-3 py-1 bg-sugan-bone rounded-full text-sm font-body text-sugan-ink"
                     >
                       {color}
                     </span>
@@ -317,7 +317,7 @@ export default function ProductDetail() {
             {/* Size Variants - Links to other sizes */}
             {hasSizeVariants(product) && (
               <div className="mb-6">
-                <label className="block text-sm font-medium text-sugan-brown mb-2">
+                <label className="block text-sm font-medium text-sugan-ink mb-2">
                   Select Size
                 </label>
                 <div className="flex flex-wrap gap-2">
@@ -325,7 +325,7 @@ export default function ProductDetail() {
                     variant.product.id === product.id ? (
                       <span
                         key={variant.product.id}
-                        className="px-4 py-2 rounded-lg border-2 border-sugan-gold bg-sugan-gold/10 text-sm font-body text-sugan-brown"
+                        className="px-4 py-2 rounded-lg border-2 border-sugan-gold bg-sugan-gold/10 text-sm font-body text-sugan-ink"
                       >
                         {variant.size}
                         <span className="font-semibold ml-2">₹{variant.product.price.toLocaleString()}</span>
@@ -335,7 +335,7 @@ export default function ProductDetail() {
                         key={variant.product.id}
                         to={`/product/${variant.product.id}`}
                         state={{ from: fromPage || `/shop/${product.room}` }}
-                        className="px-4 py-2 rounded-lg border-2 border-sugan-brown/20 hover:border-sugan-gold transition-colors text-sm font-body text-sugan-brown"
+                        className="px-4 py-2 rounded-lg border-2 border-sugan-ink/20 hover:border-sugan-gold transition-colors text-sm font-body text-sugan-ink"
                       >
                         {variant.size}
                         <span className="font-semibold ml-2">₹{variant.product.price.toLocaleString()}</span>
@@ -349,19 +349,19 @@ export default function ProductDetail() {
             {/* Quick Info Badges */}
             <div className="flex flex-wrap gap-3 mb-6">
               {product.details?.materials && (
-                <div className="flex items-center gap-2 text-sm text-sugan-brown/60 font-body bg-white px-3 py-2 rounded-lg">
+                <div className="flex items-center gap-2 text-sm text-sugan-ink/60 font-body bg-white px-3 py-2 rounded-lg">
                   <Package className="w-4 h-4 text-sugan-gold" />
                   {product.details.materials.split(',')[0]}
                 </div>
               )}
               {product.details?.dimensions && (
-                <div className="flex items-center gap-2 text-sm text-sugan-brown/60 font-body bg-white px-3 py-2 rounded-lg">
+                <div className="flex items-center gap-2 text-sm text-sugan-ink/60 font-body bg-white px-3 py-2 rounded-lg">
                   <Ruler className="w-4 h-4 text-sugan-gold" />
                   {product.details.dimensions.length} × {product.details.dimensions.width}
                 </div>
               )}
               {product.details?.warranty && (
-                <div className="flex items-center gap-2 text-sm text-sugan-brown/60 font-body bg-white px-3 py-2 rounded-lg">
+                <div className="flex items-center gap-2 text-sm text-sugan-ink/60 font-body bg-white px-3 py-2 rounded-lg">
                   <Shield className="w-4 h-4 text-sugan-gold" />
                   {product.details.warranty.split(' ')[0]} Warranty
                 </div>
@@ -371,17 +371,17 @@ export default function ProductDetail() {
             {/* Quantity & Actions */}
             <div className="flex flex-col sm:flex-row gap-4 mb-8">
               {/* Quantity */}
-              <div className="flex items-center gap-3 border border-sugan-brown/20 rounded-lg px-4 py-2">
+              <div className="flex items-center gap-3 border border-sugan-ink/20 rounded-lg px-4 py-2">
                 <button
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  className="text-sugan-brown hover:text-sugan-gold transition-colors"
+                  className="text-sugan-ink hover:text-sugan-gold transition-colors"
                 >
                   <Minus className="w-4 h-4" />
                 </button>
-                <span className="w-8 text-center font-body text-sugan-brown">{quantity}</span>
+                <span className="w-8 text-center font-body text-sugan-ink">{quantity}</span>
                 <button
                   onClick={() => setQuantity(quantity + 1)}
-                  className="text-sugan-brown hover:text-sugan-gold transition-colors"
+                  className="text-sugan-ink hover:text-sugan-gold transition-colors"
                 >
                   <Plus className="w-4 h-4" />
                 </button>
@@ -430,7 +430,7 @@ export default function ProductDetail() {
                   }
                 }}
                 className={`flex items-center gap-2 transition-colors text-sm font-body ${
-                  isInWishlist ? 'text-red-500' : 'text-sugan-brown/60 hover:text-sugan-gold'
+                  isInWishlist ? 'text-red-500' : 'text-sugan-ink/60 hover:text-sugan-gold'
                 }`}
               >
                 <Heart className={`w-4 h-4 ${isInWishlist ? 'fill-current' : ''}`} />
@@ -449,7 +449,7 @@ export default function ProductDetail() {
                     alert('Link copied to clipboard!');
                   }
                 }}
-                className="flex items-center gap-2 text-sugan-brown/60 hover:text-sugan-gold transition-colors text-sm font-body"
+                className="flex items-center gap-2 text-sugan-ink/60 hover:text-sugan-gold transition-colors text-sm font-body"
               >
                 <Share2 className="w-4 h-4" />
                 Share
@@ -488,7 +488,7 @@ export default function ProductDetail() {
                   </p>
                   <a
                     href={`mailto:contact@sugan.shop?subject=Restock Request — ${product.name}&body=Hi Sugan Team,%0A%0AI would like to request the following out-of-stock item:%0A%0AProduct: ${product.name}%0ASKU: ${product.id}%0A%0APlease notify me when it is available again.%0A%0AThank you`}
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-sugan-brown text-sugan-cream rounded-lg font-body text-sm hover:bg-sugan-brown/90 transition-colors"
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-sugan-ink text-sugan-bone rounded-lg font-body text-sm hover:bg-sugan-ink/90 transition-colors"
                   >
                     Request via Email
                   </a>
@@ -496,13 +496,13 @@ export default function ProductDetail() {
 
                 {/* Similar Options pointing to SAC048S */}
                 {product.id !== 'SAC048S' && (
-                  <div className="bg-white border border-sugan-brown/10 rounded-lg p-4">
-                    <p className="font-body text-sm text-sugan-brown font-medium mb-2">
+                  <div className="bg-white border border-sugan-ink/10 rounded-lg p-4">
+                    <p className="font-body text-sm text-sugan-ink font-medium mb-2">
                       Similar Options
                     </p>
                     <Link
                       to="/product/SAC048S"
-                      className="flex items-center gap-3 p-3 bg-sugan-cream/50 rounded-lg hover:bg-sugan-cream transition-colors"
+                      className="flex items-center gap-3 p-3 bg-sugan-bone/50 rounded-lg hover:bg-sugan-bone transition-colors"
                     >
                       <img
                         src={allProducts.find(p => p.id === 'SAC048S')?.image || ''}
@@ -510,10 +510,10 @@ export default function ProductDetail() {
                         className="w-14 h-14 object-cover rounded-lg"
                       />
                       <div>
-                        <p className="font-body text-sm font-medium text-sugan-brown">
+                        <p className="font-body text-sm font-medium text-sugan-ink">
                           Marble Pet Feeder Stand
                         </p>
-                        <p className="font-body text-xs text-sugan-brown/60">
+                        <p className="font-body text-xs text-sugan-ink/60">
                           Available in 3 sizes — Small, Medium & Large
                         </p>
                         <p className="font-body text-xs text-sugan-gold mt-0.5">
@@ -538,22 +538,22 @@ export default function ProductDetail() {
                 onClick={() => toggleSection('description')}
                 className="w-full flex items-center justify-between p-6 text-left"
               >
-                <span className="font-display text-lg text-sugan-brown">Description</span>
+                <span className="font-display text-lg text-sugan-ink">Description</span>
                 {expandedSection === 'description' ? (
-                  <ChevronUp className="w-5 h-5 text-sugan-brown" />
+                  <ChevronUp className="w-5 h-5 text-sugan-ink" />
                 ) : (
-                  <ChevronDown className="w-5 h-5 text-sugan-brown" />
+                  <ChevronDown className="w-5 h-5 text-sugan-ink" />
                 )}
               </button>
               {expandedSection === 'description' && (
                 <div className="px-6 pb-6">
-                  <p className="text-sugan-brown/70 font-body leading-relaxed">
+                  <p className="text-sugan-ink/70 font-body leading-relaxed">
                     {product.description}
                   </p>
                   {product.details?.story && (
-                    <div className="mt-4 p-4 bg-sugan-cream rounded-lg">
-                      <h4 className="font-medium text-sugan-brown mb-2">The Story</h4>
-                      <p className="text-sugan-brown/70 font-body text-sm">{product.details.story}</p>
+                    <div className="mt-4 p-4 bg-sugan-bone rounded-lg">
+                      <h4 className="font-medium text-sugan-ink mb-2">The Story</h4>
+                      <p className="text-sugan-ink/70 font-body text-sm">{product.details.story}</p>
                     </div>
                   )}
                 </div>
@@ -567,71 +567,71 @@ export default function ProductDetail() {
                   onClick={() => toggleSection('specs')}
                   className="w-full flex items-center justify-between p-6 text-left"
                 >
-                  <span className="font-display text-lg text-sugan-brown">Materials & Dimensions</span>
+                  <span className="font-display text-lg text-sugan-ink">Materials & Dimensions</span>
                   {expandedSection === 'specs' ? (
-                    <ChevronUp className="w-5 h-5 text-sugan-brown" />
+                    <ChevronUp className="w-5 h-5 text-sugan-ink" />
                   ) : (
-                    <ChevronDown className="w-5 h-5 text-sugan-brown" />
+                    <ChevronDown className="w-5 h-5 text-sugan-ink" />
                   )}
                 </button>
                 {expandedSection === 'specs' && (
                   <div className="px-6 pb-6 space-y-4">
                     {product.details.materials && (
                       <div>
-                        <h4 className="font-medium text-sugan-brown mb-1">Materials</h4>
-                        <p className="text-sugan-brown/70 font-body text-sm">{product.details.materials}</p>
+                        <h4 className="font-medium text-sugan-ink mb-1">Materials</h4>
+                        <p className="text-sugan-ink/70 font-body text-sm">{product.details.materials}</p>
                       </div>
                     )}
                     {product.details.construction && (
                       <div>
-                        <h4 className="font-medium text-sugan-brown mb-1">Construction</h4>
-                        <p className="text-sugan-brown/70 font-body text-sm">{product.details.construction}</p>
+                        <h4 className="font-medium text-sugan-ink mb-1">Construction</h4>
+                        <p className="text-sugan-ink/70 font-body text-sm">{product.details.construction}</p>
                       </div>
                     )}
                     {product.details.finish && (
                       <div>
-                        <h4 className="font-medium text-sugan-brown mb-1">Finish</h4>
-                        <p className="text-sugan-brown/70 font-body text-sm">{product.details.finish}</p>
+                        <h4 className="font-medium text-sugan-ink mb-1">Finish</h4>
+                        <p className="text-sugan-ink/70 font-body text-sm">{product.details.finish}</p>
                       </div>
                     )}
                     {product.details.dimensions && (
                       <div>
-                        <h4 className="font-medium text-sugan-brown mb-2">Dimensions (inches)</h4>
+                        <h4 className="font-medium text-sugan-ink mb-2">Dimensions (inches)</h4>
                         <div className="grid grid-cols-2 gap-2 text-sm">
                           {product.details.dimensions.length && (
-                            <div className="flex justify-between bg-sugan-cream px-3 py-2 rounded">
-                              <span className="text-sugan-brown/60">Length</span>
-                              <span className="text-sugan-brown font-medium">{product.details.dimensions.length}"</span>
+                            <div className="flex justify-between bg-sugan-bone px-3 py-2 rounded">
+                              <span className="text-sugan-ink/60">Length</span>
+                              <span className="text-sugan-ink font-medium">{product.details.dimensions.length}"</span>
                             </div>
                           )}
                           {product.details.dimensions.width && (
-                            <div className="flex justify-between bg-sugan-cream px-3 py-2 rounded">
-                              <span className="text-sugan-brown/60">Width</span>
-                              <span className="text-sugan-brown font-medium">{product.details.dimensions.width}"</span>
+                            <div className="flex justify-between bg-sugan-bone px-3 py-2 rounded">
+                              <span className="text-sugan-ink/60">Width</span>
+                              <span className="text-sugan-ink font-medium">{product.details.dimensions.width}"</span>
                             </div>
                           )}
                           {product.details.dimensions.height && (
-                            <div className="flex justify-between bg-sugan-cream px-3 py-2 rounded">
-                              <span className="text-sugan-brown/60">Height</span>
-                              <span className="text-sugan-brown font-medium">{product.details.dimensions.height}"</span>
+                            <div className="flex justify-between bg-sugan-bone px-3 py-2 rounded">
+                              <span className="text-sugan-ink/60">Height</span>
+                              <span className="text-sugan-ink font-medium">{product.details.dimensions.height}"</span>
                             </div>
                           )}
                           {product.details.dimensions.depth && (
-                            <div className="flex justify-between bg-sugan-cream px-3 py-2 rounded">
-                              <span className="text-sugan-brown/60">Depth</span>
-                              <span className="text-sugan-brown font-medium">{product.details.dimensions.depth}"</span>
+                            <div className="flex justify-between bg-sugan-bone px-3 py-2 rounded">
+                              <span className="text-sugan-ink/60">Depth</span>
+                              <span className="text-sugan-ink font-medium">{product.details.dimensions.depth}"</span>
                             </div>
                           )}
                           {product.details.dimensions.diameter && (
-                            <div className="flex justify-between bg-sugan-cream px-3 py-2 rounded">
-                              <span className="text-sugan-brown/60">Diameter</span>
-                              <span className="text-sugan-brown font-medium">{product.details.dimensions.diameter}"</span>
+                            <div className="flex justify-between bg-sugan-bone px-3 py-2 rounded">
+                              <span className="text-sugan-ink/60">Diameter</span>
+                              <span className="text-sugan-ink font-medium">{product.details.dimensions.diameter}"</span>
                             </div>
                           )}
                           {product.details.dimensions.weight && (
-                            <div className="flex justify-between bg-sugan-cream px-3 py-2 rounded">
-                              <span className="text-sugan-brown/60">Weight</span>
-                              <span className="text-sugan-brown font-medium">{product.details.dimensions.weight}</span>
+                            <div className="flex justify-between bg-sugan-bone px-3 py-2 rounded">
+                              <span className="text-sugan-ink/60">Weight</span>
+                              <span className="text-sugan-ink font-medium">{product.details.dimensions.weight}</span>
                             </div>
                           )}
                         </div>
@@ -649,20 +649,20 @@ export default function ProductDetail() {
                   onClick={() => toggleSection('care')}
                   className="w-full flex items-center justify-between p-6 text-left"
                 >
-                  <span className="font-display text-lg text-sugan-brown">Care Instructions</span>
+                  <span className="font-display text-lg text-sugan-ink">Care Instructions</span>
                   {expandedSection === 'care' ? (
-                    <ChevronUp className="w-5 h-5 text-sugan-brown" />
+                    <ChevronUp className="w-5 h-5 text-sugan-ink" />
                   ) : (
-                    <ChevronDown className="w-5 h-5 text-sugan-brown" />
+                    <ChevronDown className="w-5 h-5 text-sugan-ink" />
                   )}
                 </button>
                 {expandedSection === 'care' && (
                   <div className="px-6 pb-6">
-                    <p className="text-sugan-brown/70 font-body">{product.details.care}</p>
+                    <p className="text-sugan-ink/70 font-body">{product.details.care}</p>
                     {product.details.maintenance && (
                       <div className="mt-4">
-                        <h4 className="font-medium text-sugan-brown mb-1">Long-term Maintenance</h4>
-                        <p className="text-sugan-brown/70 font-body text-sm">{product.details.maintenance}</p>
+                        <h4 className="font-medium text-sugan-ink mb-1">Long-term Maintenance</h4>
+                        <p className="text-sugan-ink/70 font-body text-sm">{product.details.maintenance}</p>
                       </div>
                     )}
                   </div>
@@ -676,37 +676,37 @@ export default function ProductDetail() {
                 onClick={() => toggleSection('shipping')}
                 className="w-full flex items-center justify-between p-6 text-left"
               >
-                <span className="font-display text-lg text-sugan-brown">Shipping & Returns</span>
+                <span className="font-display text-lg text-sugan-ink">Shipping & Returns</span>
                 {expandedSection === 'shipping' ? (
-                  <ChevronUp className="w-5 h-5 text-sugan-brown" />
+                  <ChevronUp className="w-5 h-5 text-sugan-ink" />
                 ) : (
-                  <ChevronDown className="w-5 h-5 text-sugan-brown" />
+                  <ChevronDown className="w-5 h-5 text-sugan-ink" />
                 )}
               </button>
               {expandedSection === 'shipping' && (
                 <div className="px-6 pb-6 space-y-4">
                   {product.details?.shipping && (
                     <div>
-                      <h4 className="font-medium text-sugan-brown mb-1">Shipping</h4>
-                      <p className="text-sugan-brown/70 font-body text-sm">{product.details.shipping}</p>
+                      <h4 className="font-medium text-sugan-ink mb-1">Shipping</h4>
+                      <p className="text-sugan-ink/70 font-body text-sm">{product.details.shipping}</p>
                     </div>
                   )}
                   {product.details?.delivery && (
                     <div>
-                      <h4 className="font-medium text-sugan-brown mb-1">Delivery Time</h4>
-                      <p className="text-sugan-brown/70 font-body text-sm">{product.details.delivery}</p>
+                      <h4 className="font-medium text-sugan-ink mb-1">Delivery Time</h4>
+                      <p className="text-sugan-ink/70 font-body text-sm">{product.details.delivery}</p>
                     </div>
                   )}
                   {product.details?.returns && (
                     <div>
-                      <h4 className="font-medium text-sugan-brown mb-1">Returns</h4>
-                      <p className="text-sugan-brown/70 font-body text-sm">{product.details.returns}</p>
+                      <h4 className="font-medium text-sugan-ink mb-1">Returns</h4>
+                      <p className="text-sugan-ink/70 font-body text-sm">{product.details.returns}</p>
                     </div>
                   )}
                   {product.details?.warranty && (
                     <div>
-                      <h4 className="font-medium text-sugan-brown mb-1">Warranty</h4>
-                      <p className="text-sugan-brown/70 font-body text-sm">{product.details.warranty}</p>
+                      <h4 className="font-medium text-sugan-ink mb-1">Warranty</h4>
+                      <p className="text-sugan-ink/70 font-body text-sm">{product.details.warranty}</p>
                     </div>
                   )}
                 </div>
@@ -720,19 +720,19 @@ export default function ProductDetail() {
                   onClick={() => toggleSection('faq')}
                   className="w-full flex items-center justify-between p-6 text-left"
                 >
-                  <span className="font-display text-lg text-sugan-brown">FAQ</span>
+                  <span className="font-display text-lg text-sugan-ink">FAQ</span>
                   {expandedSection === 'faq' ? (
-                    <ChevronUp className="w-5 h-5 text-sugan-brown" />
+                    <ChevronUp className="w-5 h-5 text-sugan-ink" />
                   ) : (
-                    <ChevronDown className="w-5 h-5 text-sugan-brown" />
+                    <ChevronDown className="w-5 h-5 text-sugan-ink" />
                   )}
                 </button>
                 {expandedSection === 'faq' && (
                   <div className="px-6 pb-6 space-y-4">
                     {product.details.faq.map((item, idx) => (
                       <div key={idx}>
-                        <h4 className="font-medium text-sugan-brown mb-1">{item.question}</h4>
-                        <p className="text-sugan-brown/70 font-body text-sm">{item.answer}</p>
+                        <h4 className="font-medium text-sugan-ink mb-1">{item.question}</h4>
+                        <p className="text-sugan-ink/70 font-body text-sm">{item.answer}</p>
                       </div>
                     ))}
                   </div>
@@ -748,13 +748,13 @@ export default function ProductDetail() {
               <div className="bg-white rounded-lg p-6">
                 <div className="flex items-center gap-2 mb-4">
                   <Sparkles className="w-5 h-5 text-sugan-gold" />
-                  <h3 className="font-display text-lg text-sugan-brown">Key Features</h3>
+                  <h3 className="font-display text-lg text-sugan-ink">Key Features</h3>
                 </div>
                 <ul className="space-y-3">
                   {product.details.usp.map((point, idx) => (
                     <li key={idx} className="flex items-start gap-3">
                       <div className="w-1.5 h-1.5 bg-sugan-gold rounded-full mt-2 flex-shrink-0" />
-                      <span className="text-sugan-brown/70 font-body text-sm">{point}</span>
+                      <span className="text-sugan-ink/70 font-body text-sm">{point}</span>
                     </li>
                   ))}
                 </ul>
@@ -762,7 +762,7 @@ export default function ProductDetail() {
             )}
 
             {/* Shipping Info */}
-            <div className="bg-sugan-brown text-sugan-cream rounded-lg p-6">
+            <div className="bg-sugan-ink text-sugan-bone rounded-lg p-6">
               <div className="flex items-center gap-2 mb-4">
                 <Truck className="w-5 h-5 text-sugan-gold" />
                 <h3 className="font-display text-lg">Delivery</h3>
@@ -789,8 +789,8 @@ export default function ProductDetail() {
 
             {/* Need Help */}
             <div className="bg-sugan-gold/10 rounded-lg p-6">
-              <h3 className="font-display text-lg text-sugan-brown mb-2">Need Help?</h3>
-              <p className="text-sugan-brown/70 font-body text-sm mb-4">
+              <h3 className="font-display text-lg text-sugan-ink mb-2">Need Help?</h3>
+              <p className="text-sugan-ink/70 font-body text-sm mb-4">
                 Have questions about this product? Contact us on WhatsApp.
               </p>
               <a
@@ -831,20 +831,20 @@ export default function ProductDetail() {
       <RecentlyViewed />
 
       {/* Sticky Mobile Add to Cart Bar */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-sugan-brown/10 p-4 lg:hidden z-50 safe-area-inset">
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-sugan-ink/10 p-4 lg:hidden z-50 safe-area-inset">
         <div className="flex items-center gap-4 max-w-lg mx-auto">
           {/* Quantity Controls */}
-          <div className="flex items-center gap-2 border border-sugan-brown/20 rounded-lg px-3 py-2">
+          <div className="flex items-center gap-2 border border-sugan-ink/20 rounded-lg px-3 py-2">
             <button
               onClick={() => setQuantity(Math.max(1, quantity - 1))}
-              className="text-sugan-brown hover:text-sugan-gold transition-colors w-8 h-8 flex items-center justify-center"
+              className="text-sugan-ink hover:text-sugan-gold transition-colors w-8 h-8 flex items-center justify-center"
             >
               <Minus className="w-4 h-4" />
             </button>
-            <span className="w-8 text-center font-body text-sugan-brown">{quantity}</span>
+            <span className="w-8 text-center font-body text-sugan-ink">{quantity}</span>
             <button
               onClick={() => setQuantity(quantity + 1)}
-              className="text-sugan-brown hover:text-sugan-gold transition-colors w-8 h-8 flex items-center justify-center"
+              className="text-sugan-ink hover:text-sugan-gold transition-colors w-8 h-8 flex items-center justify-center"
             >
               <Plus className="w-4 h-4" />
             </button>
@@ -853,7 +853,7 @@ export default function ProductDetail() {
           {/* Add to Cart Button */}
           <button
             onClick={handleAddToCart}
-            className="flex-1 bg-sugan-brown text-sugan-cream py-3 px-6 font-body text-sm tracking-wider uppercase transition-all duration-300 hover:bg-sugan-gold flex items-center justify-center gap-2 rounded-lg"
+            className="flex-1 bg-sugan-ink text-sugan-bone py-3 px-6 font-body text-sm tracking-wider uppercase transition-all duration-300 hover:bg-sugan-gold flex items-center justify-center gap-2 rounded-lg"
           >
             <ShoppingCart className="w-4 h-4" />
             Add to Cart • ₹{(displayPrice * quantity).toLocaleString()}
@@ -882,7 +882,7 @@ export default function ProductDetail() {
             className={`w-12 h-12 flex items-center justify-center border-2 rounded-lg transition-colors ${
               isInWishlist 
                 ? 'border-red-500 text-red-500 bg-red-50' 
-                : 'border-sugan-brown/20 text-sugan-brown/60 hover:border-sugan-gold hover:text-sugan-gold'
+                : 'border-sugan-ink/20 text-sugan-ink/60 hover:border-sugan-gold hover:text-sugan-gold'
             }`}
           >
             <Heart className={`w-5 h-5 ${isInWishlist ? 'fill-current' : ''}`} />

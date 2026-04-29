@@ -63,7 +63,7 @@ export default function CTA() {
           alt="Beautiful living room with wooden furniture"
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-sugan-brown/60" />
+        <div className="absolute inset-0 bg-sugan-ink/60" />
       </div>
 
       {/* Content Card */}
@@ -71,16 +71,16 @@ export default function CTA() {
         <div className="max-w-3xl mx-auto">
           <div
             ref={cardRef}
-            className="bg-sugan-cream/95 backdrop-blur-sm p-8 sm:p-12 lg:p-16 rounded-lg text-center"
+            className="bg-sugan-bone/95 backdrop-blur-sm p-8 sm:p-12 lg:p-16 rounded-lg text-center"
           >
             <p className="text-sugan-gold font-body text-sm tracking-[0.2em] uppercase mb-4">
               Start Your Journey
             </p>
-            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-light text-sugan-brown mb-6">
+            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-light text-sugan-ink mb-6">
               Bring Home the Beauty of
               <span className="font-medium block">Solid Wood</span>
             </h2>
-            <p className="text-sugan-brown/70 font-body leading-relaxed mb-8 max-w-lg mx-auto">
+            <p className="text-sugan-ink/70 font-body leading-relaxed mb-8 max-w-lg mx-auto">
               Explore our collection of handcrafted wooden lifestyle products.
               Each piece is made with love in Jodhpur and delivered to your
               doorstep with pan-India shipping.
@@ -102,12 +102,12 @@ export default function CTA() {
             </div>
 
             {/* Trust Badges */}
-            <div className="mt-10 pt-8 border-t border-sugan-brown/10">
-              <p className="text-sugan-brown/50 text-xs font-body mb-4">
+            <div className="mt-10 pt-8 border-t border-sugan-ink/10">
+              <p className="text-sugan-ink/50 text-xs font-body mb-4">
                 Trusted by 5000+ customers across India
               </p>
               <div className="flex items-center justify-center gap-6">
-                <div className="flex items-center gap-2 text-sugan-brown/60">
+                <div className="flex items-center gap-2 text-sugan-ink/60">
                   <svg
                     className="w-6 h-6"
                     viewBox="0 0 24 24"
@@ -117,7 +117,7 @@ export default function CTA() {
                   </svg>
                   <span className="text-xs font-body">Premium Quality</span>
                 </div>
-                <div className="flex items-center gap-2 text-sugan-brown/60">
+                <div className="flex items-center gap-2 text-sugan-ink/60">
                   <svg
                     className="w-6 h-6"
                     viewBox="0 0 24 24"
@@ -127,7 +127,7 @@ export default function CTA() {
                   </svg>
                   <span className="text-xs font-body">Secure Payment</span>
                 </div>
-                <div className="flex items-center gap-2 text-sugan-brown/60">
+                <div className="flex items-center gap-2 text-sugan-ink/60">
                   <svg
                     className="w-6 h-6"
                     viewBox="0 0 24 24"

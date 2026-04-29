@@ -29,9 +29,9 @@ export default function RelatedProducts({ currentProduct }: RelatedProductsProps
   if (relatedProducts.length === 0) return null;
 
   return (
-    <section className="py-12 bg-sugan-cream border-t border-sugan-brown/10">
+    <section className="py-12 bg-sugan-bone border-t border-sugan-ink/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="font-display text-2xl text-sugan-brown mb-8 text-center">
+        <h2 className="font-display text-2xl text-sugan-ink mb-8 text-center">
           Customers Also Viewed
         </h2>
         
@@ -52,10 +52,10 @@ export default function RelatedProducts({ currentProduct }: RelatedProductsProps
               </div>
               <div className="p-3">
                 <p className="text-xs text-sugan-gold font-body uppercase mb-1">{product.category}</p>
-                <h3 className="font-body text-sm text-sugan-brown line-clamp-2 group-hover:text-sugan-gold transition-colors">
+                <h3 className="font-body text-sm text-sugan-ink line-clamp-2 group-hover:text-sugan-gold transition-colors">
                   {product.name}
                 </h3>
-                <p className="font-display text-sugan-brown font-semibold mt-1">
+                <p className="font-display text-sugan-ink font-semibold mt-1">
                   ₹{product.price.toLocaleString()}
                 </p>
               </div>

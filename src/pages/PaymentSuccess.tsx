@@ -59,10 +59,10 @@ export default function PaymentSuccess() {
 
   if (isProcessing) {
     return (
-      <div className="min-h-screen bg-sugan-cream flex items-center justify-center">
+      <div className="min-h-screen bg-sugan-bone flex items-center justify-center">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-sugan-gold border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="font-body text-sugan-brown">Confirming your payment...</p>
+          <p className="font-body text-sugan-ink">Confirming your payment...</p>
         </div>
       </div>
     );
@@ -70,15 +70,15 @@ export default function PaymentSuccess() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-sugan-cream pt-24 pb-12">
+      <div className="min-h-screen bg-sugan-bone pt-24 pb-12">
         <div className="max-w-md mx-auto px-4">
           <Card>
             <CardContent className="p-8 text-center">
               <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Package className="w-8 h-8 text-red-500" />
               </div>
-              <h1 className="font-display text-2xl text-sugan-brown mb-2">Payment Issue</h1>
-              <p className="text-sugan-brown/60 font-body mb-6">{error}</p>
+              <h1 className="font-display text-2xl text-sugan-ink mb-2">Payment Issue</h1>
+              <p className="text-sugan-ink/60 font-body mb-6">{error}</p>
               {isHostedOnStatic && (
                 <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6 text-left">
                   <div className="flex items-start gap-2">
@@ -97,7 +97,7 @@ export default function PaymentSuccess() {
                 </div>
               )}
               <Link to="/account">
-                <Button className="bg-sugan-brown hover:bg-sugan-brown/90 font-body">
+                <Button className="bg-sugan-ink hover:bg-sugan-ink/90 font-body">
                   View Orders
                 </Button>
               </Link>
@@ -109,7 +109,7 @@ export default function PaymentSuccess() {
   }
 
   return (
-    <div className="min-h-screen bg-sugan-cream pt-24 pb-12">
+    <div className="min-h-screen bg-sugan-bone pt-24 pb-12">
       <div className="max-w-2xl mx-auto px-4 sm:px-6">
         <Card className="border-none shadow-xl">
           <CardContent className="p-8 md:p-12 text-center">
@@ -117,73 +117,73 @@ export default function PaymentSuccess() {
               <CheckCircle className="w-10 h-10 text-green-500" />
             </div>
 
-            <h1 className="font-display text-3xl md:text-4xl text-sugan-brown mb-2">
+            <h1 className="font-display text-3xl md:text-4xl text-sugan-ink mb-2">
               Payment Successful!
             </h1>
-            <p className="text-sugan-brown/60 font-body mb-8">
+            <p className="text-sugan-ink/60 font-body mb-8">
               Thank you for your purchase. Your order has been confirmed.
             </p>
 
             {orderDetails && (
-              <div className="bg-sugan-cream rounded-xl p-6 mb-8 text-left">
+              <div className="bg-sugan-bone rounded-xl p-6 mb-8 text-left">
                 <div className="grid grid-cols-2 gap-4 mb-4">
                   <div>
-                    <p className="text-sm text-sugan-brown/50 font-body">Order ID</p>
-                    <p className="font-body font-medium text-sugan-brown">#{orderDetails.id?.slice(-8).toUpperCase()}</p>
+                    <p className="text-sm text-sugan-ink/50 font-body">Order ID</p>
+                    <p className="font-body font-medium text-sugan-ink">#{orderDetails.id?.slice(-8).toUpperCase()}</p>
                   </div>
                   <div>
-                    <p className="text-sm text-sugan-brown/50 font-body">Amount Paid</p>
-                    <p className="font-body font-medium text-sugan-brown">₹{orderDetails.total?.toLocaleString()}</p>
+                    <p className="text-sm text-sugan-ink/50 font-body">Amount Paid</p>
+                    <p className="font-body font-medium text-sugan-ink">₹{orderDetails.total?.toLocaleString()}</p>
                   </div>
                   <div>
-                    <p className="text-sm text-sugan-brown/50 font-body">Transaction ID</p>
-                    <p className="font-body font-medium text-sugan-brown">{orderDetails.txnid || 'N/A'}</p>
+                    <p className="text-sm text-sugan-ink/50 font-body">Transaction ID</p>
+                    <p className="font-body font-medium text-sugan-ink">{orderDetails.txnid || 'N/A'}</p>
                   </div>
                   <div>
-                    <p className="text-sm text-sugan-brown/50 font-body">Payment Method</p>
-                    <p className="font-body font-medium text-sugan-brown">Online (PayU)</p>
+                    <p className="text-sm text-sugan-ink/50 font-body">Payment Method</p>
+                    <p className="font-body font-medium text-sugan-ink">Online (PayU)</p>
                   </div>
                 </div>
-                <div className="border-t border-sugan-brown/10 pt-4">
-                  <p className="text-sm text-sugan-brown/50 font-body">Estimated Delivery</p>
-                  <p className="font-body font-medium text-sugan-brown">5-7 business days</p>
+                <div className="border-t border-sugan-ink/10 pt-4">
+                  <p className="text-sm text-sugan-ink/50 font-body">Estimated Delivery</p>
+                  <p className="font-body font-medium text-sugan-ink">5-7 business days</p>
                 </div>
               </div>
             )}
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-              <div className="flex items-start gap-3 p-4 bg-sugan-cream rounded-lg text-left">
+              <div className="flex items-start gap-3 p-4 bg-sugan-bone rounded-lg text-left">
                 <Mail className="w-5 h-5 text-sugan-gold flex-shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-body font-medium text-sugan-brown">Order Confirmation</p>
-                  <p className="text-sm text-sugan-brown/60 font-body">We've sent a confirmation email with order details.</p>
+                  <p className="font-body font-medium text-sugan-ink">Order Confirmation</p>
+                  <p className="text-sm text-sugan-ink/60 font-body">We've sent a confirmation email with order details.</p>
                 </div>
               </div>
-              <div className="flex items-start gap-3 p-4 bg-sugan-cream rounded-lg text-left">
+              <div className="flex items-start gap-3 p-4 bg-sugan-bone rounded-lg text-left">
                 <Phone className="w-5 h-5 text-sugan-gold flex-shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-body font-medium text-sugan-brown">Need Help?</p>
-                  <p className="text-sm text-sugan-brown/60 font-body">Contact us on WhatsApp for any queries.</p>
+                  <p className="font-body font-medium text-sugan-ink">Need Help?</p>
+                  <p className="text-sm text-sugan-ink/60 font-body">Contact us on WhatsApp for any queries.</p>
                 </div>
               </div>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4">
               <Link to="/account" className="flex-1">
-                <Button className="w-full bg-sugan-brown hover:bg-sugan-brown/90 font-body h-12">
+                <Button className="w-full bg-sugan-ink hover:bg-sugan-ink/90 font-body h-12">
                   <Package className="w-4 h-4 mr-2" />
                   Track Order
                 </Button>
               </Link>
               <Link to="/shop" className="flex-1">
-                <Button variant="outline" className="w-full font-body h-12 border-sugan-brown/20">
+                <Button variant="outline" className="w-full font-body h-12 border-sugan-ink/20">
                   Continue Shopping
                 </Button>
               </Link>
             </div>
 
-            <div className="mt-8 pt-8 border-t border-sugan-brown/10">
-              <p className="text-sm text-sugan-brown/60 font-body mb-2">
+            <div className="mt-8 pt-8 border-t border-sugan-ink/10">
+              <p className="text-sm text-sugan-ink/60 font-body mb-2">
                 Have questions about your order?
               </p>
               <a

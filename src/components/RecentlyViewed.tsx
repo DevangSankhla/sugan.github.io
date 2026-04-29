@@ -44,9 +44,9 @@ export default function RecentlyViewed() {
   if (recentProducts.length === 0) return null;
 
   return (
-    <section className="py-12 bg-white border-t border-sugan-brown/10">
+    <section className="py-12 bg-white border-t border-sugan-ink/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <h2 className="font-display text-2xl text-sugan-brown mb-6">Recently Viewed</h2>
+        <h2 className="font-display text-2xl text-sugan-ink mb-6">Recently Viewed</h2>
         
         <div className="relative">
           <div 
@@ -60,7 +60,7 @@ export default function RecentlyViewed() {
                 to={`/product/${product.id}`}
                 className="flex-shrink-0 w-40 group"
               >
-                <div className="aspect-square bg-sugan-cream-dark rounded-lg overflow-hidden mb-2">
+                <div className="aspect-square bg-sugan-bone-dark rounded-lg overflow-hidden mb-2">
                   <img
                     src={product.image}
                     alt={product.name}
@@ -68,10 +68,10 @@ export default function RecentlyViewed() {
                     loading="lazy"
                   />
                 </div>
-                <h3 className="font-body text-sm text-sugan-brown line-clamp-2 group-hover:text-sugan-gold transition-colors">
+                <h3 className="font-body text-sm text-sugan-ink line-clamp-2 group-hover:text-sugan-gold transition-colors">
                   {product.name}
                 </h3>
-                <p className="font-display text-sugan-brown font-semibold text-sm">
+                <p className="font-display text-sugan-ink font-semibold text-sm">
                   ₹{product.price.toLocaleString()}
                 </p>
               </Link>

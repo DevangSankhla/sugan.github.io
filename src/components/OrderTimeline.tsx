@@ -34,7 +34,7 @@ export default function OrderTimeline({ status, createdAt, shippedAt, deliveredA
     <div className="w-full py-4">
       <div className="flex items-center justify-between relative">
         {/* Progress Line */}
-        <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-1 bg-sugan-brown/10 rounded-full" />
+        <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-1 bg-sugan-ink/10 rounded-full" />
         <div 
           className="absolute left-0 top-1/2 -translate-y-1/2 h-1 bg-sugan-gold rounded-full transition-all duration-500"
           style={{ width: `${(currentStepIndex / (steps.length - 1)) * 100}%` }}
@@ -54,7 +54,7 @@ export default function OrderTimeline({ status, createdAt, shippedAt, deliveredA
                 className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
                   isCompleted
                     ? 'bg-sugan-gold text-white shadow-md'
-                    : 'bg-white text-sugan-brown/40 border-2 border-sugan-brown/10'
+                    : 'bg-white text-sugan-ink/40 border-2 border-sugan-ink/10'
                 } ${isCurrent ? 'ring-4 ring-sugan-gold/20 scale-110' : ''}`}
               >
                 {isCompleted ? (
@@ -70,11 +70,11 @@ export default function OrderTimeline({ status, createdAt, shippedAt, deliveredA
               
               {/* Label */}
               <div className="mt-2 text-center">
-                <p className={`text-xs font-body font-medium ${isCompleted ? 'text-sugan-brown' : 'text-sugan-brown/40'}`}>
+                <p className={`text-xs font-body font-medium ${isCompleted ? 'text-sugan-ink' : 'text-sugan-ink/40'}`}>
                   {step.label}
                 </p>
                 {date && (
-                  <p className="text-[10px] text-sugan-brown/50 font-body">
+                  <p className="text-[10px] text-sugan-ink/50 font-body">
                     {date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}
                   </p>
                 )}

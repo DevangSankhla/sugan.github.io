@@ -13,33 +13,33 @@ const sizeReferences = [
 
 export default function SizeGuide({ dimensions }: SizeGuideProps) {
   return (
-    <div className="bg-white rounded-xl p-6 border border-sugan-brown/10">
+    <div className="bg-white rounded-xl p-6 border border-sugan-ink/10">
       <div className="flex items-center gap-2 mb-4">
         <Ruler className="w-5 h-5 text-sugan-gold" />
-        <h3 className="font-display text-lg text-sugan-brown">Size Guide</h3>
+        <h3 className="font-display text-lg text-sugan-ink">Size Guide</h3>
       </div>
 
       {/* Product Dimensions */}
       {dimensions && (
-        <div className="mb-6 p-4 bg-sugan-cream rounded-lg">
-          <p className="text-sm font-body text-sugan-brown/60 mb-2">Product Dimensions:</p>
+        <div className="mb-6 p-4 bg-sugan-bone rounded-lg">
+          <p className="text-sm font-body text-sugan-ink/60 mb-2">Product Dimensions:</p>
           <div className="grid grid-cols-3 gap-4">
             {dimensions.length && (
               <div>
-                <span className="text-xs text-sugan-brown/50 block">Length</span>
-                <span className="font-body font-medium text-sugan-brown">{dimensions.length}&quot;</span>
+                <span className="text-xs text-sugan-ink/50 block">Length</span>
+                <span className="font-body font-medium text-sugan-ink">{dimensions.length}&quot;</span>
               </div>
             )}
             {dimensions.width && (
               <div>
-                <span className="text-xs text-sugan-brown/50 block">Width</span>
-                <span className="font-body font-medium text-sugan-brown">{dimensions.width}&quot;</span>
+                <span className="text-xs text-sugan-ink/50 block">Width</span>
+                <span className="font-body font-medium text-sugan-ink">{dimensions.width}&quot;</span>
               </div>
             )}
             {dimensions.height && (
               <div>
-                <span className="text-xs text-sugan-brown/50 block">Height</span>
-                <span className="font-body font-medium text-sugan-brown">{dimensions.height}&quot;</span>
+                <span className="text-xs text-sugan-ink/50 block">Height</span>
+                <span className="font-body font-medium text-sugan-ink">{dimensions.height}&quot;</span>
               </div>
             )}
           </div>
@@ -48,24 +48,24 @@ export default function SizeGuide({ dimensions }: SizeGuideProps) {
 
       {/* Size Reference Table */}
       <div className="space-y-3">
-        <p className="text-sm font-body text-sugan-brown/60">Size Reference:</p>
+        <p className="text-sm font-body text-sugan-ink/60">Size Reference:</p>
         {sizeReferences.map((ref) => (
           <div
             key={ref.size}
-            className="flex items-center justify-between p-3 bg-sugan-cream/50 rounded-lg"
+            className="flex items-center justify-between p-3 bg-sugan-bone/50 rounded-lg"
           >
             <div>
-              <span className="font-body font-medium text-sugan-brown">{ref.size}</span>
-              <p className="text-xs text-sugan-brown/50">{ref.reference}</p>
+              <span className="font-body font-medium text-sugan-ink">{ref.size}</span>
+              <p className="text-xs text-sugan-ink/50">{ref.reference}</p>
             </div>
-            <span className="text-sm font-body text-sugan-brown/70">{ref.dimensions}</span>
+            <span className="text-sm font-body text-sugan-ink/70">{ref.dimensions}</span>
           </div>
         ))}
       </div>
 
-      <div className="flex items-start gap-2 mt-4 pt-4 border-t border-sugan-brown/10">
+      <div className="flex items-start gap-2 mt-4 pt-4 border-t border-sugan-ink/10">
         <Info className="w-4 h-4 text-sugan-gold flex-shrink-0 mt-0.5" />
-        <p className="text-xs text-sugan-brown/60 font-body">
+        <p className="text-xs text-sugan-ink/60 font-body">
           Not sure about the size? Contact us on WhatsApp and we&apos;ll help you choose the perfect fit for your space.
         </p>
       </div>

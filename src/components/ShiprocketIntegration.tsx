@@ -66,7 +66,7 @@ export function ShiprocketRateCalculator({
       <button
         onClick={calculateRates}
         disabled={isLoading || pincode.length !== 6}
-        className="w-full py-2 px-4 bg-sugan-brown text-sugan-cream rounded-lg font-body hover:bg-sugan-brown/90 transition-colors disabled:opacity-50"
+        className="w-full py-2 px-4 bg-sugan-ink text-sugan-bone rounded-lg font-body hover:bg-sugan-ink/90 transition-colors disabled:opacity-50"
       >
         {isLoading ? 'Calculating...' : 'Calculate Shipping'}
       </button>
@@ -75,7 +75,7 @@ export function ShiprocketRateCalculator({
 
   return (
     <div className="space-y-3">
-      <p className="text-sm font-body text-sugan-brown/60">
+      <p className="text-sm font-body text-sugan-ink/60">
         Shipping to: {pincode} • Weight: {weight}g
       </p>
       {rates.map((rate) => (
@@ -85,22 +85,22 @@ export function ShiprocketRateCalculator({
           className={`p-4 rounded-lg border-2 cursor-pointer transition-all ${
             selectedRate?.courier === rate.courier
               ? 'border-sugan-gold bg-sugan-gold/5'
-              : 'border-sugan-brown/10 hover:border-sugan-brown/30'
+              : 'border-sugan-ink/10 hover:border-sugan-ink/30'
           }`}
         >
           <div className="flex items-center justify-between">
             <div>
               <div className="flex items-center gap-2">
                 <Truck className="w-4 h-4 text-sugan-gold" />
-                <span className="font-body font-medium text-sugan-brown">{rate.courier}</span>
-                <span className="text-xs text-sugan-brown/50">({rate.service})</span>
+                <span className="font-body font-medium text-sugan-ink">{rate.courier}</span>
+                <span className="text-xs text-sugan-ink/50">({rate.service})</span>
               </div>
-              <p className="text-sm text-sugan-brown/60 font-body mt-1">
+              <p className="text-sm text-sugan-ink/60 font-body mt-1">
                 Delivery: {rate.etd}
               </p>
             </div>
             <div className="text-right">
-              <span className="font-display text-lg text-sugan-brown">₹{rate.price}</span>
+              <span className="font-display text-lg text-sugan-ink">₹{rate.price}</span>
               {selectedRate?.courier === rate.courier && (
                 <CheckCircle className="w-5 h-5 text-sugan-gold mt-1 ml-auto" />
               )}
@@ -126,7 +126,7 @@ export function ShiprocketTracking({ trackingNumber }: ShiprocketTrackingProps) 
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <div className="bg-white rounded-xl border border-sugan-brown/10 overflow-hidden">
+    <div className="bg-white rounded-xl border border-sugan-ink/10 overflow-hidden">
       <button
         onClick={() => setIsExpanded(!isExpanded)}
         className="w-full p-4 flex items-center justify-between"
@@ -136,8 +136,8 @@ export function ShiprocketTracking({ trackingNumber }: ShiprocketTrackingProps) 
             <Package className="w-5 h-5 text-sugan-gold" />
           </div>
           <div className="text-left">
-            <p className="font-body font-medium text-sugan-brown">Track Order</p>
-            <p className="text-sm text-sugan-brown/50 font-body">AWB: {trackingNumber}</p>
+            <p className="font-body font-medium text-sugan-ink">Track Order</p>
+            <p className="text-sm text-sugan-ink/50 font-body">AWB: {trackingNumber}</p>
           </div>
         </div>
         <div className="flex items-center gap-2">
@@ -149,20 +149,20 @@ export function ShiprocketTracking({ trackingNumber }: ShiprocketTrackingProps) 
 
       {isExpanded && (
         <div className="px-4 pb-4">
-          <div className="relative pl-6 border-l-2 border-sugan-brown/10 space-y-6">
+          <div className="relative pl-6 border-l-2 border-sugan-ink/10 space-y-6">
             {mockTracking.map((event, index) => (
               <div key={index} className="relative">
                 <div className={`absolute -left-[31px] w-4 h-4 rounded-full border-2 ${
                   index === 0 
                     ? 'bg-sugan-gold border-sugan-gold' 
-                    : 'bg-white border-sugan-brown/30'
+                    : 'bg-white border-sugan-ink/30'
                 }`} />
                 <div>
-                  <p className="font-body font-medium text-sugan-brown">{event.status}</p>
-                  <div className="flex items-center gap-2 text-sm text-sugan-brown/60">
+                  <p className="font-body font-medium text-sugan-ink">{event.status}</p>
+                  <div className="flex items-center gap-2 text-sm text-sugan-ink/60">
                     <MapPin className="w-3 h-3" />
                     <span className="font-body">{event.location}</span>
-                    <span className="text-sugan-brown/30">•</span>
+                    <span className="text-sugan-ink/30">•</span>
                     <Clock className="w-3 h-3" />
                     <span className="font-body">{event.date} at {event.time}</span>
                   </div>

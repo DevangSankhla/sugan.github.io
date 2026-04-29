@@ -70,7 +70,7 @@ export default function ProductCard({ product, showWishlist = true, baseName, si
         to={`/product/${product.id}`}
         className="block bg-white rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300"
       >
-        <div className="aspect-square overflow-hidden bg-sugan-cream-dark relative">
+        <div className="aspect-square overflow-hidden bg-sugan-bone-dark relative">
           <img
             src={product.image}
             alt={product.name}
@@ -84,7 +84,7 @@ export default function ProductCard({ product, showWishlist = true, baseName, si
               className={`absolute top-2 right-2 w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200 ${
                 isInWishlist
                   ? 'bg-red-500 text-white shadow-md'
-                  : 'bg-white/90 text-sugan-brown/60 hover:text-red-500 opacity-0 group-hover:opacity-100'
+                  : 'bg-white/90 text-sugan-ink/60 hover:text-red-500 opacity-0 group-hover:opacity-100'
               }`}
               aria-label={isInWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
             >
@@ -94,14 +94,14 @@ export default function ProductCard({ product, showWishlist = true, baseName, si
         </div>
         <div className="p-3">
           <p className="text-xs text-sugan-gold font-body uppercase">{product.category}</p>
-          <h4 className="font-body text-sm text-sugan-brown line-clamp-2 group-hover:text-sugan-gold transition-colors">
+          <h4 className="font-body text-sm text-sugan-ink line-clamp-2 group-hover:text-sugan-gold transition-colors">
             {baseName || product.name}
           </h4>
-          <p className="font-display text-sugan-brown font-semibold mt-1">
+          <p className="font-display text-sugan-ink font-semibold mt-1">
             ₹{product.price.toLocaleString()}
           </p>
           {sizeText && (
-            <p className="text-xs text-sugan-brown/50 font-body mt-1">{sizeText}</p>
+            <p className="text-xs text-sugan-ink/50 font-body mt-1">{sizeText}</p>
           )}
         </div>
       </Link>

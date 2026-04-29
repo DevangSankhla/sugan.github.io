@@ -126,7 +126,7 @@ export default function AffiliateDashboard() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-sugan-cream flex items-center justify-center">
+      <div className="min-h-screen bg-sugan-bone flex items-center justify-center">
         <div className="w-8 h-8 border-2 border-sugan-gold border-t-transparent rounded-full animate-spin" />
       </div>
     );
@@ -136,20 +136,20 @@ export default function AffiliateDashboard() {
 
   if (!isAffiliate) {
     return (
-      <div className="min-h-screen bg-sugan-cream pt-24 pb-12">
+      <div className="min-h-screen bg-sugan-bone pt-24 pb-12">
         <div className="max-w-md mx-auto px-4">
           <Card>
             <CardContent className="p-8 text-center">
               <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <AlertCircle className="w-8 h-8 text-amber-600" />
               </div>
-              <h1 className="font-display text-2xl text-sugan-brown mb-2">No affiliate code on this account</h1>
-              <p className="font-body text-sugan-brown/70 mb-6">
+              <h1 className="font-display text-2xl text-sugan-ink mb-2">No affiliate code on this account</h1>
+              <p className="font-body text-sugan-ink/70 mb-6">
                 We don't see an active affiliate code linked to <strong>{user.email}</strong>.
                 If you should have access, contact us so we can link your code.
               </p>
               <Link to="/contact">
-                <Button className="bg-sugan-brown hover:bg-sugan-brown/90 font-body">
+                <Button className="bg-sugan-ink hover:bg-sugan-ink/90 font-body">
                   Contact Sugan
                 </Button>
               </Link>
@@ -161,18 +161,18 @@ export default function AffiliateDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-sugan-cream pt-24 pb-12">
+    <div className="min-h-screen bg-sugan-bone pt-24 pb-12">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-8 flex items-end justify-between flex-wrap gap-4">
           <div>
-            <h1 className="font-display text-3xl text-sugan-brown">Affiliate Dashboard</h1>
-            <p className="font-body text-sugan-brown/70 mt-1">
+            <h1 className="font-display text-3xl text-sugan-ink">Affiliate Dashboard</h1>
+            <p className="font-body text-sugan-ink/70 mt-1">
               Code: <span className="font-mono font-semibold text-sugan-gold">{affiliateCode}</span>
             </p>
           </div>
           <div className="text-right">
-            <p className="text-xs font-body text-sugan-brown/50">Signed in as</p>
-            <p className="font-body text-sugan-brown">{user.email}</p>
+            <p className="text-xs font-body text-sugan-ink/50">Signed in as</p>
+            <p className="font-body text-sugan-ink">{user.email}</p>
           </div>
         </div>
 
@@ -191,18 +191,18 @@ export default function AffiliateDashboard() {
         {/* Live orders */}
         <Card className="mb-8">
           <CardHeader>
-            <CardTitle className="font-display text-xl text-sugan-brown">Recent orders</CardTitle>
+            <CardTitle className="font-display text-xl text-sugan-ink">Recent orders</CardTitle>
           </CardHeader>
           <CardContent>
             {orders.length === 0 ? (
-              <p className="font-body text-sugan-brown/60 py-8 text-center">
+              <p className="font-body text-sugan-ink/60 py-8 text-center">
                 No orders yet with your code. Share <span className="font-mono">{affiliateCode}</span> to get started.
               </p>
             ) : (
               <div className="overflow-x-auto">
                 <table className="w-full text-sm font-body">
                   <thead>
-                    <tr className="text-left text-sugan-brown/60 border-b border-sugan-brown/10">
+                    <tr className="text-left text-sugan-ink/60 border-b border-sugan-ink/10">
                       <th className="py-2 pr-4">Order</th>
                       <th className="py-2 pr-4">Items</th>
                       <th className="py-2 pr-4">Status</th>
@@ -213,27 +213,27 @@ export default function AffiliateDashboard() {
                   </thead>
                   <tbody>
                     {orders.map((o) => (
-                      <tr key={o.id} className="border-b border-sugan-brown/5">
-                        <td className="py-3 pr-4 font-mono text-sugan-brown">{o.orderNumber}</td>
-                        <td className="py-3 pr-4 text-sugan-brown/70">{o.itemsSummary}</td>
+                      <tr key={o.id} className="border-b border-sugan-ink/5">
+                        <td className="py-3 pr-4 font-mono text-sugan-ink">{o.orderNumber}</td>
+                        <td className="py-3 pr-4 text-sugan-ink/70">{o.itemsSummary}</td>
                         <td className="py-3 pr-4">
                           <Badge className={`${statusBadgeClass(o.status)} text-xs`}>{o.status}</Badge>
                         </td>
-                        <td className="py-3 pr-4 text-sugan-brown/70">{o.paymentStatus}</td>
+                        <td className="py-3 pr-4 text-sugan-ink/70">{o.paymentStatus}</td>
                         <td className="py-3 pr-4 text-right">
                           {o.commissionVoided ? (
-                            <span className="line-through text-sugan-brown/40">{fmtCurrency(o.commissionAmount)}</span>
+                            <span className="line-through text-sugan-ink/40">{fmtCurrency(o.commissionAmount)}</span>
                           ) : (
-                            <span className="font-medium text-sugan-brown">{fmtCurrency(o.commissionAmount)}</span>
+                            <span className="font-medium text-sugan-ink">{fmtCurrency(o.commissionAmount)}</span>
                           )}
                           {o.commissionVoided && o.voidReason && (
                             <p className="text-[10px] text-red-500 mt-1">Voided: {o.voidReason}</p>
                           )}
                         </td>
-                        <td className="py-3 pr-4 text-sugan-brown/60 text-xs">
+                        <td className="py-3 pr-4 text-sugan-ink/60 text-xs">
                           {o.eligibilityDate ? o.eligibilityDate.toDate().toLocaleDateString('en-IN') : '—'}
                           {o.commissionMonth && (
-                            <span className="block text-sugan-brown/40">{o.commissionMonth}</span>
+                            <span className="block text-sugan-ink/40">{o.commissionMonth}</span>
                           )}
                         </td>
                       </tr>
@@ -248,18 +248,18 @@ export default function AffiliateDashboard() {
         {/* Monthly history */}
         <Card>
           <CardHeader>
-            <CardTitle className="font-display text-xl text-sugan-brown">Monthly settlements</CardTitle>
+            <CardTitle className="font-display text-xl text-sugan-ink">Monthly settlements</CardTitle>
           </CardHeader>
           <CardContent>
             {monthly.length === 0 ? (
-              <p className="font-body text-sugan-brown/60 py-8 text-center">
+              <p className="font-body text-sugan-ink/60 py-8 text-center">
                 Your first monthly settlement will appear here on the 1st of next month.
               </p>
             ) : (
               <div className="overflow-x-auto">
                 <table className="w-full text-sm font-body">
                   <thead>
-                    <tr className="text-left text-sugan-brown/60 border-b border-sugan-brown/10">
+                    <tr className="text-left text-sugan-ink/60 border-b border-sugan-ink/10">
                       <th className="py-2 pr-4">Month</th>
                       <th className="py-2 pr-4">Delivered</th>
                       <th className="py-2 pr-4">Successful</th>
@@ -270,12 +270,12 @@ export default function AffiliateDashboard() {
                   </thead>
                   <tbody>
                     {monthly.map((m) => (
-                      <tr key={m.id} className="border-b border-sugan-brown/5">
-                        <td className="py-3 pr-4 font-medium text-sugan-brown">{m.id}</td>
-                        <td className="py-3 pr-4 text-sugan-brown/70">{m.ordersDelivered}</td>
-                        <td className="py-3 pr-4 text-sugan-brown/70">{m.ordersSuccessful}</td>
-                        <td className="py-3 pr-4 text-right text-sugan-brown">{fmtCurrency(m.commissionTotal)}</td>
-                        <td className="py-3 pr-4 text-right font-medium text-sugan-brown">{fmtCurrency(m.netPayable)}</td>
+                      <tr key={m.id} className="border-b border-sugan-ink/5">
+                        <td className="py-3 pr-4 font-medium text-sugan-ink">{m.id}</td>
+                        <td className="py-3 pr-4 text-sugan-ink/70">{m.ordersDelivered}</td>
+                        <td className="py-3 pr-4 text-sugan-ink/70">{m.ordersSuccessful}</td>
+                        <td className="py-3 pr-4 text-right text-sugan-ink">{fmtCurrency(m.commissionTotal)}</td>
+                        <td className="py-3 pr-4 text-right font-medium text-sugan-ink">{fmtCurrency(m.netPayable)}</td>
                         <td className="py-3 pr-4">
                           <Badge className={m.status === 'paid'
                             ? 'bg-green-100 text-green-800 text-xs'
@@ -292,7 +292,7 @@ export default function AffiliateDashboard() {
           </CardContent>
         </Card>
 
-        <p className="mt-8 text-xs font-body text-sugan-brown/40 text-center">
+        <p className="mt-8 text-xs font-body text-sugan-ink/40 text-center">
           Successful = order delivered + 7-day return window passed. Commission = 10% of listed prices.
           Customer details are private and not shown here.
         </p>
@@ -308,11 +308,11 @@ function StatCard({ icon, label, value, sub }: {
     <Card>
       <CardContent className="p-5">
         <div className="flex items-center justify-between mb-2">
-          <p className="text-xs font-body uppercase tracking-wide text-sugan-brown/50">{label}</p>
+          <p className="text-xs font-body uppercase tracking-wide text-sugan-ink/50">{label}</p>
           <div className="text-sugan-gold">{icon}</div>
         </div>
-        <p className="font-display text-2xl text-sugan-brown">{value}</p>
-        {sub && <p className="text-xs font-body text-sugan-brown/50 mt-1">{sub}</p>}
+        <p className="font-display text-2xl text-sugan-ink">{value}</p>
+        {sub && <p className="text-xs font-body text-sugan-ink/50 mt-1">{sub}</p>}
       </CardContent>
     </Card>
   );

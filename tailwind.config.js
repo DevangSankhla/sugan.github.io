@@ -38,33 +38,56 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        // Sugan Brand Colors
+        // Sugan Atelier Apple palette
         sugan: {
-          gold: "#D4A056",
+          bone: "#FAF8F5",
+          "bone-dark": "#EFEAE2",
+          ink: "#0F0E0C",
+          "ink-soft": "#3C3530",
+          gold: "#B68B3F",
+          "gold-soft": "#F5EBD8",
+          // legacy aliases (kept for incremental migration; prefer the tokens above)
           "gold-light": "#E5BC7A",
-          "gold-dark": "#B8832F",
-          brown: "#2C1810",
-          "brown-light": "#4A2C1F",
-          cream: "#F5F0E8",
-          "cream-dark": "#E8E0D4",
+          "gold-dark": "#8A6A30",
         },
       },
       fontFamily: {
-        display: ["Cormorant Garamond", "serif"],
+        display: ["Fraunces", "serif"],
         body: ["Inter", "sans-serif"],
       },
+      fontSize: {
+        "display-2xl": ["clamp(56px, 9vw, 144px)", { lineHeight: "0.95", letterSpacing: "-0.04em" }],
+        "display-xl": ["clamp(40px, 6vw, 96px)", { lineHeight: "0.98", letterSpacing: "-0.03em" }],
+        "display-lg": ["clamp(32px, 4vw, 64px)", { lineHeight: "1.05", letterSpacing: "-0.025em" }],
+        "display-md": ["clamp(24px, 2.5vw, 40px)", { lineHeight: "1.15", letterSpacing: "-0.02em" }],
+        eyebrow: ["11px", { lineHeight: "1", letterSpacing: "0.18em" }],
+        "body-lg": ["18px", { lineHeight: "1.6", letterSpacing: "-0.005em" }],
+        body: ["15px", { lineHeight: "1.65", letterSpacing: "0" }],
+        "body-sm": ["13px", { lineHeight: "1.5", letterSpacing: "0" }],
+        mono: ["12px", { lineHeight: "1.4", letterSpacing: "0.04em" }],
+      },
+      spacing: {
+        "section-y": "clamp(96px, 12vw, 200px)",
+        "section-x": "clamp(20px, 5vw, 96px)",
+        gutter: "clamp(16px, 2vw, 32px)",
+      },
       borderRadius: {
-        xl: "calc(var(--radius) + 4px)",
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
-        xs: "calc(var(--radius) - 6px)",
+        none: "0",
+        sm: "2px",
+        DEFAULT: "4px",
+        // shadcn components rely on these tokens — keep them but flatten
+        md: "4px",
+        lg: "4px",
+        xl: "4px",
+        xs: "2px",
+        pill: "9999px",
       },
       boxShadow: {
-        xs: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
-        "gold": "0 10px 40px -10px rgba(212, 160, 86, 0.35), 0 2px 8px -2px rgba(44, 24, 16, 0.06)",
-        "gold-lg": "0 24px 70px -12px rgba(212, 160, 86, 0.45), 0 4px 16px -4px rgba(44, 24, 16, 0.08)",
-        "card": "0 1px 4px rgba(44, 24, 16, 0.04), 0 4px 16px -4px rgba(44, 24, 16, 0.06)",
+        hairline: "0 0 0 1px rgb(15 14 12 / 0.08)",
+        lift: "0 24px 60px -20px rgb(15 14 12 / 0.12)",
+      },
+      transitionTimingFunction: {
+        apple: "cubic-bezier(0.16, 1, 0.3, 1)",
       },
       keyframes: {
         "accordion-down": {
@@ -79,11 +102,7 @@ module.exports = {
           "0%,70%,100%": { opacity: "1" },
           "20%,50%": { opacity: "0" },
         },
-        "float": {
-          "0%, 100%": { transform: "translateY(0px)" },
-          "50%": { transform: "translateY(-10px)" },
-        },
-        "grain": {
+        grain: {
           "0%, 100%": { transform: "translate(0, 0)" },
           "10%": { transform: "translate(-5%, -10%)" },
           "20%": { transform: "translate(-15%, 5%)" },
@@ -95,13 +114,17 @@ module.exports = {
           "80%": { transform: "translate(3%, 35%)" },
           "90%": { transform: "translate(-10%, 10%)" },
         },
+        marquee: {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "caret-blink": "caret-blink 1.25s ease-out infinite",
-        "float": "float 4s ease-in-out infinite",
-        "grain": "grain 8s steps(10) infinite",
+        grain: "grain 8s steps(10) infinite",
+        marquee: "marquee 40s linear infinite",
       },
     },
   },

@@ -175,22 +175,22 @@ export default function Account() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-sugan-cream flex items-center justify-center">
-        <div className="text-sugan-brown font-body">Loading...</div>
+      <div className="min-h-screen bg-sugan-bone flex items-center justify-center">
+        <div className="text-sugan-ink font-body">Loading...</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-sugan-cream pt-24 pb-12">
+    <div className="min-h-screen bg-sugan-bone pt-24 pb-12">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
           <div>
-            <h1 className="font-display text-3xl text-sugan-brown">
+            <h1 className="font-display text-3xl text-sugan-ink">
               My Account
             </h1>
-            <p className="font-body text-sugan-brown/60 mt-1">
+            <p className="font-body text-sugan-ink/60 mt-1">
               Welcome back, {userData?.name || 'User'}
             </p>
           </div>
@@ -206,7 +206,7 @@ export default function Account() {
             {isAffiliate && (
               <Button
                 onClick={() => navigate('/affiliate')}
-                className="bg-sugan-brown hover:bg-sugan-brown/90 font-body"
+                className="bg-sugan-ink hover:bg-sugan-ink/90 font-body"
               >
                 Affiliate Dashboard
               </Button>
@@ -214,7 +214,7 @@ export default function Account() {
             <Button
               variant="outline"
               onClick={handleLogout}
-              className="font-body border-sugan-brown/20"
+              className="font-body border-sugan-ink/20"
             >
               <LogOut className="w-4 h-4 mr-2" />
               Logout
@@ -223,16 +223,16 @@ export default function Account() {
         </div>
 
         <Tabs defaultValue="orders" className="space-y-6">
-          <TabsList className="bg-white border border-sugan-brown/10 p-1">
-            <TabsTrigger value="orders" className="font-body data-[state=active]:bg-sugan-brown data-[state=active]:text-white">
+          <TabsList className="bg-white border border-sugan-ink/10 p-1">
+            <TabsTrigger value="orders" className="font-body data-[state=active]:bg-sugan-ink data-[state=active]:text-white">
               <Package className="w-4 h-4 mr-2" />
               Orders
             </TabsTrigger>
-            <TabsTrigger value="wishlist" className="font-body data-[state=active]:bg-sugan-brown data-[state=active]:text-white">
+            <TabsTrigger value="wishlist" className="font-body data-[state=active]:bg-sugan-ink data-[state=active]:text-white">
               <Heart className="w-4 h-4 mr-2" />
               Wishlist
             </TabsTrigger>
-            <TabsTrigger value="profile" className="font-body data-[state=active]:bg-sugan-brown data-[state=active]:text-white">
+            <TabsTrigger value="profile" className="font-body data-[state=active]:bg-sugan-ink data-[state=active]:text-white">
               <User className="w-4 h-4 mr-2" />
               Profile
             </TabsTrigger>
@@ -242,7 +242,7 @@ export default function Account() {
           <TabsContent value="orders">
             <Card>
               <CardHeader>
-                <CardTitle className="font-display text-xl text-sugan-brown">
+                <CardTitle className="font-display text-xl text-sugan-ink">
                   My Orders ({orders.length})
                 </CardTitle>
               </CardHeader>
@@ -258,15 +258,15 @@ export default function Account() {
                 )}
                 {orders.length === 0 ? (
                   <div className="text-center py-12">
-                    <Package className="w-12 h-12 text-sugan-brown/20 mx-auto mb-4" />
-                    <h3 className="font-display text-lg text-sugan-brown mb-2">
+                    <Package className="w-12 h-12 text-sugan-ink/20 mx-auto mb-4" />
+                    <h3 className="font-display text-lg text-sugan-ink mb-2">
                       No orders yet
                     </h3>
-                    <p className="font-body text-sugan-brown/60 mb-4">
+                    <p className="font-body text-sugan-ink/60 mb-4">
                       Start shopping to see your orders here
                     </p>
                     <Link to="/shop">
-                      <Button className="bg-sugan-brown hover:bg-sugan-brown/90 font-body">
+                      <Button className="bg-sugan-ink hover:bg-sugan-ink/90 font-body">
                         Browse Products
                       </Button>
                     </Link>
@@ -279,7 +279,7 @@ export default function Account() {
                       const isExpanded = expandedOrder === order.id;
                       
                       return (
-                        <Card key={order.id} className="border-sugan-brown/10">
+                        <Card key={order.id} className="border-sugan-ink/10">
                           <CardContent className="p-4">
                             {/* Order Header */}
                             <div 
@@ -288,15 +288,15 @@ export default function Account() {
                             >
                               <div className="flex-1">
                                 <div className="flex items-center gap-2">
-                                  <p className="font-body text-sm text-sugan-brown/60">
+                                  <p className="font-body text-sm text-sugan-ink/60">
                                     Order #{order.id.slice(-8).toUpperCase()}
                                   </p>
-                                  {isExpanded ? <ChevronUp className="w-4 h-4 text-sugan-brown/40" /> : <ChevronDown className="w-4 h-4 text-sugan-brown/40" />}
+                                  {isExpanded ? <ChevronUp className="w-4 h-4 text-sugan-ink/40" /> : <ChevronDown className="w-4 h-4 text-sugan-ink/40" />}
                                 </div>
-                                <p className="font-body text-sugan-brown">
+                                <p className="font-body text-sugan-ink">
                                   {order.items?.length} items • ₹{order.total?.toLocaleString()}
                                 </p>
-                                <p className="font-body text-xs text-sugan-brown/40 mt-1">
+                                <p className="font-body text-xs text-sugan-ink/40 mt-1">
                                   {order.createdAt?.toDate().toLocaleDateString('en-IN', {
                                     day: 'numeric',
                                     month: 'long',
@@ -316,27 +316,27 @@ export default function Account() {
 
                             {/* Expanded Order Details */}
                             {isExpanded && (
-                              <div className="mt-4 pt-4 border-t border-sugan-brown/10">
+                              <div className="mt-4 pt-4 border-t border-sugan-ink/10">
                                 {/* Order Items with SKUs */}
                                 <div className="space-y-3 mb-4">
-                                  <h4 className="font-body font-medium text-sugan-brown">Order Items</h4>
+                                  <h4 className="font-body font-medium text-sugan-ink">Order Items</h4>
                                   {order.items?.map((item: any, idx: number) => (
-                                    <div key={idx} className="flex items-center gap-3 bg-sugan-cream/50 p-3 rounded-lg">
+                                    <div key={idx} className="flex items-center gap-3 bg-sugan-bone/50 p-3 rounded-lg">
                                       <img
                                         src={item.image}
                                         alt={item.name}
                                         className="w-16 h-16 object-cover rounded-lg"
                                       />
                                       <div className="flex-1">
-                                        <p className="font-body text-sm font-medium text-sugan-brown">{item.name}</p>
-                                        <p className="text-xs text-sugan-brown/60">
+                                        <p className="font-body text-sm font-medium text-sugan-ink">{item.name}</p>
+                                        <p className="text-xs text-sugan-ink/60">
                                           SKU: <span className="font-mono">{item.id}</span>
                                         </p>
-                                        <p className="text-xs text-sugan-brown/60">
+                                        <p className="text-xs text-sugan-ink/60">
                                           Qty: {item.quantity} × ₹{item.price?.toLocaleString()}
                                         </p>
                                       </div>
-                                      <p className="font-body font-medium text-sugan-brown">
+                                      <p className="font-body font-medium text-sugan-ink">
                                         ₹{(item.price * item.quantity)?.toLocaleString()}
                                       </p>
                                     </div>
@@ -344,10 +344,10 @@ export default function Account() {
                                 </div>
 
                                 {/* Order Summary */}
-                                <div className="mb-4 p-3 bg-sugan-cream/50 rounded-lg">
-                                  <h4 className="font-body font-medium text-sugan-brown mb-2">Order Summary</h4>
+                                <div className="mb-4 p-3 bg-sugan-bone/50 rounded-lg">
+                                  <h4 className="font-body font-medium text-sugan-ink mb-2">Order Summary</h4>
                                   <div className="space-y-1">
-                                    <div className="flex justify-between font-body text-sm text-sugan-brown/60">
+                                    <div className="flex justify-between font-body text-sm text-sugan-ink/60">
                                       <span>Subtotal</span>
                                       <span>₹{(order.subtotal ?? order.total)?.toLocaleString()}</span>
                                     </div>
@@ -357,28 +357,28 @@ export default function Account() {
                                         <span>-₹{order.discount?.toLocaleString()}</span>
                                       </div>
                                     )}
-                                    <div className="flex justify-between font-body text-sm text-sugan-brown/60">
+                                    <div className="flex justify-between font-body text-sm text-sugan-ink/60">
                                       <span>Shipping</span>
                                       <span>{order.shipping === 0 ? 'FREE' : `₹${order.shipping}`}</span>
                                     </div>
                                     {(order.codCharge ?? 0) > 0 && (
-                                      <div className="flex justify-between font-body text-sm text-sugan-brown/60">
+                                      <div className="flex justify-between font-body text-sm text-sugan-ink/60">
                                         <span>COD Fee</span>
                                         <span>₹{order.codCharge}</span>
                                       </div>
                                     )}
-                                    <div className="flex justify-between font-body text-sm font-semibold text-sugan-brown pt-1 border-t border-sugan-brown/10">
+                                    <div className="flex justify-between font-body text-sm font-semibold text-sugan-ink pt-1 border-t border-sugan-ink/10">
                                       <span>Total</span>
                                       <span>₹{order.total?.toLocaleString()}</span>
                                     </div>
                                     {order.paymentStatus && (
-                                      <div className="flex justify-between font-body text-sm text-sugan-brown/60 pt-1">
+                                      <div className="flex justify-between font-body text-sm text-sugan-ink/60 pt-1">
                                         <span>Payment</span>
                                         <span className="capitalize">{order.paymentMethod} • {order.paymentStatus}</span>
                                       </div>
                                     )}
                                     {order.txnid && (
-                                      <div className="flex justify-between font-body text-sm text-sugan-brown/60">
+                                      <div className="flex justify-between font-body text-sm text-sugan-ink/60">
                                         <span>Transaction ID</span>
                                         <span className="font-mono text-xs">{order.txnid}</span>
                                       </div>
@@ -388,9 +388,9 @@ export default function Account() {
 
                                 {/* Shipping Address */}
                                 {order.shippingAddress && (
-                                  <div className="mb-4 p-3 bg-sugan-cream/50 rounded-lg">
-                                    <h4 className="font-body font-medium text-sugan-brown mb-2">Shipping Address</h4>
-                                    <p className="font-body text-sm text-sugan-brown/70">
+                                  <div className="mb-4 p-3 bg-sugan-bone/50 rounded-lg">
+                                    <h4 className="font-body font-medium text-sugan-ink mb-2">Shipping Address</h4>
+                                    <p className="font-body text-sm text-sugan-ink/70">
                                       {order.shippingAddress.fullName}<br />
                                       {order.shippingAddress.addressLine1}<br />
                                       {order.shippingAddress.addressLine2 && <>{order.shippingAddress.addressLine2}<br /></>}
@@ -456,7 +456,7 @@ export default function Account() {
                                       </DialogTrigger>
                                       <DialogContent className="max-w-md">
                                         <DialogHeader>
-                                          <DialogTitle className="font-display text-xl text-sugan-brown">
+                                          <DialogTitle className="font-display text-xl text-sugan-ink">
                                             Return Request
                                           </DialogTitle>
                                         </DialogHeader>
@@ -476,10 +476,10 @@ export default function Account() {
                                           </div>
                                           
                                           <div className="space-y-2">
-                                            <p className="font-body text-sm text-sugan-brown/70">
+                                            <p className="font-body text-sm text-sugan-ink/70">
                                               <strong>Return Window:</strong> {daysRemaining} days remaining
                                             </p>
-                                            <p className="font-body text-sm text-sugan-brown/70">
+                                            <p className="font-body text-sm text-sugan-ink/70">
                                               <strong>Refund Timeline:</strong> 7-10 business days after we receive the item
                                             </p>
                                           </div>
@@ -493,7 +493,7 @@ export default function Account() {
                                           <a 
                                             href={`mailto:contact@sugan.shop?subject=Return Request - Order ${order.id.slice(-8).toUpperCase()}&body=Order ID: ${order.id}%0AName: ${userData?.name || ''}%0AEmail: ${user?.email}%0A%0AReason for return:%0A`}
                                           >
-                                            <Button className="w-full bg-sugan-brown hover:bg-sugan-brown/90 font-body">
+                                            <Button className="w-full bg-sugan-ink hover:bg-sugan-ink/90 font-body">
                                               <RefreshCw className="w-4 h-4 mr-2" />
                                               Email Return Request
                                             </Button>
@@ -526,22 +526,22 @@ export default function Account() {
           <TabsContent value="wishlist">
             <Card>
               <CardHeader>
-                <CardTitle className="font-display text-xl text-sugan-brown">
+                <CardTitle className="font-display text-xl text-sugan-ink">
                   My Wishlist ({wishlist.length})
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 {wishlist.length === 0 ? (
                   <div className="text-center py-12">
-                    <Heart className="w-12 h-12 text-sugan-brown/20 mx-auto mb-4" />
-                    <h3 className="font-display text-lg text-sugan-brown mb-2">
+                    <Heart className="w-12 h-12 text-sugan-ink/20 mx-auto mb-4" />
+                    <h3 className="font-display text-lg text-sugan-ink mb-2">
                       Your wishlist is empty
                     </h3>
-                    <p className="font-body text-sugan-brown/60 mb-4">
+                    <p className="font-body text-sugan-ink/60 mb-4">
                       Save products you love for later
                     </p>
                     <Link to="/shop">
-                      <Button className="bg-sugan-brown hover:bg-sugan-brown/90 font-body">
+                      <Button className="bg-sugan-ink hover:bg-sugan-ink/90 font-body">
                         Browse Products
                       </Button>
                     </Link>
@@ -549,7 +549,7 @@ export default function Account() {
                 ) : (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {wishlist.map((item) => (
-                      <Card key={item.id} className="border-sugan-brown/10">
+                      <Card key={item.id} className="border-sugan-ink/10">
                         <CardContent className="p-4">
                           <div className="flex gap-4">
                             <img
@@ -559,7 +559,7 @@ export default function Account() {
                               loading="lazy"
                             />
                             <div className="flex-1">
-                              <h4 className="font-body font-medium text-sugan-brown">
+                              <h4 className="font-body font-medium text-sugan-ink">
                                 {item.name}
                               </h4>
                               <p className="font-body text-sugan-gold font-semibold">
@@ -569,7 +569,7 @@ export default function Account() {
                                 <Button
                                   size="sm"
                                   onClick={() => moveToCart(item)}
-                                  className="bg-sugan-brown hover:bg-sugan-brown/90 font-body text-xs"
+                                  className="bg-sugan-ink hover:bg-sugan-ink/90 font-body text-xs"
                                 >
                                   <ShoppingBag className="w-3 h-3 mr-1" />
                                   Add to Cart
@@ -578,7 +578,7 @@ export default function Account() {
                                   size="sm"
                                   variant="outline"
                                   onClick={() => removeFromWishlist(item.id)}
-                                  className="font-body text-xs border-sugan-brown/20"
+                                  className="font-body text-xs border-sugan-ink/20"
                                 >
                                   Remove
                                 </Button>
@@ -598,28 +598,28 @@ export default function Account() {
           <TabsContent value="profile">
             <Card>
               <CardHeader>
-                <CardTitle className="font-display text-xl text-sugan-brown">
+                <CardTitle className="font-display text-xl text-sugan-ink">
                   Profile Information
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="p-4 bg-sugan-cream/50 rounded-lg">
-                      <p className="text-sm text-sugan-brown/60 font-body mb-1">Name</p>
-                      <p className="font-body text-sugan-brown">{userData?.name || 'Not set'}</p>
+                    <div className="p-4 bg-sugan-bone/50 rounded-lg">
+                      <p className="text-sm text-sugan-ink/60 font-body mb-1">Name</p>
+                      <p className="font-body text-sugan-ink">{userData?.name || 'Not set'}</p>
                     </div>
-                    <div className="p-4 bg-sugan-cream/50 rounded-lg">
-                      <p className="text-sm text-sugan-brown/60 font-body mb-1">Email</p>
-                      <p className="font-body text-sugan-brown">{user?.email}</p>
+                    <div className="p-4 bg-sugan-bone/50 rounded-lg">
+                      <p className="text-sm text-sugan-ink/60 font-body mb-1">Email</p>
+                      <p className="font-body text-sugan-ink">{user?.email}</p>
                     </div>
-                    <div className="p-4 bg-sugan-cream/50 rounded-lg">
-                      <p className="text-sm text-sugan-brown/60 font-body mb-1">Phone</p>
-                      <p className="font-body text-sugan-brown">{(userData as any)?.phone || 'Not set'}</p>
+                    <div className="p-4 bg-sugan-bone/50 rounded-lg">
+                      <p className="text-sm text-sugan-ink/60 font-body mb-1">Phone</p>
+                      <p className="font-body text-sugan-ink">{(userData as any)?.phone || 'Not set'}</p>
                     </div>
-                    <div className="p-4 bg-sugan-cream/50 rounded-lg">
-                      <p className="text-sm text-sugan-brown/60 font-body mb-1">Member Since</p>
-                      <p className="font-body text-sugan-brown">
+                    <div className="p-4 bg-sugan-bone/50 rounded-lg">
+                      <p className="text-sm text-sugan-ink/60 font-body mb-1">Member Since</p>
+                      <p className="font-body text-sugan-ink">
                         {(userData as any)?.createdAt?.toDate?.() ? (userData as any).createdAt.toDate().toLocaleDateString('en-IN', {
                           month: 'long',
                           year: 'numeric'

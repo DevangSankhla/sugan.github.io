@@ -79,14 +79,14 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-sugan-cream flex items-center justify-center px-4 py-12">
+    <div className="min-h-screen bg-sugan-bone flex items-center justify-center px-4 py-12">
       <div className="max-w-md w-full">
         <Card className="border-none shadow-xl">
           <CardHeader className="text-center space-y-2">
-            <CardTitle className="font-display text-2xl text-sugan-brown">
+            <CardTitle className="font-display text-2xl text-sugan-ink">
               {resetMode ? 'Reset Password' : 'Welcome Back'}
             </CardTitle>
-            <CardDescription className="font-body text-sugan-brown/60">
+            <CardDescription className="font-body text-sugan-ink/60">
               {resetMode 
                 ? 'Enter your email and we will send you a reset link' 
                 : 'Sign in to access your account, orders, and wishlist'}
@@ -102,7 +102,7 @@ export default function Login() {
             {/* Google Login */}
             <Button
               variant="outline"
-              className="w-full h-12 font-body border-sugan-brown/20 hover:bg-sugan-brown/5"
+              className="w-full h-12 font-body border-sugan-ink/20 hover:bg-sugan-ink/5"
               onClick={handleGoogleLogin}
               disabled={loading}
             >
@@ -112,10 +112,10 @@ export default function Login() {
 
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-sugan-brown/10"></div>
+                <div className="w-full border-t border-sugan-ink/10"></div>
               </div>
               <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-white px-2 text-sugan-brown/40 font-body">
+                <span className="bg-white px-2 text-sugan-ink/40 font-body">
                   Or continue with email
                 </span>
               </div>
@@ -129,18 +129,18 @@ export default function Login() {
               )}
 
               <div className="space-y-2">
-                <Label htmlFor="email" className="font-body text-sugan-brown">
+                <Label htmlFor="email" className="font-body text-sugan-ink">
                   Email
                 </Label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-sugan-brown/40" />
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-sugan-ink/40" />
                   <Input
                     id="email"
                     type="email"
                     placeholder="Enter your email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="pl-10 h-12 font-body border-sugan-brown/20 focus:border-sugan-gold"
+                    className="pl-10 h-12 font-body border-sugan-ink/20 focus:border-sugan-gold"
                     required
                   />
                 </div>
@@ -148,24 +148,24 @@ export default function Login() {
 
               {!resetMode && (
                 <div className="space-y-2">
-                  <Label htmlFor="password" className="font-body text-sugan-brown">
+                  <Label htmlFor="password" className="font-body text-sugan-ink">
                     Password
                   </Label>
                   <div className="relative">
-                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-sugan-brown/40" />
+                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-sugan-ink/40" />
                     <Input
                       id="password"
                       type={showPassword ? 'text' : 'password'}
                       placeholder="Enter your password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      className="pl-10 pr-10 h-12 font-body border-sugan-brown/20 focus:border-sugan-gold"
+                      className="pl-10 pr-10 h-12 font-body border-sugan-ink/20 focus:border-sugan-gold"
                       required={!resetMode}
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-sugan-brown/40 hover:text-sugan-brown"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-sugan-ink/40 hover:text-sugan-ink"
                     >
                       {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                     </button>
@@ -175,7 +175,7 @@ export default function Login() {
 
               <Button
                 type="submit"
-                className="w-full h-12 bg-sugan-brown hover:bg-sugan-brown/90 font-body"
+                className="w-full h-12 bg-sugan-ink hover:bg-sugan-ink/90 font-body"
                 disabled={loading}
               >
                 {loading 
@@ -184,7 +184,7 @@ export default function Login() {
               </Button>
             </form>
 
-            <p className="text-center text-sm font-body text-sugan-brown/60">
+            <p className="text-center text-sm font-body text-sugan-ink/60">
               {resetMode ? (
                 <button 
                   type="button"
@@ -210,7 +210,7 @@ export default function Login() {
                 <button 
                   type="button"
                   onClick={() => { setResetMode(true); setError(''); }}
-                  className="text-sugan-brown/60 hover:text-sugan-gold transition-colors"
+                  className="text-sugan-ink/60 hover:text-sugan-gold transition-colors"
                 >
                   Forgot password?
                 </button>

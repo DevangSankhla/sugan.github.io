@@ -35,7 +35,7 @@ export default function BottomNavigation() {
 
   return (
     <nav 
-      className={`fixed bottom-0 left-0 right-0 bg-white border-t border-sugan-brown/10 lg:hidden z-50 safe-area-inset transition-transform duration-300 ${
+      className={`fixed bottom-0 left-0 right-0 bg-white border-t border-sugan-ink/10 lg:hidden z-50 safe-area-inset transition-transform duration-300 ${
         isVisible ? 'translate-y-0' : 'translate-y-full'
       }`}
     >
@@ -52,7 +52,7 @@ export default function BottomNavigation() {
               className={`flex flex-col items-center py-2 px-4 rounded-lg transition-colors ${
                 isActive 
                   ? 'text-sugan-gold' 
-                  : 'text-sugan-brown/60 hover:text-sugan-brown'
+                  : 'text-sugan-ink/60 hover:text-sugan-ink'
               }`}
             >
               <div className="relative">

@@ -53,7 +53,7 @@ export default function Testimonials() {
     <section
       id="testimonials"
       ref={sectionRef}
-      className="py-20 lg:py-32 bg-sugan-brown section-padding"
+      className="py-20 lg:py-32 bg-sugan-ink section-padding"
     >
       <div className="max-w-5xl mx-auto">
         {/* Header */}
@@ -61,7 +61,7 @@ export default function Testimonials() {
           <p className="section-label mb-3">
             Testimonials
           </p>
-          <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-light text-sugan-cream">
+          <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-light text-sugan-bone">
             What Our <span className="font-medium">Customers Say</span>
           </h2>
         </div>
@@ -91,23 +91,23 @@ export default function Testimonials() {
                           className={`w-5 h-5 ${
                             i < testimonial.rating
                               ? 'fill-sugan-gold text-sugan-gold'
-                              : 'text-sugan-cream/20'
+                              : 'text-sugan-bone/20'
                           }`}
                         />
                       ))}
                     </div>
 
                     {/* Quote */}
-                    <p className="font-display text-xl sm:text-2xl lg:text-3xl text-sugan-cream leading-relaxed mb-8 italic">
+                    <p className="font-display text-xl sm:text-2xl lg:text-3xl text-sugan-bone leading-relaxed mb-8 italic">
                       "{testimonial.text}"
                     </p>
 
                     {/* Author */}
                     <div>
-                      <p className="font-display text-lg font-medium text-sugan-cream">
+                      <p className="font-display text-lg font-medium text-sugan-bone">
                         {testimonial.name}
                       </p>
-                      <p className="text-sugan-cream/60 font-body text-sm">
+                      <p className="text-sugan-bone/60 font-body text-sm">
                         {testimonial.location}
                       </p>
                     </div>
@@ -121,7 +121,7 @@ export default function Testimonials() {
           <div className="flex items-center justify-center gap-4 mt-10">
             <button
               onClick={goToPrev}
-              className="w-12 h-12 rounded-full border border-sugan-cream/30 flex items-center justify-center text-sugan-cream hover:bg-sugan-cream hover:text-sugan-brown transition-colors"
+              className="w-12 h-12 rounded-full border border-sugan-bone/30 flex items-center justify-center text-sugan-bone hover:bg-sugan-bone hover:text-sugan-ink transition-colors"
               aria-label="Previous testimonial"
             >
               <ChevronLeft className="w-5 h-5" />
@@ -136,7 +136,7 @@ export default function Testimonials() {
                   className={`w-2 h-2 rounded-full transition-all duration-300 ${
                     index === activeIndex
                       ? 'w-8 bg-sugan-gold'
-                      : 'bg-sugan-cream/30 hover:bg-sugan-cream/50'
+                      : 'bg-sugan-bone/30 hover:bg-sugan-bone/50'
                   }`}
                   aria-label={`Go to testimonial ${index + 1}`}
                 />
@@ -145,7 +145,7 @@ export default function Testimonials() {
 
             <button
               onClick={goToNext}
-              className="w-12 h-12 rounded-full border border-sugan-cream/30 flex items-center justify-center text-sugan-cream hover:bg-sugan-cream hover:text-sugan-brown transition-colors"
+              className="w-12 h-12 rounded-full border border-sugan-bone/30 flex items-center justify-center text-sugan-bone hover:bg-sugan-bone hover:text-sugan-ink transition-colors"
               aria-label="Next testimonial"
             >
               <ChevronRight className="w-5 h-5" />

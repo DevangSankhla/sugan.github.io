@@ -30,11 +30,11 @@ export default function QuickViewModal({ product, isOpen, onClose }: QuickViewMo
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-sugan-brown/60 backdrop-blur-sm">
-      <div className="bg-sugan-cream rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-sugan-ink/60 backdrop-blur-sm">
+      <div className="bg-sugan-bone rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
           {/* Image */}
-          <div className="aspect-square bg-sugan-cream-dark rounded-xl overflow-hidden">
+          <div className="aspect-square bg-sugan-bone-dark rounded-xl overflow-hidden">
             <img
               src={product.image}
               alt={product.name}
@@ -47,16 +47,16 @@ export default function QuickViewModal({ product, isOpen, onClose }: QuickViewMo
           <div className="flex flex-col">
             <button
               onClick={onClose}
-              className="self-end p-2 hover:bg-sugan-brown/10 rounded-full transition-colors"
+              className="self-end p-2 hover:bg-sugan-ink/10 rounded-full transition-colors"
             >
-              <X className="w-5 h-5 text-sugan-brown" />
+              <X className="w-5 h-5 text-sugan-ink" />
             </button>
 
             <p className="text-sugan-gold text-xs font-body uppercase tracking-wider mb-2">
               {product.category}
             </p>
 
-            <h2 className="font-display text-2xl text-sugan-brown mb-2">
+            <h2 className="font-display text-2xl text-sugan-ink mb-2">
               {product.name}
             </h2>
 
@@ -69,29 +69,29 @@ export default function QuickViewModal({ product, isOpen, onClose }: QuickViewMo
                       className={`w-4 h-4 ${
                         i < Math.floor(product.rating || 0)
                           ? 'fill-sugan-gold text-sugan-gold'
-                          : 'text-sugan-brown/20'
+                          : 'text-sugan-ink/20'
                       }`}
                     />
                   ))}
                 </div>
-                <span className="text-sm text-sugan-brown/60 font-body">
+                <span className="text-sm text-sugan-ink/60 font-body">
                   ({product.reviews} reviews)
                 </span>
               </div>
             )}
 
-            <p className="font-display text-2xl text-sugan-brown mb-4">
+            <p className="font-display text-2xl text-sugan-ink mb-4">
               ₹{product.price.toLocaleString()}
             </p>
 
-            <p className="text-sugan-brown/70 font-body text-sm mb-6 line-clamp-3">
+            <p className="text-sugan-ink/70 font-body text-sm mb-6 line-clamp-3">
               {product.description}
             </p>
 
             {/* Size variants if available */}
             {product.relatedSizes && product.relatedSizes.length > 0 && (
               <div className="mb-4">
-                <p className="text-sm font-medium text-sugan-brown mb-2">Available Sizes:</p>
+                <p className="text-sm font-medium text-sugan-ink mb-2">Available Sizes:</p>
                 <div className="flex flex-wrap gap-2">
                   {[...product.relatedSizes, { 
                     size: product.name.match(/(Small|Medium|Large|Extra Small)/)?.[0] || 'Current', 
@@ -105,7 +105,7 @@ export default function QuickViewModal({ product, isOpen, onClose }: QuickViewMo
                         className={`px-3 py-1 rounded-lg text-xs font-body ${
                           variant.productId === product.id
                             ? 'bg-sugan-gold text-white'
-                            : 'bg-sugan-brown/10 text-sugan-brown'
+                            : 'bg-sugan-ink/10 text-sugan-ink'
                         }`}
                       >
                         {variant.size}
@@ -118,7 +118,7 @@ export default function QuickViewModal({ product, isOpen, onClose }: QuickViewMo
             <div className="flex gap-3 mt-auto">
               <button
                 onClick={handleAddToCart}
-                className="flex-1 bg-sugan-brown text-sugan-cream py-3 px-6 rounded-lg font-body hover:bg-sugan-brown/90 transition-colors flex items-center justify-center gap-2"
+                className="flex-1 bg-sugan-ink text-sugan-bone py-3 px-6 rounded-lg font-body hover:bg-sugan-ink/90 transition-colors flex items-center justify-center gap-2"
               >
                 <ShoppingCart className="w-4 h-4" />
                 Add to Cart
@@ -127,7 +127,7 @@ export default function QuickViewModal({ product, isOpen, onClose }: QuickViewMo
                 to={`/product/${product.id}`}
                 state={{ from: location.pathname }}
                 onClick={onClose}
-                className="flex-1 border-2 border-sugan-brown text-sugan-brown py-3 px-6 rounded-lg font-body hover:bg-sugan-brown hover:text-sugan-cream transition-colors text-center"
+                className="flex-1 border-2 border-sugan-ink text-sugan-ink py-3 px-6 rounded-lg font-body hover:bg-sugan-ink hover:text-sugan-bone transition-colors text-center"
               >
                 View Details
               </Link>

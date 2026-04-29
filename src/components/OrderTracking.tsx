@@ -72,16 +72,16 @@ export default function OrderTracking({ awb, courier, orderStatus }: OrderTracki
     const isOutForDelivery = status.toLowerCase().includes('out for delivery');
     const isInTransit = status.toLowerCase().includes('transit');
     
-    if (isDelivered) return <CheckCircle className={`w-6 h-6 ${isLatest ? 'text-green-500' : 'text-sugan-brown/30'}`} />;
-    if (isOutForDelivery) return <Truck className={`w-6 h-6 ${isLatest ? 'text-sugan-gold' : 'text-sugan-brown/30'}`} />;
-    if (isInTransit) return <Package className={`w-6 h-6 ${isLatest ? 'text-sugan-gold' : 'text-sugan-brown/30'}`} />;
-    return <Clock className={`w-6 h-6 ${isLatest ? 'text-sugan-gold' : 'text-sugan-brown/30'}`} />;
+    if (isDelivered) return <CheckCircle className={`w-6 h-6 ${isLatest ? 'text-green-500' : 'text-sugan-ink/30'}`} />;
+    if (isOutForDelivery) return <Truck className={`w-6 h-6 ${isLatest ? 'text-sugan-gold' : 'text-sugan-ink/30'}`} />;
+    if (isInTransit) return <Package className={`w-6 h-6 ${isLatest ? 'text-sugan-gold' : 'text-sugan-ink/30'}`} />;
+    return <Clock className={`w-6 h-6 ${isLatest ? 'text-sugan-gold' : 'text-sugan-ink/30'}`} />;
   };
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="font-display text-xl text-sugan-brown flex items-center gap-2">
+        <CardTitle className="font-display text-xl text-sugan-ink flex items-center gap-2">
           <Truck className="w-5 h-5 text-sugan-gold" />
           Order Tracking
         </CardTitle>
@@ -95,15 +95,15 @@ export default function OrderTracking({ awb, courier, orderStatus }: OrderTracki
           <>
             {/* AWB Info */}
             {awb && (
-              <div className="bg-sugan-cream rounded-lg p-4 mb-6">
+              <div className="bg-sugan-bone rounded-lg p-4 mb-6">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <p className="text-xs text-sugan-brown/50 font-body">AWB Number</p>
-                    <p className="font-body font-medium text-sugan-brown">{awb}</p>
+                    <p className="text-xs text-sugan-ink/50 font-body">AWB Number</p>
+                    <p className="font-body font-medium text-sugan-ink">{awb}</p>
                   </div>
                   <div>
-                    <p className="text-xs text-sugan-brown/50 font-body">Courier</p>
-                    <p className="font-body font-medium text-sugan-brown">{courier || 'Delhivery'}</p>
+                    <p className="text-xs text-sugan-ink/50 font-body">Courier</p>
+                    <p className="font-body font-medium text-sugan-ink">{courier || 'Delhivery'}</p>
                   </div>
                 </div>
               </div>
@@ -111,35 +111,35 @@ export default function OrderTracking({ awb, courier, orderStatus }: OrderTracki
 
             {/* Tracking Timeline */}
             <div className="relative pl-6">
-              <div className="absolute left-[11px] top-2 bottom-2 w-0.5 bg-sugan-brown/10" />
+              <div className="absolute left-[11px] top-2 bottom-2 w-0.5 bg-sugan-ink/10" />
               
               {displayData.map((event, index) => (
                 <div key={index} className="relative mb-6 last:mb-0">
-                  <div className="absolute -left-[25px] bg-sugan-cream p-1">
+                  <div className="absolute -left-[25px] bg-sugan-bone p-1">
                     {getStatusIcon(event.status, index)}
                   </div>
                   <div>
-                    <p className="font-body font-medium text-sugan-brown">{event.status}</p>
-                    <div className="flex items-center gap-2 text-sm text-sugan-brown/60">
+                    <p className="font-body font-medium text-sugan-ink">{event.status}</p>
+                    <div className="flex items-center gap-2 text-sm text-sugan-ink/60">
                       <MapPin className="w-3 h-3" />
                       <span className="font-body">{event.location}</span>
                       {event.time && (
                         <>
-                          <span className="text-sugan-brown/30">•</span>
+                          <span className="text-sugan-ink/30">•</span>
                           <Clock className="w-3 h-3" />
                           <span className="font-body">{event.time}</span>
                         </>
                       )}
                     </div>
-                    <p className="text-xs text-sugan-brown/40 font-body mt-1">{event.date}</p>
+                    <p className="text-xs text-sugan-ink/40 font-body mt-1">{event.date}</p>
                   </div>
                 </div>
               ))}
             </div>
 
             {/* Support */}
-            <div className="mt-6 pt-6 border-t border-sugan-brown/10">
-              <p className="text-sm text-sugan-brown/60 font-body mb-3">
+            <div className="mt-6 pt-6 border-t border-sugan-ink/10">
+              <p className="text-sm text-sugan-ink/60 font-body mb-3">
                 Need help with your delivery?
               </p>
               <a

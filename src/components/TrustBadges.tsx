@@ -38,8 +38,8 @@ export default function TrustBadges({ variant = 'horizontal', className = '' }: 
               <badge.icon className="w-5 h-5 text-sugan-gold" />
             </div>
             <div>
-              <h4 className="font-body font-medium text-sugan-brown text-sm">{badge.title}</h4>
-              <p className="text-xs text-sugan-brown/60 font-body">{badge.description}</p>
+              <h4 className="font-body font-medium text-sugan-ink text-sm">{badge.title}</h4>
+              <p className="text-xs text-sugan-ink/60 font-body">{badge.description}</p>
             </div>
           </div>
         ))}
@@ -50,12 +50,12 @@ export default function TrustBadges({ variant = 'horizontal', className = '' }: 
   return (
     <div className={`grid grid-cols-2 md:grid-cols-4 gap-4 ${className}`}>
       {badges.map((badge) => (
-        <div key={badge.title} className="flex flex-col items-center text-center p-4 bg-sugan-cream rounded-xl">
+        <div key={badge.title} className="flex flex-col items-center text-center p-4 bg-sugan-bone rounded-xl">
           <div className="w-12 h-12 bg-sugan-gold/10 rounded-full flex items-center justify-center mb-3">
             <badge.icon className="w-6 h-6 text-sugan-gold" />
           </div>
-          <h4 className="font-body font-medium text-sugan-brown text-sm">{badge.title}</h4>
-          <p className="text-xs text-sugan-brown/60 font-body mt-1">{badge.description}</p>
+          <h4 className="font-body font-medium text-sugan-ink text-sm">{badge.title}</h4>
+          <p className="text-xs text-sugan-ink/60 font-body mt-1">{badge.description}</p>
         </div>
       ))}
     </div>

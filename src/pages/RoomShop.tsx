@@ -72,9 +72,9 @@ export default function RoomShop() {
 
   if (!room) {
     return (
-      <div className="min-h-screen bg-sugan-cream pt-24 flex items-center justify-center">
+      <div className="min-h-screen bg-sugan-bone pt-24 flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-display text-sugan-brown mb-4">Room not found</h1>
+          <h1 className="text-2xl font-display text-sugan-ink mb-4">Room not found</h1>
           <Link to="/shop" className="btn-primary">Back to Shop</Link>
         </div>
       </div>
@@ -82,13 +82,13 @@ export default function RoomShop() {
   }
 
   return (
-    <div className="min-h-screen bg-sugan-cream pt-24">
+    <div className="min-h-screen bg-sugan-bone pt-24">
       {/* Header */}
-      <div className="bg-sugan-brown py-12">
+      <div className="bg-sugan-ink py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <button 
             onClick={() => navigate('/shop')}
-            className="flex items-center gap-2 text-sugan-cream/70 hover:text-sugan-gold mb-4 transition-colors"
+            className="flex items-center gap-2 text-sugan-bone/70 hover:text-sugan-gold mb-4 transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             Back to Rooms
@@ -96,10 +96,10 @@ export default function RoomShop() {
           <div className="flex items-center gap-4">
             {IconComponent && <IconComponent className="w-10 h-10 text-sugan-gold" />}
             <div>
-              <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl text-sugan-cream">
+              <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl text-sugan-bone">
                 {room.name}
               </h1>
-              <p className="text-sugan-cream/70 font-body mt-1">
+              <p className="text-sugan-bone/70 font-body mt-1">
                 {room.description}
               </p>
             </div>
@@ -108,20 +108,20 @@ export default function RoomShop() {
       </div>
 
       {/* Search Bar */}
-      <div className="bg-white border-b border-sugan-brown/10 sticky top-0 z-30">
+      <div className="bg-white border-b border-sugan-ink/10 sticky top-0 z-30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
           <div className="flex items-center justify-between">
-            <p className="text-sugan-brown/60 font-body text-sm">
+            <p className="text-sugan-ink/60 font-body text-sm">
               {filteredProducts.length} products
             </p>
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-sugan-brown/40" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-sugan-ink/40" />
               <input
                 type="text"
                 placeholder={`Search ${room.name.toLowerCase()}...`}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 pr-4 py-2 bg-sugan-cream border border-sugan-brown/20 rounded-full text-sm font-body focus:outline-none focus:border-sugan-gold w-full md:w-64"
+                className="pl-10 pr-4 py-2 bg-sugan-bone border border-sugan-ink/20 rounded-full text-sm font-body focus:outline-none focus:border-sugan-gold w-full md:w-64"
               />
             </div>
           </div>
@@ -133,8 +133,8 @@ export default function RoomShop() {
         <div className="max-w-7xl mx-auto">
           {filteredProducts.length === 0 ? (
             <div className="text-center py-16">
-              <p className="text-sugan-brown/60 font-body mb-4">No products in this room yet.</p>
-              <p className="text-sugan-brown/40 font-body text-sm">We're curating the best products for your {room.name.toLowerCase()}.</p>
+              <p className="text-sugan-ink/60 font-body mb-4">No products in this room yet.</p>
+              <p className="text-sugan-ink/40 font-body text-sm">We're curating the best products for your {room.name.toLowerCase()}.</p>
               <Link to="/shop" className="inline-flex items-center gap-2 btn-primary mt-6">
                 Browse Other Rooms
               </Link>
@@ -150,7 +150,7 @@ export default function RoomShop() {
                   className="product-card group bg-white rounded-lg overflow-hidden transition-all duration-500 hover:shadow-gold-lg"
                 >
                   {/* Image */}
-                  <Link to={`/product/${product.id}`} state={{ from: `/shop/${roomId}` }} className="block relative aspect-square overflow-hidden bg-sugan-cream-dark">
+                  <Link to={`/product/${product.id}`} state={{ from: `/shop/${roomId}` }} className="block relative aspect-square overflow-hidden bg-sugan-bone-dark">
                     <img
                       src={product.image}
                       alt={product.name}
@@ -165,7 +165,7 @@ export default function RoomShop() {
                       {product.category}
                     </p>
                     <Link to={`/product/${product.id}`} state={{ from: `/shop/${roomId}` }}>
-                      <h3 className="font-display text-lg font-medium text-sugan-brown mb-2 group-hover:text-sugan-gold transition-colors">
+                      <h3 className="font-display text-lg font-medium text-sugan-ink mb-2 group-hover:text-sugan-gold transition-colors">
                         {getBaseProductName(product.name)}
                       </h3>
                     </Link>
@@ -176,21 +176,21 @@ export default function RoomShop() {
                           className={`w-3 h-3 ${
                             i < Math.floor(product.rating || 0)
                               ? 'fill-sugan-gold text-sugan-gold'
-                              : 'text-sugan-brown/20'
+                              : 'text-sugan-ink/20'
                           }`}
                         />
                       ))}
-                      <span className="text-xs text-sugan-brown/50 ml-1">
+                      <span className="text-xs text-sugan-ink/50 ml-1">
                         ({product.reviews})
                       </span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="font-display text-xl font-semibold text-sugan-brown">
+                      <span className="font-display text-xl font-semibold text-sugan-ink">
                         ₹{product.price.toLocaleString()}
                       </span>
                     </div>
                     {hasSizeVariants(product) && (
-                      <p className="text-xs text-sugan-brown/50 font-body mt-2">{getSizeVariantCount(product)} sizes available</p>
+                      <p className="text-xs text-sugan-ink/50 font-body mt-2">{getSizeVariantCount(product)} sizes available</p>
                     )}
                   </div>
                 </div>

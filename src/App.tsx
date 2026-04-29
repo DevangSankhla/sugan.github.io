@@ -40,7 +40,7 @@ const PaymentFailure = lazy(() => import('@/pages/PaymentFailure'));
 
 function PageLoader() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-sugan-cream">
+    <div className="min-h-screen flex items-center justify-center bg-sugan-bone">
       <div className="w-8 h-8 border-2 border-sugan-gold border-t-transparent rounded-full animate-spin" />
     </div>
   );
@@ -90,7 +90,7 @@ function App() {
     <AuthProvider>
     <CartProvider>
       <BrowserRouter>
-        <div className="relative min-h-screen bg-sugan-cream">
+        <div className="relative min-h-screen bg-sugan-bone">
           {/* Grain Overlay */}
           <div className="grain-overlay" aria-hidden="true" />
 

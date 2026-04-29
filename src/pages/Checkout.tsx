@@ -263,9 +263,9 @@ export default function Checkout() {
   }
 
   return (
-    <div className="min-h-screen bg-sugan-cream py-24">
+    <div className="min-h-screen bg-sugan-bone py-24">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="font-display text-3xl text-sugan-brown mb-8">Checkout</h1>
+        <h1 className="font-display text-3xl text-sugan-ink mb-8">Checkout</h1>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Left Column - Shipping & Payment */}
@@ -273,7 +273,7 @@ export default function Checkout() {
             {/* Shipping Address */}
             <Card>
               <CardHeader>
-                <CardTitle className="font-display text-xl text-sugan-brown flex items-center gap-2">
+                <CardTitle className="font-display text-xl text-sugan-ink flex items-center gap-2">
                   <MapPin className="w-5 h-5 text-sugan-gold" />
                   Shipping Address
                 </CardTitle>
@@ -283,7 +283,7 @@ export default function Checkout() {
                   <div className="space-y-2">
                     <Label className="font-body">Full Name</Label>
                     <div className="relative">
-                      <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-sugan-brown/40" />
+                      <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-sugan-ink/40" />
                       <Input
                         value={address.fullName}
                         onChange={(e) => setAddress({...address, fullName: e.target.value})}
@@ -297,7 +297,7 @@ export default function Checkout() {
                   <div className="space-y-2">
                     <Label className="font-body">Phone Number</Label>
                     <div className="relative">
-                      <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-sugan-brown/40" />
+                      <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-sugan-ink/40" />
                       <Input
                         value={address.phone}
                         onChange={(e) => setAddress({...address, phone: e.target.value})}
@@ -312,7 +312,7 @@ export default function Checkout() {
                   <div className="space-y-2">
                     <Label className="font-body">Address Line 1</Label>
                     <div className="relative">
-                      <Home className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-sugan-brown/40" />
+                      <Home className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-sugan-ink/40" />
                       <Input
                         value={address.addressLine1}
                         onChange={(e) => setAddress({...address, addressLine1: e.target.value})}
@@ -326,7 +326,7 @@ export default function Checkout() {
                   <div className="space-y-2">
                     <Label className="font-body">Address Line 2 (Optional)</Label>
                     <div className="relative">
-                      <Building className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-sugan-brown/40" />
+                      <Building className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-sugan-ink/40" />
                       <Input
                         value={address.addressLine2}
                         onChange={(e) => setAddress({...address, addressLine2: e.target.value})}
@@ -363,7 +363,7 @@ export default function Checkout() {
                     <div className="space-y-2">
                       <Label className="font-body">PIN Code</Label>
                       <div className="relative">
-                        <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-sugan-brown/40" />
+                        <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-sugan-ink/40" />
                         <Input
                           value={address.pincode}
                           onChange={(e) => setAddress({...address, pincode: e.target.value})}
@@ -380,7 +380,7 @@ export default function Checkout() {
                     <div className="space-y-2">
                       <Label className="font-body">Landmark (Optional)</Label>
                       <div className="relative">
-                        <Navigation className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-sugan-brown/40" />
+                        <Navigation className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-sugan-ink/40" />
                         <Input
                           value={address.landmark}
                           onChange={(e) => setAddress({...address, landmark: e.target.value})}
@@ -397,20 +397,20 @@ export default function Checkout() {
             {/* Shipping Info */}
             <Card>
               <CardHeader>
-                <CardTitle className="font-display text-xl text-sugan-brown flex items-center gap-2">
+                <CardTitle className="font-display text-xl text-sugan-ink flex items-center gap-2">
                   <Truck className="w-5 h-5 text-sugan-gold" />
                   Shipping
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="flex items-center gap-3 p-4 bg-sugan-cream rounded-xl">
+                <div className="flex items-center gap-3 p-4 bg-sugan-bone rounded-xl">
                   <Package className="w-10 h-10 text-sugan-gold" />
                   <div>
-                    <p className="font-body font-medium text-sugan-brown">Standard Delivery</p>
-                    <p className="text-sm text-sugan-brown/60 font-body">
+                    <p className="font-body font-medium text-sugan-ink">Standard Delivery</p>
+                    <p className="text-sm text-sugan-ink/60 font-body">
                       Ships within 2-3 business days
                     </p>
-                    <p className="text-xs text-sugan-brown/50 font-body mt-1">
+                    <p className="text-xs text-sugan-ink/50 font-body mt-1">
                       via Shiprocket
                     </p>
                   </div>
@@ -445,11 +445,11 @@ export default function Checkout() {
                     </p>
                   </div>
                 ) : (
-                  <div className="mt-4 p-3 bg-sugan-cream rounded-lg">
-                    <p className="text-sm text-sugan-brown/60 font-body">
-                      Shipping: <span className="font-medium text-sugan-brown">₹99</span>
+                  <div className="mt-4 p-3 bg-sugan-bone rounded-lg">
+                    <p className="text-sm text-sugan-ink/60 font-body">
+                      Shipping: <span className="font-medium text-sugan-ink">₹99</span>
                     </p>
-                    <p className="text-xs text-sugan-brown/40 font-body mt-1">
+                    <p className="text-xs text-sugan-ink/40 font-body mt-1">
                       Free shipping on orders above ₹1999
                     </p>
                   </div>
@@ -468,7 +468,7 @@ export default function Checkout() {
             {/* Payment Method */}
             <Card>
               <CardHeader>
-                <CardTitle className="font-display text-xl text-sugan-brown flex items-center gap-2">
+                <CardTitle className="font-display text-xl text-sugan-ink flex items-center gap-2">
                   <CreditCard className="w-5 h-5 text-sugan-gold" />
                   Payment Method
                 </CardTitle>
@@ -482,27 +482,27 @@ export default function Checkout() {
                     className={`w-full p-4 rounded-xl border-2 text-left transition-all ${
                       paymentMethod === 'payu'
                         ? 'border-sugan-gold bg-sugan-gold/5'
-                        : 'border-sugan-brown/10 hover:border-sugan-brown/30'
+                        : 'border-sugan-ink/10 hover:border-sugan-ink/30'
                     }`}
                   >
                     <div className="flex items-center gap-3">
                       <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
-                        paymentMethod === 'payu' ? 'border-sugan-gold' : 'border-sugan-brown/30'
+                        paymentMethod === 'payu' ? 'border-sugan-gold' : 'border-sugan-ink/30'
                       }`}>
                         {paymentMethod === 'payu' && <div className="w-2.5 h-2.5 bg-sugan-gold rounded-full" />}
                       </div>
                       <div className="flex-1">
                         <div className="flex items-center gap-2">
-                          <span className="font-body font-medium text-sugan-brown">Pay Online</span>
+                          <span className="font-body font-medium text-sugan-ink">Pay Online</span>
                           <Badge className="bg-green-100 text-green-700 text-xs">Secure</Badge>
                         </div>
-                        <p className="text-xs text-sugan-brown/60 font-body mt-1">
+                        <p className="text-xs text-sugan-ink/60 font-body mt-1">
                           UPI, Cards, Net Banking, Wallets
                         </p>
                       </div>
                       <div className="flex gap-1">
-                        <div className="w-8 h-5 bg-sugan-brown/10 rounded" />
-                        <div className="w-8 h-5 bg-sugan-brown/10 rounded" />
+                        <div className="w-8 h-5 bg-sugan-ink/10 rounded" />
+                        <div className="w-8 h-5 bg-sugan-ink/10 rounded" />
                       </div>
                     </div>
                   </button>
@@ -514,25 +514,25 @@ export default function Checkout() {
                     className={`w-full p-4 rounded-xl border-2 text-left transition-all ${
                       paymentMethod === 'cod'
                         ? 'border-sugan-gold bg-sugan-gold/5'
-                        : 'border-sugan-brown/10 hover:border-sugan-brown/30'
+                        : 'border-sugan-ink/10 hover:border-sugan-ink/30'
                     }`}
                   >
                     <div className="flex items-center gap-3">
                       <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
-                        paymentMethod === 'cod' ? 'border-sugan-gold' : 'border-sugan-brown/30'
+                        paymentMethod === 'cod' ? 'border-sugan-gold' : 'border-sugan-ink/30'
                       }`}>
                         {paymentMethod === 'cod' && <div className="w-2.5 h-2.5 bg-sugan-gold rounded-full" />}
                       </div>
                       <div className="flex-1">
                         <div className="flex items-center gap-2">
-                          <span className="font-body font-medium text-sugan-brown">Cash on Delivery</span>
+                          <span className="font-body font-medium text-sugan-ink">Cash on Delivery</span>
                           <Badge className="bg-blue-100 text-blue-700 text-xs">COD</Badge>
                         </div>
-                        <p className="text-xs text-sugan-brown/60 font-body mt-1">
+                        <p className="text-xs text-sugan-ink/60 font-body mt-1">
                           Pay when you receive the product
                         </p>
                       </div>
-                      <Banknote className="w-8 h-8 text-sugan-brown/20" />
+                      <Banknote className="w-8 h-8 text-sugan-ink/20" />
                     </div>
                   </button>
 
@@ -555,7 +555,7 @@ export default function Checkout() {
           <div>
             <Card className="sticky top-24">
               <CardHeader>
-                <CardTitle className="font-display text-xl text-sugan-brown">
+                <CardTitle className="font-display text-xl text-sugan-ink">
                   Order Summary
                 </CardTitle>
               </CardHeader>
@@ -571,8 +571,8 @@ export default function Checkout() {
                         loading="lazy"
                       />
                       <div className="flex-1">
-                        <h4 className="font-body text-sugan-brown font-medium line-clamp-1">{item.name}</h4>
-                        <p className="text-sm text-sugan-brown/60 font-body">
+                        <h4 className="font-body text-sugan-ink font-medium line-clamp-1">{item.name}</h4>
+                        <p className="text-sm text-sugan-ink/60 font-body">
                           Qty: {item.quantity}
                         </p>
                         <p className="text-sugan-gold font-body">
@@ -600,8 +600,8 @@ export default function Checkout() {
                   />
 
                   {/* Totals */}
-                  <div className="border-t border-sugan-brown/10 pt-4 space-y-2">
-                    <div className="flex justify-between font-body text-sugan-brown/60">
+                  <div className="border-t border-sugan-ink/10 pt-4 space-y-2">
+                    <div className="flex justify-between font-body text-sugan-ink/60">
                       <span>Subtotal</span>
                       <span>₹{totalPrice.toLocaleString()}</span>
                     </div>
@@ -611,7 +611,7 @@ export default function Checkout() {
                         <span>-₹{discountAmount.toLocaleString()}</span>
                       </div>
                     )}
-                    <div className="flex justify-between font-body text-sugan-brown/60">
+                    <div className="flex justify-between font-body text-sugan-ink/60">
                       <span>Shipping</span>
                       <span className={promoFreeDelivery ? 'text-green-600 font-medium' : ''}>
                         {shippingCost === 0 ? (promoFreeDelivery ? 'FREE 🎁' : 'FREE') : `₹${shippingCost}`}
@@ -623,24 +623,24 @@ export default function Checkout() {
                         <span className="font-medium">FREE 🎁</span>
                       </div>
                     ) : codCharge > 0 ? (
-                      <div className="flex justify-between font-body text-sugan-brown/60">
+                      <div className="flex justify-between font-body text-sugan-ink/60">
                         <span>COD Fee</span>
                         <span>₹{codCharge}</span>
                       </div>
                     ) : null}
-                    <div className="flex justify-between font-body text-sugan-brown font-semibold text-lg pt-2 border-t border-sugan-brown/10">
+                    <div className="flex justify-between font-body text-sugan-ink font-semibold text-lg pt-2 border-t border-sugan-ink/10">
                       <span>Total</span>
                       <span>₹{finalTotal.toLocaleString()}</span>
                     </div>
                   </div>
 
                   {/* Security Badges */}
-                  <div className="flex items-center justify-center gap-4 pt-4 border-t border-sugan-brown/10">
-                    <div className="flex items-center gap-1 text-xs text-sugan-brown/50 font-body">
+                  <div className="flex items-center justify-center gap-4 pt-4 border-t border-sugan-ink/10">
+                    <div className="flex items-center gap-1 text-xs text-sugan-ink/50 font-body">
                       <Shield className="w-4 h-4" />
                       Secure Payment
                     </div>
-                    <div className="flex items-center gap-1 text-xs text-sugan-brown/50 font-body">
+                    <div className="flex items-center gap-1 text-xs text-sugan-ink/50 font-body">
                       <Truck className="w-4 h-4" />
                       Free Shipping above ₹1999
                     </div>
@@ -651,7 +651,7 @@ export default function Checkout() {
                     type="button"
                     onClick={handleSubmit}
                     disabled={!isFormValid || loading}
-                    className="w-full h-14 bg-sugan-brown hover:bg-sugan-brown/90 font-body text-lg"
+                    className="w-full h-14 bg-sugan-ink hover:bg-sugan-ink/90 font-body text-lg"
                   >
                     {loading ? (
                       <span className="flex items-center gap-2">
@@ -666,7 +666,7 @@ export default function Checkout() {
                   </Button>
 
                   {/* Trust Note */}
-                  <p className="text-xs text-sugan-brown/50 font-body text-center">
+                  <p className="text-xs text-sugan-ink/50 font-body text-center">
                     By placing this order, you agree to our Terms of Service and Privacy Policy.
                     All transactions are secured by PayU.
                   </p>
@@ -678,22 +678,22 @@ export default function Checkout() {
       </div>
       {/* PayU Redirect Warning Modal */}
       {showPayUWarning && (
-        <div className="fixed inset-0 z-50 bg-sugan-brown/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-sugan-cream rounded-2xl p-6 md:p-8 max-w-md w-full shadow-2xl">
+        <div className="fixed inset-0 z-50 bg-sugan-ink/80 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-sugan-bone rounded-2xl p-6 md:p-8 max-w-md w-full shadow-2xl">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="font-display text-xl text-sugan-brown flex items-center gap-2">
+              <h3 className="font-display text-xl text-sugan-ink flex items-center gap-2">
                 <Info className="w-5 h-5 text-sugan-gold" />
                 Important
               </h3>
               <button
                 onClick={() => setShowPayUWarning(false)}
-                className="text-sugan-brown/40 hover:text-sugan-brown"
+                className="text-sugan-ink/40 hover:text-sugan-ink"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
             <div className="space-y-4">
-              <p className="font-body text-sugan-brown/80">
+              <p className="font-body text-sugan-ink/80">
                 You are about to be redirected to PayU to complete your payment.
               </p>
               <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
@@ -724,14 +724,14 @@ export default function Checkout() {
               <div className="flex flex-col gap-3 pt-2">
                 <Button
                   onClick={proceedToPayU}
-                  className="w-full h-12 bg-sugan-brown hover:bg-sugan-brown/90 font-body"
+                  className="w-full h-12 bg-sugan-ink hover:bg-sugan-ink/90 font-body"
                 >
                   Continue to PayU
                 </Button>
                 <Button
                   variant="outline"
                   onClick={() => setShowPayUWarning(false)}
-                  className="w-full h-12 font-body border-sugan-brown/20"
+                  className="w-full h-12 font-body border-sugan-ink/20"
                 >
                   Go Back
                 </Button>

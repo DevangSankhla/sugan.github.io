@@ -19,19 +19,19 @@ export default function FreeShippingProgress({ onClose, showClose = false }: Fre
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-2">
           <Truck className="w-5 h-5 text-sugan-gold" />
-          <span className="font-body text-sm text-sugan-brown font-medium">
+          <span className="font-body text-sm text-sugan-ink font-medium">
             {remaining === 0 ? 'You got free shipping!' : 'Free Shipping Progress'}
           </span>
         </div>
         {showClose && onClose && (
-          <button onClick={onClose} className="text-sugan-brown/40 hover:text-sugan-brown">
+          <button onClick={onClose} className="text-sugan-ink/40 hover:text-sugan-ink">
             <X className="w-4 h-4" />
           </button>
         )}
       </div>
       
       {/* Progress Bar */}
-      <div className="h-2 bg-sugan-brown/10 rounded-full overflow-hidden">
+      <div className="h-2 bg-sugan-ink/10 rounded-full overflow-hidden">
         <div 
           className="h-full bg-sugan-gold rounded-full transition-all duration-500"
           style={{ width: `${progress}%` }}
@@ -39,7 +39,7 @@ export default function FreeShippingProgress({ onClose, showClose = false }: Fre
       </div>
       
       {/* Text */}
-      <p className="text-xs text-sugan-brown/60 font-body mt-2">
+      <p className="text-xs text-sugan-ink/60 font-body mt-2">
         {remaining === 0 ? (
           'Your order qualifies for free shipping!'
         ) : (

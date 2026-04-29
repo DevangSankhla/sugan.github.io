@@ -74,7 +74,7 @@ export default function Hero() {
     <section
       id="home"
       ref={heroRef}
-      className="min-h-screen relative overflow-hidden bg-sugan-cream"
+      className="min-h-screen relative overflow-hidden bg-sugan-bone"
     >
       <div className="w-full min-h-screen flex flex-col lg:flex-row">
         {/* Content Side */}
@@ -83,14 +83,14 @@ export default function Hero() {
             <p className="animate-item text-sugan-gold font-body text-sm tracking-[0.2em] uppercase mb-4">
               Since 1999 • Jodhpur, India
             </p>
-            <h1 className="animate-item font-display text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-light text-sugan-brown leading-[1.1] mb-6">
+            <h1 className="animate-item font-display text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-light text-sugan-ink leading-[1.1] mb-6">
               Handcrafted
               <br />
               <span className="font-medium">Solid Wood</span>
               <br />
               Furniture
             </h1>
-            <p className="animate-item text-sugan-brown/70 font-body text-base lg:text-lg leading-relaxed mb-8 max-w-md">
+            <p className="animate-item text-sugan-ink/70 font-body text-base lg:text-lg leading-relaxed mb-8 max-w-md">
               Experience the perfect blend of traditional Jodhpur craftsmanship
               and modern design. Each piece tells a story of heritage and
               excellence.
@@ -115,19 +115,19 @@ export default function Hero() {
             {/* Stats */}
             <div
               ref={statsRef}
-              className="animate-item grid grid-cols-3 gap-6 mt-12 pt-8 border-t border-sugan-brown/10"
+              className="animate-item grid grid-cols-3 gap-6 mt-12 pt-8 border-t border-sugan-ink/10"
             >
               <div className="text-center sm:text-left">
                 <div className="flex items-center justify-center sm:justify-start gap-2 mb-1">
                   <Award className="w-4 h-4 text-sugan-gold" />
                   <span
-                    className="stat-number font-display text-2xl sm:text-3xl font-semibold text-sugan-brown"
+                    className="stat-number font-display text-2xl sm:text-3xl font-semibold text-sugan-ink"
                     data-target="25"
                   >
                     0
                   </span>
                 </div>
-                <p className="text-xs text-sugan-brown/60 font-body">
+                <p className="text-xs text-sugan-ink/60 font-body">
                   Years Experience
                 </p>
               </div>
@@ -135,13 +135,13 @@ export default function Hero() {
                 <div className="flex items-center justify-center sm:justify-start gap-2 mb-1">
                   <Users className="w-4 h-4 text-sugan-gold" />
                   <span
-                    className="stat-number font-display text-2xl sm:text-3xl font-semibold text-sugan-brown"
+                    className="stat-number font-display text-2xl sm:text-3xl font-semibold text-sugan-ink"
                     data-target="5000"
                   >
                     0
                   </span>
                 </div>
-                <p className="text-xs text-sugan-brown/60 font-body">
+                <p className="text-xs text-sugan-ink/60 font-body">
                   Happy Customers
                 </p>
               </div>
@@ -149,13 +149,13 @@ export default function Hero() {
                 <div className="flex items-center justify-center sm:justify-start gap-2 mb-1">
                   <TreePine className="w-4 h-4 text-sugan-gold" />
                   <span
-                    className="stat-number font-display text-2xl sm:text-3xl font-semibold text-sugan-brown"
+                    className="stat-number font-display text-2xl sm:text-3xl font-semibold text-sugan-ink"
                     data-target="100"
                   >
                     0
                   </span>
                 </div>
-                <p className="text-xs text-sugan-brown/60 font-body">
+                <p className="text-xs text-sugan-ink/60 font-body">
                   % Solid Wood
                 </p>
               </div>
@@ -175,9 +175,9 @@ export default function Hero() {
               className="w-full h-full object-cover"
             />
             {/* Gradient overlay for mobile */}
-            <div className="absolute inset-0 bg-gradient-to-t from-sugan-cream via-transparent to-transparent lg:hidden" />
+            <div className="absolute inset-0 bg-gradient-to-t from-sugan-bone via-transparent to-transparent lg:hidden" />
             {/* Subtle gradient for desktop */}
-            <div className="hidden lg:block absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-sugan-cream to-transparent" />
+            <div className="hidden lg:block absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-sugan-bone to-transparent" />
           </div>
         </div>
       </div>

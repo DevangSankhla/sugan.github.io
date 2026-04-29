@@ -57,7 +57,7 @@ export default function About() {
     <section
       id="about"
       ref={sectionRef}
-      className="py-20 lg:py-32 bg-sugan-cream section-padding overflow-hidden"
+      className="py-20 lg:py-32 bg-sugan-bone section-padding overflow-hidden"
     >
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
@@ -72,7 +72,7 @@ export default function About() {
               />
             </div>
             {/* Floating Badge */}
-            <div className="absolute -bottom-6 -right-6 bg-sugan-brown text-sugan-cream p-6 rounded-lg shadow-xl hidden sm:block">
+            <div className="absolute -bottom-6 -right-6 bg-sugan-ink text-sugan-bone p-6 rounded-lg shadow-xl hidden sm:block">
               <p className="font-display text-4xl font-semibold">25+</p>
               <p className="text-sm font-body opacity-80">Years of Excellence</p>
             </div>
@@ -85,12 +85,12 @@ export default function About() {
             <p className="animate-item section-label mb-3">
               Our Heritage
             </p>
-            <h2 className="animate-item font-display text-3xl sm:text-4xl lg:text-5xl font-light text-sugan-brown mb-6">
+            <h2 className="animate-item font-display text-3xl sm:text-4xl lg:text-5xl font-light text-sugan-ink mb-6">
               Crafting Excellence
               <br />
               <span className="font-medium">Since 1999</span>
             </h2>
-            <div className="animate-item space-y-4 text-sugan-brown/70 font-body leading-relaxed mb-8">
+            <div className="animate-item space-y-4 text-sugan-ink/70 font-body leading-relaxed mb-8">
               <p>
                 For over two decades, Sugan has been synonymous with premium
                 wooden craftsmanship in Jodhpur, the heart of Rajasthan's rich
@@ -118,15 +118,15 @@ export default function About() {
             <div className="animate-item grid grid-cols-3 gap-4 mb-8">
               <div className="text-center p-4 bg-white rounded-lg">
                 <MapPin className="w-5 h-5 text-sugan-gold mx-auto mb-2" />
-                <p className="text-xs text-sugan-brown/60 font-body">Jodhpur</p>
+                <p className="text-xs text-sugan-ink/60 font-body">Jodhpur</p>
               </div>
               <div className="text-center p-4 bg-white rounded-lg">
                 <Calendar className="w-5 h-5 text-sugan-gold mx-auto mb-2" />
-                <p className="text-xs text-sugan-brown/60 font-body">Since 1999</p>
+                <p className="text-xs text-sugan-ink/60 font-body">Since 1999</p>
               </div>
               <div className="text-center p-4 bg-white rounded-lg">
                 <Heart className="w-5 h-5 text-sugan-gold mx-auto mb-2" />
-                <p className="text-xs text-sugan-brown/60 font-body">Handmade</p>
+                <p className="text-xs text-sugan-ink/60 font-body">Handmade</p>
               </div>
             </div>
 

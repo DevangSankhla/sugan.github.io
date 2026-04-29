@@ -34,16 +34,16 @@ export default function CompleteTheLook({ currentProduct }: CompleteTheLookProps
   const savings = Math.floor(totalPrice * 0.1); // 10% bundle discount
 
   return (
-    <div className="bg-sugan-cream rounded-2xl p-6">
-      <h3 className="font-display text-xl text-sugan-brown mb-4">Complete the Look</h3>
-      <p className="text-sugan-brown/60 font-body text-sm mb-6">
+    <div className="bg-sugan-bone rounded-2xl p-6">
+      <h3 className="font-display text-xl text-sugan-ink mb-4">Complete the Look</h3>
+      <p className="text-sugan-ink/60 font-body text-sm mb-6">
         Frequently bought together with this item
       </p>
 
       <div className="space-y-4">
         {/* Current Product */}
         <div className="flex items-center gap-4 p-3 bg-white rounded-lg">
-          <div className="w-16 h-16 bg-sugan-cream-dark rounded-lg overflow-hidden flex-shrink-0">
+          <div className="w-16 h-16 bg-sugan-bone-dark rounded-lg overflow-hidden flex-shrink-0">
             <img
               src={currentProduct.image}
               alt={currentProduct.name}
@@ -53,15 +53,15 @@ export default function CompleteTheLook({ currentProduct }: CompleteTheLookProps
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-xs text-sugan-gold font-body uppercase">Current Item</p>
-            <h4 className="font-body text-sm text-sugan-brown truncate">{currentProduct.name}</h4>
-            <p className="font-display text-sugan-brown">₹{currentProduct.price.toLocaleString()}</p>
+            <h4 className="font-body text-sm text-sugan-ink truncate">{currentProduct.name}</h4>
+            <p className="font-display text-sugan-ink">₹{currentProduct.price.toLocaleString()}</p>
           </div>
           <Check className="w-5 h-5 text-green-500 flex-shrink-0" />
         </div>
 
         {/* Plus Divider */}
         <div className="flex items-center justify-center">
-          <Plus className="w-5 h-5 text-sugan-brown/30" />
+          <Plus className="w-5 h-5 text-sugan-ink/30" />
         </div>
 
         {/* Suggested Products */}
@@ -72,7 +72,7 @@ export default function CompleteTheLook({ currentProduct }: CompleteTheLookProps
             state={{ from: `/product/${currentProduct.id}` }}
             className="flex items-center gap-4 p-3 bg-white rounded-lg hover:shadow-md transition-shadow group"
           >
-            <div className="w-16 h-16 bg-sugan-cream-dark rounded-lg overflow-hidden flex-shrink-0">
+            <div className="w-16 h-16 bg-sugan-bone-dark rounded-lg overflow-hidden flex-shrink-0">
               <img
                 src={product.image}
                 alt={product.name}
@@ -81,26 +81,26 @@ export default function CompleteTheLook({ currentProduct }: CompleteTheLookProps
               />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-xs text-sugan-brown/50 font-body uppercase">{product.category}</p>
-              <h4 className="font-body text-sm text-sugan-brown truncate group-hover:text-sugan-gold transition-colors">
+              <p className="text-xs text-sugan-ink/50 font-body uppercase">{product.category}</p>
+              <h4 className="font-body text-sm text-sugan-ink truncate group-hover:text-sugan-gold transition-colors">
                 {product.name}
               </h4>
-              <p className="font-display text-sugan-brown">₹{product.price.toLocaleString()}</p>
+              <p className="font-display text-sugan-ink">₹{product.price.toLocaleString()}</p>
             </div>
           </Link>
         ))}
 
         {/* Bundle Summary */}
-        <div className="border-t border-sugan-brown/10 pt-4 mt-4">
+        <div className="border-t border-sugan-ink/10 pt-4 mt-4">
           <div className="flex items-center justify-between mb-2">
-            <span className="font-body text-sugan-brown/60">Bundle Price:</span>
-            <span className="font-display text-xl text-sugan-brown">₹{totalPrice.toLocaleString()}</span>
+            <span className="font-body text-sugan-ink/60">Bundle Price:</span>
+            <span className="font-display text-xl text-sugan-ink">₹{totalPrice.toLocaleString()}</span>
           </div>
           <div className="flex items-center justify-between mb-4">
             <span className="font-body text-green-600 text-sm">You save:</span>
             <span className="font-body text-green-600">₹{savings.toLocaleString()}</span>
           </div>
-          <button className="w-full bg-sugan-brown text-sugan-cream py-3 rounded-lg font-body hover:bg-sugan-brown/90 transition-colors">
+          <button className="w-full bg-sugan-ink text-sugan-bone py-3 rounded-lg font-body hover:bg-sugan-ink/90 transition-colors">
             Add All to Cart
           </button>
         </div>

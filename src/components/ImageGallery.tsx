@@ -54,7 +54,7 @@ export default function ImageGallery({ images, videos = [], productName }: Image
   return (
     <div className="space-y-4">
       {/* Main Media Display */}
-      <div className="relative aspect-square bg-sugan-cream-dark rounded-xl overflow-hidden group">
+      <div className="relative aspect-square bg-sugan-bone-dark rounded-xl overflow-hidden group">
         {currentIsVideo ? (
           <>
             <video
@@ -72,7 +72,7 @@ export default function ImageGallery({ images, videos = [], productName }: Image
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
               <button
                 onClick={toggleVideo}
-                className="w-16 h-16 bg-sugan-brown/80 hover:bg-sugan-brown text-white rounded-full flex items-center justify-center transition-colors pointer-events-auto"
+                className="w-16 h-16 bg-sugan-ink/80 hover:bg-sugan-ink text-white rounded-full flex items-center justify-center transition-colors pointer-events-auto"
                 aria-label={isPlaying ? 'Pause video' : 'Play video'}
               >
                 {isPlaying ? (
@@ -89,9 +89,9 @@ export default function ImageGallery({ images, videos = [], productName }: Image
               aria-label={isMuted ? 'Unmute' : 'Mute'}
             >
               {isMuted ? (
-                <VolumeX className="w-5 h-5 text-sugan-brown" />
+                <VolumeX className="w-5 h-5 text-sugan-ink" />
               ) : (
-                <Volume2 className="w-5 h-5 text-sugan-brown" />
+                <Volume2 className="w-5 h-5 text-sugan-ink" />
               )}
             </button>
           </>
@@ -112,7 +112,7 @@ export default function ImageGallery({ images, videos = [], productName }: Image
               className="absolute top-4 right-4 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
               aria-label={isZoomed ? 'Zoom out' : 'Zoom in'}
             >
-              <ZoomIn className="w-5 h-5 text-sugan-brown" />
+              <ZoomIn className="w-5 h-5 text-sugan-ink" />
             </button>
           </>
         )}
@@ -125,28 +125,28 @@ export default function ImageGallery({ images, videos = [], productName }: Image
               className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
               aria-label="Previous"
             >
-              <ChevronLeft className="w-5 h-5 text-sugan-brown" />
+              <ChevronLeft className="w-5 h-5 text-sugan-ink" />
             </button>
             <button
               onClick={nextMedia}
               className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
               aria-label="Next"
             >
-              <ChevronRight className="w-5 h-5 text-sugan-brown" />
+              <ChevronRight className="w-5 h-5 text-sugan-ink" />
             </button>
           </>
         )}
 
         {/* Media Counter */}
         {allMedia.length > 1 && (
-          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-sugan-brown/80 text-sugan-cream px-3 py-1 rounded-full text-sm font-body">
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-sugan-ink/80 text-sugan-bone px-3 py-1 rounded-full text-sm font-body">
             {selectedIndex + 1} / {allMedia.length}
           </div>
         )}
 
         {/* Video Badge */}
         {currentIsVideo && (
-          <div className="absolute top-4 left-4 bg-sugan-gold text-sugan-brown px-3 py-1 rounded-full text-xs font-medium">
+          <div className="absolute top-4 left-4 bg-sugan-gold text-sugan-ink px-3 py-1 rounded-full text-xs font-medium">
             VIDEO
           </div>
         )}
@@ -167,7 +167,7 @@ export default function ImageGallery({ images, videos = [], productName }: Image
                 className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-colors relative ${
                   selectedIndex === index
                     ? 'border-sugan-gold'
-                    : 'border-transparent hover:border-sugan-brown/30'
+                    : 'border-transparent hover:border-sugan-ink/30'
                 }`}
               >
                 {mediaIsVideo ? (

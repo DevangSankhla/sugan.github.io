@@ -63,14 +63,14 @@ export default function Signup() {
   };
 
   return (
-    <div className="min-h-screen bg-sugan-cream flex items-center justify-center px-4 py-12">
+    <div className="min-h-screen bg-sugan-bone flex items-center justify-center px-4 py-12">
       <div className="max-w-md w-full">
         <Card className="border-none shadow-xl">
           <CardHeader className="text-center space-y-2">
-            <CardTitle className="font-display text-2xl text-sugan-brown">
+            <CardTitle className="font-display text-2xl text-sugan-ink">
               Create Account
             </CardTitle>
-            <CardDescription className="font-body text-sugan-brown/60">
+            <CardDescription className="font-body text-sugan-ink/60">
               Join Sugan to save products, track orders, and more
             </CardDescription>
           </CardHeader>
@@ -78,7 +78,7 @@ export default function Signup() {
             {/* Google Signup */}
             <Button
               variant="outline"
-              className="w-full h-12 font-body border-sugan-brown/20 hover:bg-sugan-brown/5"
+              className="w-full h-12 font-body border-sugan-ink/20 hover:bg-sugan-ink/5"
               onClick={handleGoogleSignup}
               disabled={loading}
             >
@@ -88,10 +88,10 @@ export default function Signup() {
 
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-sugan-brown/10"></div>
+                <div className="w-full border-t border-sugan-ink/10"></div>
               </div>
               <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-white px-2 text-sugan-brown/40 font-body">
+                <span className="bg-white px-2 text-sugan-ink/40 font-body">
                   Or sign up with email
                 </span>
               </div>
@@ -105,60 +105,60 @@ export default function Signup() {
               )}
 
               <div className="space-y-2">
-                <Label htmlFor="name" className="font-body text-sugan-brown">
+                <Label htmlFor="name" className="font-body text-sugan-ink">
                   Full Name
                 </Label>
                 <div className="relative">
-                  <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-sugan-brown/40" />
+                  <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-sugan-ink/40" />
                   <Input
                     id="name"
                     type="text"
                     placeholder="Enter your full name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="pl-10 h-12 font-body border-sugan-brown/20 focus:border-sugan-gold"
+                    className="pl-10 h-12 font-body border-sugan-ink/20 focus:border-sugan-gold"
                     required
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="email" className="font-body text-sugan-brown">
+                <Label htmlFor="email" className="font-body text-sugan-ink">
                   Email
                 </Label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-sugan-brown/40" />
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-sugan-ink/40" />
                   <Input
                     id="email"
                     type="email"
                     placeholder="Enter your email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="pl-10 h-12 font-body border-sugan-brown/20 focus:border-sugan-gold"
+                    className="pl-10 h-12 font-body border-sugan-ink/20 focus:border-sugan-gold"
                     required
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="password" className="font-body text-sugan-brown">
+                <Label htmlFor="password" className="font-body text-sugan-ink">
                   Password
                 </Label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-sugan-brown/40" />
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-sugan-ink/40" />
                   <Input
                     id="password"
                     type={showPassword ? 'text' : 'password'}
                     placeholder="Create a password (min 6 characters)"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="pl-10 pr-10 h-12 font-body border-sugan-brown/20 focus:border-sugan-gold"
+                    className="pl-10 pr-10 h-12 font-body border-sugan-ink/20 focus:border-sugan-gold"
                     required
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-sugan-brown/40 hover:text-sugan-brown"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-sugan-ink/40 hover:text-sugan-ink"
                   >
                     {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
@@ -166,7 +166,7 @@ export default function Signup() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="confirmPassword" className="font-body text-sugan-brown">
+                <Label htmlFor="confirmPassword" className="font-body text-sugan-ink">
                   Confirm Password
                 </Label>
                 <Input
@@ -175,21 +175,21 @@ export default function Signup() {
                   placeholder="Confirm your password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="h-12 font-body border-sugan-brown/20 focus:border-sugan-gold"
+                  className="h-12 font-body border-sugan-ink/20 focus:border-sugan-gold"
                   required
                 />
               </div>
 
               <Button
                 type="submit"
-                className="w-full h-12 bg-sugan-brown hover:bg-sugan-brown/90 font-body"
+                className="w-full h-12 bg-sugan-ink hover:bg-sugan-ink/90 font-body"
                 disabled={loading}
               >
                 {loading ? 'Creating account...' : 'Create Account'}
               </Button>
             </form>
 
-            <p className="text-center text-sm font-body text-sugan-brown/60">
+            <p className="text-center text-sm font-body text-sugan-ink/60">
               Already have an account?{' '}
               <Link
                 to={redirectPath !== '/account' ? `/login?redirect=${encodeURIComponent(redirectPath)}` : '/login'}

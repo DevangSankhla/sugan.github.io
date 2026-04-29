@@ -78,7 +78,7 @@ export default function Navigation() {
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           isScrolled || !isHomePage
-            ? 'bg-sugan-cream/95 backdrop-blur-md py-4 shadow-sm border-b border-sugan-gold/15'
+            ? 'bg-sugan-bone/95 backdrop-blur-md py-4 shadow-sm border-b border-sugan-gold/15'
             : 'bg-transparent py-6'
         }`}
       >
@@ -87,7 +87,7 @@ export default function Navigation() {
             {/* Logo */}
             <Link
               to="/"
-              className={`font-display text-2xl md:text-3xl font-semibold text-sugan-brown transition-all duration-500 ${
+              className={`font-display text-2xl md:text-3xl font-semibold text-sugan-ink transition-all duration-500 ${
                 isScrolled ? 'scale-90' : 'scale-100'
               }`}
             >
@@ -139,14 +139,14 @@ export default function Navigation() {
             <div className="flex items-center gap-4">
               <button
                 onClick={() => setIsSearchOpen(true)}
-                className="p-2 text-sugan-brown hover:text-sugan-gold transition-colors"
+                className="p-2 text-sugan-ink hover:text-sugan-gold transition-colors"
                 aria-label="Search"
               >
                 <Search className="w-5 h-5" />
               </button>
               <button
                 onClick={() => setIsCartOpen(true)}
-                className="relative p-2 text-sugan-brown hover:text-sugan-gold transition-colors"
+                className="relative p-2 text-sugan-ink hover:text-sugan-gold transition-colors"
                 aria-label="Cart"
               >
                 <ShoppingBag className="w-5 h-5" />
@@ -158,13 +158,13 @@ export default function Navigation() {
               </button>
               <Link
                 to={user ? "/account" : "/login"}
-                className="p-2 text-sugan-brown hover:text-sugan-gold transition-colors"
+                className="p-2 text-sugan-ink hover:text-sugan-gold transition-colors"
                 aria-label="Account"
               >
                 <User className="w-5 h-5" />
               </Link>
               <button
-                className="md:hidden p-2 text-sugan-brown"
+                className="md:hidden p-2 text-sugan-ink"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 aria-label="Menu"
               >
@@ -177,7 +177,7 @@ export default function Navigation() {
 
       {/* Mobile Menu */}
       <div
-        className={`fixed inset-0 z-40 bg-sugan-cream transition-transform duration-500 md:hidden ${
+        className={`fixed inset-0 z-40 bg-sugan-bone transition-transform duration-500 md:hidden ${
           isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
@@ -185,34 +185,34 @@ export default function Navigation() {
           <Link
             to="/"
             onClick={() => setIsMobileMenuOpen(false)}
-            className="font-display text-3xl text-sugan-brown hover:text-sugan-gold transition-colors"
+            className="font-display text-3xl text-sugan-ink hover:text-sugan-gold transition-colors"
           >
             Home
           </Link>
           <Link
             to="/shop"
             onClick={() => setIsMobileMenuOpen(false)}
-            className="font-display text-3xl text-sugan-brown hover:text-sugan-gold transition-colors"
+            className="font-display text-3xl text-sugan-ink hover:text-sugan-gold transition-colors"
           >
             Shop
           </Link>
           <Link
             to="/bulk-orders"
             onClick={() => setIsMobileMenuOpen(false)}
-            className="font-display text-3xl text-sugan-brown hover:text-sugan-gold transition-colors"
+            className="font-display text-3xl text-sugan-ink hover:text-sugan-gold transition-colors"
           >
             Bulk/Trade
           </Link>
           <button
             onClick={() => scrollToSection('about')}
-            className="font-display text-3xl text-sugan-brown hover:text-sugan-gold transition-colors"
+            className="font-display text-3xl text-sugan-ink hover:text-sugan-gold transition-colors"
           >
             About
           </button>
           <Link
             to="/contact"
             onClick={() => setIsMobileMenuOpen(false)}
-            className="font-display text-3xl text-sugan-brown hover:text-sugan-gold transition-colors"
+            className="font-display text-3xl text-sugan-ink hover:text-sugan-gold transition-colors"
           >
             Contact
           </Link>
@@ -221,23 +221,23 @@ export default function Navigation() {
 
       {/* Search Modal */}
       {isSearchOpen && (
-        <div className="fixed inset-0 z-50 bg-sugan-brown/80 backdrop-blur-sm flex items-start justify-center pt-24 px-4">
-          <div className="w-full max-w-2xl bg-sugan-cream rounded-lg shadow-2xl overflow-hidden">
+        <div className="fixed inset-0 z-50 bg-sugan-ink/80 backdrop-blur-sm flex items-start justify-center pt-24 px-4">
+          <div className="w-full max-w-2xl bg-sugan-bone rounded-lg shadow-2xl overflow-hidden">
             {/* Search Input */}
-            <form onSubmit={handleSearchSubmit} className="relative border-b border-sugan-brown/10">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-sugan-brown/40" />
+            <form onSubmit={handleSearchSubmit} className="relative border-b border-sugan-ink/10">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-sugan-ink/40" />
               <input
                 type="text"
                 placeholder="Search products..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-12 pr-12 py-4 bg-transparent font-body text-sugan-brown placeholder:text-sugan-brown/40 focus:outline-none"
+                className="w-full pl-12 pr-12 py-4 bg-transparent font-body text-sugan-ink placeholder:text-sugan-ink/40 focus:outline-none"
                 autoFocus
               />
               <button
                 type="button"
                 onClick={() => setIsSearchOpen(false)}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-sugan-brown/40 hover:text-sugan-brown"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-sugan-ink/40 hover:text-sugan-ink"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -260,27 +260,27 @@ export default function Navigation() {
                         loading="lazy"
                       />
                       <div className="flex-1">
-                        <p className="font-body text-sm text-sugan-brown">{product.name}</p>
+                        <p className="font-body text-sm text-sugan-ink">{product.name}</p>
                         <p className="text-xs text-sugan-gold">₹{product.price.toLocaleString()}</p>
                       </div>
-                      <ArrowRight className="w-4 h-4 text-sugan-brown/40" />
+                      <ArrowRight className="w-4 h-4 text-sugan-ink/40" />
                     </button>
                   ))}
                 </div>
               ) : searchQuery.trim() ? (
                 <div className="py-8 text-center">
-                  <p className="text-sugan-brown/60 font-body">No products found</p>
+                  <p className="text-sugan-ink/60 font-body">No products found</p>
                 </div>
               ) : (
                 <div className="py-8 text-center">
-                  <p className="text-sugan-brown/40 font-body text-sm">Type to search products</p>
+                  <p className="text-sugan-ink/40 font-body text-sm">Type to search products</p>
                 </div>
               )}
             </div>
 
             {/* View All Button */}
             {searchResults.length > 0 && (
-              <div className="border-t border-sugan-brown/10 p-4">
+              <div className="border-t border-sugan-ink/10 p-4">
                 <Link
                   to="/shop"
                   onClick={() => setIsSearchOpen(false)}

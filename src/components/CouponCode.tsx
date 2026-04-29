@@ -122,8 +122,8 @@ export default function CouponCode({
   };
 
   return (
-    <div className="border border-sugan-brown/10 rounded-xl p-4 mb-4">
-      <h3 className="font-body font-medium text-sugan-brown mb-3 flex items-center gap-2">
+    <div className="border border-sugan-ink/10 rounded-xl p-4 mb-4">
+      <h3 className="font-body font-medium text-sugan-ink mb-3 flex items-center gap-2">
         <Tag className="w-4 h-4 text-sugan-gold" />
         Apply Coupon
       </h3>
@@ -152,12 +152,12 @@ export default function CouponCode({
               value={code}
               onChange={(e) => setCode(e.target.value)}
               placeholder="Enter coupon code"
-              className="flex-1 px-3 py-2 border border-sugan-brown/20 rounded-lg font-body text-sm focus:outline-none focus:border-sugan-gold uppercase"
+              className="flex-1 px-3 py-2 border border-sugan-ink/20 rounded-lg font-body text-sm focus:outline-none focus:border-sugan-gold uppercase"
             />
             <button
               onClick={handleApply}
               disabled={!code.trim()}
-              className="px-4 py-2 bg-sugan-brown text-sugan-cream rounded-lg font-body text-sm hover:bg-sugan-brown/90 transition-colors disabled:opacity-50"
+              className="px-4 py-2 bg-sugan-ink text-sugan-bone rounded-lg font-body text-sm hover:bg-sugan-ink/90 transition-colors disabled:opacity-50"
             >
               Apply
             </button>
@@ -190,15 +190,15 @@ export default function CouponCode({
                     setCode(coupon.code);
                     setShowCoupons(false);
                   }}
-                  className="p-3 bg-sugan-cream/50 rounded-lg cursor-pointer hover:bg-sugan-cream transition-colors"
+                  className="p-3 bg-sugan-bone/50 rounded-lg cursor-pointer hover:bg-sugan-bone transition-colors"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="font-body text-sm font-medium text-sugan-brown">{coupon.code}</span>
+                    <span className="font-body text-sm font-medium text-sugan-ink">{coupon.code}</span>
                     <span className="text-xs text-sugan-gold font-body">
                       {coupon.type === 'percent' ? `${coupon.discount}% OFF` : `₹${coupon.discount} OFF`}
                     </span>
                   </div>
-                  <p className="text-xs text-sugan-brown/60 font-body">{coupon.description}</p>
+                  <p className="text-xs text-sugan-ink/60 font-body">{coupon.description}</p>
                 </div>
               ))}
             </div>
