@@ -1,235 +1,119 @@
-import { Mail, Phone, MapPin, Instagram, Linkedin } from 'lucide-react';
 import { Link } from 'react-router-dom';
+
+type FooterLink = { label: string; to: string; external?: boolean };
+type FooterColumn = { label: string; links: FooterLink[] };
+
+const columns: FooterColumn[] = [
+  {
+    label: 'Shop',
+    links: [
+      { label: 'All', to: '/shop' },
+      { label: 'Kitchen', to: '/shop/kitchen' },
+      { label: 'Living', to: '/shop/living' },
+      { label: 'Pet', to: '/shop/pet' },
+      { label: 'Bulk / Trade', to: '/bulk-orders' },
+    ],
+  },
+  {
+    label: 'Help',
+    links: [
+      { label: 'Shipping', to: '/shipping' },
+      { label: 'Returns', to: '/returns' },
+      { label: 'FAQ', to: '/faq' },
+      { label: 'Privacy', to: '/privacy' },
+    ],
+  },
+  {
+    label: 'Company',
+    links: [
+      { label: 'Atelier', to: '/#about' },
+      { label: 'Contact', to: '/contact' },
+      { label: 'Account', to: '/account' },
+    ],
+  },
+  {
+    label: 'Connect',
+    links: [
+      { label: 'Instagram', to: 'https://www.instagram.com/wwwsuganshop/', external: true },
+      { label: 'LinkedIn', to: 'https://www.linkedin.com/company/sugan-shop/', external: true },
+      { label: 'contact@sugan.shop', to: 'mailto:contact@sugan.shop', external: true },
+    ],
+  },
+];
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-sugan-ink text-sugan-bone">
-      {/* Main Footer */}
-      <div className="section-padding py-16 lg:py-20">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
-            {/* Brand */}
-            <div className="lg:col-span-1">
-              <a
-                href="#"
-                className="font-display text-3xl font-semibold text-sugan-bone mb-4 block"
-                onClick={(e) => {
-                  e.preventDefault();
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }}
-              >
-                Sugan
-              </a>
-              <p className="text-sugan-bone/60 font-body text-sm leading-relaxed mb-6">
-                Handcrafted solid wood furniture from Jodhpur, India. Bringing
-                25+ years of heritage craftsmanship to modern homes.
+    <footer className="bg-sugan-bone text-sugan-ink border-t border-sugan-ink/10">
+      {/* Wordmark */}
+      <div className="section-padding pt-[clamp(64px,10vw,160px)] pb-[clamp(48px,8vw,120px)]">
+        <Link
+          to="/"
+          aria-label="Sugan home"
+          className="block text-center font-display font-light tracking-[-0.04em] leading-none text-[clamp(96px,18vw,280px)] text-sugan-ink hover:text-sugan-gold transition-colors duration-400 ease-apple"
+        >
+          Sugan
+          <span
+            className="inline-block w-3 h-3 rounded-full bg-sugan-gold ml-2 align-middle translate-y-[-0.15em]"
+            aria-hidden="true"
+          />
+        </Link>
+      </div>
+
+      {/* Hairline-separated columns */}
+      <div className="border-t border-sugan-ink/10">
+        <div className="grid grid-cols-2 md:grid-cols-4">
+          {columns.map((col, i) => (
+            <div
+              key={col.label}
+              className={[
+                'section-padding py-12',
+                i > 0 ? 'md:border-l md:border-sugan-ink/10' : '',
+                i % 2 === 1 ? 'border-l border-sugan-ink/10 md:border-l' : '',
+              ].join(' ')}
+            >
+              <p className="text-eyebrow font-body uppercase text-sugan-ink-soft mb-5">
+                {col.label}
               </p>
-              {/* Social Links */}
-              <div className="flex gap-3">
-                <a
-                  href="https://www.instagram.com/wwwsuganshop/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-sugan-bone/10 flex items-center justify-center hover:bg-sugan-gold transition-colors"
-                  aria-label="Instagram"
-                >
-                  <Instagram className="w-4 h-4" />
-                </a>
-                <a
-                  href="https://www.linkedin.com/company/sugan-shop/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-sugan-bone/10 flex items-center justify-center hover:bg-sugan-gold transition-colors"
-                  aria-label="LinkedIn"
-                >
-                  <Linkedin className="w-4 h-4" />
-                </a>
-
-              </div>
-            </div>
-
-            {/* Quick Links */}
-            <div>
-              <h4 className="font-display text-lg font-medium text-sugan-bone mb-6">
-                Quick Links
-              </h4>
               <ul className="space-y-3">
-                <li>
-                  <button
-                    onClick={() =>
-                      document
-                        .getElementById('home')
-                        ?.scrollIntoView({ behavior: 'smooth' })
-                    }
-                    className="text-sugan-bone/60 font-body text-sm hover:text-sugan-gold transition-colors hover:translate-x-1 inline-block"
-                  >
-                    Home
-                  </button>
-                </li>
-                <li>
-                  <Link
-                    to="/shop"
-                    className="text-sugan-bone/60 font-body text-sm hover:text-sugan-gold transition-colors hover:translate-x-1 inline-block"
-                  >
-                    Shop
-                  </Link>
-                </li>
-                <li>
-                  <button
-                    onClick={() =>
-                      document
-                        .getElementById('about')
-                        ?.scrollIntoView({ behavior: 'smooth' })
-                    }
-                    className="text-sugan-bone/60 font-body text-sm hover:text-sugan-gold transition-colors hover:translate-x-1 inline-block"
-                  >
-                    About Us
-                  </button>
-                </li>
+                {col.links.map((link) => (
+                  <li key={link.label}>
+                    {link.external ? (
+                      <a
+                        href={link.to}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-body text-body-sm text-sugan-ink-soft hover:text-sugan-gold transition-colors duration-300"
+                      >
+                        {link.label}
+                      </a>
+                    ) : (
+                      <Link
+                        to={link.to}
+                        className="font-body text-body-sm text-sugan-ink-soft hover:text-sugan-gold transition-colors duration-300"
+                      >
+                        {link.label}
+                      </Link>
+                    )}
+                  </li>
+                ))}
               </ul>
             </div>
-
-            {/* Customer Service */}
-            <div>
-              <h4 className="font-display text-lg font-medium text-sugan-bone mb-6">
-                Customer Service
-              </h4>
-              <ul className="space-y-3">
-                <li>
-                  <Link
-                    to="/shipping"
-                    className="text-sugan-bone/60 font-body text-sm hover:text-sugan-gold transition-colors hover:translate-x-1 inline-block"
-                  >
-                    Shipping Info
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/returns"
-                    className="text-sugan-bone/60 font-body text-sm hover:text-sugan-gold transition-colors hover:translate-x-1 inline-block"
-                  >
-                    Returns & Refunds
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/faq"
-                    className="text-sugan-bone/60 font-body text-sm hover:text-sugan-gold transition-colors hover:translate-x-1 inline-block"
-                  >
-                    FAQ
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/shop"
-                    className="text-sugan-bone/60 font-body text-sm hover:text-sugan-gold transition-colors hover:translate-x-1 inline-block"
-                  >
-                    Shop All
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/privacy"
-                    className="text-sugan-bone/60 font-body text-sm hover:text-sugan-gold transition-colors hover:translate-x-1 inline-block"
-                  >
-                    Privacy Policy
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            {/* Contact */}
-            <div>
-              <h4 className="font-display text-lg font-medium text-sugan-bone mb-6">
-                Contact Us
-              </h4>
-              <ul className="space-y-4">
-                <li className="flex items-start gap-3">
-                  <MapPin className="w-5 h-5 text-sugan-gold flex-shrink-0 mt-0.5" />
-                  <span className="text-sugan-bone/60 font-body text-sm">
-                    III Phase, Boranada, Jodhpur
-                    <br />
-                    Rajasthan, India 342012
-                  </span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <Phone className="w-5 h-5 text-sugan-gold flex-shrink-0" />
-                  <a
-                    href="tel:+916367677255"
-                    className="text-sugan-bone/60 font-body text-sm hover:text-sugan-gold transition-colors"
-                  >
-                    +91 6367677255
-                  </a>
-                </li>
-                <li className="flex items-center gap-3">
-                  <Mail className="w-5 h-5 text-sugan-gold flex-shrink-0" />
-                  <a
-                    href="mailto:contact@sugan.shop"
-                    className="text-sugan-bone/60 font-body text-sm hover:text-sugan-gold transition-colors"
-                  >
-                    contact@sugan.shop
-                  </a>
-                </li>
-                <li className="flex items-center gap-3">
-                  <span className="w-5 h-5 flex items-center justify-center text-sugan-gold flex-shrink-0">→</span>
-                  <Link
-                    to="/contact"
-                    className="text-sugan-bone/60 font-body text-sm hover:text-sugan-gold transition-colors"
-                  >
-                    Contact Form
-                  </Link>
-                </li>
-              </ul>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
 
-      {/* Bulk Order Banner */}
-      <div className="border-t border-sugan-bone/10 bg-sugan-bone/5">
-        <div className="section-padding py-4">
-          <div className="max-w-7xl mx-auto text-center">
-            <p className="text-sugan-bone/80 font-body text-sm">
-              Need furniture for your resort, hotel, café, school, or business?{' '}
-              <Link
-                to="/bulk-orders"
-                className="text-sugan-gold hover:text-sugan-bone underline underline-offset-2 transition-colors font-medium"
-              >
-                Get a custom quote for bulk/trade orders
-              </Link>
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Bottom Bar */}
-      <div className="border-t border-sugan-bone/10">
+      {/* Bottom strip */}
+      <div className="border-t border-sugan-ink/10">
         <div className="section-padding py-6">
-          <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-            <p className="text-sugan-bone/40 font-body text-xs text-center sm:text-left">
-              © {currentYear} Sugan. All rights reserved. Crafted with love in
-              Jodhpur.
-            </p>
-            <div className="flex items-center gap-4">
-              <Link
-                to="/shop"
-                className="text-sugan-bone/40 font-body text-xs hover:text-sugan-gold transition-colors"
-              >
-                Shop Now
-              </Link>
-              <span className="text-sugan-bone/20">|</span>
-              <button
-                onClick={() =>
-                  window.scrollTo({ top: 0, behavior: 'smooth' })
-                }
-                className="text-sugan-bone/40 font-body text-xs hover:text-sugan-gold transition-colors"
-              >
-                Back to Top
-              </button>
-            </div>
-          </div>
+          <p className="font-body text-body-sm text-sugan-ink-soft tabular-nums flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-center">
+            <span>© {currentYear} Sugan Atelier</span>
+            <span aria-hidden="true" className="hidden sm:inline text-sugan-ink/30">·</span>
+            <span>GST 08AAAAA0000A1Z5</span>
+            <span aria-hidden="true" className="hidden sm:inline text-sugan-ink/30">·</span>
+            <span>Made in Jodhpur</span>
+          </p>
         </div>
       </div>
     </footer>

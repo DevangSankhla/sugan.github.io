@@ -1,105 +1,96 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Award, Truck, ShieldCheck, Leaf } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const features = [
+const pillars = [
   {
-    icon: Award,
-    title: 'Premium Quality',
-    description:
-      'Crafted from the finest solid wood, each piece undergoes rigorous quality checks to ensure lasting durability and beauty.',
+    number: '01',
+    label: 'Sheesham',
+    headline: 'Sourced from one species. By design.',
+    body: 'Every Sugan piece begins with North-Indian sheesham — slow-grown, dense, and forgiving under the chisel. One species, one standard.',
   },
   {
-    icon: Truck,
-    title: 'Free Shipping over ₹1999',
-    description:
-      'Enjoy complimentary delivery across India on orders above ₹1999. Fast, reliable, and right to your doorstep.',
+    number: '02',
+    label: 'Jodhpur',
+    headline: 'A workshop, not a factory.',
+    body: 'Hand-shaped by artisans whose families have worked the same wood for generations, in a small atelier in Boranada, Jodhpur.',
   },
   {
-    icon: ShieldCheck,
-    title: 'Secure Payment',
-    description:
-      'Shop with confidence using PayU secure payment gateway. 100% safe transactions with multiple payment options.',
-  },
-  {
-    icon: Leaf,
-    title: 'Eco-Friendly',
-    description:
-      'Sustainably sourced wood with food-safe, non-toxic finishes. Good for your home, good for the planet.',
+    number: '03',
+    label: '25 Years',
+    headline: 'Built in 1999. Built to outlast us.',
+    body: 'A quarter-century of one trade, one material, one obsession with joinery. Each piece is signed, numbered, and made to be inherited.',
+    cta: { label: 'Read our process', to: '/bulk-orders' },
   },
 ];
 
 export default function Features() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const cardsRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const cards = cardsRef.current?.querySelectorAll('.feature-card');
-      if (cards) {
+      const cols = sectionRef.current?.querySelectorAll('[data-pillar]');
+      if (cols) {
         gsap.fromTo(
-          cards,
-          { y: 80, opacity: 0 },
+          cols,
+          { y: 32, opacity: 0 },
           {
             y: 0,
             opacity: 1,
             duration: 0.8,
-            stagger: 0.15,
+            stagger: 0.12,
             ease: 'power3.out',
             scrollTrigger: {
               trigger: sectionRef.current,
               start: 'top 80%',
-              end: 'top 30%',
-              toggleActions: 'play none none reverse',
+              toggleActions: 'play none none none',
             },
           }
         );
       }
     }, sectionRef);
-
     return () => ctx.revert();
   }, []);
 
   return (
     <section
       ref={sectionRef}
-      className="py-20 lg:py-32 bg-sugan-bone section-padding"
+      className="bg-sugan-bone section-padding section-y"
     >
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <p className="section-label mb-3">
-            Why Choose Us
-          </p>
-          <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-light text-sugan-ink">
-            The Sugan <span className="font-medium">Difference</span>
-          </h2>
-        </div>
-
-        <div
-          ref={cardsRef}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8"
-        >
-          {features.map((feature, index) => (
-            <div
-              key={index}
-              className="feature-card group"
-              style={{ marginTop: index % 2 === 1 ? '2rem' : '0' }}
-            >
-              <div className="feature-icon mb-6">
-                <feature.icon className="w-6 h-6" />
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-y-16">
+        {pillars.map((p, i) => (
+          <div
+            key={p.number}
+            data-pillar
+            className={[
+              'flex flex-col gap-6 md:px-gutter',
+              i > 0 ? 'md:border-l md:border-sugan-ink/10' : '',
+              i > 0 ? 'border-t md:border-t-0 border-sugan-ink/10 pt-16 md:pt-0' : '',
+            ].join(' ')}
+          >
+            <p className="font-body tabular-nums text-eyebrow text-sugan-ink uppercase">
+              {p.number} <span className="mx-2 text-sugan-ink/30">/</span> {p.label}
+            </p>
+            <h3 className="font-display text-display-md font-light text-sugan-ink max-w-md">
+              {p.headline}
+            </h3>
+            <p className="font-body text-body text-sugan-ink-soft max-w-prose">
+              {p.body}
+            </p>
+            {p.cta && (
+              <div className="pt-2">
+                <Link to={p.cta.to} className="btn-ghost group">
+                  {p.cta.label}
+                  <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 ease-apple group-hover:translate-x-1" />
+                </Link>
               </div>
-              <h3 className="font-display text-xl font-medium text-sugan-ink mb-3">
-                {feature.title}
-              </h3>
-              <p className="text-sugan-ink/60 font-body text-sm leading-relaxed">
-                {feature.description}
-              </p>
-            </div>
-          ))}
-        </div>
+            )}
+          </div>
+        ))}
       </div>
     </section>
   );

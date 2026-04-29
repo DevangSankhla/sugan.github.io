@@ -1,156 +1,114 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Star, ChevronLeft, ChevronRight, Quote } from 'lucide-react';
 import { testimonials } from '@/data/rooms';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Testimonials() {
   const [activeIndex, setActiveIndex] = useState(0);
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const carouselRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const headlineRef = useRef<HTMLDivElement>(null);
 
+  const goTo = useCallback((index: number) => {
+    setActiveIndex((index + testimonials.length) % testimonials.length);
+  }, []);
+
+  // Keyboard arrow support when section is in view
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (!sectionRef.current) return;
+      const rect = sectionRef.current.getBoundingClientRect();
+      const inView = rect.top < window.innerHeight * 0.6 && rect.bottom > window.innerHeight * 0.4;
+      if (!inView) return;
+      if (e.key === 'ArrowRight') goTo(activeIndex + 1);
+      if (e.key === 'ArrowLeft') goTo(activeIndex - 1);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [activeIndex, goTo]);
+
+  // Auto-rotate
+  useEffect(() => {
+    const id = setInterval(() => goTo(activeIndex + 1), 6000);
+    return () => clearInterval(id);
+  }, [activeIndex, goTo]);
+
+  // Reveal the active quote
   useEffect(() => {
     const ctx = gsap.context(() => {
+      const active = headlineRef.current?.querySelector(`[data-quote-index="${activeIndex}"]`);
+      if (!active) return;
       gsap.fromTo(
-        carouselRef.current,
-        { y: 60, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 1,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top 70%',
-            toggleActions: 'play none none reverse',
-          },
-        }
+        active,
+        { y: 16, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out' }
       );
     }, sectionRef);
-
     return () => ctx.revert();
-  }, []);
+  }, [activeIndex]);
 
-  // Auto-rotate testimonials
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % testimonials.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
-
-  const goToPrev = () => {
-    setActiveIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
-  };
-
-  const goToNext = () => {
-    setActiveIndex((prev) => (prev + 1) % testimonials.length);
-  };
+  const t = testimonials[activeIndex];
 
   return (
     <section
       id="testimonials"
       ref={sectionRef}
-      className="py-20 lg:py-32 bg-sugan-ink section-padding"
+      className="relative bg-sugan-bone min-h-[90vh] flex items-center justify-center section-padding section-y overflow-hidden"
     >
-      <div className="max-w-5xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <p className="section-label mb-3">
-            Testimonials
-          </p>
-          <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-light text-sugan-bone">
-            What Our <span className="font-medium">Customers Say</span>
-          </h2>
+      <div className="relative w-full max-w-4xl text-center">
+        {/* Oversized opening quote */}
+        <span
+          aria-hidden="true"
+          className="block font-display text-display-2xl font-light text-sugan-gold/30 leading-none mb-6 select-none"
+        >
+          “
+        </span>
+
+        {/* Quote */}
+        <div ref={headlineRef} className="relative min-h-[8em]">
+          {testimonials.map((q, i) => (
+            <p
+              key={q.id}
+              data-quote-index={i}
+              className={`font-display text-display-lg font-light italic text-sugan-ink leading-snug transition-opacity duration-500 ease-apple ${
+                i === activeIndex ? 'opacity-100' : 'absolute inset-0 opacity-0 pointer-events-none'
+              }`}
+            >
+              {q.text}
+            </p>
+          ))}
         </div>
 
-        {/* Carousel */}
-        <div ref={carouselRef} className="relative">
-          {/* Quote Icon */}
-          <Quote className="absolute -top-6 left-1/2 -translate-x-1/2 w-12 h-12 text-sugan-gold/30" />
+        {/* Closing quote glyph */}
+        <span
+          aria-hidden="true"
+          className="block font-display text-display-2xl font-light text-sugan-gold/30 leading-none mt-2 mb-12 select-none"
+        >
+          ”
+        </span>
 
-          {/* Testimonial Content */}
-          <div className="relative overflow-hidden">
-            <div
-              className="flex transition-transform duration-500 ease-out"
-              style={{ transform: `translateX(-${activeIndex * 100}%)` }}
-            >
-              {testimonials.map((testimonial) => (
-                <div
-                  key={testimonial.id}
-                  className="w-full flex-shrink-0 px-4"
-                >
-                  <div className="text-center">
-                    {/* Stars */}
-                    <div className="flex justify-center gap-1 mb-6">
-                      {[...Array(5)].map((_, i) => (
-                        <Star
-                          key={i}
-                          className={`w-5 h-5 ${
-                            i < testimonial.rating
-                              ? 'fill-sugan-gold text-sugan-gold'
-                              : 'text-sugan-bone/20'
-                          }`}
-                        />
-                      ))}
-                    </div>
+        {/* Attribution */}
+        <p className="text-eyebrow font-body uppercase text-sugan-ink-soft inline-flex flex-wrap items-center justify-center gap-2">
+          <span>— {t.name}, {t.location}</span>
+          <span aria-hidden="true" className="text-sugan-ink/30">·</span>
+          <span className="text-sugan-ink-soft/80">Verified buyer</span>
+        </p>
 
-                    {/* Quote */}
-                    <p className="font-display text-xl sm:text-2xl lg:text-3xl text-sugan-bone leading-relaxed mb-8 italic">
-                      "{testimonial.text}"
-                    </p>
-
-                    {/* Author */}
-                    <div>
-                      <p className="font-display text-lg font-medium text-sugan-bone">
-                        {testimonial.name}
-                      </p>
-                      <p className="text-sugan-bone/60 font-body text-sm">
-                        {testimonial.location}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Navigation */}
-          <div className="flex items-center justify-center gap-4 mt-10">
+        {/* Dot pagination */}
+        <div className="flex items-center justify-center gap-3 mt-12">
+          {testimonials.map((q, i) => (
             <button
-              onClick={goToPrev}
-              className="w-12 h-12 rounded-full border border-sugan-bone/30 flex items-center justify-center text-sugan-bone hover:bg-sugan-bone hover:text-sugan-ink transition-colors"
-              aria-label="Previous testimonial"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-
-            {/* Dots */}
-            <div className="flex gap-2">
-              {testimonials.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setActiveIndex(index)}
-                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                    index === activeIndex
-                      ? 'w-8 bg-sugan-gold'
-                      : 'bg-sugan-bone/30 hover:bg-sugan-bone/50'
-                  }`}
-                  aria-label={`Go to testimonial ${index + 1}`}
-                />
-              ))}
-            </div>
-
-            <button
-              onClick={goToNext}
-              className="w-12 h-12 rounded-full border border-sugan-bone/30 flex items-center justify-center text-sugan-bone hover:bg-sugan-bone hover:text-sugan-ink transition-colors"
-              aria-label="Next testimonial"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
-          </div>
+              key={q.id}
+              onClick={() => goTo(i)}
+              aria-label={`Show testimonial ${i + 1}`}
+              className={`h-1.5 rounded-pill transition-all duration-400 ease-apple ${
+                i === activeIndex
+                  ? 'w-8 bg-sugan-ink'
+                  : 'w-1.5 bg-sugan-ink/20 hover:bg-sugan-ink/40'
+              }`}
+            />
+          ))}
         </div>
       </div>
     </section>

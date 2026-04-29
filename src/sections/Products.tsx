@@ -1,41 +1,69 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { rooms } from '@/data/rooms';
-import * as Icons from 'lucide-react';
+import { rooms, roomProducts } from '@/data/rooms';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Products() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const gridRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
 
-  // Show only first 6 rooms on home page
-  const featuredRooms = rooms.slice(0, 6);
+  // Skip 'shop-all' meta-room; cap at 6 cards for the showcase
+  const showcaseRooms = rooms
+    .filter((r) => r.id !== 'shop-all')
+    .slice(0, 6)
+    .map((r) => ({
+      ...r,
+      heroImage: roomProducts[r.id]?.[0]?.image ?? '/images/SAC030.jpeg',
+    }));
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const cards = gridRef.current?.querySelectorAll('.room-card');
-      if (cards) {
-        gsap.fromTo(
-          cards,
-          { y: 60, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.6,
-            stagger: 0.1,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: sectionRef.current,
-              start: 'top 70%',
-              toggleActions: 'play none none reverse',
-            },
-          }
-        );
-      }
+      const mm = gsap.matchMedia();
+
+      mm.add('(min-width: 1024px)', () => {
+        const track = trackRef.current;
+        const section = sectionRef.current;
+        if (!track || !section) return;
+
+        gsap.to(track, {
+          x: () => -(track.scrollWidth - window.innerWidth) + 'px',
+          ease: 'none',
+          scrollTrigger: {
+            trigger: section,
+            start: 'top top',
+            end: () => '+=' + (track.scrollWidth - window.innerWidth),
+            pin: true,
+            scrub: 1,
+            invalidateOnRefresh: true,
+          },
+        });
+      });
+
+      mm.add('(max-width: 1023px)', () => {
+        // Mobile/tablet: simple fade-in stagger, no pin
+        const cards = trackRef.current?.querySelectorAll('[data-room-card]');
+        if (cards) {
+          gsap.fromTo(
+            cards,
+            { y: 32, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              duration: 0.8,
+              stagger: 0.08,
+              ease: 'power3.out',
+              scrollTrigger: {
+                trigger: sectionRef.current,
+                start: 'top 80%',
+                toggleActions: 'play none none none',
+              },
+            }
+          );
+        }
+      });
     }, sectionRef);
 
     return () => ctx.revert();
@@ -45,78 +73,57 @@ export default function Products() {
     <section
       id="products"
       ref={sectionRef}
-      className="py-20 lg:py-32 bg-sugan-bone section-padding"
+      className="relative bg-sugan-bone overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-12">
-          <div>
-            <p className="section-label mb-3">
-              Shop by Room
-            </p>
-            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-light text-sugan-ink">
-              Find Products for <span className="font-medium">Every Space</span>
-            </h2>
-            <p className="text-sugan-ink/60 font-body mt-4 max-w-xl">
-              Browse our handcrafted wooden products organized by room. 
-              From kitchen essentials to living room decor, find the perfect pieces for your home.
-            </p>
-          </div>
-        </div>
+      {/* Header */}
+      <div className="section-padding pt-section-y pb-12 lg:pb-20 max-w-7xl">
+        <p className="text-eyebrow font-body uppercase text-sugan-ink-soft mb-4">
+          Shop by Room
+        </p>
+        <h2 className="font-display text-display-xl font-light text-sugan-ink max-w-3xl">
+          Find what fits the space.
+        </h2>
+      </div>
 
-        {/* Rooms Grid */}
-        <div
-          ref={gridRef}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
-        >
-          {featuredRooms.map((room) => {
-            const IconComponent = (Icons as unknown as Record<string, React.ComponentType<{ className?: string }>>)[room.icon];
-            
-            return (
-              <Link
-                key={room.id}
-                to={`/shop/${room.id}`}
-                className="room-card group relative bg-white rounded-2xl p-8 transition-all duration-500 hover:shadow-gold-lg hover:-translate-y-2 overflow-hidden"
-              >
-                {/* Background Pattern */}
-                <div className="absolute top-0 right-0 w-32 h-32 bg-sugan-bone/50 rounded-full -mr-16 -mt-16 transition-transform duration-500 group-hover:scale-150" />
-                
-                {/* Icon */}
-                <div className="relative mb-6">
-                  <div className="w-14 h-14 bg-sugan-ink/5 rounded-xl flex items-center justify-center transition-colors duration-300 group-hover:bg-sugan-gold/10">
-                    {IconComponent && <IconComponent className="w-7 h-7 text-sugan-ink transition-colors duration-300 group-hover:text-sugan-gold" />}
-                  </div>
-                </div>
-
-                {/* Content */}
-                <div className="relative">
-                  <h3 className="font-display text-xl font-medium text-sugan-ink mb-2 group-hover:text-sugan-gold transition-colors">
-                    {room.name}
-                  </h3>
-                  <p className="text-sugan-ink/60 font-body text-sm">
-                    {room.description}
-                  </p>
-                </div>
-
-                {/* Arrow */}
-                <div className="absolute bottom-8 right-8 opacity-0 transform translate-x-4 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0">
-                  <Icons.ArrowRight className="w-5 h-5 text-sugan-gold" />
-                </div>
-              </Link>
-            );
-          })}
-        </div>
-
-        {/* View All CTA */}
-        <div className="text-center mt-12">
+      {/* Horizontal track on desktop, vertical stack on mobile */}
+      <div
+        ref={trackRef}
+        className="
+          flex flex-col gap-gutter section-padding pb-section-y
+          lg:flex-row lg:flex-nowrap lg:gap-gutter lg:pb-0 lg:pl-section-x lg:pr-[20vw] lg:will-change-transform
+        "
+      >
+        {showcaseRooms.map((room) => (
           <Link
-            to="/shop"
-            className="inline-flex items-center gap-2 btn-primary"
+            key={room.id}
+            to={`/shop/${room.id}`}
+            data-room-card
+            data-cursor="view"
+            className="
+              group relative shrink-0
+              w-full aspect-[4/5]
+              lg:w-[60vw] lg:h-[80vh] lg:aspect-auto
+              overflow-hidden bg-sugan-bone-dark
+            "
           >
-            Explore All Rooms
-            <ArrowRight className="w-4 h-4" />
+            <img
+              src={room.heroImage}
+              alt={room.name}
+              loading="lazy"
+              className="absolute inset-0 w-full h-full object-cover scale-[1.04] transition-transform duration-700 ease-apple group-hover:scale-100"
+            />
+            {/* Bottom-left gradient + label */}
+            <div className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-sugan-ink/80 via-sugan-ink/30 to-transparent pointer-events-none" />
+            <div className="absolute bottom-0 left-0 right-0 p-8 lg:p-10">
+              <p className="text-eyebrow font-body uppercase text-sugan-bone/70 mb-3">
+                {String(showcaseRooms.indexOf(room) + 1).padStart(2, '0')}
+              </p>
+              <h3 className="font-display text-display-lg font-light text-sugan-bone">
+                {room.name}
+              </h3>
+            </div>
           </Link>
-        </div>
+        ))}
       </div>
     </section>
   );

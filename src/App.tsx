@@ -10,6 +10,7 @@ import Features from '@/sections/Features';
 import Products from '@/sections/Products';
 import About from '@/sections/About';
 import Testimonials from '@/sections/Testimonials';
+import ByTheNumbers from '@/sections/ByTheNumbers';
 import CTA from '@/sections/CTA';
 import Footer from '@/sections/Footer';
 import CartDrawer from '@/sections/CartDrawer';
@@ -87,6 +88,7 @@ function HomePage() {
         <Features />
         <Products />
         <About />
+        <ByTheNumbers />
         <Testimonials />
         <CTA />
       </main>

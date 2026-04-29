@@ -1,49 +1,77 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { MapPin, Calendar, Heart } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import SplitType from 'split-type';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function About() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const imageRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Image reveal with clip-path
-      gsap.fromTo(
-        imageRef.current,
-        { clipPath: 'circle(0% at 50% 50%)' },
-        {
-          clipPath: 'circle(100% at 50% 50%)',
-          duration: 1.5,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top 70%',
-            toggleActions: 'play none none reverse',
-          },
-        }
-      );
-
-      // Content parallax
-      const contentElements = contentRef.current?.querySelectorAll('.animate-item');
-      if (contentElements) {
+      // Image scale-in on enter
+      const image = sectionRef.current?.querySelector('[data-about-image]');
+      if (image) {
         gsap.fromTo(
-          contentElements,
-          { y: 50, opacity: 0 },
+          image,
+          { scale: 1.08, opacity: 0 },
+          {
+            scale: 1,
+            opacity: 1,
+            duration: 1.4,
+            ease: 'expo.out',
+            scrollTrigger: {
+              trigger: image,
+              start: 'top 85%',
+              toggleActions: 'play none none none',
+            },
+          }
+        );
+      }
+
+      // Word-by-word headline reveal
+      const headline = sectionRef.current?.querySelector('[data-about-headline]');
+      if (headline) {
+        const split = new SplitType(headline as HTMLElement, { types: 'lines,words' });
+        if (split.words) {
+          gsap.fromTo(
+            split.words,
+            { y: 24, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              duration: 1,
+              stagger: 0.03,
+              ease: 'expo.out',
+              scrollTrigger: {
+                trigger: headline,
+                start: 'top 85%',
+                toggleActions: 'play none none none',
+              },
+            }
+          );
+        }
+      }
+
+      // Body + CTA fade up
+      const bodyEls = sectionRef.current?.querySelectorAll('[data-about-body]');
+      if (bodyEls) {
+        gsap.fromTo(
+          bodyEls,
+          { y: 16, opacity: 0 },
           {
             y: 0,
             opacity: 1,
             duration: 0.8,
-            stagger: 0.1,
+            stagger: 0.08,
             ease: 'power3.out',
             scrollTrigger: {
-              trigger: sectionRef.current,
-              start: 'top 60%',
-              toggleActions: 'play none none reverse',
+              trigger: bodyEls[0],
+              start: 'top 85%',
+              toggleActions: 'play none none none',
             },
           }
         );
@@ -57,89 +85,69 @@ export default function About() {
     <section
       id="about"
       ref={sectionRef}
-      className="py-20 lg:py-32 bg-sugan-bone section-padding overflow-hidden"
+      className="bg-sugan-bone section-y"
     >
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          {/* Image */}
-          <div ref={imageRef} className="relative">
-            <div className="aspect-square rounded-lg overflow-hidden">
-              <img
-                src="/images/Crafting Excellence hero.jpeg"
-                alt="Crafting Excellence - Sugan Heritage"
-                className="w-full h-full object-cover"
-                loading="lazy"
-              />
-            </div>
-            {/* Floating Badge */}
-            <div className="absolute -bottom-6 -right-6 bg-sugan-ink text-sugan-bone p-6 rounded-lg shadow-xl hidden sm:block">
-              <p className="font-display text-4xl font-semibold">25+</p>
-              <p className="text-sm font-body opacity-80">Years of Excellence</p>
-            </div>
-            {/* Decorative */}
-            <div className="absolute -top-4 -left-4 w-24 h-24 border-2 border-sugan-gold/30 rounded-lg -z-10" />
+      <div className="grid grid-cols-1 lg:grid-cols-[60fr_40fr]">
+        {/* Image (full-bleed left, sticky on desktop) */}
+        <div className="relative h-[70vh] lg:h-auto">
+          <div className="lg:sticky lg:top-0 lg:h-screen overflow-hidden">
+            <img
+              data-about-image
+              src="/images/Crafting Excellence hero.jpeg"
+              alt="Sugan workshop, Jodhpur"
+              loading="lazy"
+              className="w-full h-full object-cover"
+            />
+          </div>
+        </div>
+
+        {/* Text column */}
+        <div className="section-padding py-section-y lg:py-[clamp(96px,15vh,240px)] flex flex-col gap-10 max-w-2xl">
+          <p
+            data-about-body
+            className="text-eyebrow font-body uppercase text-sugan-ink-soft inline-flex items-center gap-3"
+          >
+            <span className="block w-12 h-px bg-sugan-ink/20" aria-hidden="true" />
+            Our heritage
+          </p>
+
+          <h2
+            data-about-headline
+            className="font-display text-display-xl font-light text-sugan-ink"
+          >
+            Crafting excellence,
+            <br />
+            since 1999.
+          </h2>
+
+          <div
+            data-about-body
+            className="space-y-5 font-body text-body-lg text-sugan-ink-soft leading-relaxed"
+          >
+            <p>
+              For over two decades, Sugan has been synonymous with premium
+              wooden craftsmanship in Jodhpur — the heart of Rajasthan's
+              artisanal heritage. What began as a small family workshop has
+              become a small atelier, working only in solid wood.
+            </p>
+            <p>
+              Each piece is hand-shaped by artisans who inherited the trade
+              through generations. We work in sheesham, teak, and acacia —
+              slow-grown, sustainably sourced, and finished with food-safe
+              oils that protect without hiding the grain.
+            </p>
+            <p>
+              Twenty-five years on, the answer to "why solid wood?" hasn't
+              changed: it's the only material that earns more character
+              with use.
+            </p>
           </div>
 
-          {/* Content */}
-          <div ref={contentRef}>
-            <p className="animate-item section-label mb-3">
-              Our Heritage
-            </p>
-            <h2 className="animate-item font-display text-3xl sm:text-4xl lg:text-5xl font-light text-sugan-ink mb-6">
-              Crafting Excellence
-              <br />
-              <span className="font-medium">Since 1999</span>
-            </h2>
-            <div className="animate-item space-y-4 text-sugan-ink/70 font-body leading-relaxed mb-8">
-              <p>
-                For over two decades, Sugan has been synonymous with premium
-                wooden craftsmanship in Jodhpur, the heart of Rajasthan's rich
-                artisanal heritage. What began as a small family workshop has
-                evolved into a trusted brand that brings the warmth of solid wood
-                into homes across India.
-              </p>
-              <p>
-                Each Sugan product is meticulously handcrafted by skilled
-                artisans who have inherited the secrets of woodworking through
-                generations. We use only the finest sustainably sourced solid
-                wood—walnut, teak, oak, and mango—ensuring every piece is not
-                just beautiful, but built to last a lifetime.
-              </p>
-              <p>
-                Our commitment to quality extends beyond craftsmanship. We use
-                food-safe, non-toxic finishes that are healthy for your family
-                and kind to the environment. From kitchen essentials to home
-                décor, every Sugan product tells a story of tradition, passion,
-                and uncompromising quality.
-              </p>
-            </div>
-
-            {/* Features */}
-            <div className="animate-item grid grid-cols-3 gap-4 mb-8">
-              <div className="text-center p-4 bg-white rounded-lg">
-                <MapPin className="w-5 h-5 text-sugan-gold mx-auto mb-2" />
-                <p className="text-xs text-sugan-ink/60 font-body">Jodhpur</p>
-              </div>
-              <div className="text-center p-4 bg-white rounded-lg">
-                <Calendar className="w-5 h-5 text-sugan-gold mx-auto mb-2" />
-                <p className="text-xs text-sugan-ink/60 font-body">Since 1999</p>
-              </div>
-              <div className="text-center p-4 bg-white rounded-lg">
-                <Heart className="w-5 h-5 text-sugan-gold mx-auto mb-2" />
-                <p className="text-xs text-sugan-ink/60 font-body">Handmade</p>
-              </div>
-            </div>
-
-            <button
-              onClick={() =>
-                document
-                  .getElementById('products')
-                  ?.scrollIntoView({ behavior: 'smooth' })
-              }
-              className="animate-item btn-primary"
-            >
-              Explore Our Collection
-            </button>
+          <div data-about-body className="pt-2">
+            <Link to="/contact" className="btn-ghost group">
+              Visit the workshop
+              <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 ease-apple group-hover:translate-x-1" />
+            </Link>
           </div>
         </div>
       </div>
