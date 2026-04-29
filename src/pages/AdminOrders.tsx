@@ -26,9 +26,10 @@ import {
   Mail,
   Copy,
   Check,
+  Trash2,
 } from 'lucide-react';
 import { db } from '@/lib/firebase';
-import { collection, query, onSnapshot, doc, updateDoc, serverTimestamp } from 'firebase/firestore';
+import { collection, query, onSnapshot, doc, updateDoc, serverTimestamp, deleteDoc, where, getDocs, limit } from 'firebase/firestore';
 
 interface OrderItem {
   productId: string;
@@ -78,6 +79,7 @@ interface Order {
   couponCode?: string | null;
   discount?: number;
   paidAmount?: number;
+  orderNumber?: string;
 }
 
 export default function AdminOrders() {
@@ -89,6 +91,7 @@ export default function AdminOrders() {
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [copiedField, setCopiedField] = useState<string | null>(null);
   const [paymentStatusUpdating, setPaymentStatusUpdating] = useState<string | null>(null);
+  const [deletingOrder, setDeletingOrder] = useState<string | null>(null);
 
   // Redirect if not admin
   useEffect(() => {
@@ -156,6 +159,33 @@ export default function AdminOrders() {
       alert('Failed to update payment status. Please try again.');
     } finally {
       setPaymentStatusUpdating(null);
+    }
+  };
+
+  const deleteOrder = async (order: Order) => {
+    const label = order.orderNumber || `#${order.id.slice(-8).toUpperCase()}`;
+    if (!window.confirm(`Delete order ${label}? This cannot be undone.`)) return;
+    setDeletingOrder(order.id);
+    try {
+      // Delete from orders collection
+      await deleteDoc(doc(db, 'orders', order.id));
+      // Also delete from affiliateOrders if it exists
+      if (order.orderNumber) {
+        const affQuery = query(
+          collection(db, 'affiliateOrders'),
+          where('orderNumber', '==', order.orderNumber),
+          limit(10)
+        );
+        const affSnap = await getDocs(affQuery);
+        affSnap.forEach((d) => deleteDoc(d.ref));
+      }
+      // Close dialog if this order was selected
+      setSelectedOrder(null);
+    } catch (err) {
+      console.error('Failed to delete order:', err);
+      alert('Failed to delete order. Please try again.');
+    } finally {
+      setDeletingOrder(null);
     }
   };
 
@@ -445,17 +475,31 @@ export default function AdminOrders() {
                         </Badge>
                       </td>
                       <td className="py-3 px-3 text-right">
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          className="font-body text-xs"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setSelectedOrder(order);
-                          }}
-                        >
-                          View
-                        </Button>
+                        <div className="flex items-center justify-end gap-2">
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            className="font-body text-xs"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setSelectedOrder(order);
+                            }}
+                          >
+                            View
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            className="font-body text-xs border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700"
+                            disabled={deletingOrder === order.id}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              deleteOrder(order);
+                            }}
+                          >
+                            <Trash2 className="w-3 h-3" />
+                          </Button>
+                        </div>
                       </td>
                     </tr>
                   ))}
@@ -525,13 +569,28 @@ export default function AdminOrders() {
                       ₹{order.total?.toLocaleString()}
                     </span>
                   </div>
-                  <p className="font-body text-xs text-sugan-brown/40">
-                    {order.createdAt?.toDate?.().toLocaleDateString('en-IN', {
-                      day: 'numeric',
-                      month: 'short',
-                      year: 'numeric'
-                    }) || 'N/A'}
-                  </p>
+                  <div className="flex items-center justify-between">
+                    <p className="font-body text-xs text-sugan-brown/40">
+                      {order.createdAt?.toDate?.().toLocaleDateString('en-IN', {
+                        day: 'numeric',
+                        month: 'short',
+                        year: 'numeric'
+                      }) || 'N/A'}
+                    </p>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="font-body text-xs border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700"
+                      disabled={deletingOrder === order.id}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        deleteOrder(order);
+                      }}
+                    >
+                      <Trash2 className="w-3 h-3 mr-1" />
+                      Delete
+                    </Button>
+                  </div>
                 </div>
               ))}
               {filteredOrders.length === 0 && (
@@ -839,6 +898,19 @@ export default function AdminOrders() {
                   </div>
                 </div>
               )}
+            </div>
+          )}
+          {selectedOrder && (
+            <div className="pt-6 border-t border-sugan-brown/10 flex justify-end">
+              <Button
+                variant="outline"
+                className="font-body border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700"
+                disabled={deletingOrder === selectedOrder.id}
+                onClick={() => deleteOrder(selectedOrder)}
+              >
+                <Trash2 className="w-4 h-4 mr-2" />
+                {deletingOrder === selectedOrder.id ? 'Deleting...' : 'Delete Order'}
+              </Button>
             </div>
           )}
         </DialogContent>

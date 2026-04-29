@@ -10,10 +10,10 @@ import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { 
   Package, Users, DollarSign, ShoppingCart, Search, Edit, Save, X, User, Mail, MessageSquare,
-  Eye, ArrowRight, MapPin, Phone, CreditCard, Truck, Calendar, Hash, Copy, Check
+  Eye, ArrowRight, MapPin, Phone, CreditCard, Truck, Calendar, Hash, Copy, Check, Trash2
 } from 'lucide-react';
 import { db, functions as fns } from '@/lib/firebase';
-import { collection, query, onSnapshot, doc, updateDoc, serverTimestamp, setDoc, deleteDoc } from 'firebase/firestore';
+import { collection, query, onSnapshot, doc, updateDoc, serverTimestamp, setDoc, deleteDoc, where, getDocs, limit } from 'firebase/firestore';
 import { httpsCallable } from 'firebase/functions';
 import { allProducts } from '@/data/rooms';
 import type { Product } from '@/types';
@@ -146,6 +146,7 @@ export default function Admin() {
   const [newAff, setNewAff] = useState({ code: '', email: '', name: '', discountPercent: 10, commissionPercent: 10 });
   const [affError, setAffError] = useState('');
   const [voidingId, setVoidingId] = useState<string | null>(null);
+  const [deletingOrder, setDeletingOrder] = useState<string | null>(null);
   const realOrders = useMemo(
     () => orders.filter(o => !o.isTrial && o.orderType !== 'trial' && o.orderType !== 'creator'),
     [orders]
@@ -310,6 +311,19 @@ export default function Admin() {
     }
   };
 
+  const updatePaymentStatus = async (orderId: string, paymentStatus: string) => {
+    const prev = orders.find(o => o.id === orderId)?.paymentStatus;
+    setOrders(p => p.map(o => o.id === orderId ? { ...o, paymentStatus } : o));
+    try {
+      await updateDoc(doc(db, 'orders', orderId), { paymentStatus, updatedAt: serverTimestamp() });
+      setStatusError('');
+    } catch (error) {
+      console.error('Error updating payment status:', error);
+      if (prev) setOrders(p => p.map(o => o.id === orderId ? { ...o, paymentStatus: prev } : o));
+      setStatusError('Failed to update payment status. Check admin permissions.');
+    }
+  };
+
   const updateSubmissionStatus = async (submissionId: string, status: string) => {
     try {
       await updateDoc(doc(db, 'contactSubmissions', submissionId), { status });
@@ -336,6 +350,30 @@ export default function Admin() {
       });
     } catch (error) {
       console.error('Error updating order type:', error);
+    }
+  };
+
+  const deleteOrder = async (order: Order) => {
+    const label = order.orderNumber || `#${order.id.slice(-8).toUpperCase()}`;
+    if (!window.confirm(`Delete order ${label}? This cannot be undone.`)) return;
+    setDeletingOrder(order.id);
+    try {
+      await deleteDoc(doc(db, 'orders', order.id));
+      if (order.orderNumber) {
+        const affQuery = query(
+          collection(db, 'affiliateOrders'),
+          where('orderNumber', '==', order.orderNumber),
+          limit(10)
+        );
+        const affSnap = await getDocs(affQuery);
+        affSnap.forEach((d) => deleteDoc(d.ref));
+      }
+      setSelectedOrder(null);
+    } catch (err) {
+      console.error('Failed to delete order:', err);
+      alert('Failed to delete order. Please try again.');
+    } finally {
+      setDeletingOrder(null);
     }
   };
 
@@ -692,18 +730,32 @@ export default function Admin() {
                             </div>
                           </div>
                           <div className="flex flex-col items-end gap-3">
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              className="font-body"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setSelectedOrder(order);
-                              }}
-                            >
-                              <Eye className="w-3 h-3 mr-1" />
-                              View Details
-                            </Button>
+                            <div className="flex items-center gap-2">
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                className="font-body"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setSelectedOrder(order);
+                                }}
+                              >
+                                <Eye className="w-3 h-3 mr-1" />
+                                View Details
+                              </Button>
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                className="font-body border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700"
+                                disabled={deletingOrder === order.id}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  deleteOrder(order);
+                                }}
+                              >
+                                <Trash2 className="w-3 h-3" />
+                              </Button>
+                            </div>
                             <div className="flex items-center gap-3">
                               <select
                                 value={order.status}
@@ -731,6 +783,25 @@ export default function Admin() {
                                 <option value="regular">Regular</option>
                                 <option value="trial">Trial</option>
                                 <option value="creator">Creator</option>
+                              </select>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <span className="font-body text-xs text-sugan-brown/50">Payment:</span>
+                              <select
+                                value={order.paymentStatus || 'pending'}
+                                onClick={(e) => e.stopPropagation()}
+                                onChange={(e) => { e.stopPropagation(); updatePaymentStatus(order.id, e.target.value); }}
+                                className={`font-body text-xs border rounded-md px-2 py-1 cursor-pointer ${
+                                  order.paymentStatus === 'paid' ? 'border-green-300 bg-green-50 text-green-700' :
+                                  order.paymentStatus === 'cod_pending' ? 'border-orange-300 bg-orange-50 text-orange-700' :
+                                  order.paymentStatus === 'failed' ? 'border-red-300 bg-red-50 text-red-700' :
+                                  'border-sugan-brown/20 bg-white text-sugan-brown'
+                                }`}
+                              >
+                                <option value="pending">Pending</option>
+                                <option value="paid">Paid</option>
+                                <option value="cod_pending">COD Pending</option>
+                                <option value="failed">Failed</option>
                               </select>
                             </div>
                           </div>
@@ -1385,6 +1456,19 @@ export default function Admin() {
                     </div>
                   </div>
                 )}
+              </div>
+            )}
+            {selectedOrder && (
+              <div className="pt-6 border-t border-sugan-brown/10 flex justify-end">
+                <Button
+                  variant="outline"
+                  className="font-body border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700"
+                  disabled={deletingOrder === selectedOrder.id}
+                  onClick={() => deleteOrder(selectedOrder)}
+                >
+                  <Trash2 className="w-4 h-4 mr-2" />
+                  {deletingOrder === selectedOrder.id ? 'Deleting...' : 'Delete Order'}
+                </Button>
               </div>
             )}
           </DialogContent>
