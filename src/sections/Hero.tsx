@@ -1,190 +1,99 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
-import { ArrowRight, Award, Users, TreePine, Building2 } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import SplitType from 'split-type';
 
 export default function Hero() {
-  const heroRef = useRef<HTMLDivElement>(null);
-  const imageRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
-  const statsRef = useRef<HTMLDivElement>(null);
-  const navigate = useNavigate();
+  const sectionRef = useRef<HTMLElement>(null);
+  const imageRef = useRef<HTMLImageElement>(null);
+  const eyebrowRef = useRef<HTMLParagraphElement>(null);
+  const headlineRef = useRef<HTMLHeadingElement>(null);
+  const ctaRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Image reveal animation
-      gsap.fromTo(
+      const tl = gsap.timeline();
+
+      tl.fromTo(
         imageRef.current,
-        { scale: 1.2, opacity: 0 },
-        { scale: 1, opacity: 1, duration: 1.5, ease: 'power3.out' }
+        { scale: 1.05, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 1.4, ease: 'expo.out' }
       );
 
-      // Content stagger animation
-      const contentElements = contentRef.current?.querySelectorAll('.animate-item');
-      if (contentElements) {
-        gsap.fromTo(
-          contentElements,
-          { y: 60, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 1,
-            stagger: 0.15,
-            ease: 'power3.out',
-            delay: 0.3,
-          }
+      const split = headlineRef.current
+        ? new SplitType(headlineRef.current, { types: 'lines,words' })
+        : null;
+
+      if (split?.words) {
+        tl.fromTo(
+          split.words,
+          { y: 32, opacity: 0 },
+          { y: 0, opacity: 1, duration: 1.2, stagger: 0.03, ease: 'expo.out' },
+          0.2
         );
       }
 
-      // Stats counter animation
-      const statNumbers = statsRef.current?.querySelectorAll('.stat-number');
-      if (statNumbers) {
-        statNumbers.forEach((stat) => {
-          const target = parseInt(stat.getAttribute('data-target') || '0');
-          gsap.fromTo(
-            stat,
-            { innerText: 0 },
-            {
-              innerText: target,
-              duration: 2,
-              ease: 'power2.out',
-              delay: 0.8,
-              snap: { innerText: 1 },
-              onUpdate: function () {
-                const current = Math.round(parseFloat(stat.textContent || '0'));
-                stat.textContent = current + (target >= 100 ? '+' : '');
-              },
-            }
-          );
-        });
-      }
-    }, heroRef);
+      tl.fromTo(
+        [eyebrowRef.current, ctaRef.current],
+        { y: 16, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.8, stagger: 0.08, ease: 'power3.out' },
+        '-=0.6'
+      );
+    }, sectionRef);
 
     return () => ctx.revert();
   }, []);
 
-  const scrollToProducts = () => {
-    const element = document.getElementById('products');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
   return (
     <section
       id="home"
-      ref={heroRef}
-      className="min-h-screen relative overflow-hidden bg-sugan-bone"
+      ref={sectionRef}
+      className="relative w-full h-screen min-h-[640px] overflow-hidden bg-sugan-bone-dark"
     >
-      <div className="w-full min-h-screen flex flex-col lg:flex-row">
-        {/* Content Side */}
-        <div className="w-full lg:w-[45%] flex flex-col justify-center section-padding py-32 lg:py-20 order-2 lg:order-1">
-          <div ref={contentRef} className="max-w-xl">
-            <p className="animate-item text-sugan-gold font-body text-sm tracking-[0.2em] uppercase mb-4">
-              Since 1999 • Jodhpur, India
-            </p>
-            <h1 className="animate-item font-display text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-light text-sugan-ink leading-[1.1] mb-6">
-              Handcrafted
-              <br />
-              <span className="font-medium">Solid Wood</span>
-              <br />
-              Furniture
-            </h1>
-            <p className="animate-item text-sugan-ink/70 font-body text-base lg:text-lg leading-relaxed mb-8 max-w-md">
-              Experience the perfect blend of traditional Jodhpur craftsmanship
-              and modern design. Each piece tells a story of heritage and
-              excellence.
-            </p>
-            <div className="animate-item flex flex-col sm:flex-row gap-4">
-              <button
-                onClick={scrollToProducts}
-                className="btn-primary flex items-center justify-center gap-2 group"
-              >
-                Explore Collection
-                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-              </button>
-              <button
-                onClick={() => navigate('/bulk-orders')}
-                className="btn-outline flex items-center justify-center gap-2 group"
-              >
-                <Building2 className="w-4 h-4" />
-                BULK/TRADE ORDERS
-              </button>
-            </div>
+      {/* Full-bleed image */}
+      <img
+        ref={imageRef}
+        src="/images/SAC030.jpeg"
+        alt="Solid wood furniture, hand-shaped in Jodhpur"
+        data-cursor="view"
+        className="absolute inset-0 w-full h-full object-cover will-change-transform"
+      />
 
-            {/* Stats */}
-            <div
-              ref={statsRef}
-              className="animate-item grid grid-cols-3 gap-6 mt-12 pt-8 border-t border-sugan-ink/10"
+      {/* Bottom gradient — covers ~40% from below */}
+      <div className="absolute inset-x-0 bottom-0 h-[55%] bg-gradient-to-t from-sugan-bone via-sugan-bone/40 to-transparent pointer-events-none" />
+
+      {/* Content baseline-aligned to bottom-left */}
+      <div className="absolute inset-x-0 bottom-0 section-padding pb-[clamp(40px,8vw,96px)]">
+        <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between lg:gap-16">
+          <div className="flex flex-col gap-5 max-w-4xl">
+            <p
+              ref={eyebrowRef}
+              className="text-eyebrow font-body uppercase text-sugan-ink-soft"
             >
-              <div className="text-center sm:text-left">
-                <div className="flex items-center justify-center sm:justify-start gap-2 mb-1">
-                  <Award className="w-4 h-4 text-sugan-gold" />
-                  <span
-                    className="stat-number font-display text-2xl sm:text-3xl font-semibold text-sugan-ink"
-                    data-target="25"
-                  >
-                    0
-                  </span>
-                </div>
-                <p className="text-xs text-sugan-ink/60 font-body">
-                  Years Experience
-                </p>
-              </div>
-              <div className="text-center sm:text-left">
-                <div className="flex items-center justify-center sm:justify-start gap-2 mb-1">
-                  <Users className="w-4 h-4 text-sugan-gold" />
-                  <span
-                    className="stat-number font-display text-2xl sm:text-3xl font-semibold text-sugan-ink"
-                    data-target="5000"
-                  >
-                    0
-                  </span>
-                </div>
-                <p className="text-xs text-sugan-ink/60 font-body">
-                  Happy Customers
-                </p>
-              </div>
-              <div className="text-center sm:text-left">
-                <div className="flex items-center justify-center sm:justify-start gap-2 mb-1">
-                  <TreePine className="w-4 h-4 text-sugan-gold" />
-                  <span
-                    className="stat-number font-display text-2xl sm:text-3xl font-semibold text-sugan-ink"
-                    data-target="100"
-                  >
-                    0
-                  </span>
-                </div>
-                <p className="text-xs text-sugan-ink/60 font-body">
-                  % Solid Wood
-                </p>
-              </div>
-            </div>
+              Jodhpur · Atelier · Est. 1999
+            </p>
+            <h1
+              ref={headlineRef}
+              className="font-display text-display-2xl font-light text-sugan-ink"
+            >
+              Solid wood,
+              <br />
+              shaped by hand.
+            </h1>
           </div>
-        </div>
 
-        {/* Image Side */}
-        <div className="w-full lg:w-[55%] relative h-[50vh] lg:h-screen order-1 lg:order-2">
-          <div
-            ref={imageRef}
-            className="absolute inset-0 lg:inset-y-0 lg:right-0 lg:left-[-10%]"
-          >
-            <img
-              src="/images/SAC030.jpeg"
-              alt="Handcrafted wooden product"
-              className="w-full h-full object-cover"
-            />
-            {/* Gradient overlay for mobile */}
-            <div className="absolute inset-0 bg-gradient-to-t from-sugan-bone via-transparent to-transparent lg:hidden" />
-            {/* Subtle gradient for desktop */}
-            <div className="hidden lg:block absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-sugan-bone to-transparent" />
+          <div ref={ctaRef} className="lg:pb-3">
+            <Link
+              to="/shop"
+              className="btn-ghost group"
+            >
+              Explore the collection
+              <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 ease-apple group-hover:translate-x-1" />
+            </Link>
           </div>
         </div>
       </div>
-
-      {/* Decorative Elements */}
-      <div className="absolute bottom-10 left-10 w-20 h-20 border border-sugan-gold/20 rounded-full hidden lg:block animate-float" />
-      <div className="absolute top-1/3 right-[10%] w-3 h-3 bg-sugan-gold/40 rounded-full hidden lg:block animate-float animation-delay-500" />
     </section>
   );
 }

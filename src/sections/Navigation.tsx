@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { ShoppingBag, Search, Menu, X, ArrowRight, User } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { gsap } from 'gsap';
 import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
 import { allProducts } from '@/data/rooms';
@@ -16,6 +17,7 @@ export default function Navigation() {
   const location = useLocation();
   const navigate = useNavigate();
   const isHomePage = location.pathname === '/';
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,7 +27,6 @@ export default function Navigation() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Filter products based on search query
   useEffect(() => {
     if (searchQuery.trim()) {
       const filtered = allProducts.filter(
@@ -39,6 +40,18 @@ export default function Navigation() {
       setSearchResults([]);
     }
   }, [searchQuery]);
+
+  // Stagger mobile menu items in
+  useEffect(() => {
+    if (isMobileMenuOpen && mobileMenuRef.current) {
+      const items = mobileMenuRef.current.querySelectorAll('[data-menu-item]');
+      gsap.fromTo(
+        items,
+        { x: -24, opacity: 0 },
+        { x: 0, opacity: 1, duration: 0.5, stagger: 0.06, ease: 'power3.out' }
+      );
+    }
+  }, [isMobileMenuOpen]);
 
   const scrollToSection = (id: string) => {
     if (!isHomePage) {
@@ -73,98 +86,88 @@ export default function Navigation() {
     setSearchQuery('');
   };
 
+  // Use mix-blend-difference only on the home page hero (transparent state).
+  // Once scrolled or off-home, we have a panel under the nav, so blend mode is dropped.
+  const useBlendMode = isHomePage && !isScrolled;
+
+  const desktopLinks = isHomePage ? (
+    <>
+      <button onClick={() => scrollToSection('home')} className="nav-link">Home</button>
+      <Link to="/shop" className="nav-link">Shop</Link>
+      <Link to="/bulk-orders" className="nav-link">Bulk/Trade</Link>
+      <button onClick={() => scrollToSection('about')} className="nav-link">About</button>
+      <Link to="/contact" className="nav-link">Contact</Link>
+    </>
+  ) : (
+    <>
+      <Link to="/" className="nav-link">Home</Link>
+      <Link to="/shop" className="nav-link">Shop</Link>
+      <Link to="/bulk-orders" className="nav-link">Bulk/Trade</Link>
+      <Link to="/#about" className="nav-link">About</Link>
+      <Link to="/contact" className="nav-link">Contact</Link>
+    </>
+  );
+
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          isScrolled || !isHomePage
-            ? 'bg-sugan-bone/95 backdrop-blur-md py-4 shadow-sm border-b border-sugan-gold/15'
-            : 'bg-transparent py-6'
+        className={`fixed top-0 left-0 right-0 z-50 transition-[background-color,backdrop-filter,padding] duration-400 ease-apple ${
+          useBlendMode
+            ? 'bg-transparent py-6 mix-blend-difference text-white'
+            : isScrolled
+              ? 'bg-sugan-bone/80 backdrop-blur-xl border-b border-sugan-ink/[0.08] py-3'
+              : 'bg-sugan-bone/80 backdrop-blur-xl border-b border-sugan-ink/[0.08] py-4'
         }`}
       >
         <div className="w-full section-padding">
           <div className="flex items-center justify-between">
-            {/* Logo */}
+            {/* Logo with single gold dot accent */}
             <Link
               to="/"
-              className={`font-display text-2xl md:text-3xl font-semibold text-sugan-ink transition-all duration-500 ${
-                isScrolled ? 'scale-90' : 'scale-100'
-              }`}
+              className="font-display text-2xl md:text-3xl font-light tracking-[-0.02em] inline-flex items-baseline"
             >
               Sugan
+              <span
+                className="inline-block w-1.5 h-1.5 rounded-full bg-sugan-gold ml-1 align-middle translate-y-[-0.1em]"
+                aria-hidden="true"
+              />
             </Link>
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center gap-10">
-              {isHomePage ? (
-                <>
-                  <button onClick={() => scrollToSection('home')} className="nav-link">
-                    Home
-                  </button>
-                  <Link to="/shop" className="nav-link">
-                    Shop
-                  </Link>
-                  <Link to="/bulk-orders" className="nav-link">
-                    Bulk/Trade
-                  </Link>
-                  <button onClick={() => scrollToSection('about')} className="nav-link">
-                    About
-                  </button>
-                  <Link to="/contact" className="nav-link">
-                    Contact
-                  </Link>
-                </>
-              ) : (
-                <>
-                  <Link to="/" className="nav-link">
-                    Home
-                  </Link>
-                  <Link to="/shop" className="nav-link">
-                    Shop
-                  </Link>
-                  <Link to="/bulk-orders" className="nav-link">
-                    Bulk/Trade
-                  </Link>
-                  <Link to="/#about" className="nav-link">
-                    About
-                  </Link>
-                  <Link to="/contact" className="nav-link">
-                    Contact
-                  </Link>
-                </>
-              )}
+              {desktopLinks}
             </div>
 
             {/* Actions */}
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-1.5 md:gap-3">
               <button
                 onClick={() => setIsSearchOpen(true)}
-                className="p-2 text-sugan-ink hover:text-sugan-gold transition-colors"
+                className="p-2 transition-colors hover:text-sugan-gold"
                 aria-label="Search"
               >
                 <Search className="w-5 h-5" />
               </button>
               <button
                 onClick={() => setIsCartOpen(true)}
-                className="relative p-2 text-sugan-ink hover:text-sugan-gold transition-colors"
+                className="inline-flex items-center gap-1.5 p-2 transition-colors hover:text-sugan-gold"
                 aria-label="Cart"
               >
                 <ShoppingBag className="w-5 h-5" />
                 {totalItems > 0 && (
-                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-sugan-gold text-white text-xs rounded-full flex items-center justify-center font-medium animate-bounce">
-                    {totalItems}
+                  <span className="font-body text-[13px] tabular-nums leading-none">
+                    [{totalItems}]
                   </span>
                 )}
               </button>
               <Link
-                to={user ? "/account" : "/login"}
-                className="p-2 text-sugan-ink hover:text-sugan-gold transition-colors"
+                to={user ? '/account' : '/login'}
+                className="p-2 transition-colors hover:text-sugan-gold"
                 aria-label="Account"
               >
                 <User className="w-5 h-5" />
               </Link>
               <button
-                className="md:hidden p-2 text-sugan-ink"
+                className="md:hidden p-2"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 aria-label="Menu"
               >
@@ -175,75 +178,60 @@ export default function Navigation() {
         </div>
       </nav>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu — left-aligned full-bleed editorial list */}
       <div
-        className={`fixed inset-0 z-40 bg-sugan-bone transition-transform duration-500 md:hidden ${
+        className={`fixed inset-0 z-40 bg-sugan-bone transition-transform duration-400 ease-apple md:hidden ${
           isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        <div className="flex flex-col items-center justify-center h-full gap-8">
-          <Link
-            to="/"
-            onClick={() => setIsMobileMenuOpen(false)}
-            className="font-display text-3xl text-sugan-ink hover:text-sugan-gold transition-colors"
-          >
-            Home
-          </Link>
-          <Link
-            to="/shop"
-            onClick={() => setIsMobileMenuOpen(false)}
-            className="font-display text-3xl text-sugan-ink hover:text-sugan-gold transition-colors"
-          >
-            Shop
-          </Link>
-          <Link
-            to="/bulk-orders"
-            onClick={() => setIsMobileMenuOpen(false)}
-            className="font-display text-3xl text-sugan-ink hover:text-sugan-gold transition-colors"
-          >
-            Bulk/Trade
-          </Link>
-          <button
-            onClick={() => scrollToSection('about')}
-            className="font-display text-3xl text-sugan-ink hover:text-sugan-gold transition-colors"
-          >
-            About
-          </button>
-          <Link
-            to="/contact"
-            onClick={() => setIsMobileMenuOpen(false)}
-            className="font-display text-3xl text-sugan-ink hover:text-sugan-gold transition-colors"
-          >
-            Contact
-          </Link>
+        <div
+          ref={mobileMenuRef}
+          className="flex flex-col h-full pt-28 pb-12 section-padding"
+        >
+          {[
+            { label: 'Home', to: '/' },
+            { label: 'Shop', to: '/shop' },
+            { label: 'Bulk / Trade', to: '/bulk-orders' },
+            { label: 'About', to: '/#about' },
+            { label: 'Contact', to: '/contact' },
+          ].map((item) => (
+            <Link
+              key={item.label}
+              to={item.to}
+              data-menu-item
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="block py-5 font-display text-display-lg font-light text-sugan-ink border-b border-sugan-ink/10 transition-colors hover:text-sugan-gold"
+            >
+              {item.label}
+            </Link>
+          ))}
         </div>
       </div>
 
       {/* Search Modal */}
       {isSearchOpen && (
-        <div className="fixed inset-0 z-50 bg-sugan-ink/80 backdrop-blur-sm flex items-start justify-center pt-24 px-4">
-          <div className="w-full max-w-2xl bg-sugan-bone rounded-lg shadow-2xl overflow-hidden">
-            {/* Search Input */}
+        <div className="fixed inset-0 z-50 bg-sugan-ink/95 backdrop-blur-2xl flex items-start justify-center pt-24 px-4 sm:px-6">
+          <div className="w-full max-w-2xl bg-sugan-bone rounded-none overflow-hidden shadow-lift">
             <form onSubmit={handleSearchSubmit} className="relative border-b border-sugan-ink/10">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-sugan-ink/40" />
+              <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-sugan-ink/40" />
               <input
                 type="text"
-                placeholder="Search products..."
+                placeholder="Search"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-12 pr-12 py-4 bg-transparent font-body text-sugan-ink placeholder:text-sugan-ink/40 focus:outline-none"
+                className="w-full pl-14 pr-12 py-6 bg-transparent font-display font-light text-display-md text-sugan-ink placeholder:text-sugan-ink/30 focus:outline-none"
                 autoFocus
               />
               <button
                 type="button"
                 onClick={() => setIsSearchOpen(false)}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-sugan-ink/40 hover:text-sugan-ink"
+                className="absolute right-5 top-1/2 -translate-y-1/2 text-sugan-ink/40 hover:text-sugan-ink transition-colors"
+                aria-label="Close search"
               >
                 <X className="w-5 h-5" />
               </button>
             </form>
 
-            {/* Search Results */}
             <div className="max-h-96 overflow-y-auto">
               {searchResults.length > 0 ? (
                 <div className="py-2">
@@ -251,40 +239,45 @@ export default function Navigation() {
                     <button
                       key={product.id}
                       onClick={() => handleProductClick(product.id)}
-                      className="w-full px-4 py-3 flex items-center gap-4 hover:bg-white transition-colors text-left"
+                      className="w-full px-5 py-4 flex items-center gap-4 hover:bg-sugan-bone-dark transition-colors text-left"
                     >
                       <img
                         src={product.image}
                         alt={product.name}
-                        className="w-12 h-12 rounded object-cover"
+                        className="w-12 h-12 object-cover"
                         loading="lazy"
                       />
                       <div className="flex-1">
-                        <p className="font-body text-sm text-sugan-ink">{product.name}</p>
-                        <p className="text-xs text-sugan-gold">₹{product.price.toLocaleString()}</p>
+                        <p className="font-body text-[15px] text-sugan-ink">{product.name}</p>
+                        <p className="text-[12px] text-sugan-ink-soft tabular-nums mt-0.5">
+                          ₹{product.price.toLocaleString()}
+                        </p>
                       </div>
                       <ArrowRight className="w-4 h-4 text-sugan-ink/40" />
                     </button>
                   ))}
                 </div>
               ) : searchQuery.trim() ? (
-                <div className="py-8 text-center">
-                  <p className="text-sugan-ink/60 font-body">No products found</p>
+                <div className="py-10 text-center">
+                  <p className="text-sugan-ink-soft font-body text-[13px] tracking-[0.04em]">
+                    No products found
+                  </p>
                 </div>
               ) : (
-                <div className="py-8 text-center">
-                  <p className="text-sugan-ink/40 font-body text-sm">Type to search products</p>
+                <div className="py-10 text-center">
+                  <p className="text-sugan-ink/40 font-body text-[11px] uppercase tracking-[0.18em]">
+                    Type to search
+                  </p>
                 </div>
               )}
             </div>
 
-            {/* View All Button */}
             {searchResults.length > 0 && (
               <div className="border-t border-sugan-ink/10 p-4">
                 <Link
                   to="/shop"
                   onClick={() => setIsSearchOpen(false)}
-                  className="flex items-center justify-center gap-2 text-sugan-gold font-body text-sm hover:underline"
+                  className="flex items-center justify-center gap-2 text-sugan-ink font-body text-[11px] uppercase tracking-[0.18em] hover:text-sugan-gold transition-colors"
                 >
                   View all products
                   <ArrowRight className="w-4 h-4" />

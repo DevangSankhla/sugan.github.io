@@ -89,6 +89,11 @@ module.exports = {
       transitionTimingFunction: {
         apple: "cubic-bezier(0.16, 1, 0.3, 1)",
       },
+      transitionDuration: {
+        400: "400ms",
+        800: "800ms",
+        1200: "1200ms",
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },

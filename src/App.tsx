@@ -16,6 +16,8 @@ import CartDrawer from '@/sections/CartDrawer';
 import MobileCartButton from '@/components/MobileCartButton';
 import BottomNavigation from '@/components/BottomNavigation';
 import ErrorBoundary from '@/components/ErrorBoundary';
+import Cursor from '@/components/Cursor';
+import Marquee from '@/components/Marquee';
 import './App.css';
 
 // Lazy-load all pages so each route only loads its JS when visited
@@ -62,7 +64,6 @@ function ScrollToTop() {
 // Home page component
 function HomePage() {
   useEffect(() => {
-    document.documentElement.style.scrollBehavior = 'smooth';
     ScrollTrigger.refresh();
 
     return () => {
@@ -74,6 +75,15 @@ function HomePage() {
     <>
       <main>
         <Hero />
+        <Marquee
+          items={[
+            'Handcrafted in Jodhpur',
+            'Solid Sheesham',
+            'Since 1999',
+            'Free Shipping ₹1999+',
+            'Worldwide Atelier',
+          ]}
+        />
         <Features />
         <Products />
         <About />
@@ -98,6 +108,9 @@ function App() {
           
           {/* Navigation */}
           <Navigation />
+
+          {/* Custom cursor (pointer-fine devices only) */}
+          <Cursor />
 
           {/* Routes */}
           <ErrorBoundary>
