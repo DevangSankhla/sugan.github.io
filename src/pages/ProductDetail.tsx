@@ -187,12 +187,12 @@ export default function ProductDetail() {
   return (
     <div className="bg-sugan-bone">
       {/* Above the fold: full-viewport image, no overlay */}
-      <div className="relative h-screen min-h-[640px] w-full overflow-hidden bg-sugan-bone-dark">
+      <div className="relative h-[70vh] sm:h-screen min-h-[400px] sm:min-h-[640px] w-full overflow-hidden bg-sugan-bone-dark">
         <img
           src={heroImage}
           alt={product.name}
           data-cursor="view"
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-contain sm:object-cover"
         />
         {/* Soft gradient at the bottom only - no text overlay */}
         <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-sugan-bone via-sugan-bone/30 to-transparent pointer-events-none" />
@@ -219,23 +219,23 @@ export default function ProductDetail() {
             galleryImages.map((src, i) => (
               <div
                 key={`${src}-${i}`}
-                className="relative w-full aspect-[4/5] overflow-hidden bg-sugan-bone-dark"
+                className="relative w-full aspect-square lg:aspect-[4/5] overflow-hidden bg-sugan-bone-dark"
               >
                 <img
                   src={src}
                   alt={`${product.name} - view ${i + 2}`}
                   loading="lazy"
-                  className="absolute inset-0 w-full h-full object-cover"
+                  className="absolute inset-0 w-full h-full object-contain lg:object-cover"
                 />
               </div>
             ))
           ) : (
-            <div className="relative w-full aspect-[4/5] overflow-hidden bg-sugan-bone-dark">
+            <div className="relative w-full aspect-square lg:aspect-[4/5] overflow-hidden bg-sugan-bone-dark">
               <img
                 src={heroImage}
                 alt={product.name}
                 loading="lazy"
-                className="absolute inset-0 w-full h-full object-cover"
+                className="absolute inset-0 w-full h-full object-contain lg:object-cover"
               />
             </div>
           )}
@@ -244,7 +244,7 @@ export default function ProductDetail() {
           {galleryVideos.map((src, i) => (
             <div
               key={`video-${i}`}
-              className="relative w-full aspect-[4/5] overflow-hidden bg-sugan-bone-dark"
+              className="relative w-full aspect-square lg:aspect-[4/5] overflow-hidden bg-sugan-bone-dark"
             >
               <video
                 src={src}

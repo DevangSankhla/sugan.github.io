@@ -20,6 +20,8 @@ const categories = [
   { id: 'coasters', name: 'Coasters' },
   { id: 'cutlery', name: 'Cutlery & Organizers' },
   { id: 'chopping-boards', name: 'Chopping Boards' },
+  { id: 'napkin-holders', name: 'Napkin Holders' },
+  { id: 'side-tables', name: 'Side Tables' },
   { id: 'pooja', name: 'Pooja Essentials' },
 ];
 
@@ -65,6 +67,12 @@ function getCategoryProducts(categoryId: string): Product[] {
           p.name.toLowerCase().includes('chopping') ||
           p.name.toLowerCase().includes('board')
       );
+      break;
+    case 'napkin-holders':
+      products = allProducts.filter((p) => p.name.toLowerCase().includes('napkin'));
+      break;
+    case 'side-tables':
+      products = allProducts.filter((p) => p.name.toLowerCase().includes('side table'));
       break;
     case 'pooja':
       products = roomProducts['pooja'] || [];

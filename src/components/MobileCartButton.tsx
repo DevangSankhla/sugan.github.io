@@ -1,8 +1,13 @@
 import { ShoppingCart } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
 import { useCart } from '@/context/CartContext';
 
 export default function MobileCartButton() {
   const { totalItems, setIsCartOpen } = useCart();
+  const { pathname } = useLocation();
+
+  // Hide on product detail pages — the sticky bottom bar already provides cart actions
+  if (pathname.startsWith('/product/')) return null;
 
   return (
     <button
