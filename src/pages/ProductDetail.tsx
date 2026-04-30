@@ -186,7 +186,7 @@ export default function ProductDetail() {
   })();
 
   return (
-    <div className="bg-sugan-bone">
+    <div className="bg-sugan-bone pb-24 lg:pb-0">
       {/* Above the fold: full-viewport image, no overlay */}
       <div className="relative h-[70vh] sm:h-screen min-h-[400px] sm:min-h-[640px] w-full overflow-hidden bg-sugan-bone-dark">
         <img

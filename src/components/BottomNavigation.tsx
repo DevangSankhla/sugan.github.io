@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Home, ShoppingBag, Briefcase, ShoppingCart, User } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
@@ -15,14 +14,9 @@ type NavItem = {
 export default function BottomNavigation() {
   const location = useLocation();
   const { totalItems, isCartOpen, setIsCartOpen } = useCart();
-  const [isVisible, setIsVisible] = useState(false);
 
-  useEffect(() => {
-    const handleScroll = () => setIsVisible(window.scrollY > 200);
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
+  // Product detail pages have their own sticky add-to-bag bar on mobile, so hide
+  // the bottom nav there to avoid stacking two bars.
   const hiddenPaths = ['/checkout', '/admin', '/login', '/signup', '/product/'];
   const shouldHide = hiddenPaths.some((path) => location.pathname.startsWith(path));
   if (shouldHide) return null;
@@ -43,9 +37,7 @@ export default function BottomNavigation() {
 
   return (
     <nav
-      className={`fixed bottom-0 left-0 right-0 bg-sugan-bone/95 backdrop-blur-2xl border-t border-sugan-ink/10 lg:hidden z-50 safe-area-inset transition-transform duration-400 ease-apple ${
-        isVisible ? 'translate-y-0' : 'translate-y-full'
-      }`}
+      className="fixed bottom-0 left-0 right-0 bg-sugan-bone/95 backdrop-blur-2xl border-t border-sugan-ink/10 lg:hidden z-50 safe-area-inset"
     >
       <div className="flex items-stretch justify-around">
         {navItems.map((item, index) => {

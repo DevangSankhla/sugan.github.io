@@ -14,7 +14,6 @@ import ByTheNumbers from '@/sections/ByTheNumbers';
 import CTA from '@/sections/CTA';
 import Footer from '@/sections/Footer';
 import CartDrawer from '@/sections/CartDrawer';
-import MobileCartButton from '@/components/MobileCartButton';
 import BottomNavigation from '@/components/BottomNavigation';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import Cursor from '@/components/Cursor';
@@ -105,7 +104,7 @@ function App() {
     <AuthProvider>
     <CartProvider>
       <BrowserRouter>
-        <div className="relative min-h-screen bg-sugan-bone">
+        <div className="relative min-h-screen bg-sugan-bone pb-16 lg:pb-0">
           {/* Grain Overlay */}
           <div className="grain-overlay" aria-hidden="true" />
 
@@ -149,9 +148,6 @@ function App() {
 
           {/* Cart Drawer */}
           <CartDrawer />
-
-          {/* Mobile Cart Button */}
-          <MobileCartButton />
 
           {/* Bottom Navigation (Mobile) */}
           <BottomNavigation />

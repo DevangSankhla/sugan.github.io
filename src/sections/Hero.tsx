@@ -57,7 +57,7 @@ export default function Hero() {
         - Desktop: image is full viewport with content layered baseline-aligned over the bottom gradient.
         Single content block with refs; the wrapping div toggles between flow (mobile) and absolute (desktop).
       */}
-      <div className="relative w-full h-[70vh] lg:h-screen lg:min-h-[640px] overflow-hidden bg-sugan-bone-dark">
+      <div className="relative w-full h-[70svh] lg:h-[100dvh] lg:min-h-[640px] overflow-hidden bg-sugan-bone-dark">
         <img
           ref={imageRef}
           src="/images/SAC030.jpeg"

@@ -59,7 +59,11 @@
       touch-action: manipulation;
     }
 
-    button, a {
+    /* Icon-only buttons get a 44x44 touch target. Anchors are intentionally
+       NOT included so inline text links don't break paragraph/footer layouts.
+       For anchors that need a touch target, add the .tap-target class. */
+    button:where([aria-label]:not(.btn-primary):not(.btn-outline):not(.btn-ghost)),
+    .tap-target {
       min-height: 44px;
       min-width: 44px;
     }

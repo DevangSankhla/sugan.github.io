@@ -12,7 +12,6 @@ import {
 } from '@/data/rooms';
 import type { Product } from '@/types';
 import ProductCard from '@/components/ProductCard';
-import MobileCartButton from '@/components/MobileCartButton';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -228,7 +227,6 @@ export default function RoomShop() {
         )}
       </section>
 
-      <MobileCartButton />
     </div>
   );
 }

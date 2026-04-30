@@ -49,6 +49,15 @@ export default function Navigation() {
     }
   }, [isMobileMenuOpen]);
 
+  // Lock body scroll while either the mobile menu or the search modal is open
+  useEffect(() => {
+    const shouldLock = isMobileMenuOpen || isSearchOpen;
+    document.body.style.overflow = shouldLock ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMobileMenuOpen, isSearchOpen]);
+
   const scrollToSection = (id: string) => {
     if (!isHomePage) {
       navigate('/');
@@ -215,7 +224,7 @@ export default function Navigation() {
                 placeholder="Search"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-14 pr-12 py-6 bg-transparent font-display font-light text-display-md text-sugan-ink placeholder:text-sugan-ink/30 focus:outline-none"
+                className="w-full pl-14 pr-12 py-5 sm:py-6 bg-transparent font-display font-light text-2xl sm:text-display-md text-sugan-ink placeholder:text-sugan-ink/30 focus:outline-none"
                 autoFocus
               />
               <button
