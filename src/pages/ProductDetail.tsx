@@ -12,6 +12,29 @@ import RelatedProducts from '@/components/RelatedProducts';
 
 type SpecRow = { label: string; value: string };
 
+function ExpandableDescription({ product }: { product: import('@/types').Product }) {
+  const isTruncated = product.description.trimEnd().endsWith('...');
+  const fullText = product.details?.story || product.description;
+  const shortText = isTruncated ? product.description : null;
+  const [expanded, setExpanded] = useState(!isTruncated);
+
+  return (
+    <div className="border-t border-sugan-ink/10 pt-6 flex flex-col gap-3">
+      <p className="font-body text-body text-sugan-ink-soft leading-relaxed">
+        {expanded ? fullText : (shortText ?? fullText)}
+      </p>
+      {(isTruncated || (product.details?.story && product.details.story !== product.description)) && (
+        <button
+          onClick={() => setExpanded((v) => !v)}
+          className="self-start text-eyebrow font-body uppercase text-sugan-ink border-b border-sugan-ink/30 pb-0.5 hover:border-sugan-ink transition-colors"
+        >
+          {expanded ? 'Read less' : 'Read more'}
+        </button>
+      )}
+    </div>
+  );
+}
+
 export default function ProductDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -237,7 +260,7 @@ export default function ProductDetail() {
 
         {/* Sticky info panel */}
         <div className="lg:sticky lg:top-0 lg:h-screen lg:overflow-y-auto">
-          <div className="section-padding py-section-y flex flex-col gap-8">
+          <div className="section-padding pt-8 pb-12 lg:pt-12 flex flex-col gap-6">
             {/* Eyebrow */}
             <div className="flex items-center gap-3 text-eyebrow font-body uppercase text-sugan-ink-soft">
               {product.category && <span>{product.category}</span>}
@@ -276,11 +299,6 @@ export default function ProductDetail() {
               ₹{displayPrice.toLocaleString()}
             </p>
 
-            {/* Description */}
-            <p className="font-body text-body text-sugan-ink-soft leading-relaxed">
-              {product.description}
-            </p>
-
             {/* Stock + hot tag */}
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
               <span
@@ -303,23 +321,21 @@ export default function ProductDetail() {
               )}
             </div>
 
-            {/* Size variants */}
+            {/* Size variants — ABOVE description so they're always in view */}
             {hasSizeVariants(product) && (
               <div className="flex flex-col gap-3">
-                <p className="text-eyebrow font-body uppercase text-sugan-ink-soft">
-                  Size
-                </p>
+                <p className="text-eyebrow font-body uppercase text-sugan-ink-soft">Size</p>
                 <div className="flex flex-wrap gap-2">
                   {getAllSizeVariants(product).map((variant) => {
                     const isActive = variant.product.id === product.id;
-                    const className = `px-4 py-2 rounded-pill border font-body text-eyebrow uppercase transition-colors duration-300 ease-apple tabular-nums ${
+                    const cls = `px-4 py-2 rounded-pill border font-body text-eyebrow uppercase transition-colors duration-300 ease-apple tabular-nums ${
                       isActive
                         ? 'border-sugan-ink bg-sugan-ink text-sugan-bone'
                         : 'border-sugan-ink/20 text-sugan-ink hover:border-sugan-ink'
                     }`;
                     if (isActive) {
                       return (
-                        <span key={variant.product.id} className={className}>
+                        <span key={variant.product.id} className={cls}>
                           {variant.size} · ₹{variant.product.price.toLocaleString()}
                         </span>
                       );
@@ -329,7 +345,7 @@ export default function ProductDetail() {
                         key={variant.product.id}
                         to={`/product/${variant.product.id}`}
                         state={{ from: fromPage || `/shop/${product.room}` }}
-                        className={className}
+                        className={cls}
                       >
                         {variant.size} · ₹{variant.product.price.toLocaleString()}
                       </Link>
@@ -342,9 +358,7 @@ export default function ProductDetail() {
             {/* Variant pricing (size/color from details) */}
             {product.details?.variants && product.details.variants.length > 0 && (
               <div className="flex flex-col gap-3">
-                <p className="text-eyebrow font-body uppercase text-sugan-ink-soft">
-                  Option
-                </p>
+                <p className="text-eyebrow font-body uppercase text-sugan-ink-soft">Option</p>
                 <div className="flex flex-wrap gap-2">
                   {product.details.variants.map((v, idx) => {
                     const active = selectedVariant === idx;
@@ -369,9 +383,7 @@ export default function ProductDetail() {
             {/* Quantity + Add to bag */}
             <div className="flex flex-col gap-4 pt-2">
               <div className="flex items-center gap-3">
-                <p className="text-eyebrow font-body uppercase text-sugan-ink-soft">
-                  Quantity
-                </p>
+                <p className="text-eyebrow font-body uppercase text-sugan-ink-soft">Quantity</p>
                 <div className="inline-flex items-center border border-sugan-ink/20 rounded-pill">
                   <button
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
@@ -416,8 +428,8 @@ export default function ProductDetail() {
               </a>
             </div>
 
-            {/* Wishlist + share - text links, no chrome */}
-            <div className="flex items-center gap-6 pt-2">
+            {/* Wishlist + share */}
+            <div className="flex items-center gap-6">
               <button
                 onClick={handleWishlistToggle}
                 className="inline-flex items-center gap-2 text-eyebrow font-body uppercase text-sugan-ink-soft hover:text-sugan-ink transition-colors"
@@ -433,6 +445,9 @@ export default function ProductDetail() {
                 Share
               </button>
             </div>
+
+            {/* Description — below the fold, expandable */}
+            <ExpandableDescription product={product} />
 
             {/* Out of stock fallback */}
             {!product.inStock && (
