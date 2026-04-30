@@ -60,7 +60,7 @@ export default function Hero() {
         className="absolute inset-0 w-full h-full object-cover will-change-transform"
       />
 
-      {/* Bottom gradient — covers ~40% from below */}
+      {/* Bottom gradient - covers ~40% from below */}
       <div className="absolute inset-x-0 bottom-0 h-[55%] bg-gradient-to-t from-sugan-bone via-sugan-bone/40 to-transparent pointer-events-none" />
 
       {/* Content baseline-aligned to bottom-left */}
@@ -71,7 +71,7 @@ export default function Hero() {
               ref={eyebrowRef}
               className="text-eyebrow font-body uppercase text-sugan-ink-soft"
             >
-              Jodhpur · Atelier · Est. 1999
+              Jodhpur · Since 1999
             </p>
             <h1
               ref={headlineRef}

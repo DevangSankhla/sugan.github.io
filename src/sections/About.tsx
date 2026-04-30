@@ -126,13 +126,14 @@ export default function About() {
           >
             <p>
               For over two decades, Sugan has been synonymous with premium
-              wooden craftsmanship in Jodhpur — the heart of Rajasthan's
+              wooden craftsmanship in Jodhpur, the heart of Rajasthan's
               artisanal heritage. What began as a small family workshop has
-              become a small atelier, working only in solid wood.
+              grown into multiple manufacturing workshops, all working in
+              solid wood.
             </p>
             <p>
               Each piece is hand-shaped by artisans who inherited the trade
-              through generations. We work in sheesham, teak, and acacia —
+              through generations. We work in sheesham, teak, and acacia -
               slow-grown, sustainably sourced, and finished with food-safe
               oils that protect without hiding the grain.
             </p>
@@ -145,7 +146,7 @@ export default function About() {
 
           <div data-about-body className="pt-2">
             <Link to="/contact" className="btn-ghost group">
-              Visit the workshop
+              Visit our workshops
               <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 ease-apple group-hover:translate-x-1" />
             </Link>
           </div>

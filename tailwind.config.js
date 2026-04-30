@@ -54,6 +54,7 @@ module.exports = {
       fontFamily: {
         display: ["Fraunces", "serif"],
         body: ["Inter", "sans-serif"],
+        logo: ["Cormorant Garamond", "serif"],
       },
       fontSize: {
         "display-2xl": ["clamp(56px, 9vw, 144px)", { lineHeight: "0.95", letterSpacing: "-0.04em" }],

@@ -132,7 +132,7 @@ export default function Checkout() {
     setLoading(true);
 
     try {
-      // Affiliate fields snapshot — commission is on listed prices (sum of
+      // Affiliate fields snapshot - commission is on listed prices (sum of
       // items[].price * items[].quantity), independent of customer discount.
       const itemsTotal = items.reduce((s, it) => s + it.price * it.quantity, 0);
       const affiliateFields = affiliateMeta ? {
@@ -216,7 +216,7 @@ export default function Checkout() {
 
       if (paymentMethod === 'cod') {
         // Customer confirmation email is handled by the sendOrderPlacedEmail
-        // Cloud Function trigger — no client-side notify call needed.
+        // Cloud Function trigger - no client-side notify call needed.
         await processCOD(orderId);
         clearCart();
         navigate(`/account?order=${orderId}&cod=true`);
@@ -419,16 +419,16 @@ export default function Checkout() {
                 {promoFreeDelivery ? (
                   <div className="mt-4 p-4 bg-green-50 border-2 border-green-300 rounded-xl">
                     <p className="font-body font-bold text-green-800">
-                      🎁 Free Delivery — At no extra cost!
+                      🎁 Free Delivery - At no extra cost!
                     </p>
                     <p className="font-body text-sm text-green-700 mt-1">
-                      <strong>{promoRemaining} left</strong> — Shipping & COD charge both waived
+                      <strong>{promoRemaining} left</strong> - Shipping & COD charge both waived
                     </p>
                   </div>
                 ) : hasSAC048 && promoRemaining === 0 ? (
                   <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-xl">
                     <p className="font-body font-semibold text-red-800 text-sm mb-1">
-                      The first 50 free deliveries are sold out — sorry, you're late!
+                      The first 50 free deliveries are sold out - sorry, you're late!
                     </p>
                     <p className="font-body text-sm text-red-700">
                       Get your next order with us with no extra shipping costs.

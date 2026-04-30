@@ -231,7 +231,7 @@ export default function AffiliateDashboard() {
                           )}
                         </td>
                         <td className="py-3 pr-4 text-sugan-ink/60 text-xs">
-                          {o.eligibilityDate ? o.eligibilityDate.toDate().toLocaleDateString('en-IN') : '—'}
+                          {o.eligibilityDate ? o.eligibilityDate.toDate().toLocaleDateString('en-IN') : '-'}
                           {o.commissionMonth && (
                             <span className="block text-sugan-ink/40">{o.commissionMonth}</span>
                           )}

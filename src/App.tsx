@@ -45,7 +45,7 @@ const PaymentFailure = lazy(() => import('@/pages/PaymentFailure'));
 function PageLoader() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-sugan-bone">
-      <span className="font-display text-display-md font-light text-sugan-ink animate-pulse">
+      <span className="font-logo text-display-md font-semibold text-sugan-ink animate-pulse">
         Sugan
       </span>
     </div>
@@ -85,7 +85,7 @@ function HomePage() {
             'Always Solid Wood',
             'Since 1999',
             'Free Shipping ₹1999+',
-            'Worldwide Atelier',
+            'Worldwide Shipping',
           ]}
         />
         <Features />

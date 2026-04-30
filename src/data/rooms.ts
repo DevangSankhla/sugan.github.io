@@ -38,7 +38,7 @@ export const roomProducts: Record<string, Product[]> = {
     returns: '7-day easy returns',
     usp: ['Handcrafted in Jodhpur'],
     sustainability: 'Sustainably sourced wood',
-    story: 'At Sugan, we set out to change how India thinks about everyday pet products. Your pet eats from this bowl twice a day — so why should it be made of cheap plastic that scratches, stains, and harbors ba...',
+    story: 'At Sugan, we set out to change how India thinks about everyday pet products. Your pet eats from this bowl twice a day - so why should it be made of cheap plastic that scratches, stains, and harbors ba...',
     care: 'Hand wash with mild soap. Do not soak.',
     maintenance: 'Apply mineral oil periodically'
    },
@@ -71,7 +71,7 @@ export const roomProducts: Record<string, Product[]> = {
     returns: '7-day easy returns',
     usp: ['Handcrafted in Jodhpur'],
     sustainability: 'Sustainably sourced wood',
-    story: 'We started Sugan with a simple belief: everyday objects in your home should be beautiful, safe, and built to last. This pet feeder combines high-grade acacia wood — one of the hardest, most water-resi...',
+    story: 'We started Sugan with a simple belief: everyday objects in your home should be beautiful, safe, and built to last. This pet feeder combines high-grade acacia wood - one of the hardest, most water-resi...',
     care: 'Hand wash with mild soap. Do not soak.',
     maintenance: 'Apply mineral oil periodically'
    },
@@ -109,7 +109,7 @@ export const roomProducts: Record<string, Product[]> = {
     returns: '7-day easy returns',
     usp: ['Handcrafted in Jodhpur'],
     sustainability: 'Sustainably sourced wood',
-    story: 'We started Sugan with a simple belief: everyday objects in your home should be beautiful, safe, and built to last. This pet feeder combines high-grade acacia wood — one of the hardest, most water-resi...',
+    story: 'We started Sugan with a simple belief: everyday objects in your home should be beautiful, safe, and built to last. This pet feeder combines high-grade acacia wood - one of the hardest, most water-resi...',
     care: 'Hand wash with mild soap. Do not soak.',
     maintenance: 'Apply mineral oil periodically'
    },
@@ -200,7 +200,7 @@ export const roomProducts: Record<string, Product[]> = {
     returns: '7-day easy returns',
     usp: ['Handcrafted in Jodhpur'],
     sustainability: 'Sustainably sourced wood',
-    story: 'At Sugan, we set out to change how India thinks about everyday pet products. Your pet eats from this bowl twice a day — so why should it be made of cheap plastic that scratches, stains, and harbors ba...',
+    story: 'At Sugan, we set out to change how India thinks about everyday pet products. Your pet eats from this bowl twice a day - so why should it be made of cheap plastic that scratches, stains, and harbors ba...',
     care: 'Hand wash with mild soap. Do not soak.',
     maintenance: 'Apply mineral oil periodically'
    },
@@ -233,7 +233,7 @@ export const roomProducts: Record<string, Product[]> = {
     returns: '7-day easy returns',
     usp: ['Handcrafted in Jodhpur'],
     sustainability: 'Sustainably sourced wood',
-    story: 'At Sugan, we set out to change how India thinks about everyday pet products. Your pet eats from this bowl twice a day — so why should it be made of cheap plastic that scratches, stains, and harbors ba...',
+    story: 'At Sugan, we set out to change how India thinks about everyday pet products. Your pet eats from this bowl twice a day - so why should it be made of cheap plastic that scratches, stains, and harbors ba...',
     care: 'Hand wash with mild soap. Do not soak.',
     maintenance: 'Apply mineral oil periodically'
    },
@@ -319,7 +319,7 @@ export const roomProducts: Record<string, Product[]> = {
     returns: '7-day easy returns',
     usp: ['Handcrafted in Jodhpur'],
     sustainability: 'Sustainably sourced wood',
-    story: 'At Sugan, we set out to change how India thinks about everyday pet products. Your pet eats from this bowl twice a day — so why should it be made of cheap plastic that scratches, stains, and harbors ba...',
+    story: 'At Sugan, we set out to change how India thinks about everyday pet products. Your pet eats from this bowl twice a day - so why should it be made of cheap plastic that scratches, stains, and harbors ba...',
     care: 'Hand wash with mild soap. Do not soak.',
     maintenance: 'Apply mineral oil periodically'
    },
@@ -491,7 +491,7 @@ export const roomProducts: Record<string, Product[]> = {
     returns: '7-day easy returns',
     usp: ['Handcrafted in Jodhpur'],
     sustainability: 'Sustainably sourced wood',
-    story: 'At Sugan, we set out to change how India thinks about everyday pet products. Your pet eats from this bowl twice a day — so why should it be made of cheap plastic that scratches, stains, and harbors ba...',
+    story: 'At Sugan, we set out to change how India thinks about everyday pet products. Your pet eats from this bowl twice a day - so why should it be made of cheap plastic that scratches, stains, and harbors ba...',
     care: 'Hand wash with mild soap. Do not soak.',
     maintenance: 'Apply mineral oil periodically'
    },
@@ -524,7 +524,7 @@ export const roomProducts: Record<string, Product[]> = {
     returns: '7-day easy returns',
     usp: ['Handcrafted in Jodhpur'],
     sustainability: 'Sustainably sourced wood',
-    story: 'At Sugan, we set out to change how India thinks about everyday pet products. Your pet eats from this bowl twice a day — so why should it be made of cheap plastic that scratches, stains, and harbors ba...',
+    story: 'At Sugan, we set out to change how India thinks about everyday pet products. Your pet eats from this bowl twice a day - so why should it be made of cheap plastic that scratches, stains, and harbors ba...',
     care: 'Hand wash with mild soap. Do not soak.',
     maintenance: 'Apply mineral oil periodically'
    },
@@ -557,7 +557,7 @@ export const roomProducts: Record<string, Product[]> = {
     returns: '7-day easy returns',
     usp: ['Handcrafted in Jodhpur'],
     sustainability: 'Sustainably sourced wood',
-    story: 'At Sugan, we set out to change how India thinks about everyday pet products. Your pet eats from this bowl twice a day — so why should it be made of cheap plastic that scratches, stains, and harbors ba...',
+    story: 'At Sugan, we set out to change how India thinks about everyday pet products. Your pet eats from this bowl twice a day - so why should it be made of cheap plastic that scratches, stains, and harbors ba...',
     care: 'Hand wash with mild soap. Do not soak.',
     maintenance: 'Apply mineral oil periodically'
    },
@@ -574,7 +574,7 @@ export const roomProducts: Record<string, Product[]> = {
    name: 'Marble-Top Acacia Wood Pet Feeder with Stainless Steel Bowls',
    price: 2999,
    originalPrice: 3999,
-   description: 'This large marble-top pet feeder pairs the warmth of acacia wood with the cool elegance of natural marble in a piece that looks as much like furniture as it does a feeder. The two stainless steel bowls sit at a height suited to larger breeds, supporting healthy posture and digestion. Every marble slab is hand-selected for its unique veining, and the acacia wood base is finished with food-safe mineral oil. Non-toxic throughout — safe for daily mealtime, beautiful enough to leave out.',
+   description: 'This large marble-top pet feeder pairs the warmth of acacia wood with the cool elegance of natural marble in a piece that looks as much like furniture as it does a feeder. The two stainless steel bowls sit at a height suited to larger breeds, supporting healthy posture and digestion. Every marble slab is hand-selected for its unique veining, and the acacia wood base is finished with food-safe mineral oil. Non-toxic throughout - safe for daily mealtime, beautiful enough to leave out.',
    image: '/images/SAC048L_01.png',
    category: 'Pet Feeders',
    room: 'pet',
@@ -590,7 +590,7 @@ export const roomProducts: Record<string, Product[]> = {
     returns: '7-day easy returns',
     usp: ['Handcrafted in Jodhpur'],
     sustainability: 'Sustainably sourced wood',
-    story: 'We started Sugan because we believed your pet deserved better than a plastic bowl on the floor. This feeder pairs hand-selected acacia wood — sustainably sourced from forests across India — with a natural marble top and two detachable stainless steel bowls. The raised stance supports posture-friendly eating for larger breeds, the materials are completely plastic-free, and every piece is handcrafted in our Jodhpur workshop.',
+    story: 'We started Sugan because we believed your pet deserved better than a plastic bowl on the floor. This feeder pairs hand-selected acacia wood - sustainably sourced from forests across India - with a natural marble top and two detachable stainless steel bowls. The raised stance supports posture-friendly eating for larger breeds, the materials are completely plastic-free, and every piece is handcrafted in our Jodhpur workshop.',
     care: 'Hand wash with mild soap. Do not soak.',
     maintenance: 'Apply mineral oil periodically',
     videos: ['/videos/SAC048L_video.mp4'],
@@ -636,7 +636,7 @@ Food math: A 25 kg Lab eats ~300–400 g/day (~500–700 ml dry kibble volume), 
     returns: '7-day easy returns',
     usp: ['Handcrafted in Jodhpur'],
     sustainability: 'Sustainably sourced wood',
-    story: 'We started Sugan because we believed your pet deserved better than a plastic bowl on the floor. This feeder pairs hand-selected acacia wood — sustainably sourced from forests across India — with a natural marble top and two detachable stainless steel bowls. The medium size is ideal for most dogs and cats, and every piece is handcrafted in our Jodhpur workshop.',
+    story: 'We started Sugan because we believed your pet deserved better than a plastic bowl on the floor. This feeder pairs hand-selected acacia wood - sustainably sourced from forests across India - with a natural marble top and two detachable stainless steel bowls. The medium size is ideal for most dogs and cats, and every piece is handcrafted in our Jodhpur workshop.',
     care: 'Hand wash with mild soap. Do not soak.',
     maintenance: 'Apply mineral oil periodically',
     videos: ['/videos/SAC048M_video.mp4'],
@@ -667,7 +667,7 @@ Food math: ~1.8 L = ~4–6 days for a 12 kg dog, well over a week for a cat.`
    name: 'Marble-Top Acacia Wood Pet Feeder with Stainless Steel Bowls',
    price: 1999,
    originalPrice: 3999,
-   description: 'This small marble-top pet feeder is made for cats and compact breeds who deserve beautiful materials at their daily mealtime. Natural acacia wood, genuine marble, and stainless steel come together in a piece that sits comfortably on a kitchen floor without looking like an afterthought. Non-toxic throughout, easy to clean, and finished with food-safe mineral oil — a piece that looks as intentional as your coffee table.',
+   description: 'This small marble-top pet feeder is made for cats and compact breeds who deserve beautiful materials at their daily mealtime. Natural acacia wood, genuine marble, and stainless steel come together in a piece that sits comfortably on a kitchen floor without looking like an afterthought. Non-toxic throughout, easy to clean, and finished with food-safe mineral oil - a piece that looks as intentional as your coffee table.',
    image: '/images/SAC048S_01.png',
    category: 'Pet Feeders',
    room: 'pet',
@@ -683,7 +683,7 @@ Food math: ~1.8 L = ~4–6 days for a 12 kg dog, well over a week for a cat.`
     returns: '7-day easy returns',
     usp: ['Handcrafted in Jodhpur'],
     sustainability: 'Sustainably sourced wood',
-    story: 'We started Sugan because we believed your pet deserved better than a plastic bowl on the floor. This feeder pairs hand-selected acacia wood — sustainably sourced from forests across India — with a natural marble top and two detachable stainless steel bowls. Compact enough for cats and small breeds, and handcrafted in our Jodhpur workshop.',
+    story: 'We started Sugan because we believed your pet deserved better than a plastic bowl on the floor. This feeder pairs hand-selected acacia wood - sustainably sourced from forests across India - with a natural marble top and two detachable stainless steel bowls. Compact enough for cats and small breeds, and handcrafted in our Jodhpur workshop.',
     care: 'Hand wash with mild soap. Do not soak.',
     maintenance: 'Apply mineral oil periodically',
     videos: ['/videos/SAC048S_video.mp4'],
@@ -691,7 +691,7 @@ Food math: ~1.8 L = ~4–6 days for a 12 kg dog, well over a week for a cat.`
 
 Pet shoulder height: ~20–30 cm (dogs) / standard cat height
 Pet weight: ~2–8 kg
-Category: Cats and toy/small dog breeds. The 12 cm height is basically a low-profile bowl — ergonomic for cats and short-legged dogs.
+Category: Cats and toy/small dog breeds. The 12 cm height is basically a low-profile bowl - ergonomic for cats and short-legged dogs.
 Cat breeds: Persian, Siamese, Bengal, Indian domestic shorthair
 Small dog breeds: Pug, Shih Tzu, Pomeranian, Lhasa Apso
 Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
@@ -730,7 +730,7 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
     returns: '7-day easy returns',
     usp: ['Handcrafted in Jodhpur'],
     sustainability: 'Sustainably sourced wood',
-    story: 'At Sugan, we set out to change how India thinks about everyday pet products. Your pet eats from this bowl twice a day — so why should it be made of cheap plastic that scratches, stains, and harbors ba...',
+    story: 'At Sugan, we set out to change how India thinks about everyday pet products. Your pet eats from this bowl twice a day - so why should it be made of cheap plastic that scratches, stains, and harbors ba...',
     care: 'Hand wash with mild soap. Do not soak.',
     maintenance: 'Apply mineral oil periodically'
    }
@@ -915,7 +915,7 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
     returns: '7-day easy returns',
     usp: ['Handcrafted in Jodhpur'],
     sustainability: 'Sustainably sourced wood',
-    story: 'At Sugan, we set out to change how India thinks about everyday pet products. Your pet eats from this bowl twice a day — so why should it be made of cheap plastic that scratches, stains, and harbors ba...',
+    story: 'At Sugan, we set out to change how India thinks about everyday pet products. Your pet eats from this bowl twice a day - so why should it be made of cheap plastic that scratches, stains, and harbors ba...',
     care: 'Hand wash with mild soap. Do not soak.',
     maintenance: 'Apply mineral oil periodically'
    }
@@ -1108,7 +1108,7 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
     returns: '7-day easy returns',
     usp: ['Handcrafted in Jodhpur'],
     sustainability: 'Sustainably sourced wood',
-    story: 'We started Sugan with a simple belief: everyday objects in your home should be beautiful, safe, and built to last. This pet feeder combines high-grade acacia wood — one of the hardest, most water-resi...',
+    story: 'We started Sugan with a simple belief: everyday objects in your home should be beautiful, safe, and built to last. This pet feeder combines high-grade acacia wood - one of the hardest, most water-resi...',
     care: 'Hand wash with mild soap. Do not soak.',
     maintenance: 'Apply mineral oil periodically'
    },
@@ -1148,7 +1148,7 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
     returns: '7-day easy returns',
     usp: ['Handcrafted in Jodhpur'],
     sustainability: 'Sustainably sourced wood',
-    story: 'The smallest objects in a home say the most about it. Sugan was built on the belief that even a napkin holder on your dining table should be made from honest materials — not plastic, not painted MDF, ...',
+    story: 'The smallest objects in a home say the most about it. Sugan was built on the belief that even a napkin holder on your dining table should be made from honest materials - not plastic, not painted MDF, ...',
     care: 'Hand wash with mild soap. Do not soak.',
     maintenance: 'Apply mineral oil periodically'
    }
@@ -1174,7 +1174,7 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
     returns: '7-day easy returns',
     usp: ['Handcrafted in Jodhpur'],
     sustainability: 'Sustainably sourced wood',
-    story: 'The smallest objects in a home say the most about it. Sugan was built on the belief that even a napkin holder on your dining table should be made from honest materials — not plastic, not painted MDF, ...',
+    story: 'The smallest objects in a home say the most about it. Sugan was built on the belief that even a napkin holder on your dining table should be made from honest materials - not plastic, not painted MDF, ...',
     care: 'Hand wash with mild soap. Do not soak.',
     maintenance: 'Apply mineral oil periodically'
    }
@@ -1200,7 +1200,7 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
     returns: '7-day easy returns',
     usp: ['Handcrafted in Jodhpur'],
     sustainability: 'Sustainably sourced wood',
-    story: 'The smallest objects in a home say the most about it. Sugan was built on the belief that even a napkin holder on your dining table should be made from honest materials — not plastic, not painted MDF, ...',
+    story: 'The smallest objects in a home say the most about it. Sugan was built on the belief that even a napkin holder on your dining table should be made from honest materials - not plastic, not painted MDF, ...',
     care: 'Hand wash with mild soap. Do not soak.',
     maintenance: 'Apply mineral oil periodically'
    }
@@ -1424,7 +1424,7 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
     returns: '7-day easy returns',
     usp: ['Handcrafted in Jodhpur'],
     sustainability: 'Sustainably sourced wood',
-    story: 'The honey finish on this tray isn\'t applied from a bottle — it\'s the natural warmth of acacia wood, brought out by our artisans in Jodhpur through careful sanding and food-safe mineral oil finishing...',
+    story: 'The honey finish on this tray isn\'t applied from a bottle - it\'s the natural warmth of acacia wood, brought out by our artisans in Jodhpur through careful sanding and food-safe mineral oil finishing...',
     care: 'Hand wash with mild soap. Do not soak.',
     maintenance: 'Apply mineral oil periodically'
    },
@@ -1467,7 +1467,7 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
     returns: '7-day easy returns',
     usp: ['Handcrafted in Jodhpur'],
     sustainability: 'Sustainably sourced wood',
-    story: 'The honey finish on this tray isn\'t applied from a bottle — it\'s the natural warmth of acacia wood, brought out by our artisans in Jodhpur through careful sanding and food-safe mineral oil finishing...',
+    story: 'The honey finish on this tray isn\'t applied from a bottle - it\'s the natural warmth of acacia wood, brought out by our artisans in Jodhpur through careful sanding and food-safe mineral oil finishing...',
     care: 'Hand wash with mild soap. Do not soak.',
     maintenance: 'Apply mineral oil periodically'
    },
@@ -1510,7 +1510,7 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
     returns: '7-day easy returns',
     usp: ['Handcrafted in Jodhpur'],
     sustainability: 'Sustainably sourced wood',
-    story: 'The honey finish on this tray isn\'t applied from a bottle — it\'s the natural warmth of acacia wood, brought out by our artisans in Jodhpur through careful sanding and food-safe mineral oil finishing...',
+    story: 'The honey finish on this tray isn\'t applied from a bottle - it\'s the natural warmth of acacia wood, brought out by our artisans in Jodhpur through careful sanding and food-safe mineral oil finishing...',
     care: 'Hand wash with mild soap. Do not soak.',
     maintenance: 'Apply mineral oil periodically'
    },
@@ -1553,7 +1553,7 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
     returns: '7-day easy returns',
     usp: ['Handcrafted in Jodhpur'],
     sustainability: 'Sustainably sourced wood',
-    story: 'The honey finish on this tray isn\'t applied from a bottle — it\'s the natural warmth of acacia wood, brought out by our artisans in Jodhpur through careful sanding and food-safe mineral oil finishing...',
+    story: 'The honey finish on this tray isn\'t applied from a bottle - it\'s the natural warmth of acacia wood, brought out by our artisans in Jodhpur through careful sanding and food-safe mineral oil finishing...',
     care: 'Hand wash with mild soap. Do not soak.',
     maintenance: 'Apply mineral oil periodically'
    },
@@ -1639,7 +1639,7 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
     returns: '7-day easy returns',
     usp: ['Handcrafted in Jodhpur'],
     sustainability: 'Sustainably sourced wood',
-    story: 'Mango wood is one of India\'s most abundant and sustainable hardwoods — and at Sugan, we think it\'s also one of the most beautiful. This chopping and serving board is hand-crafted in Jodhpur from hig...',
+    story: 'Mango wood is one of India\'s most abundant and sustainable hardwoods - and at Sugan, we think it\'s also one of the most beautiful. This chopping and serving board is hand-crafted in Jodhpur from hig...',
     care: 'Hand wash with mild soap. Do not soak.',
     maintenance: 'Apply mineral oil periodically'
    }
@@ -1837,7 +1837,7 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
     returns: '7-day easy returns',
     usp: ['Handcrafted in Jodhpur'],
     sustainability: 'Sustainably sourced wood',
-    story: 'We built Sugan because we wanted India\'s kitchens to look as good as they cook. This board pairs premium acacia wood — sustainably sourced, naturally anti-bacterial, and harder than most Indian hardw...',
+    story: 'We built Sugan because we wanted India\'s kitchens to look as good as they cook. This board pairs premium acacia wood - sustainably sourced, naturally anti-bacterial, and harder than most Indian hardw...',
     care: 'Hand wash with mild soap. Do not soak.',
     maintenance: 'Apply mineral oil periodically'
    }
@@ -1889,7 +1889,7 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
     returns: '7-day easy returns',
     usp: ['Handcrafted in Jodhpur'],
     sustainability: 'Sustainably sourced wood',
-    story: 'Mango wood is one of India\'s most abundant and sustainable hardwoods — and at Sugan, we think it\'s also one of the most beautiful. This chopping and serving board is hand-crafted in Jodhpur from hig...',
+    story: 'Mango wood is one of India\'s most abundant and sustainable hardwoods - and at Sugan, we think it\'s also one of the most beautiful. This chopping and serving board is hand-crafted in Jodhpur from hig...',
     care: 'Hand wash with mild soap. Do not soak.',
     maintenance: 'Apply mineral oil periodically'
    }
@@ -1915,7 +1915,7 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
     returns: '7-day easy returns',
     usp: ['Handcrafted in Jodhpur'],
     sustainability: 'Sustainably sourced wood',
-    story: 'Mango wood is one of India\'s most abundant and sustainable hardwoods — and at Sugan, we think it\'s also one of the most beautiful. This chopping and serving board is hand-crafted in Jodhpur from hig...',
+    story: 'Mango wood is one of India\'s most abundant and sustainable hardwoods - and at Sugan, we think it\'s also one of the most beautiful. This chopping and serving board is hand-crafted in Jodhpur from hig...',
     care: 'Hand wash with mild soap. Do not soak.',
     maintenance: 'Apply mineral oil periodically'
    }
@@ -2096,7 +2096,7 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
     returns: '7-day easy returns',
     usp: ['Handcrafted in Jodhpur'],
     sustainability: 'Sustainably sourced wood',
-    story: 'A serving bowl is one of the most used objects in an Indian kitchen — so at Sugan, we decided it should also be one of the most beautiful. Hand-carved from premium acacia wood by artisans in Jodhpur, ...',
+    story: 'A serving bowl is one of the most used objects in an Indian kitchen - so at Sugan, we decided it should also be one of the most beautiful. Hand-carved from premium acacia wood by artisans in Jodhpur, ...',
     care: 'Hand wash with mild soap. Do not soak.',
     maintenance: 'Apply mineral oil periodically'
    },
@@ -2139,7 +2139,7 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
     returns: '7-day easy returns',
     usp: ['Handcrafted in Jodhpur'],
     sustainability: 'Sustainably sourced wood',
-    story: 'A serving bowl is one of the most used objects in an Indian kitchen — so at Sugan, we decided it should also be one of the most beautiful. Hand-carved from premium acacia wood by artisans in Jodhpur, ...',
+    story: 'A serving bowl is one of the most used objects in an Indian kitchen - so at Sugan, we decided it should also be one of the most beautiful. Hand-carved from premium acacia wood by artisans in Jodhpur, ...',
     care: 'Hand wash with mild soap. Do not soak.',
     maintenance: 'Apply mineral oil periodically'
    },
@@ -2177,7 +2177,7 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
     returns: '7-day easy returns',
     usp: ['Handcrafted in Jodhpur'],
     sustainability: 'Sustainably sourced wood',
-    story: 'A serving bowl is one of the most used objects in an Indian kitchen — so at Sugan, we decided it should also be one of the most beautiful. Hand-carved from premium acacia wood by artisans in Jodhpur, ...',
+    story: 'A serving bowl is one of the most used objects in an Indian kitchen - so at Sugan, we decided it should also be one of the most beautiful. Hand-carved from premium acacia wood by artisans in Jodhpur, ...',
     care: 'Hand wash with mild soap. Do not soak.',
     maintenance: 'Apply mineral oil periodically'
    },
@@ -2220,7 +2220,7 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
     returns: '7-day easy returns',
     usp: ['Handcrafted in Jodhpur'],
     sustainability: 'Sustainably sourced wood',
-    story: 'A serving bowl is one of the most used objects in an Indian kitchen — so at Sugan, we decided it should also be one of the most beautiful. Hand-carved from premium acacia wood by artisans in Jodhpur, ...',
+    story: 'A serving bowl is one of the most used objects in an Indian kitchen - so at Sugan, we decided it should also be one of the most beautiful. Hand-carved from premium acacia wood by artisans in Jodhpur, ...',
     care: 'Hand wash with mild soap. Do not soak.',
     maintenance: 'Apply mineral oil periodically'
    },
@@ -2446,7 +2446,7 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
     returns: '7-day easy returns',
     usp: ['Handcrafted in Jodhpur'],
     sustainability: 'Sustainably sourced wood',
-    story: 'Mango wood is one of India\'s most abundant and sustainable hardwoods — and at Sugan, we think it\'s also one of the most beautiful. This chopping and serving board is hand-crafted in Jodhpur from hig...',
+    story: 'Mango wood is one of India\'s most abundant and sustainable hardwoods - and at Sugan, we think it\'s also one of the most beautiful. This chopping and serving board is hand-crafted in Jodhpur from hig...',
     care: 'Hand wash with mild soap. Do not soak.',
     maintenance: 'Apply mineral oil periodically'
    }
@@ -2474,7 +2474,7 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
     returns: '7-day easy returns',
     usp: ['Handcrafted in Jodhpur'],
     sustainability: 'Sustainably sourced wood',
-    story: 'A good side table should disappear into your room — and this one does, until you look closely and realise how well it\'s made. Sugan was built to bring premium, plastic-free woodcraft into Indian home...',
+    story: 'A good side table should disappear into your room - and this one does, until you look closely and realise how well it\'s made. Sugan was built to bring premium, plastic-free woodcraft into Indian home...',
     care: 'Hand wash with mild soap. Do not soak.',
     maintenance: 'Apply mineral oil periodically'
    }
@@ -2500,7 +2500,7 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
     returns: '7-day easy returns',
     usp: ['Handcrafted in Jodhpur'],
     sustainability: 'Sustainably sourced wood',
-    story: 'Grey wash is not a coat of paint — it\'s a slow, patient process that our artisans in Jodhpur apply by hand to bring out the natural grain of the wood while giving it a contemporary muted tone. This f...',
+    story: 'Grey wash is not a coat of paint - it\'s a slow, patient process that our artisans in Jodhpur apply by hand to bring out the natural grain of the wood while giving it a contemporary muted tone. This f...',
     care: 'Hand wash with mild soap. Do not soak.',
     maintenance: 'Apply mineral oil periodically'
    }
@@ -2526,7 +2526,7 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
     returns: '7-day easy returns',
     usp: ['Handcrafted in Jodhpur'],
     sustainability: 'Sustainably sourced wood',
-    story: 'Dark, rich, and unmistakably handmade — this side table carries the character of the wood it\'s made from. At Sugan, we source high-grade natural wood from forests across India and finish each piece b...',
+    story: 'Dark, rich, and unmistakably handmade - this side table carries the character of the wood it\'s made from. At Sugan, we source high-grade natural wood from forests across India and finish each piece b...',
     care: 'Hand wash with mild soap. Do not soak.',
     maintenance: 'Apply mineral oil periodically'
    }
@@ -2580,7 +2580,7 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
     returns: '7-day easy returns',
     usp: ['Handcrafted in Jodhpur'],
     sustainability: 'Sustainably sourced wood',
-    story: 'Jodhpur has been painting stories onto wood for longer than most cities have existed. This jewellery and storage box carries that tradition — hand-painted by skilled Rajasthani artisans with tradition...',
+    story: 'Jodhpur has been painting stories onto wood for longer than most cities have existed. This jewellery and storage box carries that tradition - hand-painted by skilled Rajasthani artisans with tradition...',
     care: 'Hand wash with mild soap. Do not soak.',
     maintenance: 'Apply mineral oil periodically'
    }
@@ -2608,7 +2608,7 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
     returns: '7-day easy returns',
     usp: ['Handcrafted in Jodhpur'],
     sustainability: 'Sustainably sourced wood',
-    story: 'The chowki is the most sacred surface in an Indian home — and at Sugan, we believe it should reflect that. This bajot is hand-crafted in Jodhpur from high-grade natural wood, with brass-plated detaili...',
+    story: 'The chowki is the most sacred surface in an Indian home - and at Sugan, we believe it should reflect that. This bajot is hand-crafted in Jodhpur from high-grade natural wood, with brass-plated detaili...',
     care: 'Hand wash with mild soap. Do not soak.',
     maintenance: 'Apply mineral oil periodically'
    }
@@ -2634,7 +2634,7 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
     returns: '7-day easy returns',
     usp: ['Handcrafted in Jodhpur'],
     sustainability: 'Sustainably sourced wood',
-    story: 'Some objects carry meaning beyond their function. This chowki is one of them. Sugan was started in Jodhpur — a city where the tradition of hand-painted, hand-carved religious woodcraft runs centuries ...',
+    story: 'Some objects carry meaning beyond their function. This chowki is one of them. Sugan was started in Jodhpur - a city where the tradition of hand-painted, hand-carved religious woodcraft runs centuries ...',
     care: 'Hand wash with mild soap. Do not soak.',
     maintenance: 'Apply mineral oil periodically'
    }

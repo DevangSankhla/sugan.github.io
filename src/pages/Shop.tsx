@@ -106,7 +106,7 @@ export default function Shop() {
       <div className="section-padding pb-10 border-b border-sugan-ink/10">
         <p className="text-eyebrow font-body uppercase text-sugan-ink-soft mb-6 inline-flex items-center gap-3">
           <span className="block w-12 h-px bg-sugan-ink/20" aria-hidden="true" />
-          The Atelier
+          The Collection
         </p>
         <h1 className="font-display text-display-xl font-light text-sugan-ink">
           Shop

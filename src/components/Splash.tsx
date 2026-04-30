@@ -31,7 +31,7 @@ export default function Splash() {
         hiding ? 'opacity-0 pointer-events-none' : 'opacity-100'
       }`}
     >
-      <span className="font-display text-display-2xl font-light text-sugan-bone tracking-[-0.04em] animate-[splash-fade_400ms_ease-out_forwards]">
+      <span className="font-logo text-display-2xl font-semibold text-sugan-bone animate-[splash-fade_400ms_ease-out_forwards]">
         Sugan
       </span>
       <span className="block h-px bg-sugan-gold animate-[splash-line_800ms_ease-out_forwards] origin-left" />

@@ -170,7 +170,7 @@ export default function ProductDetail() {
           data-cursor="view"
           className="absolute inset-0 w-full h-full object-cover"
         />
-        {/* Soft gradient at the bottom only — no text overlay */}
+        {/* Soft gradient at the bottom only - no text overlay */}
         <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-sugan-bone via-sugan-bone/30 to-transparent pointer-events-none" />
 
         {/* Floating back link */}
@@ -199,7 +199,7 @@ export default function ProductDetail() {
               >
                 <img
                   src={src}
-                  alt={`${product.name} — view ${i + 2}`}
+                  alt={`${product.name} - view ${i + 2}`}
                   loading="lazy"
                   className="absolute inset-0 w-full h-full object-cover"
                 />
@@ -398,7 +398,7 @@ export default function ProductDetail() {
               </a>
             </div>
 
-            {/* Wishlist + share — text links, no chrome */}
+            {/* Wishlist + share - text links, no chrome */}
             <div className="flex items-center gap-6 pt-2">
               <button
                 onClick={handleWishlistToggle}
@@ -424,7 +424,7 @@ export default function ProductDetail() {
                 </p>
                 <a
                   href={`mailto:contact@sugan.shop?subject=${encodeURIComponent(
-                    `Restock request — ${product.name}`
+                    `Restock request - ${product.name}`
                   )}&body=${encodeURIComponent(
                     `Please notify me when ${product.name} (SKU: ${product.id}) is back in stock.`
                   )}`}
@@ -493,7 +493,7 @@ export default function ProductDetail() {
             </div>
             <p className="font-body text-body-lg text-sugan-ink-soft leading-relaxed">
               {product.details?.story ||
-                'Each piece is hand-shaped by artisans whose families have worked the same wood for generations. The grain is read, the joinery cut by hand, the finish raised over days — never minutes.'}
+                'Each piece is hand-shaped by artisans whose families have worked the same wood for generations. The grain is read, the joinery cut by hand, the finish raised over days - never minutes.'}
             </p>
           </div>
         </div>

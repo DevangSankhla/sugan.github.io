@@ -1055,7 +1055,7 @@ export default function Admin() {
                           {affiliateCodes.map((c) => (
                             <tr key={c.id} className="border-b border-sugan-ink/5">
                               <td className="py-3 pr-4 font-mono font-medium text-sugan-ink">{c.id}</td>
-                              <td className="py-3 pr-4 text-sugan-ink">{c.name || '—'}</td>
+                              <td className="py-3 pr-4 text-sugan-ink">{c.name || '-'}</td>
                               <td className="py-3 pr-4 text-sugan-ink/70">{c.email}</td>
                               <td className="py-3 pr-4 text-right text-sugan-ink/70">
                                 {c.discountPercent}% / {c.commissionPercent}%
@@ -1140,7 +1140,7 @@ export default function Admin() {
                                 )}
                               </td>
                               <td className="py-3 pr-4 text-sugan-ink/60 text-xs">
-                                {o.commissionMonth || '—'}
+                                {o.commissionMonth || '-'}
                               </td>
                               <td className="py-3 pr-4">
                                 {!o.commissionVoided && o.commissionMonth && (

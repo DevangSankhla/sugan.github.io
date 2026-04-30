@@ -26,7 +26,7 @@ const columns: FooterColumn[] = [
   {
     label: 'Company',
     links: [
-      { label: 'Atelier', to: '/#about' },
+      { label: 'About', to: '/#about' },
       { label: 'Contact', to: '/contact' },
       { label: 'Account', to: '/account' },
     ],
@@ -51,7 +51,7 @@ export default function Footer() {
         <Link
           to="/"
           aria-label="Sugan home"
-          className="block text-center font-display font-light tracking-[-0.04em] leading-none text-[clamp(96px,18vw,280px)] text-sugan-ink hover:text-sugan-gold transition-colors duration-400 ease-apple"
+          className="block text-center font-logo font-semibold leading-none text-[clamp(96px,18vw,280px)] text-sugan-ink hover:text-sugan-gold transition-colors duration-400 ease-apple"
         >
           Sugan
           <span
@@ -108,7 +108,7 @@ export default function Footer() {
       <div className="border-t border-sugan-ink/10">
         <div className="section-padding py-6">
           <p className="font-body text-body-sm text-sugan-ink-soft tabular-nums flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-center">
-            <span>© {currentYear} Sugan Atelier</span>
+            <span>© {currentYear} Sugan</span>
             <span aria-hidden="true" className="hidden sm:inline text-sugan-ink/30">·</span>
             <span>GST 08AAAAA0000A1Z5</span>
             <span aria-hidden="true" className="hidden sm:inline text-sugan-ink/30">·</span>

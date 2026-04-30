@@ -11,13 +11,13 @@ const pillars = [
     number: '01',
     label: 'Solid Wood',
     headline: 'Always solid. Never veneered.',
-    body: 'Sheesham, teak, mango, acacia — slow-grown hardwoods, sustainably sourced and finished with food-safe oils. Never particle board, never veneer.',
+    body: 'Sheesham, teak, mango, acacia - slow-grown hardwoods, sustainably sourced and finished with food-safe oils. Never particle board, never veneer.',
   },
   {
     number: '02',
     label: 'Jodhpur',
-    headline: 'A workshop, not a factory.',
-    body: 'Hand-shaped by artisans whose families have worked the same wood for generations, in a small atelier in Boranada, Jodhpur.',
+    headline: 'Built in Boranada, Jodhpur.',
+    body: 'Every piece comes out of our workshops in Boranada, hand-finished by craftsmen whose families have worked the same wood for generations.',
   },
   {
     number: '03',

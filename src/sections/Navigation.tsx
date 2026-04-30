@@ -86,9 +86,9 @@ export default function Navigation() {
     setSearchQuery('');
   };
 
-  // Use mix-blend-difference only on the home page hero (transparent state).
-  // Once scrolled or off-home, we have a panel under the nav, so blend mode is dropped.
-  const useBlendMode = isHomePage && !isScrolled;
+  // On the home transparent state, the hero gradient sits on bone - solid ink reads
+  // cleanly across the wood-tone hero photography without needing a panel.
+  const transparentOverHero = isHomePage && !isScrolled;
 
   const desktopLinks = isHomePage ? (
     <>
@@ -111,9 +111,9 @@ export default function Navigation() {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-[background-color,backdrop-filter,padding] duration-400 ease-apple ${
-          useBlendMode
-            ? 'bg-transparent py-6 mix-blend-difference text-white'
+        className={`fixed top-0 left-0 right-0 z-50 text-sugan-ink transition-[background-color,backdrop-filter,padding] duration-400 ease-apple ${
+          transparentOverHero
+            ? 'bg-transparent py-6'
             : isScrolled
               ? 'bg-sugan-bone/80 backdrop-blur-xl border-b border-sugan-ink/[0.08] py-3'
               : 'bg-sugan-bone/80 backdrop-blur-xl border-b border-sugan-ink/[0.08] py-4'
@@ -121,10 +121,10 @@ export default function Navigation() {
       >
         <div className="w-full section-padding">
           <div className="flex items-center justify-between">
-            {/* Logo with single gold dot accent */}
+            {/* Logo - Cormorant Garamond wordmark with a single gold dot */}
             <Link
               to="/"
-              className="font-display text-2xl md:text-3xl font-light tracking-[-0.02em] inline-flex items-baseline"
+              className="font-logo text-3xl md:text-4xl font-semibold leading-none inline-flex items-baseline text-sugan-ink"
             >
               Sugan
               <span
@@ -178,7 +178,7 @@ export default function Navigation() {
         </div>
       </nav>
 
-      {/* Mobile Menu — left-aligned full-bleed editorial list */}
+      {/* Mobile Menu - left-aligned full-bleed editorial list */}
       <div
         className={`fixed inset-0 z-40 bg-sugan-bone transition-transform duration-400 ease-apple md:hidden ${
           isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'

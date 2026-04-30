@@ -90,7 +90,7 @@ export default function Testimonials() {
 
         {/* Attribution */}
         <p className="text-eyebrow font-body uppercase text-sugan-ink-soft inline-flex flex-wrap items-center justify-center gap-2">
-          <span>— {t.name}, {t.location}</span>
+          <span>- {t.name}, {t.location}</span>
           <span aria-hidden="true" className="text-sugan-ink/30">·</span>
           <span className="text-sugan-ink-soft/80">Verified buyer</span>
         </p>

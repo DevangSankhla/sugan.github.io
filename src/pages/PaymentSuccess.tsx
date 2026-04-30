@@ -15,7 +15,7 @@ export default function PaymentSuccess() {
   useEffect(() => {
     const processPayment = async () => {
       try {
-        // orderId is embedded in surl as a GET param — reliable even after PayU's POST redirect
+        // orderId is embedded in surl as a GET param - reliable even after PayU's POST redirect
         const orderId = searchParams.get('orderId') || sessionStorage.getItem('pendingOrderId');
 
         if (!orderId) {
@@ -89,7 +89,7 @@ export default function PaymentSuccess() {
                       </p>
                       <p className="font-body text-sm text-amber-700">
                         Your site is on a static host that blocks POST requests from PayU. 
-                        Your order is still safe — please check your orders page. 
+                        Your order is still safe - please check your orders page. 
                         Consider switching to Firebase Hosting for full payment redirect support.
                       </p>
                     </div>

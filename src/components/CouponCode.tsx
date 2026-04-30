@@ -61,7 +61,7 @@ export default function CouponCode({
           return;
         }
         if (!isFirstOrder) {
-          setError('FIRST10 is only available on your first order — not applicable to your account');
+          setError('FIRST10 is only available on your first order - not applicable to your account');
           return;
         }
       }
@@ -78,7 +78,7 @@ export default function CouponCode({
       return;
     }
 
-    // Unknown code — try the affiliate codes collection
+    // Unknown code - try the affiliate codes collection
     try {
       const affSnap = await getDoc(doc(db, 'affiliateCodes', normalized));
       if (!affSnap.exists()) {
@@ -96,7 +96,7 @@ export default function CouponCode({
         return;
       }
       if (!aff.email || typeof aff.discountPercent !== 'number') {
-        setError('This code is misconfigured — contact support');
+        setError('This code is misconfigured - contact support');
         return;
       }
       const discount = Math.round((subtotal * aff.discountPercent) / 100);
@@ -110,7 +110,7 @@ export default function CouponCode({
       setCode('');
     } catch (err) {
       console.error('Affiliate code lookup failed:', err);
-      setError('Could not verify code right now — please try again');
+      setError('Could not verify code right now - please try again');
     }
   };
 

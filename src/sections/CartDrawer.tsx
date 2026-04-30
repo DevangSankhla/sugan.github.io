@@ -61,7 +61,7 @@ export default function CartDrawer() {
                 Your bag is empty.
               </h3>
               <p className="font-body text-body text-sugan-ink-soft max-w-xs">
-                Browse the atelier and add a piece you'd like to keep for a long time.
+                Browse the collection and add a piece you'd like to keep for a long time.
               </p>
               <button
                 type="button"
@@ -112,7 +112,7 @@ export default function CartDrawer() {
                     </div>
 
                     <div className="flex items-center justify-between mt-auto">
-                      {/* Quantity stepper — hairline border, no fill */}
+                      {/* Quantity stepper - hairline border, no fill */}
                       <div className="inline-flex items-center border border-sugan-ink/20 rounded-pill">
                         <button
                           type="button"

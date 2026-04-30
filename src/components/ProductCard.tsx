@@ -97,14 +97,14 @@ export default function ProductCard({
       className="group block"
     >
       <div className="relative aspect-[4/5] overflow-hidden bg-sugan-bone-dark">
-        {/* Primary image — fades out on hover */}
+        {/* Primary image - fades out on hover */}
         <img
           src={product.image}
           alt={product.name}
           loading="lazy"
           className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-apple group-hover:opacity-0"
         />
-        {/* Secondary image — fades in on hover, slightly larger settling to 1.0 */}
+        {/* Secondary image - fades in on hover, slightly larger settling to 1.0 */}
         <img
           src={secondaryImage}
           alt=""
@@ -118,7 +118,7 @@ export default function ProductCard({
           }}
         />
 
-        {/* Wishlist — persistent at low opacity, fills on active */}
+        {/* Wishlist - persistent at low opacity, fills on active */}
         {showWishlist && (
           <button
             onClick={handleWishlistClick}
