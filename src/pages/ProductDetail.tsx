@@ -12,20 +12,24 @@ import RelatedProducts from '@/components/RelatedProducts';
 
 type SpecRow = { label: string; value: string };
 
-function ProductDescription({ product }: { product: import('@/types').Product }) {
-  const description = product.description.trim();
-  const story = product.details?.story?.trim();
-  const showStory = !!story && story !== description;
+function ExpandableDescription({ product }: { product: import('@/types').Product }) {
+  const description = product.description;
+  const story = product.details?.story;
+  const hasMore = !!story && story.trim() !== description.trim();
+  const [expanded, setExpanded] = useState(false);
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-3">
       <p className="font-body text-body text-sugan-ink-soft leading-relaxed whitespace-pre-line">
-        {description}
+        {expanded && hasMore ? `${description}\n\n${story}` : description}
       </p>
-      {showStory && (
-        <p className="font-body text-body text-sugan-ink-soft leading-relaxed whitespace-pre-line">
-          {story}
-        </p>
+      {hasMore && (
+        <button
+          onClick={() => setExpanded((v) => !v)}
+          className="self-start text-eyebrow font-body uppercase text-sugan-ink border-b border-sugan-ink/30 pb-0.5 hover:border-sugan-ink transition-colors"
+        >
+          {expanded ? 'Read less' : 'Read more'}
+        </button>
       )}
     </div>
   );
@@ -147,7 +151,7 @@ export default function ProductDetail() {
   const displaySku =
     product.details?.variants?.[selectedVariant]?.sku || product.id;
 
-  // Build the specifications table - show every detail field that has a value
+  // Build the specifications table
   const specs: SpecRow[] = [];
   const d = product.details;
   if (d?.materials) specs.push({ label: 'Material', value: d.materials });
@@ -164,18 +168,8 @@ export default function ProductDetail() {
     if (d.dimensions.weight) specs.push({ label: 'Weight', value: String(d.dimensions.weight) });
   }
   if (d?.usesAndMeasurements) specs.push({ label: 'Size Guide', value: d.usesAndMeasurements });
-  if (d?.usp && d.usp.length) specs.push({ label: 'Highlights', value: d.usp.join(' · ') });
-  if (d?.features && d.features.length) specs.push({ label: 'Features', value: d.features.join('\n') });
-  if (d?.benefits && d.benefits.length) specs.push({ label: 'Benefits', value: d.benefits.join('\n') });
   if (d?.care) specs.push({ label: 'Care', value: d.care });
-  if (d?.cleaning) specs.push({ label: 'Cleaning', value: d.cleaning });
-  if (d?.maintenance) specs.push({ label: 'Maintenance', value: d.maintenance });
-  if (d?.sustainability) specs.push({ label: 'Sustainability', value: d.sustainability });
-  if (d?.origin) specs.push({ label: 'Origin', value: d.origin });
-  if (d?.artisan) specs.push({ label: 'Artisan', value: d.artisan });
   if (d?.shipping) specs.push({ label: 'Shipping', value: d.shipping });
-  if (d?.delivery) specs.push({ label: 'Delivery', value: d.delivery });
-  if (d?.returns) specs.push({ label: 'Returns', value: d.returns });
   if (d?.warranty) specs.push({ label: 'Warranty', value: d.warranty });
 
   const isHot = ['SAC048S', 'SAC048M', 'SAC048L'].includes(product.id);
@@ -193,21 +187,18 @@ export default function ProductDetail() {
 
   return (
     <div className="bg-sugan-bone pb-24 lg:pb-0">
-      {/* Above the fold:
-            - Mobile: image renders at its natural aspect ratio (full width, auto height)
-              so the whole product is visible without cropping or letterboxing.
-            - Desktop: full-viewport hero with object-cover. */}
-      <div className="relative w-full bg-sugan-bone-dark sm:h-screen sm:min-h-[640px] sm:overflow-hidden">
+      {/* Above the fold: full-viewport image, no overlay */}
+      <div className="relative h-[70vh] sm:h-screen min-h-[400px] sm:min-h-[640px] w-full overflow-hidden bg-sugan-bone-dark">
         <img
           src={heroImage}
           alt={product.name}
           data-cursor="view"
-          className="block w-full h-auto sm:absolute sm:inset-0 sm:h-full sm:object-cover"
+          className="absolute inset-0 w-full h-full object-contain sm:object-cover"
         />
-        {/* Soft gradient on desktop only */}
-        <div className="hidden sm:block absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-sugan-bone via-sugan-bone/30 to-transparent pointer-events-none" />
+        {/* Soft gradient at the bottom only - no text overlay */}
+        <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-sugan-bone via-sugan-bone/30 to-transparent pointer-events-none" />
 
-        {/* Floating back chip - sits below the nav */}
+        {/* Floating back chip - bone/85 frosted, hairline border, sits below the nav */}
         <button
           onClick={() => {
             if (fromPage) navigate(fromPage);
@@ -223,31 +214,29 @@ export default function ProductDetail() {
 
       {/* Editorial layout: gallery left, sticky info right */}
       <div className="grid grid-cols-1 lg:grid-cols-[60fr_40fr]">
-        {/* Vertical image + video stack
-              - Mobile: each image renders at its natural aspect ratio (full image, no crop)
-              - Desktop: aspect-[4/5] tiles with object-cover for editorial feel */}
+        {/* Vertical image + video stack */}
         <div className="bg-sugan-bone-dark">
           {galleryImages.length > 0 ? (
             galleryImages.map((src, i) => (
               <div
                 key={`${src}-${i}`}
-                className="bg-sugan-bone-dark lg:relative lg:w-full lg:aspect-[4/5] lg:overflow-hidden"
+                className="relative w-full aspect-square lg:aspect-[4/5] overflow-hidden bg-sugan-bone-dark"
               >
                 <img
                   src={src}
                   alt={`${product.name} - view ${i + 2}`}
                   loading="lazy"
-                  className="block w-full h-auto lg:absolute lg:inset-0 lg:h-full lg:object-cover"
+                  className="absolute inset-0 w-full h-full object-contain lg:object-cover"
                 />
               </div>
             ))
           ) : (
-            <div className="bg-sugan-bone-dark lg:relative lg:w-full lg:aspect-[4/5] lg:overflow-hidden">
+            <div className="relative w-full aspect-square lg:aspect-[4/5] overflow-hidden bg-sugan-bone-dark">
               <img
                 src={heroImage}
                 alt={product.name}
                 loading="lazy"
-                className="block w-full h-auto lg:absolute lg:inset-0 lg:h-full lg:object-cover"
+                className="absolute inset-0 w-full h-full object-contain lg:object-cover"
               />
             </div>
           )}
@@ -256,7 +245,7 @@ export default function ProductDetail() {
           {galleryVideos.map((src, i) => (
             <div
               key={`video-${i}`}
-              className="bg-sugan-bone-dark lg:relative lg:w-full lg:aspect-[4/5] lg:overflow-hidden"
+              className="relative w-full aspect-square lg:aspect-[4/5] overflow-hidden bg-sugan-bone-dark"
             >
               <video
                 src={src}
@@ -264,7 +253,7 @@ export default function ProductDetail() {
                 muted
                 loop
                 playsInline
-                className="block w-full h-auto lg:absolute lg:inset-0 lg:h-full lg:object-cover"
+                className="absolute inset-0 w-full h-full object-cover"
               />
             </div>
           ))}
@@ -311,8 +300,8 @@ export default function ProductDetail() {
               ₹{displayPrice.toLocaleString()}
             </p>
 
-            {/* Description + story — both shown in full, always */}
-            <ProductDescription product={product} />
+            {/* Description — visible immediately, expandable if details.story is longer */}
+            <ExpandableDescription product={product} />
 
             {/* Stock + hot tag */}
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
@@ -497,14 +486,14 @@ export default function ProductDetail() {
             {specs.map((row, i) => (
               <div
                 key={row.label}
-                className={`grid grid-cols-1 gap-2 sm:grid-cols-[200px_1fr] sm:gap-6 py-5 ${
+                className={`grid grid-cols-[140px_1fr] sm:grid-cols-[200px_1fr] gap-6 py-5 ${
                   i === 0 ? 'border-y' : 'border-b'
                 } border-sugan-ink/10`}
               >
                 <span className="text-eyebrow font-body uppercase text-sugan-ink-soft tabular-nums">
                   {row.label}
                 </span>
-                <span className="font-body text-body text-sugan-ink leading-relaxed whitespace-pre-line">
+                <span className={`font-body text-body text-sugan-ink leading-relaxed ${row.label === 'Size Guide' ? 'whitespace-pre-line' : ''}`}>
                   {row.value}
                 </span>
               </div>
