@@ -1,206 +1,224 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Star, Search, ArrowLeft } from 'lucide-react';
-import { roomProducts, rooms, getDisplayProduct, hasSizeVariants, getSizeVariantCount, getBaseProductName, isSetProduct } from '@/data/rooms';
-
-import type { Product } from '@/types';
+import { ArrowLeft, Search } from 'lucide-react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import * as Icons from 'lucide-react';
-
+import {
+  rooms,
+  roomProducts,
+  getDisplayProduct,
+  getBaseProductName,
+  isSetProduct,
+} from '@/data/rooms';
+import type { Product } from '@/types';
+import ProductCard from '@/components/ProductCard';
 import MobileCartButton from '@/components/MobileCartButton';
 
 gsap.registerPlugin(ScrollTrigger);
+
+type SortKey = 'featured' | 'price-asc' | 'price-desc' | 'name';
 
 export default function RoomShop() {
   const { roomId } = useParams<{ roomId: string }>();
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
-
-
+  const [sortKey, setSortKey] = useState<SortKey>('featured');
+  const [sortOpen, setSortOpen] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
 
-  const room = rooms.find(r => r.id === roomId);
-  const products = roomId === 'shop-all' 
-    ? Object.values(roomProducts).flat()
-    : roomProducts[roomId || ''] || [];
+  const room = rooms.find((r) => r.id === roomId);
+  const products =
+    roomId === 'shop-all'
+      ? Object.values(roomProducts).flat()
+      : roomProducts[roomId || ''] || [];
 
-  // Filter to show unique base products. Set-of-3 products are always kept as separate entries.
-  const uniqueProducts = useMemo(() => products.reduce((acc: Product[], product) => {
-    const displayProduct = isSetProduct(product) ? product : getDisplayProduct(product);
-    const baseName = getBaseProductName(displayProduct.name);
-    const isDuplicate = acc.some(p => getBaseProductName(p.name) === baseName);
-    if (!isDuplicate) acc.push(displayProduct);
-    return acc;
-  }, []), [products]);
+  const uniqueProducts = useMemo(
+    () =>
+      products.reduce((acc: Product[], product) => {
+        const displayProduct = isSetProduct(product) ? product : getDisplayProduct(product);
+        const baseName = getBaseProductName(displayProduct.name);
+        const isDuplicate = acc.some((p) => getBaseProductName(p.name) === baseName);
+        if (!isDuplicate) acc.push(displayProduct);
+        return acc;
+      }, []),
+    [products]
+  );
 
-  const filteredProducts = uniqueProducts.filter((p) => {
-    const matchesSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         p.description.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesSearch;
-  });
+  const filteredProducts = useMemo(() => {
+    const q = searchQuery.toLowerCase();
+    let list = uniqueProducts.filter(
+      (p) =>
+        !q ||
+        p.name.toLowerCase().includes(q) ||
+        p.description.toLowerCase().includes(q)
+    );
 
-  // Get the icon component dynamically
-  const IconComponent = room ? (Icons as unknown as Record<string, React.ComponentType<{ className?: string }>>)[room.icon] : null;
+    switch (sortKey) {
+      case 'price-asc':
+        list = [...list].sort((a, b) => a.price - b.price);
+        break;
+      case 'price-desc':
+        list = [...list].sort((a, b) => b.price - a.price);
+        break;
+      case 'name':
+        list = [...list].sort((a, b) => a.name.localeCompare(b.name));
+        break;
+    }
+    return list;
+  }, [uniqueProducts, searchQuery, sortKey]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const cards = gridRef.current?.querySelectorAll('.product-card');
-      if (cards) {
+      const cards = gridRef.current?.querySelectorAll('[data-card]');
+      if (cards && cards.length) {
         gsap.fromTo(
           cards,
-          { y: 60, opacity: 0 },
+          { y: 24, opacity: 0 },
           {
             y: 0,
             opacity: 1,
             duration: 0.6,
-            stagger: 0.1,
+            stagger: 0.04,
             ease: 'power3.out',
-            scrollTrigger: {
-              trigger: sectionRef.current,
-              start: 'top 70%',
-              toggleActions: 'play none none reverse',
-            },
           }
         );
       }
     }, sectionRef);
-
     return () => ctx.revert();
   }, [filteredProducts]);
 
   if (!room) {
     return (
-      <div className="min-h-screen bg-sugan-bone pt-24 flex items-center justify-center">
+      <div className="min-h-screen bg-sugan-bone pt-32 flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-display text-sugan-ink mb-4">Room not found</h1>
-          <Link to="/shop" className="btn-primary">Back to Shop</Link>
+          <h1 className="font-display text-display-lg font-light text-sugan-ink mb-6">
+            Room not found
+          </h1>
+          <Link to="/shop" className="btn-outline">
+            Back to Shop
+          </Link>
         </div>
       </div>
     );
   }
 
+  const sortLabel: Record<SortKey, string> = {
+    featured: 'Featured',
+    'price-asc': 'Price · low to high',
+    'price-desc': 'Price · high to low',
+    name: 'Name',
+  };
+
   return (
-    <div className="min-h-screen bg-sugan-bone pt-24">
+    <div ref={sectionRef} className="min-h-screen bg-sugan-bone pt-32">
       {/* Header */}
-      <div className="bg-sugan-ink py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <button 
-            onClick={() => navigate('/shop')}
-            className="flex items-center gap-2 text-sugan-bone/70 hover:text-sugan-gold mb-4 transition-colors"
+      <div className="section-padding pb-10 border-b border-sugan-ink/10">
+        <button
+          onClick={() => navigate('/shop')}
+          className="inline-flex items-center gap-2 text-eyebrow font-body uppercase text-sugan-ink-soft hover:text-sugan-ink transition-colors mb-6"
+        >
+          <ArrowLeft className="w-3.5 h-3.5" />
+          All rooms
+        </button>
+        <p className="text-eyebrow font-body uppercase text-sugan-ink-soft mb-4">
+          {String(filteredProducts.length).padStart(2, '0')} products
+        </p>
+        <h1 className="font-display text-display-xl font-light text-sugan-ink">
+          {room.name}
+        </h1>
+        <p className="mt-6 max-w-2xl font-body text-body-lg text-sugan-ink-soft">
+          {room.description}
+        </p>
+      </div>
+
+      {/* Filter / sort bar */}
+      <div className="section-padding py-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b border-sugan-ink/10 sticky top-[64px] bg-sugan-bone/80 backdrop-blur-xl z-30">
+        <div className="relative flex-1 max-w-sm">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-sugan-ink/40" />
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder={`Search ${room.name.toLowerCase()}`}
+            className="w-full pl-10 pr-4 py-2 bg-transparent border-b border-sugan-ink/20 font-body text-[15px] text-sugan-ink placeholder:text-sugan-ink/30 focus:outline-none focus:border-sugan-ink transition-colors"
+          />
+        </div>
+
+        {/* Flat ghost sort dropdown */}
+        <div className="relative">
+          <button
+            onClick={() => setSortOpen((v) => !v)}
+            className="inline-flex items-center gap-2 text-eyebrow font-body uppercase text-sugan-ink border-b border-sugan-ink/30 pb-1 hover:border-sugan-ink transition-colors"
           >
-            <ArrowLeft className="w-4 h-4" />
-            Back to Rooms
+            Sort · {sortLabel[sortKey]}
           </button>
-          <div className="flex items-center gap-4">
-            {IconComponent && <IconComponent className="w-10 h-10 text-sugan-gold" />}
-            <div>
-              <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl text-sugan-bone">
-                {room.name}
-              </h1>
-              <p className="text-sugan-bone/70 font-body mt-1">
-                {room.description}
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Search Bar */}
-      <div className="bg-white border-b border-sugan-ink/10 sticky top-0 z-30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
-          <div className="flex items-center justify-between">
-            <p className="text-sugan-ink/60 font-body text-sm">
-              {filteredProducts.length} products
-            </p>
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-sugan-ink/40" />
-              <input
-                type="text"
-                placeholder={`Search ${room.name.toLowerCase()}...`}
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 pr-4 py-2 bg-sugan-bone border border-sugan-ink/20 rounded-full text-sm font-body focus:outline-none focus:border-sugan-gold w-full md:w-64"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Products Grid */}
-      <section ref={sectionRef} className="py-12 section-padding">
-        <div className="max-w-7xl mx-auto">
-          {filteredProducts.length === 0 ? (
-            <div className="text-center py-16">
-              <p className="text-sugan-ink/60 font-body mb-4">No products in this room yet.</p>
-              <p className="text-sugan-ink/40 font-body text-sm">We're curating the best products for your {room.name.toLowerCase()}.</p>
-              <Link to="/shop" className="inline-flex items-center gap-2 btn-primary mt-6">
-                Browse Other Rooms
-              </Link>
-            </div>
-          ) : (
+          {sortOpen && (
             <div
-              ref={gridRef}
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8"
+              className="absolute right-0 mt-3 min-w-[220px] bg-sugan-bone border border-sugan-ink/10 shadow-lift z-40"
+              onMouseLeave={() => setSortOpen(false)}
             >
-              {filteredProducts.map((product) => (
-                <div
-                  key={product.id}
-                  className="product-card group bg-white rounded-lg overflow-hidden transition-all duration-500 hover:shadow-gold-lg"
+              {(Object.keys(sortLabel) as SortKey[]).map((key) => (
+                <button
+                  key={key}
+                  onClick={() => {
+                    setSortKey(key);
+                    setSortOpen(false);
+                  }}
+                  className={`w-full text-left px-4 py-3 text-eyebrow font-body uppercase border-b border-sugan-ink/10 last:border-b-0 transition-colors ${
+                    sortKey === key
+                      ? 'text-sugan-ink bg-sugan-bone-dark'
+                      : 'text-sugan-ink-soft hover:text-sugan-ink'
+                  }`}
                 >
-                  {/* Image */}
-                  <Link to={`/product/${product.id}`} state={{ from: `/shop/${roomId}` }} className="block relative aspect-square overflow-hidden bg-sugan-bone-dark">
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                      loading="lazy"
-                    />
-                  </Link>
-
-                  {/* Content */}
-                  <div className="p-5">
-                    <p className="text-sugan-gold text-xs font-body uppercase tracking-wider mb-1">
-                      {product.category}
-                    </p>
-                    <Link to={`/product/${product.id}`} state={{ from: `/shop/${roomId}` }}>
-                      <h3 className="font-display text-lg font-medium text-sugan-ink mb-2 group-hover:text-sugan-gold transition-colors">
-                        {getBaseProductName(product.name)}
-                      </h3>
-                    </Link>
-                    <div className="flex items-center gap-1 mb-3">
-                      {[...Array(5)].map((_, i) => (
-                        <Star
-                          key={i}
-                          className={`w-3 h-3 ${
-                            i < Math.floor(product.rating || 0)
-                              ? 'fill-sugan-gold text-sugan-gold'
-                              : 'text-sugan-ink/20'
-                          }`}
-                        />
-                      ))}
-                      <span className="text-xs text-sugan-ink/50 ml-1">
-                        ({product.reviews})
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="font-display text-xl font-semibold text-sugan-ink">
-                        ₹{product.price.toLocaleString()}
-                      </span>
-                    </div>
-                    {hasSizeVariants(product) && (
-                      <p className="text-xs text-sugan-ink/50 font-body mt-2">{getSizeVariantCount(product)} sizes available</p>
-                    )}
-                  </div>
-                </div>
+                  {sortLabel[key]}
+                </button>
               ))}
             </div>
           )}
         </div>
+      </div>
+
+      {/* Active search chip */}
+      {searchQuery && (
+        <div className="section-padding pt-6">
+          <button
+            onClick={() => setSearchQuery('')}
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-pill border border-sugan-ink/20 text-eyebrow font-body uppercase text-sugan-ink hover:border-sugan-ink transition-colors"
+          >
+            “{searchQuery}” ×
+          </button>
+        </div>
+      )}
+
+      {/* Products Grid */}
+      <section className="section-padding py-12">
+        {filteredProducts.length === 0 ? (
+          <div className="text-center py-24">
+            <p className="font-display text-display-md font-light text-sugan-ink mb-3">
+              Nothing here yet.
+            </p>
+            <p className="font-body text-body text-sugan-ink-soft mb-8">
+              We're curating pieces for the {room.name.toLowerCase()}.
+            </p>
+            <Link to="/shop" className="btn-outline">
+              Browse other rooms
+            </Link>
+          </div>
+        ) : (
+          <div
+            ref={gridRef}
+            className="grid grid-cols-2 lg:grid-cols-4 gap-gutter"
+          >
+            {filteredProducts.map((product) => (
+              <div key={product.id} data-card>
+                <ProductCard product={product} baseName={getBaseProductName(product.name)} />
+              </div>
+            ))}
+          </div>
+        )}
       </section>
 
-      {/* Mobile Cart Button */}
       <MobileCartButton />
     </div>
   );

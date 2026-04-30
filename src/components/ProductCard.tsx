@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { Heart } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
@@ -13,12 +13,42 @@ interface ProductCardProps {
   sizeText?: string;
 }
 
-export default function ProductCard({ product, showWishlist = true, baseName, sizeText }: ProductCardProps) {
+// Build a short spec line from material + primary dimension if available.
+function buildSpecLine(product: Product): string | null {
+  const material = product.details?.materials?.split(',')[0]?.trim();
+  const dims = product.details?.dimensions;
+  let dimText: string | null = null;
+  if (dims) {
+    const parts = [dims.length, dims.width, dims.height].filter(Boolean);
+    if (parts.length >= 2) dimText = parts.join('×') + (typeof parts[0] === 'string' ? '' : '"');
+    else if (dims.diameter) dimText = `Ø${dims.diameter}`;
+  }
+  if (material && dimText) return `${material} · ${dimText}`;
+  if (material) return material;
+  if (dimText) return dimText;
+  return null;
+}
+
+export default function ProductCard({
+  product,
+  showWishlist = true,
+  baseName,
+  sizeText,
+}: ProductCardProps) {
   const { user } = useAuth();
   const [isInWishlist, setIsInWishlist] = useState(false);
   const [wishlistId, setWishlistId] = useState<string | null>(null);
 
-  // Check if product is in wishlist
+  // Derive secondary image for dual-image hover (Aimé Leon Dore-style).
+  const secondaryImage = useMemo(() => {
+    if (product.image.includes('_01.png')) {
+      return product.image.replace('_01.png', '_02.png');
+    }
+    return product.image;
+  }, [product.image]);
+
+  const specLine = useMemo(() => buildSpecLine(product), [product]);
+
   useEffect(() => {
     if (!user || !showWishlist) return;
 
@@ -44,11 +74,7 @@ export default function ProductCard({ product, showWishlist = true, baseName, si
   const handleWishlistClick = async (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    
-    if (!user) {
-      // Could show login modal or redirect
-      return;
-    }
+    if (!user) return;
 
     if (isInWishlist && wishlistId) {
       await deleteDoc(doc(db, 'wishlists', wishlistId));
@@ -59,52 +85,73 @@ export default function ProductCard({ product, showWishlist = true, baseName, si
         name: product.name,
         price: product.price,
         image: product.image,
-        addedAt: new Date()
+        addedAt: new Date(),
       });
     }
   };
 
   return (
-    <div className="relative group">
-      <Link
-        to={`/product/${product.id}`}
-        className="block bg-white rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300"
-      >
-        <div className="aspect-square overflow-hidden bg-sugan-bone-dark relative">
-          <img
-            src={product.image}
-            alt={product.name}
-            className="w-full h-full object-cover transition-transform group-hover:scale-105"
-            loading="lazy"
-          />
-          {/* Wishlist Button Overlay */}
-          {showWishlist && (
-            <button
-              onClick={handleWishlistClick}
-              className={`absolute top-2 right-2 w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200 ${
-                isInWishlist
-                  ? 'bg-red-500 text-white shadow-md'
-                  : 'bg-white/90 text-sugan-ink/60 hover:text-red-500 opacity-0 group-hover:opacity-100'
-              }`}
-              aria-label={isInWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
-            >
-              <Heart className={`w-4 h-4 ${isInWishlist ? 'fill-current' : ''}`} />
-            </button>
-          )}
-        </div>
-        <div className="p-3">
-          <p className="text-xs text-sugan-gold font-body uppercase">{product.category}</p>
-          <h4 className="font-body text-sm text-sugan-ink line-clamp-2 group-hover:text-sugan-gold transition-colors">
-            {baseName || product.name}
-          </h4>
-          <p className="font-display text-sugan-ink font-semibold mt-1">
-            ₹{product.price.toLocaleString()}
+    <Link
+      to={`/product/${product.id}`}
+      data-cursor="view"
+      className="group block"
+    >
+      <div className="relative aspect-[4/5] overflow-hidden bg-sugan-bone-dark">
+        {/* Primary image — fades out on hover */}
+        <img
+          src={product.image}
+          alt={product.name}
+          loading="lazy"
+          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-apple group-hover:opacity-0"
+        />
+        {/* Secondary image — fades in on hover, slightly larger settling to 1.0 */}
+        <img
+          src={secondaryImage}
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          className="absolute inset-0 w-full h-full object-cover scale-105 opacity-0 transition-opacity duration-700 ease-apple group-hover:opacity-100"
+          onError={(e) => {
+            // If _02 doesn't exist, fall back silently to the primary image
+            const img = e.currentTarget;
+            if (img.src !== product.image) img.src = product.image;
+          }}
+        />
+
+        {/* Wishlist — persistent at low opacity, fills on active */}
+        {showWishlist && (
+          <button
+            onClick={handleWishlistClick}
+            aria-label={isInWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
+            className={`absolute top-3 right-3 w-9 h-9 flex items-center justify-center transition-opacity duration-300 ease-apple ${
+              isInWishlist
+                ? 'text-sugan-ink opacity-100'
+                : 'text-sugan-ink/70 opacity-30 group-hover:opacity-100'
+            }`}
+          >
+            <Heart className={`w-4 h-4 ${isInWishlist ? 'fill-current' : ''}`} />
+          </button>
+        )}
+      </div>
+
+      <div className="pt-4">
+        {product.category && (
+          <p className="text-eyebrow font-body uppercase text-sugan-ink/40">
+            {product.category}
           </p>
-          {sizeText && (
-            <p className="text-xs text-sugan-ink/50 font-body mt-1">{sizeText}</p>
-          )}
-        </div>
-      </Link>
-    </div>
+        )}
+        <h4 className="mt-2 font-body text-[15px] text-sugan-ink line-clamp-2">
+          {baseName || product.name}
+        </h4>
+        {(specLine || sizeText) && (
+          <p className="mt-1 font-body text-body-sm text-sugan-ink-soft">
+            {sizeText ?? specLine}
+          </p>
+        )}
+        <p className="mt-2 font-body text-[15px] text-sugan-ink tabular-nums">
+          ₹{product.price.toLocaleString()}
+        </p>
+      </div>
+    </Link>
   );
 }

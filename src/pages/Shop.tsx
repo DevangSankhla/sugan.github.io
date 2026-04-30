@@ -1,30 +1,29 @@
 import { useState, useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { rooms, roomProducts, allProducts, getDisplayProduct, hasSizeVariants, getSizeVariantCount, getBaseProductName, isSetProduct } from '@/data/rooms';
 import { Link } from 'react-router-dom';
-import * as Icons from 'lucide-react';
+import { ArrowRight, X } from 'lucide-react';
+import { rooms, roomProducts, allProducts, getDisplayProduct, getBaseProductName, isSetProduct } from '@/data/rooms';
 import type { Product } from '@/types';
+import ProductCard from '@/components/ProductCard';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Define categories based on actual product categories
 const categories = [
-  { id: 'pet-feeders', name: 'Pet Feeders', icon: 'Heart' },
-  { id: 'trays', name: 'Serving Trays', icon: 'LayoutGrid' },
-  { id: 'bowls', name: 'Bowls', icon: 'Circle' },
-  { id: 'coasters', name: 'Coasters', icon: 'Square' },
-  { id: 'cutlery', name: 'Cutlery & Organizers', icon: 'Utensils' },
-  { id: 'chopping-boards', name: 'Chopping Boards', icon: 'Square' },
-  { id: 'pooja', name: 'Pooja Essentials', icon: 'Sparkles' },
+  { id: 'pet-feeders', name: 'Pet Feeders' },
+  { id: 'trays', name: 'Serving Trays' },
+  { id: 'bowls', name: 'Bowls' },
+  { id: 'coasters', name: 'Coasters' },
+  { id: 'cutlery', name: 'Cutlery & Organizers' },
+  { id: 'chopping-boards', name: 'Chopping Boards' },
+  { id: 'pooja', name: 'Pooja Essentials' },
 ];
 
-// Shows set-of-3 as their own entry; collapses other size variants to the small variant.
 const getUniqueProductsByName = (products: Product[]): Product[] => {
   const seen = new Set<string>();
   return products
-    .map(p => isSetProduct(p) ? p : getDisplayProduct(p))
-    .filter(p => {
+    .map((p) => (isSetProduct(p) ? p : getDisplayProduct(p)))
+    .filter((p) => {
       const baseName = getBaseProductName(p.name);
       if (seen.has(baseName)) return false;
       seen.add(baseName);
@@ -32,312 +31,225 @@ const getUniqueProductsByName = (products: Product[]): Product[] => {
     });
 };
 
+function getCategoryProducts(categoryId: string): Product[] {
+  let products: Product[] = [];
+  switch (categoryId) {
+    case 'pet-feeders':
+      products = roomProducts['pet'] || [];
+      break;
+    case 'trays':
+      products = allProducts.filter((p) => p.name.toLowerCase().includes('tray'));
+      break;
+    case 'bowls':
+      products = allProducts.filter(
+        (p) => p.name.toLowerCase().includes('bowl') && p.room !== 'pet'
+      );
+      break;
+    case 'coasters':
+      products = allProducts.filter((p) => p.name.toLowerCase().includes('coaster'));
+      break;
+    case 'cutlery':
+      products = allProducts.filter(
+        (p) =>
+          p.name.toLowerCase().includes('cutlery') ||
+          p.name.toLowerCase().includes('organizer')
+      );
+      break;
+    case 'chopping-boards':
+      products = allProducts.filter(
+        (p) =>
+          p.name.toLowerCase().includes('chopping') ||
+          p.name.toLowerCase().includes('board')
+      );
+      break;
+    case 'pooja':
+      products = roomProducts['pooja'] || [];
+      break;
+  }
+  return getUniqueProductsByName(products);
+}
+
 export default function Shop() {
-  const [activeView, setActiveView] = useState<'home' | 'rooms' | 'category'>('home');
+  const [browseBy, setBrowseBy] = useState<'rooms' | 'categories'>('rooms');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
 
+  // Reveal grid on view change
   useEffect(() => {
-    if (activeView === 'home') return;
-    
     const ctx = gsap.context(() => {
-      const cards = gridRef.current?.querySelectorAll('.item-card');
-      if (cards) {
+      const cards = gridRef.current?.querySelectorAll('[data-card]');
+      if (cards && cards.length) {
         gsap.fromTo(
           cards,
-          { y: 40, opacity: 0 },
+          { y: 24, opacity: 0 },
           {
             y: 0,
             opacity: 1,
-            duration: 0.5,
-            stagger: 0.08,
+            duration: 0.6,
+            stagger: 0.04,
             ease: 'power3.out',
           }
         );
       }
     }, sectionRef);
-
     return () => ctx.revert();
-  }, [activeView, selectedCategory]);
+  }, [browseBy, selectedCategory]);
 
-  // Get products by category - returns unique products only
-  const getCategoryProducts = (categoryId: string): Product[] => {
-    let products: Product[] = [];
-    switch(categoryId) {
-      case 'pet-feeders':
-        products = roomProducts['pet'] || [];
-        break;
-      case 'trays':
-        products = allProducts.filter(p => p.name.toLowerCase().includes('tray'));
-        break;
-      case 'bowls':
-        products = allProducts.filter(p => p.name.toLowerCase().includes('bowl') && p.room !== 'pet');
-        break;
-      case 'coasters':
-        products = allProducts.filter(p => p.name.toLowerCase().includes('coaster'));
-        break;
-      case 'cutlery':
-        products = allProducts.filter(p => p.name.toLowerCase().includes('cutlery') || p.name.toLowerCase().includes('organizer'));
-        break;
-      case 'chopping-boards':
-        products = allProducts.filter(p => p.name.toLowerCase().includes('chopping') || p.name.toLowerCase().includes('board'));
-        break;
-      case 'pooja':
-        products = roomProducts['pooja'] || [];
-        break;
-      case 'decor':
-        products = allProducts.filter(p => p.category?.toLowerCase().includes('decor'));
-        break;
-      default:
-        products = [];
-    }
-    // Return unique products only to avoid duplicates from size variants
-    return getUniqueProductsByName(products);
-  };
-
-  // Filter out shop-all from rooms display
-  const displayRooms = rooms.filter(r => r.id !== 'shop-all');
+  const displayRooms = rooms.filter((r) => r.id !== 'shop-all');
+  const activeCategoryName = categories.find((c) => c.id === selectedCategory)?.name;
+  const categoryProducts = selectedCategory ? getCategoryProducts(selectedCategory) : [];
 
   return (
-    <div className="min-h-screen bg-sugan-bone pt-24">
+    <div ref={sectionRef} className="min-h-screen bg-sugan-bone pt-32">
       {/* Header */}
-      <div className="bg-sugan-ink py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center">
-          <h1 className="font-display text-3xl sm:text-4xl lg:text-6xl text-sugan-bone mb-4">
-            Shop <span className="text-sugan-gold">Sugan</span>
-          </h1>
-          <p className="text-sugan-bone/70 font-body max-w-2xl mx-auto text-lg">
-            Handcrafted wooden products from Jodhpur. 
-            Browse by room or category to find your perfect piece.
-          </p>
-        </div>
+      <div className="section-padding pb-10 border-b border-sugan-ink/10">
+        <p className="text-eyebrow font-body uppercase text-sugan-ink-soft mb-6 inline-flex items-center gap-3">
+          <span className="block w-12 h-px bg-sugan-ink/20" aria-hidden="true" />
+          The Atelier
+        </p>
+        <h1 className="font-display text-display-xl font-light text-sugan-ink">
+          Shop
+        </h1>
+        <p className="mt-6 max-w-2xl font-body text-body-lg text-sugan-ink-soft">
+          Solid wood, slow-grown and hand-shaped in Jodhpur. Browse by room or by category.
+        </p>
       </div>
 
-      {/* Main Shop Navigation */}
-      {activeView === 'home' && (
-        <section className="py-16 section-padding">
-          <div className="max-w-4xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {/* Shop by Room */}
-              <button
-                onClick={() => setActiveView('rooms')}
-                className="group relative bg-white rounded-3xl p-12 transition-all duration-500 hover:shadow-gold-lg hover:-translate-y-2 text-left overflow-hidden"
-              >
-                <div className="absolute top-0 right-0 w-48 h-48 bg-sugan-bone/50 rounded-full -mr-24 -mt-24 transition-transform duration-500 group-hover:scale-150" />
-                <div className="relative">
-                  <div className="w-20 h-20 bg-sugan-ink/5 rounded-2xl flex items-center justify-center mb-6 transition-colors duration-300 group-hover:bg-sugan-gold/10">
-                    <Icons.Home className="w-10 h-10 text-sugan-ink transition-colors duration-300 group-hover:text-sugan-gold" />
-                  </div>
-                  <h2 className="font-display text-3xl font-medium text-sugan-ink mb-3 group-hover:text-sugan-gold transition-colors">
-                    Shop by Room
-                  </h2>
-                  <p className="text-sugan-ink/60 font-body mb-6">
-                    Browse products organized by rooms in your home
-                  </p>
-                  <div className="flex items-center text-sugan-gold font-body">
-                    <span>Explore Rooms</span>
-                    <Icons.ArrowRight className="w-5 h-5 ml-2 transform transition-transform group-hover:translate-x-2" />
-                  </div>
-                </div>
-              </button>
-
-              {/* Shop by Category */}
-              <button
-                onClick={() => setActiveView('category')}
-                className="group relative bg-white rounded-3xl p-12 transition-all duration-500 hover:shadow-gold-lg hover:-translate-y-2 text-left overflow-hidden"
-              >
-                <div className="absolute top-0 right-0 w-48 h-48 bg-sugan-bone/50 rounded-full -mr-24 -mt-24 transition-transform duration-500 group-hover:scale-150" />
-                <div className="relative">
-                  <div className="w-20 h-20 bg-sugan-ink/5 rounded-2xl flex items-center justify-center mb-6 transition-colors duration-300 group-hover:bg-sugan-gold/10">
-                    <Icons.Grid3X3 className="w-10 h-10 text-sugan-ink transition-colors duration-300 group-hover:text-sugan-gold" />
-                  </div>
-                  <h2 className="font-display text-3xl font-medium text-sugan-ink mb-3 group-hover:text-sugan-gold transition-colors">
-                    Shop by Category
-                  </h2>
-                  <p className="text-sugan-ink/60 font-body mb-6">
-                    Find specific products like feeders, trays, bowls & more
-                  </p>
-                  <div className="flex items-center text-sugan-gold font-body">
-                    <span>Explore Categories</span>
-                    <Icons.ArrowRight className="w-5 h-5 ml-2 transform transition-transform group-hover:translate-x-2" />
-                  </div>
-                </div>
-              </button>
-            </div>
-
-            {/* Shop All Link */}
-            <div className="text-center mt-12">
-              <Link 
-                to="/shop/shop-all"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-sugan-ink text-sugan-bone rounded-full font-body hover:bg-sugan-ink/90 transition-colors"
-              >
-                <Icons.Grid3X3 className="w-5 h-5" />
-                View All Products
-              </Link>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Shop by Room View - Shows Room Buttons */}
-      {activeView === 'rooms' && (
-        <section ref={sectionRef} className="py-12 section-padding">
-          <div className="max-w-7xl mx-auto">
-            <button 
-              onClick={() => setActiveView('home')}
-              className="flex items-center gap-2 text-sugan-ink/60 hover:text-sugan-gold mb-8 font-body"
-            >
-              <Icons.ArrowLeft className="w-4 h-4" />
-              Back
-            </button>
-
-            <h2 className="font-display text-3xl text-sugan-ink mb-8">Shop by Room</h2>
-            
-            {/* Room Buttons Grid */}
-            <div ref={gridRef} className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-              {displayRooms.map((room) => {
-                const roomProds = roomProducts[room.id] || [];
-                if (roomProds.length === 0) return null;
-                
-                const uniqueProducts = getUniqueProductsByName(roomProds);
-                const IconComponent = (Icons as unknown as Record<string, React.ComponentType<{ className?: string }>>)[room.icon];
-
-                return (
-                  <Link
-                    key={room.id}
-                    to={`/shop/${room.id}`}
-                    className="item-card group bg-white rounded-2xl p-6 text-center hover:shadow-gold-lg transition-all hover:-translate-y-1"
-                  >
-                    <div className="w-16 h-16 bg-sugan-ink/5 rounded-2xl flex items-center justify-center mx-auto mb-4 transition-colors group-hover:bg-sugan-gold/10">
-                      {IconComponent && <IconComponent className="w-8 h-8 text-sugan-ink group-hover:text-sugan-gold transition-colors" />}
-                    </div>
-                    <h3 className="font-display text-lg text-sugan-ink group-hover:text-sugan-gold transition-colors">{room.name}</h3>
-                    <p className="text-sm text-sugan-ink/50 font-body mt-1">{uniqueProducts.length} products</p>
-                  </Link>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Shop by Category View */}
-      {activeView === 'category' && (
-        <section ref={sectionRef} className="py-12 section-padding">
-          <div className="max-w-7xl mx-auto">
-            <button 
-              onClick={() => {
-                setActiveView('home');
-                setSelectedCategory(null);
-              }}
-              className="flex items-center gap-2 text-sugan-ink/60 hover:text-sugan-gold mb-8 font-body"
-            >
-              <Icons.ArrowLeft className="w-4 h-4" />
-              Back
-            </button>
-
-            {!selectedCategory ? (
-              <>
-                <h2 className="font-display text-3xl text-sugan-ink mb-8">Shop by Category</h2>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  {categories.map((category) => {
-                    const productCount = getCategoryProducts(category.id).length;
-                    if (productCount === 0) return null;
-
-                    const IconComponent = (Icons as unknown as Record<string, React.ComponentType<{ className?: string }>>)[category.icon];
-
-                    return (
-                      <button
-                        key={category.id}
-                        onClick={() => setSelectedCategory(category.id)}
-                        className="item-card group bg-white rounded-2xl p-6 text-center hover:shadow-gold-lg transition-all hover:-translate-y-1"
-                      >
-                        <div className="w-16 h-16 bg-sugan-ink/5 rounded-2xl flex items-center justify-center mx-auto mb-4 transition-colors group-hover:bg-sugan-gold/10">
-                          {IconComponent && <IconComponent className="w-8 h-8 text-sugan-ink group-hover:text-sugan-gold transition-colors" />}
-                        </div>
-                        <h3 className="font-display text-lg text-sugan-ink group-hover:text-sugan-gold transition-colors">{category.name}</h3>
-                        <p className="text-sm text-sugan-ink/50 font-body mt-1">{productCount} products</p>
-                      </button>
-                    );
-                  })}
-                </div>
-              </>
-            ) : (
-              <>
-                <div className="flex items-center justify-between mb-8">
-                  <h2 className="font-display text-3xl text-sugan-ink">
-                    {categories.find(c => c.id === selectedCategory)?.name}
-                  </h2>
-                  <button 
-                    onClick={() => setSelectedCategory(null)}
-                    className="text-sugan-gold font-body hover:underline"
-                  >
-                    View All Categories
-                  </button>
-                </div>
-                
-                <div ref={gridRef} className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                  {getCategoryProducts(selectedCategory).map((product) => (
-                    <Link
-                      key={product.id}
-                      to={`/product/${product.id}`}
-                      state={{ from: '/shop', category: selectedCategory }}
-                      className="item-card group bg-white rounded-xl overflow-hidden hover:shadow-lg transition-all"
-                    >
-                      <div className="aspect-square overflow-hidden bg-sugan-bone-dark">
-                        <img
-                          src={product.image}
-                          alt={product.name}
-                          className="w-full h-full object-cover transition-transform group-hover:scale-105"
-                          loading="lazy"
-                        />
-                      </div>
-                      <div className="p-3">
-                        <p className="text-xs text-sugan-gold font-body uppercase">{product.category}</p>
-                        <h4 className="font-body text-sm text-sugan-ink line-clamp-2">{getBaseProductName(product.name)}</h4>
-                        <p className="font-display text-sugan-ink font-semibold mt-1">₹{product.price.toLocaleString()}</p>
-                        {hasSizeVariants(product) && (
-                          <p className="text-xs text-sugan-ink/50 font-body mt-1">{getSizeVariantCount(product)} sizes available</p>
-                        )}
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              </>
-            )}
-          </div>
-        </section>
-      )}
-
-      {/* Info Section */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-            <div className="p-6">
-              <div className="w-12 h-12 bg-sugan-gold/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Icons.Truck className="w-6 h-6 text-sugan-gold" />
-              </div>
-              <h3 className="font-display text-lg font-medium text-sugan-ink mb-2">Pan India Shipping</h3>
-              <p className="text-sugan-ink/60 font-body text-sm">Free shipping on orders above ₹1999</p>
-            </div>
-            <div className="p-6">
-              <div className="w-12 h-12 bg-sugan-gold/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Icons.Shield className="w-6 h-6 text-sugan-gold" />
-              </div>
-              <h3 className="font-display text-lg font-medium text-sugan-ink mb-2">Quality Guaranteed</h3>
-              <p className="text-sugan-ink/60 font-body text-sm">Handcrafted with premium wood</p>
-            </div>
-            <div className="p-6">
-              <div className="w-12 h-12 bg-sugan-gold/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Icons.Heart className="w-6 h-6 text-sugan-gold" />
-              </div>
-              <h3 className="font-display text-lg font-medium text-sugan-ink mb-2">Made in Jodhpur</h3>
-              <p className="text-sugan-ink/60 font-body text-sm">Supporting local artisans</p>
-            </div>
+      {/* Filter row */}
+      <div className="section-padding pt-8 pb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex items-center gap-6">
+          <span className="text-eyebrow font-body uppercase text-sugan-ink-soft">
+            Browse by
+          </span>
+          <div className="flex items-center gap-1">
+            {(['rooms', 'categories'] as const).map((mode) => {
+              const active = browseBy === mode;
+              return (
+                <button
+                  key={mode}
+                  onClick={() => {
+                    setBrowseBy(mode);
+                    setSelectedCategory(null);
+                  }}
+                  className={`px-3 py-1.5 text-eyebrow font-body uppercase rounded-pill border transition-colors duration-300 ease-apple ${
+                    active
+                      ? 'border-sugan-ink bg-sugan-ink text-sugan-bone'
+                      : 'border-sugan-ink/20 text-sugan-ink-soft hover:border-sugan-ink hover:text-sugan-ink'
+                  }`}
+                >
+                  {mode}
+                </button>
+              );
+            })}
           </div>
         </div>
+
+        {/* Active filter chip */}
+        {browseBy === 'categories' && selectedCategory && (
+          <button
+            onClick={() => setSelectedCategory(null)}
+            className="self-start inline-flex items-center gap-2 px-3 py-1.5 rounded-pill border border-sugan-ink/20 text-eyebrow font-body uppercase text-sugan-ink hover:border-sugan-ink transition-colors duration-300 ease-apple"
+          >
+            {activeCategoryName}
+            <X className="w-3 h-3" />
+          </button>
+        )}
+      </div>
+
+      {/* Content */}
+      <section className="section-padding pb-section-y">
+        {browseBy === 'rooms' ? (
+          <div ref={gridRef} className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-gutter">
+            {displayRooms.map((room) => {
+              const count = getUniqueProductsByName(roomProducts[room.id] || []).length;
+              if (count === 0) return null;
+              const heroImage = roomProducts[room.id]?.[0]?.image ?? '/images/SAC030.jpeg';
+              return (
+                <Link
+                  key={room.id}
+                  to={`/shop/${room.id}`}
+                  data-card
+                  data-cursor="view"
+                  className="group block"
+                >
+                  <div className="relative aspect-[4/5] overflow-hidden bg-sugan-bone-dark">
+                    <img
+                      src={heroImage}
+                      alt={room.name}
+                      loading="lazy"
+                      className="absolute inset-0 w-full h-full object-cover scale-[1.04] transition-transform duration-700 ease-apple group-hover:scale-100"
+                    />
+                  </div>
+                  <div className="pt-4">
+                    <p className="text-eyebrow font-body uppercase text-sugan-ink/40">
+                      {String(count).padStart(2, '0')} products
+                    </p>
+                    <h3 className="mt-2 font-display text-display-md font-light text-sugan-ink">
+                      {room.name}
+                    </h3>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        ) : !selectedCategory ? (
+          <div ref={gridRef} className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-gutter">
+            {categories.map((category) => {
+              const products = getCategoryProducts(category.id);
+              if (products.length === 0) return null;
+              const heroImage = products[0]?.image ?? '/images/SAC030.jpeg';
+              return (
+                <button
+                  key={category.id}
+                  onClick={() => setSelectedCategory(category.id)}
+                  data-card
+                  data-cursor="view"
+                  className="group block text-left"
+                >
+                  <div className="relative aspect-[4/5] overflow-hidden bg-sugan-bone-dark">
+                    <img
+                      src={heroImage}
+                      alt={category.name}
+                      loading="lazy"
+                      className="absolute inset-0 w-full h-full object-cover scale-[1.04] transition-transform duration-700 ease-apple group-hover:scale-100"
+                    />
+                  </div>
+                  <div className="pt-4">
+                    <p className="text-eyebrow font-body uppercase text-sugan-ink/40">
+                      {String(products.length).padStart(2, '0')} products
+                    </p>
+                    <h3 className="mt-2 font-display text-display-md font-light text-sugan-ink">
+                      {category.name}
+                    </h3>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        ) : (
+          <div ref={gridRef} className="grid grid-cols-2 lg:grid-cols-4 gap-gutter">
+            {categoryProducts.map((product) => (
+              <div key={product.id} data-card>
+                <ProductCard product={product} />
+              </div>
+            ))}
+          </div>
+        )}
       </section>
+
+      {/* Footer prompt */}
+      <div className="border-t border-sugan-ink/10">
+        <div className="section-padding py-12 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <p className="font-body text-body text-sugan-ink-soft max-w-md">
+            Looking for something at scale? We take on resort, hotel, and office commissions.
+          </p>
+          <Link to="/bulk-orders" className="btn-ghost group self-start">
+            Bulk &amp; trade enquiries
+            <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 ease-apple group-hover:translate-x-1" />
+          </Link>
+        </div>
+      </div>
     </div>
   );
 }
