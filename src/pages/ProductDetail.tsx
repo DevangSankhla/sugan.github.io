@@ -167,6 +167,7 @@ export default function ProductDetail() {
     if (parts.length) specs.push({ label: 'Dimensions', value: parts.join(' · ') });
     if (d.dimensions.weight) specs.push({ label: 'Weight', value: String(d.dimensions.weight) });
   }
+  if (d?.usesAndMeasurements) specs.push({ label: 'Size Guide', value: d.usesAndMeasurements });
   if (d?.care) specs.push({ label: 'Care', value: d.care });
   if (d?.shipping) specs.push({ label: 'Shipping', value: d.shipping });
   if (d?.warranty) specs.push({ label: 'Warranty', value: d.warranty });
@@ -492,7 +493,7 @@ export default function ProductDetail() {
                 <span className="text-eyebrow font-body uppercase text-sugan-ink-soft tabular-nums">
                   {row.label}
                 </span>
-                <span className="font-body text-body text-sugan-ink leading-relaxed">
+                <span className={`font-body text-body text-sugan-ink leading-relaxed ${row.label === 'Size Guide' ? 'whitespace-pre-line' : ''}`}>
                   {row.value}
                 </span>
               </div>
