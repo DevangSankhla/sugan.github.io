@@ -4,6 +4,10 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Link } from 'react-router-dom';
 import { ArrowRight, X } from 'lucide-react';
 import { rooms, roomProducts, allProducts, getDisplayProduct, getBaseProductName, isSetProduct } from '@/data/rooms';
+
+const ROOM_HERO_IMAGES: Record<string, string> = {
+  kitchen: '/images/SAC05_Pack of 3_01.png',
+};
 import type { Product } from '@/types';
 import ProductCard from '@/components/ProductCard';
 
@@ -164,7 +168,7 @@ export default function Shop() {
             {displayRooms.map((room) => {
               const count = getUniqueProductsByName(roomProducts[room.id] || []).length;
               if (count === 0) return null;
-              const heroImage = roomProducts[room.id]?.[0]?.image ?? '/images/SAC030.jpeg';
+              const heroImage = ROOM_HERO_IMAGES[room.id] ?? roomProducts[room.id]?.[0]?.image ?? '/images/SAC030.jpeg';
               return (
                 <Link
                   key={room.id}
@@ -173,7 +177,7 @@ export default function Shop() {
                   data-cursor="view"
                   className="group block"
                 >
-                  <div className="relative aspect-[4/5] overflow-hidden bg-sugan-bone-dark">
+                  <div className="relative aspect-square overflow-hidden bg-sugan-bone-dark">
                     <img
                       src={heroImage}
                       alt={room.name}
@@ -207,7 +211,7 @@ export default function Shop() {
                   data-cursor="view"
                   className="group block text-left"
                 >
-                  <div className="relative aspect-[4/5] overflow-hidden bg-sugan-bone-dark">
+                  <div className="relative aspect-square overflow-hidden bg-sugan-bone-dark">
                     <img
                       src={heroImage}
                       alt={category.name}

@@ -89,10 +89,13 @@ export default function Hero() {
             </h1>
           </div>
 
-          <div ref={ctaRef} className="pt-2 lg:pt-0 lg:pb-3">
+          <div ref={ctaRef} className="pt-2 lg:pt-0 lg:pb-3 flex flex-col sm:flex-row sm:items-center gap-4 lg:flex-col lg:items-start lg:gap-3">
             <Link to="/shop" className="btn-ghost group">
               Explore the collection
               <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 ease-apple group-hover:translate-x-1" />
+            </Link>
+            <Link to="/bulk-orders" className="font-body text-[11px] uppercase tracking-[0.18em] text-sugan-ink-soft hover:text-sugan-ink transition-colors duration-300">
+              Bulk &amp; trade orders
             </Link>
           </div>
         </div>

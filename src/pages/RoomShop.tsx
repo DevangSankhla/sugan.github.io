@@ -193,7 +193,16 @@ export default function RoomShop() {
 
       {/* Products Grid */}
       <section className="section-padding py-12">
-        {filteredProducts.length === 0 ? (
+        {roomId === 'library' ? (
+          <div className="text-center py-32">
+            <p className="font-display text-display-xl font-light text-sugan-ink mb-4">
+              Coming Soon
+            </p>
+            <p className="font-body text-body text-sugan-ink-soft max-w-sm mx-auto">
+              We're working on something special for your library. Check back soon.
+            </p>
+          </div>
+        ) : filteredProducts.length === 0 ? (
           <div className="text-center py-24">
             <p className="font-display text-display-md font-light text-sugan-ink mb-3">
               Nothing here yet.

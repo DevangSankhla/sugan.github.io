@@ -96,7 +96,7 @@ export default function ProductCard({
       data-cursor="view"
       className="group block"
     >
-      <div className="relative aspect-[4/5] overflow-hidden bg-sugan-bone-dark">
+      <div className="relative aspect-square overflow-hidden bg-sugan-bone-dark">
         {/* Primary image - fades out on hover */}
         <img
           src={product.image}

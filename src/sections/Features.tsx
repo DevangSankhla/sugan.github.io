@@ -24,7 +24,7 @@ const pillars = [
     label: '25 Years',
     headline: 'Built in 1999. Built to outlast us.',
     body: 'A quarter-century of one trade, one material, one obsession with joinery. Each piece is signed, numbered, and made to be inherited.',
-    cta: { label: 'Read our process', to: '/bulk-orders' },
+    cta: { label: 'Read our process', to: '/#about' },
   },
 ];
 
