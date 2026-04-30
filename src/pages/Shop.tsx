@@ -6,7 +6,7 @@ import { ArrowRight, X } from 'lucide-react';
 import { rooms, roomProducts, allProducts, getDisplayProduct, getBaseProductName, isSetProduct } from '@/data/rooms';
 
 const ROOM_HERO_IMAGES: Record<string, string> = {
-  kitchen: '/images/SAC05_Pack of 3_01.png',
+  kitchen: '/images/SAC05L_01.png',
 };
 import type { Product } from '@/types';
 import ProductCard from '@/components/ProductCard';

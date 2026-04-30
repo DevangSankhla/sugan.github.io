@@ -3,7 +3,7 @@ import { rooms, roomProducts } from '@/data/rooms';
 
 // Curated hero images per room - override the default first-product image
 const ROOM_HERO_IMAGES: Record<string, string> = {
-  kitchen: '/images/SAC05_Pack of 3_01.png',
+  kitchen: '/images/SAC05L_01.png',
 };
 
 export default function Products() {
