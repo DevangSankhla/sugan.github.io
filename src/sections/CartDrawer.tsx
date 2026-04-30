@@ -1,5 +1,4 @@
-
-import { X, Plus, Minus, ShoppingBag, ArrowRight, CreditCard, LogIn } from 'lucide-react';
+import { X, Plus, Minus, ShoppingBag, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
@@ -18,37 +17,35 @@ export default function CartDrawer() {
     setIsCartOpen,
   } = useCart();
 
-  const finalTotal = totalPrice;
-
   if (!isCartOpen) return null;
 
   return (
     <>
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-sugan-ink/50 backdrop-blur-sm z-50 transition-opacity"
+        className="fixed inset-0 bg-sugan-ink/40 backdrop-blur-xl z-50 transition-opacity duration-400 ease-apple"
         onClick={() => setIsCartOpen(false)}
       />
 
       {/* Drawer */}
-      <div className="fixed right-0 top-0 h-full w-full sm:w-[420px] bg-sugan-bone z-50 shadow-2xl flex flex-col">
+      <aside
+        className="fixed right-0 top-0 h-full w-full sm:w-[440px] bg-sugan-bone z-50 shadow-lift flex flex-col"
+        aria-label="Shopping bag"
+      >
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-sugan-ink/10">
+        <div className="flex items-center justify-between px-8 py-6 border-b border-sugan-ink/10">
           <div className="flex items-center gap-3">
-            <ShoppingBag className="w-5 h-5 text-sugan-gold" />
-            <h2 className="font-display text-xl font-medium text-sugan-ink">
-              Your Cart
-            </h2>
+            <p className="text-eyebrow font-body uppercase text-sugan-ink-soft">Bag</p>
             {totalItems > 0 && (
-              <span className="bg-sugan-gold text-white text-xs px-2 py-0.5 rounded-full">
-                {totalItems}
+              <span className="font-body text-body-sm text-sugan-ink tabular-nums">
+                [{totalItems}]
               </span>
             )}
           </div>
           <button
             type="button"
             onClick={() => setIsCartOpen(false)}
-            className="w-10 h-10 rounded-full bg-sugan-ink/5 flex items-center justify-center text-sugan-ink hover:bg-sugan-ink/10 transition-colors"
+            className="text-sugan-ink-soft hover:text-sugan-ink transition-colors"
             aria-label="Close cart"
           >
             <X className="w-5 h-5" />
@@ -58,41 +55,31 @@ export default function CartDrawer() {
         {/* Content */}
         <div className="flex-1 overflow-y-auto">
           {items.length === 0 ? (
-            <div className="flex flex-col items-center justify-center h-full p-8 text-center">
-              <div className="w-20 h-20 bg-sugan-ink/5 rounded-full flex items-center justify-center mb-4">
-                <ShoppingBag className="w-10 h-10 text-sugan-ink/30" />
-              </div>
-              <h3 className="font-display text-xl text-sugan-ink mb-2">
-                Your cart is empty
+            <div className="flex flex-col items-center justify-center h-full px-8 text-center gap-6">
+              <ShoppingBag className="w-8 h-8 text-sugan-ink/30" strokeWidth={1.25} />
+              <h3 className="font-display text-display-md font-light text-sugan-ink">
+                Your bag is empty.
               </h3>
-              <p className="text-sugan-ink/60 font-body text-sm mb-6">
-                Discover our beautiful handcrafted wooden products
+              <p className="font-body text-body text-sugan-ink-soft max-w-xs">
+                Browse the atelier and add a piece you'd like to keep for a long time.
               </p>
               <button
                 type="button"
                 onClick={() => {
                   setIsCartOpen(false);
-                  document
-                    .getElementById('products')
-                    ?.scrollIntoView({ behavior: 'smooth' });
+                  navigate('/shop');
                 }}
-                className="btn-primary"
+                className="btn-outline"
               >
-                Start Shopping
+                Start browsing
               </button>
             </div>
           ) : (
-            <div className="p-6 space-y-6">
-              {/* Free Shipping Progress */}
-              <FreeShippingProgress />
-
+            <ul className="divide-y divide-sugan-ink/10">
               {items.map((item) => (
-                <div
-                  key={item.id}
-                  className="flex gap-4 bg-white p-4 rounded-lg"
-                >
+                <li key={item.id} className="flex gap-5 px-8 py-6">
                   {/* Image */}
-                  <div className="w-20 h-20 bg-sugan-bone-dark rounded overflow-hidden flex-shrink-0">
+                  <div className="w-20 h-24 bg-sugan-bone-dark overflow-hidden flex-shrink-0">
                     <img
                       src={item.image}
                       alt={item.name}
@@ -102,147 +89,102 @@ export default function CartDrawer() {
                   </div>
 
                   {/* Details */}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-start justify-between gap-2">
-                      <div>
-                        <p className="text-sugan-gold text-xs font-body uppercase tracking-wider">
-                          {item.category}
-                        </p>
-                        <h4 className="font-display text-base font-medium text-sugan-ink truncate">
+                  <div className="flex-1 min-w-0 flex flex-col gap-2">
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="min-w-0">
+                        {item.category && (
+                          <p className="text-eyebrow font-body uppercase text-sugan-ink/40 truncate">
+                            {item.category}
+                          </p>
+                        )}
+                        <h4 className="font-body text-[15px] text-sugan-ink line-clamp-2 mt-1">
                           {item.name}
                         </h4>
                       </div>
                       <button
                         type="button"
                         onClick={() => removeFromCart(item.id)}
-                        className="text-sugan-ink/40 hover:text-sugan-ink transition-colors"
+                        className="text-sugan-ink/40 hover:text-sugan-ink transition-colors flex-shrink-0"
                         aria-label="Remove item"
                       >
                         <X className="w-4 h-4" />
                       </button>
                     </div>
 
-                    <div className="flex items-center justify-between mt-3">
-                      {/* Quantity */}
-                      <div className="flex items-center gap-2">
+                    <div className="flex items-center justify-between mt-auto">
+                      {/* Quantity stepper — hairline border, no fill */}
+                      <div className="inline-flex items-center border border-sugan-ink/20 rounded-pill">
                         <button
                           type="button"
-                          onClick={() =>
-                            updateQuantity(item.id, item.quantity - 1)
-                          }
-                          className="w-7 h-7 rounded bg-sugan-bone flex items-center justify-center text-sugan-ink hover:bg-sugan-ink hover:text-sugan-bone transition-colors"
+                          onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                          className="w-8 h-8 inline-flex items-center justify-center text-sugan-ink hover:text-sugan-gold transition-colors"
                           aria-label="Decrease quantity"
                         >
                           <Minus className="w-3 h-3" />
                         </button>
-                        <span className="w-8 text-center font-body text-sm text-sugan-ink">
+                        <span className="w-6 text-center font-body text-body-sm tabular-nums text-sugan-ink">
                           {item.quantity}
                         </span>
                         <button
                           type="button"
-                          onClick={() =>
-                            updateQuantity(item.id, item.quantity + 1)
-                          }
-                          className="w-7 h-7 rounded bg-sugan-bone flex items-center justify-center text-sugan-ink hover:bg-sugan-ink hover:text-sugan-bone transition-colors"
+                          onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                          className="w-8 h-8 inline-flex items-center justify-center text-sugan-ink hover:text-sugan-gold transition-colors"
                           aria-label="Increase quantity"
                         >
                           <Plus className="w-3 h-3" />
                         </button>
                       </div>
 
-                      {/* Price */}
-                      <span className="font-display text-base font-semibold text-sugan-ink">
+                      <span className="font-body text-[15px] text-sugan-ink tabular-nums">
                         ₹{(item.price * item.quantity).toLocaleString()}
                       </span>
                     </div>
                   </div>
-                </div>
+                </li>
               ))}
-            </div>
+            </ul>
           )}
         </div>
 
         {/* Footer */}
         {items.length > 0 && (
-          <div className="border-t border-sugan-ink/10 p-6 space-y-4">
-            {/* Subtotal */}
-            <div className="space-y-2">
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-sugan-ink/60 font-body">
-                  Subtotal ({totalItems} items)
-                </span>
-                <span className="font-body text-sugan-ink">
-                  ₹{totalPrice.toLocaleString()}
-                </span>
-              </div>
+          <div className="border-t border-sugan-ink/10 px-8 py-6 space-y-5">
+            <FreeShippingProgress />
 
-              <div className="flex items-center justify-between pt-2 border-t border-sugan-ink/10">
-                <span className="text-sugan-ink font-body font-medium">
-                  Total
-                </span>
-                <span className="font-display text-xl font-semibold text-sugan-ink">
-                  ₹{finalTotal.toLocaleString()}
-                </span>
-              </div>
+            <div className="flex items-center justify-between">
+              <span className="text-eyebrow font-body uppercase text-sugan-ink-soft">
+                Subtotal
+              </span>
+              <span className="font-body text-display-md font-light text-sugan-ink tabular-nums">
+                ₹{totalPrice.toLocaleString()}
+              </span>
             </div>
-
-            {/* Note */}
-            <p className="text-sugan-ink/50 font-body text-xs">
-              Shipping calculated at checkout
+            <p className="text-eyebrow font-body uppercase text-sugan-ink/40">
+              Shipping at checkout
             </p>
 
-            {/* Checkout Buttons */}
-            <div className="space-y-3">
-              {user ? (
-                <button
-                  type="button"
-                  onClick={() => {
-                    setIsCartOpen(false);
-                    navigate('/checkout');
-                  }}
-                  className="w-full btn-primary flex items-center justify-center gap-2"
-                >
-                  Proceed to Checkout
-                  <CreditCard className="w-4 h-4" />
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  onClick={() => {
-                    setIsCartOpen(false);
-                    navigate('/login?redirect=/checkout');
-                  }}
-                  className="w-full btn-primary flex items-center justify-center gap-2"
-                >
-                  Sign in to Checkout
-                  <LogIn className="w-4 h-4" />
-                </button>
-              )}
+            <div className="flex flex-col gap-3 pt-2">
+              <button
+                type="button"
+                onClick={() => {
+                  setIsCartOpen(false);
+                  navigate(user ? '/checkout' : '/login?redirect=/checkout');
+                }}
+                className="btn-primary w-full tabular-nums"
+              >
+                {user ? 'Checkout' : 'Sign in to checkout'} · ₹{totalPrice.toLocaleString()}
+              </button>
               <button
                 onClick={() => setIsCartOpen(false)}
-                className="w-full btn-outline flex items-center justify-center gap-2"
+                className="btn-ghost self-center"
               >
-                Continue Shopping
-                <ArrowRight className="w-4 h-4" />
+                Continue browsing
+                <ArrowRight className="w-3.5 h-3.5" />
               </button>
-            </div>
-
-            {/* Shipping Info */}
-            <div className="flex items-center justify-center gap-2 pt-2">
-              <svg
-                className="w-5 h-5 text-sugan-gold"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-              >
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
-              </svg>
-              <span className="text-sugan-ink/50 text-xs font-body">
-                Free shipping on orders above ₹1999
-              </span>
             </div>
           </div>
         )}
-      </div>
+      </aside>
     </>
   );
 }

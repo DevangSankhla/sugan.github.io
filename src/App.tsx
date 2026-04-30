@@ -19,6 +19,7 @@ import BottomNavigation from '@/components/BottomNavigation';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import Cursor from '@/components/Cursor';
 import Marquee from '@/components/Marquee';
+import Splash from '@/components/Splash';
 import './App.css';
 
 // Lazy-load all pages so each route only loads its JS when visited
@@ -44,7 +45,9 @@ const PaymentFailure = lazy(() => import('@/pages/PaymentFailure'));
 function PageLoader() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-sugan-bone">
-      <div className="w-8 h-8 border-2 border-sugan-gold border-t-transparent rounded-full animate-spin" />
+      <span className="font-display text-display-md font-light text-sugan-ink animate-pulse">
+        Sugan
+      </span>
     </div>
   );
 }
@@ -79,7 +82,7 @@ function HomePage() {
         <Marquee
           items={[
             'Handcrafted in Jodhpur',
-            'Solid Sheesham',
+            'Always Solid Wood',
             'Since 1999',
             'Free Shipping ₹1999+',
             'Worldwide Atelier',
@@ -113,6 +116,9 @@ function App() {
 
           {/* Custom cursor (pointer-fine devices only) */}
           <Cursor />
+
+          {/* First-visit splash */}
+          <Splash />
 
           {/* Routes */}
           <ErrorBoundary>

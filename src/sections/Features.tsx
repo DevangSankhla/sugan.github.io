@@ -9,9 +9,9 @@ gsap.registerPlugin(ScrollTrigger);
 const pillars = [
   {
     number: '01',
-    label: 'Sheesham',
-    headline: 'Sourced from one species. By design.',
-    body: 'Every Sugan piece begins with North-Indian sheesham — slow-grown, dense, and forgiving under the chisel. One species, one standard.',
+    label: 'Solid Wood',
+    headline: 'Always solid. Never veneered.',
+    body: 'Sheesham, teak, mango, acacia — slow-grown hardwoods, sustainably sourced and finished with food-safe oils. Never particle board, never veneer.',
   },
   {
     number: '02',
