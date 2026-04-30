@@ -173,14 +173,14 @@ export default function ProductDetail() {
         {/* Soft gradient at the bottom only - no text overlay */}
         <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-sugan-bone via-sugan-bone/30 to-transparent pointer-events-none" />
 
-        {/* Floating back link */}
+        {/* Floating back chip - bone/85 frosted, hairline border, sits below the nav */}
         <button
           onClick={() => {
             if (fromPage) navigate(fromPage);
             else if (product.room) navigate(`/shop/${product.room}`);
             else navigate('/shop');
           }}
-          className="absolute top-28 left-section-x inline-flex items-center gap-2 text-eyebrow font-body uppercase text-sugan-ink/60 hover:text-sugan-ink transition-colors mix-blend-difference"
+          className="absolute top-24 left-section-x inline-flex items-center gap-2 px-3 py-1.5 rounded-pill bg-sugan-bone/85 backdrop-blur-md border border-sugan-ink/10 text-eyebrow font-body uppercase text-sugan-ink hover:bg-sugan-bone transition-colors duration-300 ease-apple"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
           {backLabel}

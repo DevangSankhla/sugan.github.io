@@ -49,23 +49,29 @@ export default function Hero() {
     <section
       id="home"
       ref={sectionRef}
-      className="relative w-full h-screen min-h-[640px] overflow-hidden bg-sugan-bone-dark"
+      className="relative w-full bg-sugan-bone overflow-hidden"
     >
-      {/* Full-bleed image */}
-      <img
-        ref={imageRef}
-        src="/images/SAC030.jpeg"
-        alt="Solid wood furniture, hand-shaped in Jodhpur"
-        data-cursor="view"
-        className="absolute inset-0 w-full h-full object-cover will-change-transform"
-      />
+      {/*
+        Layout:
+        - Mobile: image fills 70vh at top, text content stacks beneath.
+        - Desktop: image is full viewport with content layered baseline-aligned over the bottom gradient.
+        Single content block with refs; the wrapping div toggles between flow (mobile) and absolute (desktop).
+      */}
+      <div className="relative w-full h-[70vh] lg:h-screen lg:min-h-[640px] overflow-hidden bg-sugan-bone-dark">
+        <img
+          ref={imageRef}
+          src="/images/SAC030.jpeg"
+          alt="Solid wood furniture, hand-shaped in Jodhpur"
+          data-cursor="view"
+          className="absolute inset-0 w-full h-full object-cover will-change-transform"
+        />
 
-      {/* Bottom gradient - covers ~40% from below */}
-      <div className="absolute inset-x-0 bottom-0 h-[55%] bg-gradient-to-t from-sugan-bone via-sugan-bone/40 to-transparent pointer-events-none" />
+        {/* Gradient lifts the desktop overlay; harmless on mobile since content sits below */}
+        <div className="hidden lg:block absolute inset-x-0 bottom-0 h-[55%] bg-gradient-to-t from-sugan-bone via-sugan-bone/40 to-transparent pointer-events-none" />
+      </div>
 
-      {/* Content baseline-aligned to bottom-left */}
-      <div className="absolute inset-x-0 bottom-0 section-padding pb-[clamp(40px,8vw,96px)]">
-        <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between lg:gap-16">
+      <div className="lg:absolute lg:inset-x-0 lg:bottom-0 lg:pb-[clamp(40px,8vw,96px)] section-padding py-12 lg:py-0">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between lg:gap-16">
           <div className="flex flex-col gap-5 max-w-4xl">
             <p
               ref={eyebrowRef}
@@ -75,7 +81,7 @@ export default function Hero() {
             </p>
             <h1
               ref={headlineRef}
-              className="font-display text-display-2xl font-light text-sugan-ink"
+              className="font-display text-display-xl lg:text-display-2xl font-light text-sugan-ink"
             >
               Solid wood,
               <br />
@@ -83,11 +89,8 @@ export default function Hero() {
             </h1>
           </div>
 
-          <div ref={ctaRef} className="lg:pb-3">
-            <Link
-              to="/shop"
-              className="btn-ghost group"
-            >
+          <div ref={ctaRef} className="pt-2 lg:pt-0 lg:pb-3">
+            <Link to="/shop" className="btn-ghost group">
               Explore the collection
               <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 ease-apple group-hover:translate-x-1" />
             </Link>

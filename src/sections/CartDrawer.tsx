@@ -23,13 +23,13 @@ export default function CartDrawer() {
     <>
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-sugan-ink/40 backdrop-blur-xl z-50 transition-opacity duration-400 ease-apple"
+        className="fixed inset-0 bg-sugan-ink/40 backdrop-blur-xl z-50 animate-fade-in"
         onClick={() => setIsCartOpen(false)}
       />
 
       {/* Drawer */}
       <aside
-        className="fixed right-0 top-0 h-full w-full sm:w-[440px] bg-sugan-bone z-50 shadow-lift flex flex-col"
+        className="fixed right-0 top-0 h-full w-full sm:w-[440px] bg-sugan-bone z-50 shadow-lift flex flex-col animate-drawer-in"
         aria-label="Shopping bag"
       >
         {/* Header */}

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { ShoppingBag, Search, Menu, X, ArrowRight, User } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { gsap } from 'gsap';
@@ -11,7 +11,6 @@ export default function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [searchResults, setSearchResults] = useState<typeof allProducts>([]);
   const { totalItems, setIsCartOpen } = useCart();
   const { user } = useAuth();
   const location = useLocation();
@@ -27,18 +26,15 @@ export default function Navigation() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useEffect(() => {
-    if (searchQuery.trim()) {
-      const filtered = allProducts.filter(
-        (p) =>
-          p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          p.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          (p.category || '').toLowerCase().includes(searchQuery.toLowerCase())
-      );
-      setSearchResults(filtered);
-    } else {
-      setSearchResults([]);
-    }
+  const searchResults = useMemo(() => {
+    const q = searchQuery.trim().toLowerCase();
+    if (!q) return [] as typeof allProducts;
+    return allProducts.filter(
+      (p) =>
+        p.name.toLowerCase().includes(q) ||
+        p.description.toLowerCase().includes(q) ||
+        (p.category || '').toLowerCase().includes(q)
+    );
   }, [searchQuery]);
 
   // Stagger mobile menu items in

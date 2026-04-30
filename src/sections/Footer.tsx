@@ -110,7 +110,7 @@ export default function Footer() {
           <p className="font-body text-body-sm text-sugan-ink-soft tabular-nums flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-center">
             <span>© {currentYear} Sugan</span>
             <span aria-hidden="true" className="hidden sm:inline text-sugan-ink/30">·</span>
-            <span>GST 08AAAAA0000A1Z5</span>
+            <span>GST 08AESFS0710D1Z5</span>
             <span aria-hidden="true" className="hidden sm:inline text-sugan-ink/30">·</span>
             <span>Made in Jodhpur</span>
           </p>

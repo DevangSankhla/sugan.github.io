@@ -68,9 +68,9 @@ module.exports = {
         mono: ["12px", { lineHeight: "1.4", letterSpacing: "0.04em" }],
       },
       spacing: {
-        "section-y": "clamp(96px, 12vw, 200px)",
-        "section-x": "clamp(20px, 5vw, 96px)",
-        gutter: "clamp(16px, 2vw, 32px)",
+        "section-y": "clamp(80px, 12vw, 200px)",
+        "section-x": "clamp(24px, 5vw, 96px)",
+        gutter: "clamp(18px, 2vw, 32px)",
       },
       borderRadius: {
         none: "0",
@@ -126,6 +126,14 @@ module.exports = {
           "0%": { transform: "translateX(0)" },
           "100%": { transform: "translateX(-50%)" },
         },
+        "drawer-in": {
+          from: { transform: "translateX(100%)" },
+          to: { transform: "translateX(0)" },
+        },
+        "fade-in": {
+          from: { opacity: "0" },
+          to: { opacity: "1" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -133,6 +141,8 @@ module.exports = {
         "caret-blink": "caret-blink 1.25s ease-out infinite",
         grain: "grain 8s steps(10) infinite",
         marquee: "marquee 40s linear infinite",
+        "drawer-in": "drawer-in 400ms cubic-bezier(0.16, 1, 0.3, 1)",
+        "fade-in": "fade-in 400ms cubic-bezier(0.16, 1, 0.3, 1)",
       },
     },
   },

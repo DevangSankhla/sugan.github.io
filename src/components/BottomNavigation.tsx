@@ -3,9 +3,18 @@ import { Link, useLocation } from 'react-router-dom';
 import { Home, ShoppingBag, Briefcase, ShoppingCart, User } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 
+type NavItem = {
+  icon: typeof Home;
+  label: string;
+  badge?: number;
+  path?: string;
+  action?: () => void;
+  activeWhen?: () => boolean;
+};
+
 export default function BottomNavigation() {
   const location = useLocation();
-  const { items } = useCart();
+  const { totalItems, isCartOpen, setIsCartOpen } = useCart();
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -18,11 +27,17 @@ export default function BottomNavigation() {
   const shouldHide = hiddenPaths.some((path) => location.pathname.startsWith(path));
   if (shouldHide) return null;
 
-  const navItems = [
+  const navItems: NavItem[] = [
     { path: '/', icon: Home, label: 'Home' },
     { path: '/shop', icon: ShoppingBag, label: 'Shop' },
     { path: '/bulk-orders', icon: Briefcase, label: 'Bulk' },
-    { path: '/cart', icon: ShoppingCart, label: 'Bag', badge: items.length },
+    {
+      icon: ShoppingCart,
+      label: 'Bag',
+      badge: totalItems,
+      action: () => setIsCartOpen(true),
+      activeWhen: () => isCartOpen,
+    },
     { path: '/account', icon: User, label: 'Account' },
   ];
 
@@ -33,20 +48,15 @@ export default function BottomNavigation() {
       }`}
     >
       <div className="flex items-stretch justify-around">
-        {navItems.map((item) => {
-          const isActive =
-            location.pathname === item.path ||
-            (item.path !== '/' && location.pathname.startsWith(item.path));
+        {navItems.map((item, index) => {
+          const isActive = item.path
+            ? location.pathname === item.path ||
+              (item.path !== '/' && location.pathname.startsWith(item.path))
+            : item.activeWhen?.() ?? false;
           const Icon = item.icon;
 
-          return (
-            <Link
-              key={item.path}
-              to={item.path}
-              className={`relative flex flex-col items-center justify-center gap-1 flex-1 py-3 transition-colors duration-300 ${
-                isActive ? 'text-sugan-ink' : 'text-sugan-ink-soft hover:text-sugan-ink'
-              }`}
-            >
+          const inner = (
+            <>
               <div className="relative">
                 <Icon className="w-5 h-5" strokeWidth={1.5} />
                 {item.badge ? (
@@ -58,13 +68,36 @@ export default function BottomNavigation() {
               <span className="text-[10px] font-body uppercase tracking-[0.18em]">
                 {item.label}
               </span>
-              {/* 1px gold underline on active */}
               <span
                 aria-hidden="true"
                 className={`absolute bottom-0 left-1/2 -translate-x-1/2 h-px bg-sugan-gold transition-all duration-400 ease-apple ${
                   isActive ? 'w-8 opacity-100' : 'w-0 opacity-0'
                 }`}
               />
+            </>
+          );
+
+          const cls = `relative flex flex-col items-center justify-center gap-1 flex-1 py-3 transition-colors duration-300 ${
+            isActive ? 'text-sugan-ink' : 'text-sugan-ink-soft hover:text-sugan-ink'
+          }`;
+
+          if (item.action) {
+            return (
+              <button
+                key={index}
+                type="button"
+                onClick={item.action}
+                aria-label={item.label}
+                className={cls}
+              >
+                {inner}
+              </button>
+            );
+          }
+
+          return (
+            <Link key={index} to={item.path!} className={cls}>
+              {inner}
             </Link>
           );
         })}
