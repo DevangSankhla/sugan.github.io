@@ -121,6 +121,7 @@ export default function ProductDetail() {
   const allImages = getAllImages();
   const heroImage = allImages[0];
   const galleryImages = allImages.slice(1);
+  const galleryVideos: string[] = product.details?.videos ?? [];
 
   const displayPrice =
     product.details?.variants?.[selectedVariant]?.price || product.price;
@@ -189,7 +190,7 @@ export default function ProductDetail() {
 
       {/* Editorial layout: gallery left, sticky info right */}
       <div className="grid grid-cols-1 lg:grid-cols-[60fr_40fr]">
-        {/* Vertical image stack */}
+        {/* Vertical image + video stack */}
         <div className="bg-sugan-bone-dark">
           {galleryImages.length > 0 ? (
             galleryImages.map((src, i) => (
@@ -215,6 +216,23 @@ export default function ProductDetail() {
               />
             </div>
           )}
+
+          {/* Videos */}
+          {galleryVideos.map((src, i) => (
+            <div
+              key={`video-${i}`}
+              className="relative w-full aspect-[4/5] overflow-hidden bg-sugan-bone-dark"
+            >
+              <video
+                src={src}
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+            </div>
+          ))}
         </div>
 
         {/* Sticky info panel */}
