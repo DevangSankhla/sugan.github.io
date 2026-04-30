@@ -13,17 +13,17 @@ import RelatedProducts from '@/components/RelatedProducts';
 type SpecRow = { label: string; value: string };
 
 function ExpandableDescription({ product }: { product: import('@/types').Product }) {
-  const isTruncated = product.description.trimEnd().endsWith('...');
-  const fullText = product.details?.story || product.description;
-  const shortText = isTruncated ? product.description : null;
-  const [expanded, setExpanded] = useState(!isTruncated);
+  const description = product.description;
+  const story = product.details?.story;
+  const hasMore = !!story && story.trim() !== description.trim();
+  const [expanded, setExpanded] = useState(false);
 
   return (
-    <div className="border-t border-sugan-ink/10 pt-6 flex flex-col gap-3">
-      <p className="font-body text-body text-sugan-ink-soft leading-relaxed">
-        {expanded ? fullText : (shortText ?? fullText)}
+    <div className="flex flex-col gap-3">
+      <p className="font-body text-body text-sugan-ink-soft leading-relaxed whitespace-pre-line">
+        {expanded && hasMore ? `${description}\n\n${story}` : description}
       </p>
-      {(isTruncated || (product.details?.story && product.details.story !== product.description)) && (
+      {hasMore && (
         <button
           onClick={() => setExpanded((v) => !v)}
           className="self-start text-eyebrow font-body uppercase text-sugan-ink border-b border-sugan-ink/30 pb-0.5 hover:border-sugan-ink transition-colors"
@@ -258,9 +258,9 @@ export default function ProductDetail() {
           ))}
         </div>
 
-        {/* Sticky info panel */}
-        <div className="lg:sticky lg:top-0 lg:h-screen lg:overflow-y-auto">
-          <div className="section-padding pt-8 pb-12 lg:pt-12 flex flex-col gap-6">
+        {/* Info panel — scrolls with the page so the photos and the info move together */}
+        <div>
+          <div className="section-padding pt-8 pb-12 lg:pt-16 flex flex-col gap-6">
             {/* Eyebrow */}
             <div className="flex items-center gap-3 text-eyebrow font-body uppercase text-sugan-ink-soft">
               {product.category && <span>{product.category}</span>}
@@ -298,6 +298,9 @@ export default function ProductDetail() {
             <p className="font-body text-display-md font-light text-sugan-ink tabular-nums">
               ₹{displayPrice.toLocaleString()}
             </p>
+
+            {/* Description — visible immediately, expandable if details.story is longer */}
+            <ExpandableDescription product={product} />
 
             {/* Stock + hot tag */}
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
@@ -445,9 +448,6 @@ export default function ProductDetail() {
                 Share
               </button>
             </div>
-
-            {/* Description — below the fold, expandable */}
-            <ExpandableDescription product={product} />
 
             {/* Out of stock fallback */}
             {!product.inStock && (
