@@ -1,5 +1,5 @@
 import { useParams, useNavigate, Link, useLocation } from 'react-router-dom';
-import { ArrowLeft, ShoppingBag, Star, Minus, Plus, Heart, Share2, MapPin } from 'lucide-react';
+import { ArrowLeft, ShoppingBag, Star, Minus, Plus, Heart, Share2, MapPin, Ruler } from 'lucide-react';
 import { allProducts, getAllSizeVariants, getBaseProductName, hasSizeVariants } from '@/data/rooms';
 import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
@@ -450,6 +450,22 @@ export default function ProductDetail() {
               </button>
             </div>
 
+            {/* Size guide reminder */}
+            {product.details?.usesAndMeasurements && (
+              <button
+                type="button"
+                onClick={() => {
+                  document.getElementById('size-guide')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }}
+                className="flex items-start gap-3 text-left bg-sugan-bone-dark/60 border border-sugan-ink/10 rounded-md px-4 py-3 hover:bg-sugan-bone-dark transition-colors"
+              >
+                <Ruler className="w-4 h-4 mt-0.5 shrink-0 text-sugan-ink" />
+                <span className="font-body text-body-sm text-sugan-ink-soft leading-relaxed">
+                  Please check the <span className="text-sugan-ink underline underline-offset-2">size guide</span> below before ordering so your pet gets the feeder best suited to their breed and weight.
+                </span>
+              </button>
+            )}
+
             {/* Out of stock fallback */}
             {!product.inStock && (
               <div className="border-t border-sugan-ink/10 pt-6 flex flex-col gap-3">
@@ -486,7 +502,8 @@ export default function ProductDetail() {
             {specs.map((row, i) => (
               <div
                 key={row.label}
-                className={`grid grid-cols-[140px_1fr] sm:grid-cols-[200px_1fr] gap-6 py-5 ${
+                id={row.label === 'Size Guide' ? 'size-guide' : undefined}
+                className={`grid grid-cols-[140px_1fr] sm:grid-cols-[200px_1fr] gap-6 py-5 scroll-mt-24 ${
                   i === 0 ? 'border-y' : 'border-b'
                 } border-sugan-ink/10`}
               >

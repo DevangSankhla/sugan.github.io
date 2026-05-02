@@ -40,7 +40,15 @@ export const roomProducts: Record<string, Product[]> = {
     sustainability: 'Sustainably sourced wood',
     story: 'At Sugan, we set out to change how India thinks about everyday pet products. Your pet eats from this bowl twice a day - so why should it be made of cheap plastic that scratches, stains, and harbors bacteria? This feeder is made from solid acacia with a non-toxic, food-safe finish.',
     care: 'Hand wash with mild soap. Do not soak.',
-    maintenance: 'Apply mineral oil periodically'
+    maintenance: 'Apply mineral oil periodically',
+    usesAndMeasurements: `39×23×20 cm, 1.8 L
+
+Pet shoulder height: ~30–45 cm
+Pet weight: ~8–18 kg
+Category: Medium dogs, or large/adult cats that eat a lot.
+Breeds: Beagle, Cocker Spaniel, French Bulldog, medium Indie/Pariah dogs
+Also works for: Maine Coon or other large cat breeds if you want a multi-day refill setup.
+Food math: ~1.8 L = ~4–6 days for a 12 kg dog, well over a week for a cat.`
    },
    relatedSizes: [
     {
@@ -73,7 +81,15 @@ export const roomProducts: Record<string, Product[]> = {
     sustainability: 'Sustainably sourced wood',
     story: 'We started Sugan with a simple belief: everyday objects in your home should be beautiful, safe, and built to last. This pet feeder combines high-grade acacia wood - one of the hardest, most water-resistant hardwoods available in India - with a design that supports your pet\'s health and your home\'s aesthetic.',
     care: 'Hand wash with mild soap. Do not soak.',
-    maintenance: 'Apply mineral oil periodically'
+    maintenance: 'Apply mineral oil periodically',
+    usesAndMeasurements: `39×23×20 cm, 1.8 L
+
+Pet shoulder height: ~30–45 cm
+Pet weight: ~8–18 kg
+Category: Medium dogs, or large/adult cats that eat a lot.
+Breeds: Beagle, Cocker Spaniel, French Bulldog, medium Indie/Pariah dogs
+Also works for: Maine Coon or other large cat breeds if you want a multi-day refill setup.
+Food math: ~1.8 L = ~4–6 days for a 12 kg dog, well over a week for a cat.`
    },
    relatedSizes: [
     {
@@ -111,7 +127,15 @@ export const roomProducts: Record<string, Product[]> = {
     sustainability: 'Sustainably sourced wood',
     story: 'We started Sugan with a simple belief: everyday objects in your home should be beautiful, safe, and built to last. This pet feeder combines high-grade acacia wood - one of the hardest, most water-resistant hardwoods available in India - with a design that supports your pet\'s health and your home\'s aesthetic.',
     care: 'Hand wash with mild soap. Do not soak.',
-    maintenance: 'Apply mineral oil periodically'
+    maintenance: 'Apply mineral oil periodically',
+    usesAndMeasurements: `32×18×12 cm, 1 L
+
+Pet shoulder height: ~20–30 cm (dogs) / standard cat height
+Pet weight: ~2–8 kg
+Category: Cats and toy/small dog breeds. The 12 cm height is basically a low-profile bowl - ergonomic for cats and short-legged dogs.
+Cat breeds: Persian, Siamese, Bengal, Indian domestic shorthair
+Small dog breeds: Pug, Shih Tzu, Pomeranian, Lhasa Apso
+Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
    },
    relatedSizes: [
     {
@@ -149,7 +173,15 @@ export const roomProducts: Record<string, Product[]> = {
     sustainability: 'Sustainably sourced wood',
     story: 'The idea behind Sugan was to replace the ordinary with something worth keeping. This stripe-design crate feeder is hand-built from sustainably sourced acacia wood, with each plank fitted and finished by artisans in Jodhpur.',
     care: 'Hand wash with mild soap. Do not soak.',
-    maintenance: 'Apply mineral oil periodically'
+    maintenance: 'Apply mineral oil periodically',
+    usesAndMeasurements: `32×18×12 cm, 1 L
+
+Pet shoulder height: ~20–30 cm (dogs) / standard cat height
+Pet weight: ~2–8 kg
+Category: Cats and toy/small dog breeds. The 12 cm height is basically a low-profile bowl - ergonomic for cats and short-legged dogs.
+Cat breeds: Persian, Siamese, Bengal, Indian domestic shorthair
+Small dog breeds: Pug, Shih Tzu, Pomeranian, Lhasa Apso
+Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
    },
    relatedSizes: [
     {
@@ -202,7 +234,15 @@ export const roomProducts: Record<string, Product[]> = {
     sustainability: 'Sustainably sourced wood',
     story: 'At Sugan, we set out to change how India thinks about everyday pet products. Your pet eats from this bowl twice a day - so why should it be made of cheap plastic that scratches, stains, and harbors bacteria? This feeder is made from solid acacia with a non-toxic, food-safe finish.',
     care: 'Hand wash with mild soap. Do not soak.',
-    maintenance: 'Apply mineral oil periodically'
+    maintenance: 'Apply mineral oil periodically',
+    usesAndMeasurements: `32×18×12 cm, 1 L
+
+Pet shoulder height: ~20–30 cm (dogs) / standard cat height
+Pet weight: ~2–8 kg
+Category: Cats and toy/small dog breeds. The 12 cm height is basically a low-profile bowl - ergonomic for cats and short-legged dogs.
+Cat breeds: Persian, Siamese, Bengal, Indian domestic shorthair
+Small dog breeds: Pug, Shih Tzu, Pomeranian, Lhasa Apso
+Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
    },
    relatedSizes: [
     {
@@ -235,7 +275,15 @@ export const roomProducts: Record<string, Product[]> = {
     sustainability: 'Sustainably sourced wood',
     story: 'At Sugan, we set out to change how India thinks about everyday pet products. Your pet eats from this bowl twice a day - so why should it be made of cheap plastic that scratches, stains, and harbors bacteria? This feeder is made from solid acacia with a non-toxic, food-safe finish.',
     care: 'Hand wash with mild soap. Do not soak.',
-    maintenance: 'Apply mineral oil periodically'
+    maintenance: 'Apply mineral oil periodically',
+    usesAndMeasurements: `39×23×20 cm, 1.8 L
+
+Pet shoulder height: ~30–45 cm
+Pet weight: ~8–18 kg
+Category: Medium dogs, or large/adult cats that eat a lot.
+Breeds: Beagle, Cocker Spaniel, French Bulldog, medium Indie/Pariah dogs
+Also works for: Maine Coon or other large cat breeds if you want a multi-day refill setup.
+Food math: ~1.8 L = ~4–6 days for a 12 kg dog, well over a week for a cat.`
    },
    relatedSizes: [
     {
@@ -268,7 +316,14 @@ export const roomProducts: Record<string, Product[]> = {
     sustainability: 'Sustainably sourced wood',
     story: 'The idea behind Sugan was to replace the ordinary with something worth keeping. This stripe-design crate feeder is hand-built from sustainably sourced acacia wood, with each plank fitted and finished by artisans in Jodhpur.',
     care: 'Hand wash with mild soap. Do not soak.',
-    maintenance: 'Apply mineral oil periodically'
+    maintenance: 'Apply mineral oil periodically',
+    usesAndMeasurements: `50×29×26 cm, 2.5 L
+
+Pet shoulder height: ~45–65 cm
+Pet weight: ~20–35 kg
+Category: Medium-to-large dogs only. Overkill for cats.
+Breeds: Labrador Retriever, Golden Retriever, German Shepherd, Boxer
+Food math: A 25 kg Lab eats ~300–400 g/day (~500–700 ml dry kibble volume), so 2.5 L = ~3–4 days of food. Decent buffer.`
    },
    relatedSizes: [
     {
@@ -321,7 +376,15 @@ export const roomProducts: Record<string, Product[]> = {
     sustainability: 'Sustainably sourced wood',
     story: 'At Sugan, we set out to change how India thinks about everyday pet products. Your pet eats from this bowl twice a day - so why should it be made of cheap plastic that scratches, stains, and harbors bacteria? This feeder is made from solid acacia with a non-toxic, food-safe finish.',
     care: 'Hand wash with mild soap. Do not soak.',
-    maintenance: 'Apply mineral oil periodically'
+    maintenance: 'Apply mineral oil periodically',
+    usesAndMeasurements: `39×23×20 cm, 1.8 L
+
+Pet shoulder height: ~30–45 cm
+Pet weight: ~8–18 kg
+Category: Medium dogs, or large/adult cats that eat a lot.
+Breeds: Beagle, Cocker Spaniel, French Bulldog, medium Indie/Pariah dogs
+Also works for: Maine Coon or other large cat breeds if you want a multi-day refill setup.
+Food math: ~1.8 L = ~4–6 days for a 12 kg dog, well over a week for a cat.`
    },
    relatedSizes: [
     {
@@ -364,7 +427,14 @@ export const roomProducts: Record<string, Product[]> = {
     sustainability: 'Sustainably sourced wood',
     story: 'The idea behind Sugan was to replace the ordinary with something worth keeping. This stripe-design crate feeder is hand-built from sustainably sourced acacia wood, with each plank fitted and finished by artisans in Jodhpur.',
     care: 'Hand wash with mild soap. Do not soak.',
-    maintenance: 'Apply mineral oil periodically'
+    maintenance: 'Apply mineral oil periodically',
+    usesAndMeasurements: `50×29×26 cm, 2.5 L
+
+Pet shoulder height: ~45–65 cm
+Pet weight: ~20–35 kg
+Category: Medium-to-large dogs only. Overkill for cats.
+Breeds: Labrador Retriever, Golden Retriever, German Shepherd, Boxer
+Food math: A 25 kg Lab eats ~300–400 g/day (~500–700 ml dry kibble volume), so 2.5 L = ~3–4 days of food. Decent buffer.`
    },
    relatedSizes: [
     {
@@ -407,7 +477,15 @@ export const roomProducts: Record<string, Product[]> = {
     sustainability: 'Sustainably sourced wood',
     story: 'The idea behind Sugan was to replace the ordinary with something worth keeping. This stripe-design crate feeder is hand-built from sustainably sourced acacia wood, with each plank fitted and finished by artisans in Jodhpur.',
     care: 'Hand wash with mild soap. Do not soak.',
-    maintenance: 'Apply mineral oil periodically'
+    maintenance: 'Apply mineral oil periodically',
+    usesAndMeasurements: `39×23×20 cm, 1.8 L
+
+Pet shoulder height: ~30–45 cm
+Pet weight: ~8–18 kg
+Category: Medium dogs, or large/adult cats that eat a lot.
+Breeds: Beagle, Cocker Spaniel, French Bulldog, medium Indie/Pariah dogs
+Also works for: Maine Coon or other large cat breeds if you want a multi-day refill setup.
+Food math: ~1.8 L = ~4–6 days for a 12 kg dog, well over a week for a cat.`
    },
    relatedSizes: [
     {
@@ -450,7 +528,15 @@ export const roomProducts: Record<string, Product[]> = {
     sustainability: 'Sustainably sourced wood',
     story: 'The idea behind Sugan was to replace the ordinary with something worth keeping. This stripe-design crate feeder is hand-built from sustainably sourced acacia wood, with each plank fitted and finished by artisans in Jodhpur.',
     care: 'Hand wash with mild soap. Do not soak.',
-    maintenance: 'Apply mineral oil periodically'
+    maintenance: 'Apply mineral oil periodically',
+    usesAndMeasurements: `32×18×12 cm, 1 L
+
+Pet shoulder height: ~20–30 cm (dogs) / standard cat height
+Pet weight: ~2–8 kg
+Category: Cats and toy/small dog breeds. The 12 cm height is basically a low-profile bowl - ergonomic for cats and short-legged dogs.
+Cat breeds: Persian, Siamese, Bengal, Indian domestic shorthair
+Small dog breeds: Pug, Shih Tzu, Pomeranian, Lhasa Apso
+Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
    },
    relatedSizes: [
     {
@@ -493,7 +579,14 @@ export const roomProducts: Record<string, Product[]> = {
     sustainability: 'Sustainably sourced wood',
     story: 'At Sugan, we set out to change how India thinks about everyday pet products. Your pet eats from this bowl twice a day - so why should it be made of cheap plastic that scratches, stains, and harbors bacteria? This feeder is made from solid acacia with a non-toxic, food-safe finish.',
     care: 'Hand wash with mild soap. Do not soak.',
-    maintenance: 'Apply mineral oil periodically'
+    maintenance: 'Apply mineral oil periodically',
+    usesAndMeasurements: `50×29×26 cm, 2.5 L
+
+Pet shoulder height: ~45–65 cm
+Pet weight: ~20–35 kg
+Category: Medium-to-large dogs only. Overkill for cats.
+Breeds: Labrador Retriever, Golden Retriever, German Shepherd, Boxer
+Food math: A 25 kg Lab eats ~300–400 g/day (~500–700 ml dry kibble volume), so 2.5 L = ~3–4 days of food. Decent buffer.`
    },
    relatedSizes: [
     {
@@ -526,7 +619,15 @@ export const roomProducts: Record<string, Product[]> = {
     sustainability: 'Sustainably sourced wood',
     story: 'At Sugan, we set out to change how India thinks about everyday pet products. Your pet eats from this bowl twice a day - so why should it be made of cheap plastic that scratches, stains, and harbors bacteria? This feeder is made from solid acacia with a non-toxic, food-safe finish.',
     care: 'Hand wash with mild soap. Do not soak.',
-    maintenance: 'Apply mineral oil periodically'
+    maintenance: 'Apply mineral oil periodically',
+    usesAndMeasurements: `32×18×12 cm, 1 L
+
+Pet shoulder height: ~20–30 cm (dogs) / standard cat height
+Pet weight: ~2–8 kg
+Category: Cats and toy/small dog breeds. The 12 cm height is basically a low-profile bowl - ergonomic for cats and short-legged dogs.
+Cat breeds: Persian, Siamese, Bengal, Indian domestic shorthair
+Small dog breeds: Pug, Shih Tzu, Pomeranian, Lhasa Apso
+Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
    },
    relatedSizes: [
     {
@@ -559,7 +660,15 @@ export const roomProducts: Record<string, Product[]> = {
     sustainability: 'Sustainably sourced wood',
     story: 'At Sugan, we set out to change how India thinks about everyday pet products. Your pet eats from this bowl twice a day - so why should it be made of cheap plastic that scratches, stains, and harbors bacteria? This feeder is made from solid acacia with a non-toxic, food-safe finish.',
     care: 'Hand wash with mild soap. Do not soak.',
-    maintenance: 'Apply mineral oil periodically'
+    maintenance: 'Apply mineral oil periodically',
+    usesAndMeasurements: `32×18×12 cm, 1 L
+
+Pet shoulder height: ~20–30 cm (dogs) / standard cat height
+Pet weight: ~2–8 kg
+Category: Cats and toy/small dog breeds. The 12 cm height is basically a low-profile bowl - ergonomic for cats and short-legged dogs.
+Cat breeds: Persian, Siamese, Bengal, Indian domestic shorthair
+Small dog breeds: Pug, Shih Tzu, Pomeranian, Lhasa Apso
+Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
    },
    relatedSizes: [
     {
@@ -732,15 +841,23 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
     sustainability: 'Sustainably sourced wood',
     story: 'At Sugan, we set out to change how India thinks about everyday pet products. Your pet eats from this bowl twice a day - so why should it be made of cheap plastic that scratches, stains, and harbors bacteria? This feeder is made from solid acacia with a non-toxic, food-safe finish.',
     care: 'Hand wash with mild soap. Do not soak.',
-    maintenance: 'Apply mineral oil periodically'
+    maintenance: 'Apply mineral oil periodically',
+    usesAndMeasurements: `32×18×12 cm, 1 L
+
+Pet shoulder height: ~20–30 cm (dogs) / standard cat height
+Pet weight: ~2–8 kg
+Category: Cats and toy/small dog breeds. The 12 cm height is basically a low-profile bowl - ergonomic for cats and short-legged dogs.
+Cat breeds: Persian, Siamese, Bengal, Indian domestic shorthair
+Small dog breeds: Pug, Shih Tzu, Pomeranian, Lhasa Apso
+Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
    }
   },
   {
    id: 'SAC08_L',
-   name: 'Acacia Wood Stripe Crate Pet Feeder with Stainless Steel Bowls - 61x30x33 cm',
+   name: 'Acacia Wood Stripe Crate Pet Feeder with Stainless Steel Bowls',
    price: 2399,
    originalPrice: 2999,
-   description: 'At 61 x 30 x 33 cm, this large stripe crate feeder from Jodhpur is built for bigger dogs who need generous bowls at a proper height. The acacia wood frame is solid and stable, the stripe grain gives it a distinct warmth, and both stainless steel bowls lift cleanly out of their slots for washing. A natural choice for pet owners who value quality materials.',
+   description: 'This large stripe crate feeder from Jodhpur is built for bigger dogs who need generous bowls at a proper height. The acacia wood frame is solid and stable, the stripe grain gives it a distinct warmth, and both stainless steel bowls lift cleanly out of their slots for washing. A natural choice for pet owners who value quality materials.',
    image: '/images/SAC08L_01.png',
    category: 'Pet Feeders',
    room: 'pet',
@@ -758,7 +875,14 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
     sustainability: 'Sustainably sourced wood',
     story: 'The idea behind Sugan was to replace the ordinary with something worth keeping. This stripe-design crate feeder is hand-built from sustainably sourced acacia wood, with each plank fitted and finished by artisans in Jodhpur.',
     care: 'Hand wash with mild soap. Do not soak.',
-    maintenance: 'Apply mineral oil periodically'
+    maintenance: 'Apply mineral oil periodically',
+    usesAndMeasurements: `50×29×26 cm, 2.5 L
+
+Pet shoulder height: ~45–65 cm
+Pet weight: ~20–35 kg
+Category: Medium-to-large dogs only. Overkill for cats.
+Breeds: Labrador Retriever, Golden Retriever, German Shepherd, Boxer
+Food math: A 25 kg Lab eats ~300–400 g/day (~500–700 ml dry kibble volume), so 2.5 L = ~3–4 days of food. Decent buffer.`
    },
    relatedSizes: [
     {
@@ -790,10 +914,10 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
   },
   {
    id: 'SAC08_M',
-   name: 'Acacia Wood Stripe Crate Pet Feeder with Stainless Steel Bowls - 53x27x29 cm',
+   name: 'Acacia Wood Stripe Crate Pet Feeder with Stainless Steel Bowls',
    price: 2099,
    originalPrice: 2899,
-   description: 'This medium acacia stripe crate feeder, 53 x 27 x 29 cm, sits at the right height for medium breeds and comes with two removable stainless steel bowls. The natural stripe pattern across the wood panels makes every piece slightly different, and the non-toxic food-safe finish means it is as safe as it is beautiful.',
+   description: 'This medium acacia stripe crate feeder sits at the right height for medium breeds and comes with two removable stainless steel bowls. The natural stripe pattern across the wood panels makes every piece slightly different, and the non-toxic food-safe finish means it is as safe as it is beautiful.',
    image: '/images/SAC08M_01.png',
    category: 'Pet Feeders',
    room: 'pet',
@@ -811,7 +935,15 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
     sustainability: 'Sustainably sourced wood',
     story: 'The idea behind Sugan was to replace the ordinary with something worth keeping. This stripe-design crate feeder is hand-built from sustainably sourced acacia wood, with each plank fitted and finished by artisans in Jodhpur.',
     care: 'Hand wash with mild soap. Do not soak.',
-    maintenance: 'Apply mineral oil periodically'
+    maintenance: 'Apply mineral oil periodically',
+    usesAndMeasurements: `39×23×20 cm, 1.8 L
+
+Pet shoulder height: ~30–45 cm
+Pet weight: ~8–18 kg
+Category: Medium dogs, or large/adult cats that eat a lot.
+Breeds: Beagle, Cocker Spaniel, French Bulldog, medium Indie/Pariah dogs
+Also works for: Maine Coon or other large cat breeds if you want a multi-day refill setup.
+Food math: ~1.8 L = ~4–6 days for a 12 kg dog, well over a week for a cat.`
    },
    relatedSizes: [
     {
@@ -843,10 +975,10 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
   },
   {
    id: 'SAC08_S',
-   name: 'Acacia Wood Stripe Crate Pet Feeder with Stainless Steel Bowls - 46x23x18 cm',
+   name: 'Acacia Wood Stripe Crate Pet Feeder with Stainless Steel Bowls',
    price: 1799,
    originalPrice: 1999,
-   description: 'Measuring 46 x 23 x 18 cm, this small acacia stripe crate feeder is a practical, beautiful solution for cats and small dogs. The striped wood panels are finished with a non-toxic coating, and the two stainless steel bowls detach easily for daily cleaning. A handcrafted piece from Jodhpur that earns its place in any home.',
+   description: 'This small acacia stripe crate feeder is a practical, beautiful solution for cats and small dogs. The striped wood panels are finished with a non-toxic coating, and the two stainless steel bowls detach easily for daily cleaning. A handcrafted piece from Jodhpur that earns its place in any home.',
    image: '/images/SAC08S_01.png',
    category: 'Pet Feeders',
    room: 'pet',
@@ -864,7 +996,15 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
     sustainability: 'Sustainably sourced wood',
     story: 'The idea behind Sugan was to replace the ordinary with something worth keeping. This stripe-design crate feeder is hand-built from sustainably sourced acacia wood, with each plank fitted and finished by artisans in Jodhpur.',
     care: 'Hand wash with mild soap. Do not soak.',
-    maintenance: 'Apply mineral oil periodically'
+    maintenance: 'Apply mineral oil periodically',
+    usesAndMeasurements: `32×18×12 cm, 1 L
+
+Pet shoulder height: ~20–30 cm (dogs) / standard cat height
+Pet weight: ~2–8 kg
+Category: Cats and toy/small dog breeds. The 12 cm height is basically a low-profile bowl - ergonomic for cats and short-legged dogs.
+Cat breeds: Persian, Siamese, Bengal, Indian domestic shorthair
+Small dog breeds: Pug, Shih Tzu, Pomeranian, Lhasa Apso
+Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
    },
    relatedSizes: [
     {
@@ -917,7 +1057,15 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
     sustainability: 'Sustainably sourced wood',
     story: 'At Sugan, we set out to change how India thinks about everyday pet products. Your pet eats from this bowl twice a day - so why should it be made of cheap plastic that scratches, stains, and harbors bacteria? This feeder is made from solid acacia with a non-toxic, food-safe finish.',
     care: 'Hand wash with mild soap. Do not soak.',
-    maintenance: 'Apply mineral oil periodically'
+    maintenance: 'Apply mineral oil periodically',
+    usesAndMeasurements: `32×18×12 cm, 1 L
+
+Pet shoulder height: ~20–30 cm (dogs) / standard cat height
+Pet weight: ~2–8 kg
+Category: Cats and toy/small dog breeds. The 12 cm height is basically a low-profile bowl - ergonomic for cats and short-legged dogs.
+Cat breeds: Persian, Siamese, Bengal, Indian domestic shorthair
+Small dog breeds: Pug, Shih Tzu, Pomeranian, Lhasa Apso
+Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
    }
   },
   {
@@ -943,7 +1091,14 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
     sustainability: 'Sustainably sourced wood',
     story: 'The idea behind Sugan was to replace the ordinary with something worth keeping. This stripe-design crate feeder is hand-built from sustainably sourced acacia wood, with each plank fitted and finished by artisans in Jodhpur.',
     care: 'Hand wash with mild soap. Do not soak.',
-    maintenance: 'Apply mineral oil periodically'
+    maintenance: 'Apply mineral oil periodically',
+    usesAndMeasurements: `50×29×26 cm, 2.5 L
+
+Pet shoulder height: ~45–65 cm
+Pet weight: ~20–35 kg
+Category: Medium-to-large dogs only. Overkill for cats.
+Breeds: Labrador Retriever, Golden Retriever, German Shepherd, Boxer
+Food math: A 25 kg Lab eats ~300–400 g/day (~500–700 ml dry kibble volume), so 2.5 L = ~3–4 days of food. Decent buffer.`
    },
    relatedSizes: [
     {
@@ -981,7 +1136,15 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
     sustainability: 'Sustainably sourced wood',
     story: 'The idea behind Sugan was to replace the ordinary with something worth keeping. This stripe-design crate feeder is hand-built from sustainably sourced acacia wood, with each plank fitted and finished by artisans in Jodhpur.',
     care: 'Hand wash with mild soap. Do not soak.',
-    maintenance: 'Apply mineral oil periodically'
+    maintenance: 'Apply mineral oil periodically',
+    usesAndMeasurements: `39×23×20 cm, 1.8 L
+
+Pet shoulder height: ~30–45 cm
+Pet weight: ~8–18 kg
+Category: Medium dogs, or large/adult cats that eat a lot.
+Breeds: Beagle, Cocker Spaniel, French Bulldog, medium Indie/Pariah dogs
+Also works for: Maine Coon or other large cat breeds if you want a multi-day refill setup.
+Food math: ~1.8 L = ~4–6 days for a 12 kg dog, well over a week for a cat.`
    },
    relatedSizes: [
     {
@@ -1019,7 +1182,15 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
     sustainability: 'Sustainably sourced wood',
     story: 'The idea behind Sugan was to replace the ordinary with something worth keeping. This stripe-design crate feeder is hand-built from sustainably sourced acacia wood, with each plank fitted and finished by artisans in Jodhpur.',
     care: 'Hand wash with mild soap. Do not soak.',
-    maintenance: 'Apply mineral oil periodically'
+    maintenance: 'Apply mineral oil periodically',
+    usesAndMeasurements: `32×18×12 cm, 1 L
+
+Pet shoulder height: ~20–30 cm (dogs) / standard cat height
+Pet weight: ~2–8 kg
+Category: Cats and toy/small dog breeds. The 12 cm height is basically a low-profile bowl - ergonomic for cats and short-legged dogs.
+Cat breeds: Persian, Siamese, Bengal, Indian domestic shorthair
+Small dog breeds: Pug, Shih Tzu, Pomeranian, Lhasa Apso
+Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
    },
    relatedSizes: [
     {
@@ -1057,7 +1228,15 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
     sustainability: 'Sustainably sourced wood',
     story: 'The idea behind Sugan was to replace the ordinary with something worth keeping. This stripe-design crate feeder is hand-built from sustainably sourced acacia wood, with each plank fitted and finished by artisans in Jodhpur.',
     care: 'Hand wash with mild soap. Do not soak.',
-    maintenance: 'Apply mineral oil periodically'
+    maintenance: 'Apply mineral oil periodically',
+    usesAndMeasurements: `39×23×20 cm, 1.8 L
+
+Pet shoulder height: ~30–45 cm
+Pet weight: ~8–18 kg
+Category: Medium dogs, or large/adult cats that eat a lot.
+Breeds: Beagle, Cocker Spaniel, French Bulldog, medium Indie/Pariah dogs
+Also works for: Maine Coon or other large cat breeds if you want a multi-day refill setup.
+Food math: ~1.8 L = ~4–6 days for a 12 kg dog, well over a week for a cat.`
    },
    relatedSizes: [
     {
@@ -1110,7 +1289,14 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
     sustainability: 'Sustainably sourced wood',
     story: 'We started Sugan with a simple belief: everyday objects in your home should be beautiful, safe, and built to last. This pet feeder combines high-grade acacia wood - one of the hardest, most water-resistant hardwoods available in India - with a design that supports your pet\'s health and your home\'s aesthetic.',
     care: 'Hand wash with mild soap. Do not soak.',
-    maintenance: 'Apply mineral oil periodically'
+    maintenance: 'Apply mineral oil periodically',
+    usesAndMeasurements: `50×29×26 cm, 2.5 L
+
+Pet shoulder height: ~45–65 cm
+Pet weight: ~20–35 kg
+Category: Medium-to-large dogs only. Overkill for cats.
+Breeds: Labrador Retriever, Golden Retriever, German Shepherd, Boxer
+Food math: A 25 kg Lab eats ~300–400 g/day (~500–700 ml dry kibble volume), so 2.5 L = ~3–4 days of food. Decent buffer.`
    },
    relatedSizes: [
     {
