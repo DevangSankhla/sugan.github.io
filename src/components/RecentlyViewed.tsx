@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import type { Product } from '@/types';
 import { allProducts } from '@/data/rooms';
 
@@ -25,6 +25,7 @@ export function addToRecentlyViewed(productId: string) {
 }
 
 export default function RecentlyViewed() {
+  const location = useLocation();
   const [recentProducts, setRecentProducts] = useState<Product[]>([]);
   const scrollRef = useState<HTMLDivElement | null>(null);
 
@@ -58,6 +59,7 @@ export default function RecentlyViewed() {
               <Link
                 key={product.id}
                 to={`/product/${product.id}`}
+                state={{ from: location.pathname + location.search }}
                 className="flex-shrink-0 w-40 group"
               >
                 <div className="aspect-square bg-sugan-bone-dark rounded-lg overflow-hidden mb-2">

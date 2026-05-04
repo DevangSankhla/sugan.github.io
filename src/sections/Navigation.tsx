@@ -86,7 +86,7 @@ export default function Navigation() {
   };
 
   const handleProductClick = (productId: string) => {
-    navigate(`/product/${productId}`);
+    navigate(`/product/${productId}`, { state: { from: location.pathname + location.search } });
     setIsSearchOpen(false);
     setSearchQuery('');
   };

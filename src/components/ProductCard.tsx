@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Heart } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { db } from '@/lib/firebase';
@@ -27,6 +27,7 @@ export default function ProductCard({
   sizeText,
 }: ProductCardProps) {
   const { user } = useAuth();
+  const location = useLocation();
   const [isInWishlist, setIsInWishlist] = useState(false);
   const [wishlistId, setWishlistId] = useState<string | null>(null);
 
@@ -84,6 +85,7 @@ export default function ProductCard({
   return (
     <Link
       to={`/product/${product.id}`}
+      state={{ from: location.pathname + location.search }}
       data-cursor="view"
       className="group block"
     >

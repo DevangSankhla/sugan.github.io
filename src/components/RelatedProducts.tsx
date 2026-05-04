@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { allProducts } from '@/data/rooms';
 import type { Product } from '@/types';
 
@@ -8,6 +8,7 @@ interface RelatedProductsProps {
 }
 
 export default function RelatedProducts({ currentProduct }: RelatedProductsProps) {
+  const location = useLocation();
   const relatedProducts = useMemo(() => {
     // Find products in the same category/room, excluding current product
     const sameCategory = allProducts.filter(
@@ -40,6 +41,7 @@ export default function RelatedProducts({ currentProduct }: RelatedProductsProps
             <Link
               key={product.id}
               to={`/product/${product.id}`}
+              state={{ from: location.pathname + location.search }}
               className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300"
             >
               <div className="aspect-square overflow-hidden">

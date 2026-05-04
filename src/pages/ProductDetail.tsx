@@ -202,6 +202,7 @@ export default function ProductDetail() {
         <button
           onClick={() => {
             if (fromPage) navigate(fromPage);
+            else if (window.history.length > 1) navigate(-1);
             else if (product.room) navigate(`/shop/${product.room}`);
             else navigate('/shop');
           }}
