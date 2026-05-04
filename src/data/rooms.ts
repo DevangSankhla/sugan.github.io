@@ -2774,6 +2774,161 @@ Food math: A 25 kg Lab eats ~300–400 g/day (~500–700 ml dry kibble volume), 
     maintenance: 'Apply mineral oil periodically'
    }
   },
+  {
+   id: 'SAC050',
+   name: 'Mushroom Pedestal Side Table',
+   price: 0,
+   description: 'Hand-turned from solid mango wood in Jodhpur, this pedestal side table draws its silhouette from quiet, considered geometry — a wide, smooth top perched on a tapered single column. The natural honey polish keeps the tone warm and inviting, letting the mango wood\'s grain come through. Every piece is turned individually by hand, so the character of the wood shows in each one.',
+   image: '/images/SAC050_01.png',
+   category: 'Side Tables',
+   room: 'living',
+   inStock: false,
+   rating: 4.8,
+   reviews: 0,
+   details: {
+    materials: 'Solid mango wood',
+    finish: 'Natural honey polish, food-safe mineral oil',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['Handcrafted in Jodhpur', 'Solid mango wood', 'Plastic-free'],
+    sustainability: 'Sustainably sourced mango wood',
+    story: 'We made this table because we believed a side table could be more than a flat surface on four legs. The mushroom pedestal form is hand-turned on a lathe by artisans in Jodhpur — a wide, smooth top balanced on a tapering column that gives it the poise of sculpture and the usefulness of furniture. The natural honey finish keeps every grain visible and warm.',
+    care: 'Wipe with a dry or lightly damp cloth. Do not soak.',
+    maintenance: 'Apply mineral oil or beeswax polish periodically to maintain the finish.',
+    dimensions: {
+     height: '51 cm',
+     width: '50 cm',
+     depth: '50 cm'
+    },
+    photos: ['/images/SAC050_02.png']
+   }
+  },
+  {
+   id: 'SAC052',
+   name: 'Oval Top Shelf Side Table',
+   price: 0,
+   description: 'A tall, slim acacia wood side table with a softly rounded oval top and two open shelves below, finished in a rich dark walnut tone. The narrow profile fits comfortably beside a sofa or armchair without crowding the space, and the open shelves keep books, plants, or objects visible and within reach. Made from solid acacia in Jodhpur.',
+   image: '/images/SAC052_01.png',
+   category: 'Side Tables',
+   room: 'living',
+   inStock: false,
+   rating: 4.8,
+   reviews: 0,
+   details: {
+    materials: 'Solid acacia wood',
+    finish: 'Dark walnut polish, food-safe mineral oil',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['Handcrafted in Jodhpur', 'Solid acacia wood', 'Plastic-free'],
+    sustainability: 'Sustainably sourced acacia wood',
+    story: 'The oval top is a deliberate choice — it softens the silhouette and makes the table feel less like a piece of office furniture and more like something that belongs in a considered home. The two open shelves are arranged to display rather than conceal: books, a trailing plant, a ceramic object. Handcrafted from solid acacia in Jodhpur with a dark walnut finish that deepens the grain.',
+    care: 'Wipe with a dry or lightly damp cloth. Do not soak.',
+    maintenance: 'Apply mineral oil periodically.',
+    dimensions: {
+     height: '69 cm',
+     width: '61 cm',
+     depth: '32 cm'
+    },
+    photos: ['/images/SAC052_02.png']
+   }
+  },
+  {
+   id: 'SAC053',
+   name: 'Mosaic Pedestal Side Table',
+   price: 0,
+   description: 'Built from solid mango wood in Jodhpur, this pedestal side table carries its craft in the base — an hourglass column assembled from hand-cut wood blocks fitted together in a precise mosaic pattern. The wide, lipped circular top sits above it cleanly, offering a generous surface for daily use. Finished in a warm honey walnut tone that draws out the natural depth of the wood.',
+   image: '/images/SAC053_01.png',
+   category: 'Side Tables',
+   room: 'living',
+   inStock: false,
+   rating: 4.9,
+   reviews: 0,
+   details: {
+    materials: 'Solid mango wood',
+    finish: 'Honey walnut polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['Handcrafted in Jodhpur', 'Solid mango wood', 'Mosaic artisan base'],
+    sustainability: 'Sustainably sourced mango wood',
+    story: 'The base is the whole story. Each mosaic block is individually hand-cut and fitted by skilled artisans in Jodhpur — no two columns are assembled in exactly the same configuration, which means no two tables are identical. The hourglass silhouette gives it a sculptural confidence, and the lipped round top grounds the form in practicality. A piece that earns its place in any room it enters.',
+    care: 'Wipe with a dry or lightly damp cloth. Do not soak.',
+    maintenance: 'Apply mineral oil or beeswax polish periodically.',
+    dimensions: {
+     height: '50 cm',
+     width: '50 cm',
+     depth: '50 cm'
+    },
+    photos: ['/images/SAC053_02.png']
+   }
+  },
+  {
+   id: 'SAC055',
+   name: 'Slatted Base Bowl Top Side Table',
+   price: 0,
+   description: 'A wide, bowl-shaped top in a whitewashed gold finish sits above a slatted cylindrical base in deep ebony black — two finishes, one material, striking contrast. The open vertical slats let light pass through and cast clean shadows through the day, giving the piece an architectural quality that reads as much as sculpture as furniture. Made from solid mango wood in Jodhpur.',
+   image: '/images/SAC055_01.png',
+   category: 'Side Tables',
+   room: 'living',
+   inStock: false,
+   rating: 4.8,
+   reviews: 0,
+   details: {
+    materials: 'Solid mango wood',
+    finish: 'Whitewashed gold (top), ebony black (base)',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['Handcrafted in Jodhpur', 'Solid mango wood', 'Dual-tone finish'],
+    sustainability: 'Sustainably sourced mango wood',
+    story: 'The two-tone contrast between the whitewashed gold bowl and the ebony black slatted base came from the idea that a side table should be interesting to look at from every angle. The vertical slats are precision-cut and arranged in an open cage formation — light moves through them differently at every hour of the day. Made entirely from solid mango wood by artisans in Jodhpur.',
+    care: 'Wipe with a dry or lightly damp cloth. Avoid prolonged moisture. Keep from direct sunlight.',
+    maintenance: 'Apply appropriate wood polish periodically.',
+    dimensions: {
+     height: '53 cm',
+     width: '44 cm',
+     depth: '44 cm'
+    },
+    photos: ['/images/SAC055_02.png']
+   }
+  },
+  {
+   id: 'SAC056',
+   name: 'Slatted Drum Base Coffee Table',
+   price: 0,
+   description: 'A wide, bowl-shaped top in smoky walnut sits low above a flared slatted drum base made from solid mango wood — the grain at the centre of the top radiates outward, and the precision-cut slats of the base play with light throughout the day. Low, grounded, and quietly commanding, it anchors a living room without competing with anything around it. Made by hand in Jodhpur.',
+   image: '/images/SAC056_01.png',
+   category: 'Coffee Tables',
+   room: 'living',
+   inStock: false,
+   rating: 4.9,
+   reviews: 0,
+   details: {
+    materials: 'Solid mango wood',
+    finish: 'Smoky walnut polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['Handcrafted in Jodhpur', 'Solid mango wood', 'Statement grain pattern'],
+    sustainability: 'Sustainably sourced mango wood',
+    story: 'Coffee tables tend to be afterthoughts. This one is not. The flared slatted drum base fans outward from a narrow neck with precision-cut vertical slats arranged in an open formation — it casts beautiful shadows and creates visual depth from every angle. The bowl-shaped top is turned from a single piece of mango wood, and the centrepiece grain pattern at its surface is unique to each table. A grounded, considered piece from Jodhpur.',
+    care: 'Wipe with a dry or lightly damp cloth. Avoid prolonged moisture. Keep from direct sunlight.',
+    maintenance: 'Apply mineral oil or beeswax polish periodically.',
+    dimensions: {
+     height: '43 cm',
+     width: '61 cm',
+     depth: '61 cm'
+    },
+    photos: ['/images/SAC056_02.png']
+   }
+  },
  ],
  bedroom: [
   {
@@ -2800,6 +2955,68 @@ Food math: A 25 kg Lab eats ~300–400 g/day (~500–700 ml dry kibble volume), 
     story: 'Jodhpur has been painting stories onto wood for longer than most cities have existed. This jewellery and storage box carries that tradition - hand-painted by skilled Rajasthani artisans with traditional techniques passed down through families.',
     care: 'Hand wash with mild soap. Do not soak.',
     maintenance: 'Apply mineral oil periodically'
+   }
+  },
+  {
+   id: 'SAC051',
+   name: 'Brass Knob Bedside Table',
+   price: 0,
+   description: 'A two-drawer bedside table in solid mango wood with a dark walnut finish and small round brass knob hardware — refined without being fussy. The turned cylindrical legs lift it cleanly off the floor, and both drawers offer generous space for everyday bedside essentials. The natural grain shows through the deep finish across every drawer front, making each piece distinctly its own.',
+   image: '/images/SAC051_01.png',
+   category: 'Side Tables',
+   room: 'bedroom',
+   inStock: false,
+   rating: 4.8,
+   reviews: 0,
+   details: {
+    materials: 'Solid mango wood',
+    finish: 'Dark walnut polish, food-safe mineral oil',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['Handcrafted in Jodhpur', 'Solid mango wood', 'Brass hardware'],
+    sustainability: 'Sustainably sourced mango wood',
+    story: 'The brass knobs were the last decision, and they changed everything. A small round detail in warm gold against the deep espresso of the dark walnut finish — restrained enough to not dominate, considered enough to elevate the whole piece. Two drawers, turned cylindrical legs, solid mango wood throughout. Made by hand in Jodhpur for bedrooms that take their materials seriously.',
+    care: 'Wipe with a dry or lightly damp cloth. Do not soak.',
+    maintenance: 'Apply mineral oil periodically. Polish brass knobs with a soft cloth.',
+    dimensions: {
+     height: '50 cm',
+     width: '51 cm',
+     depth: '48 cm'
+    },
+    photos: ['/images/SAC051_02.png']
+   }
+  },
+  {
+   id: 'SAC054',
+   name: 'Round Edge Three-Drawer Bedside Table',
+   price: 0,
+   description: 'Three smooth-gliding drawers, rounded corners throughout, and raised cylindrical legs — this solid mango wood bedside table is defined by the details that set it apart from the standard. The natural honey finish stays warm and bright, and the softened edges give it a more considered silhouette than most nightstands. Every drawer front shows the natural grain of the mango wood.',
+   image: '/images/SAC054_01.png',
+   category: 'Side Tables',
+   room: 'bedroom',
+   inStock: false,
+   rating: 4.8,
+   reviews: 0,
+   details: {
+    materials: 'Solid mango wood',
+    finish: 'Natural honey polish, food-safe mineral oil',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['Handcrafted in Jodhpur', 'Solid mango wood', 'Rounded edges'],
+    sustainability: 'Sustainably sourced mango wood',
+    story: 'Rounded corners sound like a minor detail. In a bedside table you reach for in the dark every night, they become the whole character of the piece. This table is designed so that nothing sharp or hard meets you at eye level or at 2am. Three generous drawers, cylindrical legs that keep it feeling light, and a natural honey finish that lets the mango grain come through. Made in Jodhpur.',
+    care: 'Wipe with a dry or lightly damp cloth. Do not soak.',
+    maintenance: 'Apply mineral oil or beeswax polish periodically.',
+    dimensions: {
+     height: '61 cm',
+     width: '49 cm',
+     depth: '38 cm'
+    },
+    photos: ['/images/SAC054_02.png']
    }
   },
  ],

@@ -297,7 +297,7 @@ export default function ProductDetail() {
 
             {/* Price */}
             <p className="font-body text-display-md font-light text-sugan-ink tabular-nums">
-              ₹{displayPrice.toLocaleString()}
+              {displayPrice === 0 ? 'Coming soon' : `₹${displayPrice.toLocaleString()}`}
             </p>
 
             {/* Description — visible immediately, expandable if details.story is longer */}
@@ -307,16 +307,16 @@ export default function ProductDetail() {
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
               <span
                 className={`inline-flex items-center gap-2 text-eyebrow font-body uppercase ${
-                  product.inStock ? 'text-sugan-ink' : 'text-sugan-ink/50'
+                  product.price === 0 ? 'text-sugan-ink/50' : product.inStock ? 'text-sugan-ink' : 'text-sugan-ink/50'
                 }`}
               >
                 <span
                   className={`block w-1.5 h-1.5 rounded-full ${
-                    product.inStock ? 'bg-sugan-gold' : 'bg-sugan-ink/30'
+                    product.price === 0 ? 'bg-sugan-gold/40' : product.inStock ? 'bg-sugan-gold' : 'bg-sugan-ink/30'
                   }`}
                   aria-hidden="true"
                 />
-                {product.inStock ? 'In stock' : 'Out of stock'}
+                {product.price === 0 ? 'Coming soon' : product.inStock ? 'In stock' : 'Out of stock'}
               </span>
               {isHot && product.inStock && (
                 <span className="inline-flex items-center gap-2 text-eyebrow font-body uppercase text-sugan-gold">
@@ -411,13 +411,13 @@ export default function ProductDetail() {
 
               <button
                 onClick={handleAddToCart}
-                disabled={!product.inStock}
+                disabled={!product.inStock || product.price === 0}
                 className={`btn-primary w-full ${
-                  !product.inStock ? 'opacity-40 cursor-not-allowed' : ''
+                  (!product.inStock || product.price === 0) ? 'opacity-40 cursor-not-allowed' : ''
                 }`}
               >
                 <ShoppingBag className="w-3.5 h-3.5" />
-                {product.inStock ? 'Add to bag' : 'Out of stock'}
+                {product.price === 0 ? 'Coming soon' : product.inStock ? 'Add to bag' : 'Out of stock'}
               </button>
 
               <a
@@ -467,7 +467,7 @@ export default function ProductDetail() {
             )}
 
             {/* Out of stock fallback */}
-            {!product.inStock && (
+            {!product.inStock && product.price !== 0 && (
               <div className="border-t border-sugan-ink/10 pt-6 flex flex-col gap-3">
                 <p className="font-body text-body-sm text-sugan-ink-soft">
                   Currently restocking. Request a notification by email.
@@ -581,13 +581,15 @@ export default function ProductDetail() {
 
           <button
             onClick={handleAddToCart}
-            disabled={!product.inStock}
+            disabled={!product.inStock || product.price === 0}
             className={`btn-primary flex-1 tabular-nums ${
-              !product.inStock ? 'opacity-40 cursor-not-allowed' : ''
+              (!product.inStock || product.price === 0) ? 'opacity-40 cursor-not-allowed' : ''
             }`}
           >
             <ShoppingBag className="w-3.5 h-3.5" />
-            {product.inStock
+            {product.price === 0
+              ? 'Coming soon'
+              : product.inStock
               ? `Add · ₹${(displayPrice * quantity).toLocaleString()}`
               : 'Out of stock'}
           </button>

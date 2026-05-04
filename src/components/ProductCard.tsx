@@ -149,7 +149,7 @@ export default function ProductCard({
           </p>
         )}
         <p className="mt-2 font-body text-[15px] text-sugan-ink tabular-nums">
-          ₹{product.price.toLocaleString()}
+          {product.price === 0 ? 'Coming soon' : `₹${product.price.toLocaleString()}`}
         </p>
       </div>
     </Link>
