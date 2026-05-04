@@ -7,6 +7,14 @@ import { rooms, roomProducts, allProducts, getDisplayProduct, getBaseProductName
 
 const ROOM_HERO_IMAGES: Record<string, string> = {
   kitchen: '/images/SAC05L_01.png',
+  pet: '/images/SAC048M_01.png',
+  living: '/images/SAC056_02.png',
+  bedroom: '/images/SAC054_02.png',
+};
+
+const CATEGORY_HERO_IMAGES: Record<string, string> = {
+  'pet-feeders': '/images/SAC048M_01.png',
+  'side-tables': '/images/SAC050_02.png',
 };
 import type { Product } from '@/types';
 import ProductCard from '@/components/ProductCard';
@@ -214,7 +222,7 @@ export default function Shop() {
             {categories.map((category) => {
               const products = getCategoryProducts(category.id);
               if (products.length === 0) return null;
-              const heroImage = products[0]?.image ?? '/images/SAC030.jpeg';
+              const heroImage = CATEGORY_HERO_IMAGES[category.id] ?? products[0]?.image ?? '/images/SAC030.jpeg';
               return (
                 <button
                   key={category.id}
