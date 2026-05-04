@@ -2745,7 +2745,7 @@ Food math: A 25 kg Lab eats ~300–400 g/day (~500–700 ml dry kibble volume), 
      width: '33 cm',
      depth: '33 cm'
     },
-    photos: ['/images/SAC049_02.png']
+    photos: ['/images/SAC049_02.png', '/images/SAC049_03.png']
    }
   },
   {
