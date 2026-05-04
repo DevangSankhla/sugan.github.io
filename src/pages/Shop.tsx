@@ -194,7 +194,7 @@ export default function Shop() {
                       src={heroImage}
                       alt={room.name}
                       loading="lazy"
-                      className="absolute inset-0 w-full h-full object-cover scale-[1.04] transition-transform duration-700 ease-apple group-hover:scale-100"
+                      className="absolute inset-0 w-full h-full object-contain scale-[1.04] transition-transform duration-700 ease-apple group-hover:scale-100"
                     />
                   </div>
                   <div className="pt-4">
@@ -228,7 +228,7 @@ export default function Shop() {
                       src={heroImage}
                       alt={category.name}
                       loading="lazy"
-                      className="absolute inset-0 w-full h-full object-cover scale-[1.04] transition-transform duration-700 ease-apple group-hover:scale-100"
+                      className="absolute inset-0 w-full h-full object-contain scale-[1.04] transition-transform duration-700 ease-apple group-hover:scale-100"
                     />
                   </div>
                   <div className="pt-4">

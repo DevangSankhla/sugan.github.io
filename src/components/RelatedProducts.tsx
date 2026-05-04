@@ -48,7 +48,7 @@ export default function RelatedProducts({ currentProduct }: RelatedProductsProps
                 <img
                   src={product.image}
                   alt={product.name}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
                   loading="lazy"
                 />
               </div>

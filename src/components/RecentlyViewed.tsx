@@ -66,7 +66,7 @@ export default function RecentlyViewed() {
                   <img
                     src={product.image}
                     alt={product.name}
-                    className="w-full h-full object-cover transition-transform group-hover:scale-105"
+                    className="w-full h-full object-contain transition-transform group-hover:scale-105"
                     loading="lazy"
                   />
                 </div>

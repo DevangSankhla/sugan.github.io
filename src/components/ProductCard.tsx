@@ -95,7 +95,7 @@ export default function ProductCard({
           src={product.image}
           alt={product.name}
           loading="lazy"
-          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-apple group-hover:opacity-0"
+          className="absolute inset-0 w-full h-full object-contain transition-opacity duration-700 ease-apple group-hover:opacity-0"
         />
         {/* Secondary image - fades in on hover, slightly larger settling to 1.0 */}
         <img
@@ -103,7 +103,7 @@ export default function ProductCard({
           alt=""
           aria-hidden="true"
           loading="lazy"
-          className="absolute inset-0 w-full h-full object-cover scale-105 opacity-0 transition-opacity duration-700 ease-apple group-hover:opacity-100"
+          className="absolute inset-0 w-full h-full object-contain scale-105 opacity-0 transition-opacity duration-700 ease-apple group-hover:opacity-100"
           onError={(e) => {
             // If _02 doesn't exist, fall back silently to the primary image
             const img = e.currentTarget;
