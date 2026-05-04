@@ -193,7 +193,7 @@ export default function ProductDetail() {
           src={heroImage}
           alt={product.name}
           data-cursor="view"
-          className="absolute inset-0 w-full h-full object-contain sm:object-cover"
+          className="absolute inset-0 w-full h-full object-contain"
         />
         {/* Soft gradient at the bottom only - no text overlay */}
         <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-sugan-bone via-sugan-bone/30 to-transparent pointer-events-none" />
@@ -227,7 +227,7 @@ export default function ProductDetail() {
                   src={src}
                   alt={`${product.name} - view ${i + 2}`}
                   loading="lazy"
-                  className="absolute inset-0 w-full h-full object-contain lg:object-cover"
+                  className="absolute inset-0 w-full h-full object-contain"
                 />
               </div>
             ))
@@ -237,7 +237,7 @@ export default function ProductDetail() {
                 src={heroImage}
                 alt={product.name}
                 loading="lazy"
-                className="absolute inset-0 w-full h-full object-contain lg:object-cover"
+                className="absolute inset-0 w-full h-full object-contain"
               />
             </div>
           )}
