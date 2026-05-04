@@ -2718,6 +2718,37 @@ Food math: A 25 kg Lab eats ~300–400 g/day (~500–700 ml dry kibble volume), 
    }
   },
   {
+   id: 'SAC049',
+   name: 'Spiral Side Table',
+   price: 3599,
+   description: 'Hand-turned from solid mango wood in Jodhpur, this side table is built around a stacked-disc silhouette that carries the quality of sculpture and the function of furniture. Each layer is shaped and smoothed individually, so no two pieces look exactly the same. The rich dark walnut finish deepens with time, pulling out the natural grain and warmth of the wood.',
+   image: '/images/SAC049_01.png',
+   category: 'Side Tables',
+   room: 'living',
+   inStock: true,
+   rating: 4.8,
+   reviews: 42,
+   details: {
+    materials: 'Solid mango wood',
+    finish: 'Dark walnut polish, food-safe mineral oil',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['Handcrafted in Jodhpur', 'Solid mango wood', 'Plastic-free'],
+    sustainability: 'Sustainably sourced mango wood',
+    story: 'We made this table because we believed a side table could be more than a flat surface on four legs. The spiral form is hand-turned on a lathe by artisans in Jodhpur who have spent years understanding how wood moves and responds to the tool. The stacked-disc silhouette is bold enough to stand on its own in a room, and restrained enough to work with almost any interior — modern, bohemian, mid-century. Mango wood is one of the most naturally beautiful hardwoods available in India, and the dark walnut finish only deepens it over years of use.',
+    care: 'Wipe with a dry or lightly damp cloth. Do not soak.',
+    maintenance: 'Apply mineral oil or beeswax polish periodically to maintain the finish.',
+    dimensions: {
+     height: '61 cm',
+     width: '33 cm',
+     depth: '33 cm'
+    },
+    photos: ['/images/SAC049_02.png']
+   }
+  },
+  {
    id: 'SAC030',
    name: 'Rajasthani Hand-Embossed Multicolour Wooden Serving Tray',
    price: 999,

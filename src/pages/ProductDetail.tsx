@@ -159,11 +159,11 @@ export default function ProductDetail() {
   if (d?.finish) specs.push({ label: 'Finish', value: d.finish });
   if (d?.dimensions) {
     const parts: string[] = [];
-    if (d.dimensions.length) parts.push(`L ${d.dimensions.length}"`);
-    if (d.dimensions.width) parts.push(`W ${d.dimensions.width}"`);
-    if (d.dimensions.height) parts.push(`H ${d.dimensions.height}"`);
-    if (d.dimensions.depth) parts.push(`D ${d.dimensions.depth}"`);
-    if (d.dimensions.diameter) parts.push(`Ø ${d.dimensions.diameter}"`);
+    if (d.dimensions.height) parts.push(`H ${d.dimensions.height}`);
+    if (d.dimensions.length) parts.push(`L ${d.dimensions.length}`);
+    if (d.dimensions.width) parts.push(`W ${d.dimensions.width}`);
+    if (d.dimensions.depth) parts.push(`D ${d.dimensions.depth}`);
+    if (d.dimensions.diameter) parts.push(`Ø ${d.dimensions.diameter}`);
     if (parts.length) specs.push({ label: 'Dimensions', value: parts.join(' · ') });
     if (d.dimensions.weight) specs.push({ label: 'Weight', value: String(d.dimensions.weight) });
   }
