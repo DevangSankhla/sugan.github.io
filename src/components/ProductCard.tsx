@@ -13,20 +13,11 @@ interface ProductCardProps {
   sizeText?: string;
 }
 
-// Build a short spec line from material + primary dimension if available.
+// Build a short spec line from material only — dimensions belong on the
+// product detail page, not on the shop/category cards.
 function buildSpecLine(product: Product): string | null {
   const material = product.details?.materials?.split(',')[0]?.trim();
-  const dims = product.details?.dimensions;
-  let dimText: string | null = null;
-  if (dims) {
-    const parts = [dims.length, dims.width, dims.height].filter(Boolean);
-    if (parts.length >= 2) dimText = parts.join('×') + (typeof parts[0] === 'string' ? '' : '"');
-    else if (dims.diameter) dimText = `Ø${dims.diameter}`;
-  }
-  if (material && dimText) return `${material} · ${dimText}`;
-  if (material) return material;
-  if (dimText) return dimText;
-  return null;
+  return material ?? null;
 }
 
 export default function ProductCard({

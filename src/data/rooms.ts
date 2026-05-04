@@ -2745,7 +2745,7 @@ Food math: A 25 kg Lab eats ~300–400 g/day (~500–700 ml dry kibble volume), 
      width: '33 cm',
      depth: '33 cm'
     },
-    photos: ['/images/SAC049_02.png', '/images/SAC049_03.png']
+    photos: ['/images/SAC049_03.png']
    }
   },
   {
@@ -2801,8 +2801,7 @@ Food math: A 25 kg Lab eats ~300–400 g/day (~500–700 ml dry kibble volume), 
      height: '51 cm',
      width: '50 cm',
      depth: '50 cm'
-    },
-    photos: ['/images/SAC050_02.png']
+    }
    }
   },
   {
@@ -2832,8 +2831,7 @@ Food math: A 25 kg Lab eats ~300–400 g/day (~500–700 ml dry kibble volume), 
      height: '69 cm',
      width: '61 cm',
      depth: '32 cm'
-    },
-    photos: ['/images/SAC052_02.png']
+    }
    }
   },
   {
@@ -2863,8 +2861,7 @@ Food math: A 25 kg Lab eats ~300–400 g/day (~500–700 ml dry kibble volume), 
      height: '50 cm',
      width: '50 cm',
      depth: '50 cm'
-    },
-    photos: ['/images/SAC053_02.png']
+    }
    }
   },
   {
@@ -2894,8 +2891,7 @@ Food math: A 25 kg Lab eats ~300–400 g/day (~500–700 ml dry kibble volume), 
      height: '53 cm',
      width: '44 cm',
      depth: '44 cm'
-    },
-    photos: ['/images/SAC055_02.png']
+    }
    }
   },
   {
@@ -2925,8 +2921,7 @@ Food math: A 25 kg Lab eats ~300–400 g/day (~500–700 ml dry kibble volume), 
      height: '43 cm',
      width: '61 cm',
      depth: '61 cm'
-    },
-    photos: ['/images/SAC056_02.png']
+    }
    }
   },
  ],
@@ -2984,8 +2979,7 @@ Food math: A 25 kg Lab eats ~300–400 g/day (~500–700 ml dry kibble volume), 
      height: '50 cm',
      width: '51 cm',
      depth: '48 cm'
-    },
-    photos: ['/images/SAC051_02.png']
+    }
    }
   },
   {
@@ -3015,8 +3009,7 @@ Food math: A 25 kg Lab eats ~300–400 g/day (~500–700 ml dry kibble volume), 
      height: '61 cm',
      width: '49 cm',
      depth: '38 cm'
-    },
-    photos: ['/images/SAC054_02.png']
+    }
    }
   },
  ],
