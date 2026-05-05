@@ -20,9 +20,6 @@ interface CouponCodeProps {
 
 const AVAILABLE_COUPONS = [
   { code: 'FIRST10', discount: 10, type: 'percent', minOrder: 0, description: '10% off your first order' },
-  { code: 'SUGAN5', discount: 5, type: 'percent', minOrder: 0, description: '5% off any order' },
-  { code: 'SAVE100', discount: 100, type: 'fixed', minOrder: 999, description: '₹100 off on orders above ₹999' },
-  { code: 'SAVE250', discount: 250, type: 'fixed', minOrder: 1999, description: '₹250 off on orders above ₹1999' },
 ];
 
 export default function CouponCode({

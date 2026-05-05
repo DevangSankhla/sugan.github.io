@@ -321,7 +321,7 @@ export default function ProductDetail() {
               </span>
               {isHot && product.inStock && (
                 <span className="inline-flex items-center gap-2 text-eyebrow font-body uppercase text-sugan-gold">
-                  <span aria-hidden="true">·</span> Best-seller · Use code FIRST10
+                  <span aria-hidden="true">·</span> Best-seller
                 </span>
               )}
             </div>
