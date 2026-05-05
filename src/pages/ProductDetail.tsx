@@ -141,9 +141,10 @@ export default function ProductDetail() {
     return images;
   };
 
+  const [failedImages, setFailedImages] = useState<Set<string>>(new Set());
   const allImages = getAllImages();
   const heroImage = allImages[0];
-  const galleryImages = allImages.slice(1);
+  const galleryImages = allImages.slice(1).filter((src) => !failedImages.has(src));
   const galleryVideos: string[] = product.details?.videos ?? [];
 
   const displayPrice =
@@ -228,6 +229,14 @@ export default function ProductDetail() {
                   alt={`${product.name} - view ${i + 2}`}
                   loading="lazy"
                   className="absolute inset-0 w-full h-full object-contain"
+                  onError={() =>
+                    setFailedImages((prev) => {
+                      if (prev.has(src)) return prev;
+                      const next = new Set(prev);
+                      next.add(src);
+                      return next;
+                    })
+                  }
                 />
               </div>
             ))
