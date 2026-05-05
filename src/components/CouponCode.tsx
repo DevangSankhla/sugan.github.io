@@ -1,8 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Tag, Check, X } from 'lucide-react';
-import { collection, query, where, getDocs, limit, doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
-import { useAuth } from '@/context/AuthContext';
 
 export interface AffiliateMeta {
   code: string;
@@ -29,20 +28,10 @@ export default function CouponCode({
   appliedCoupon,
   discountAmount
 }: CouponCodeProps) {
-  const { user } = useAuth();
   const [code, setCode] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [showCoupons, setShowCoupons] = useState(false);
-  const [isFirstOrder, setIsFirstOrder] = useState<boolean | null>(null);
-
-  // Check if this user has ever placed an order before
-  useEffect(() => {
-    if (!user) return;
-    getDocs(query(collection(db, 'orders'), where('userId', '==', user.uid), limit(1)))
-      .then(snap => setIsFirstOrder(snap.empty))
-      .catch(() => setIsFirstOrder(false));
-  }, [user]);
 
   const handleApply = async () => {
     setError(null);
@@ -52,16 +41,6 @@ export default function CouponCode({
     const coupon = AVAILABLE_COUPONS.find(c => c.code.toUpperCase() === normalized);
 
     if (coupon) {
-      if (coupon.code === 'FIRST10') {
-        if (isFirstOrder === null) {
-          setError('Please wait a moment and try again');
-          return;
-        }
-        if (!isFirstOrder) {
-          setError('FIRST10 is only available on your first order - not applicable to your account');
-          return;
-        }
-      }
       if (subtotal < coupon.minOrder) {
         setError(`Minimum order amount is ₹${coupon.minOrder} for this coupon`);
         return;
@@ -177,10 +156,7 @@ export default function CouponCode({
 
           {showCoupons && (
             <div className="mt-3 space-y-2">
-              {AVAILABLE_COUPONS.filter(c =>
-                subtotal >= c.minOrder &&
-                !(c.code === 'FIRST10' && isFirstOrder === false)
-              ).map((coupon) => (
+              {AVAILABLE_COUPONS.filter(c => subtotal >= c.minOrder).map((coupon) => (
                 <div 
                   key={coupon.code}
                   onClick={() => {
