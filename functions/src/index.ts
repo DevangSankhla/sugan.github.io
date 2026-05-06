@@ -1,6 +1,18 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 import * as nodemailer from 'nodemailer';
+import { defineSecret } from 'firebase-functions/params';
+
+// Shiprocket credentials live in Google Secret Manager. Set them with:
+//   firebase functions:secrets:set SHIPROCKET_EMAIL
+//   firebase functions:secrets:set SHIPROCKET_PASSWORD
+const SHIPROCKET_EMAIL = defineSecret('SHIPROCKET_EMAIL');
+const SHIPROCKET_PASSWORD = defineSecret('SHIPROCKET_PASSWORD');
+
+// Non-sensitive: the registered Shiprocket pickup nickname. Hardcoded for
+// now since it changes rarely; if you rename it in the dashboard, update
+// here and redeploy.
+const SHIPROCKET_PICKUP_LOCATION = 'Factory1';
 
 admin.initializeApp();
 
@@ -601,11 +613,10 @@ async function getShiprocketToken(): Promise<string> {
   if (cachedShiprocketToken && cachedShiprocketToken.expiresAt > Date.now()) {
     return cachedShiprocketToken.token;
   }
-  const cfg = functions.config();
-  const email = cfg.shiprocket?.email;
-  const password = cfg.shiprocket?.password;
+  const email = SHIPROCKET_EMAIL.value();
+  const password = SHIPROCKET_PASSWORD.value();
   if (!email || !password) {
-    throw new Error('Shiprocket credentials not configured (functions.config().shiprocket)');
+    throw new Error('Shiprocket credentials not configured (SHIPROCKET_EMAIL / SHIPROCKET_PASSWORD secrets)');
   }
   const res = await fetch(`${SHIPROCKET_API_URL}/auth/login`, {
     method: 'POST',
@@ -634,8 +645,7 @@ interface ShiprocketCreateResponse {
 
 async function createShiprocketOrder(orderId: string, order: OrderData): Promise<ShiprocketCreateResponse> {
   const token = await getShiprocketToken();
-  const cfg = functions.config();
-  const pickupLocation = (cfg.shiprocket?.pickup_location as string) || 'Factory1';
+  const pickupLocation = SHIPROCKET_PICKUP_LOCATION;
 
   const addr = order.shippingAddress || {};
   const items = (order.items || []).map((it) => ({
@@ -738,8 +748,9 @@ async function pushOrderToShiprocket(orderId: string, before: OrderData | undefi
 // PayU orders enter Firestore as 'pending' and are flipped to 'paid' on
 // payment confirmation. COD orders enter as 'pending' and processCOD()
 // flips them to 'cod_pending'. Either path lands on the update trigger.
-export const syncOrderToShiprocketOnUpdate = functions.firestore
-  .document('orders/{orderId}')
+export const syncOrderToShiprocketOnUpdate = functions
+  .runWith({ secrets: [SHIPROCKET_EMAIL, SHIPROCKET_PASSWORD] })
+  .firestore.document('orders/{orderId}')
   .onUpdate(async (change, context) => {
     const before = change.before.data() as OrderData | undefined;
     const after = change.after.data() as OrderData;
@@ -750,8 +761,9 @@ export const syncOrderToShiprocketOnUpdate = functions.firestore
 // backfill, or a future flow that skips the 'pending' step) should also
 // sync. The same idempotency guards keep this safe alongside the update
 // trigger above.
-export const syncOrderToShiprocketOnCreate = functions.firestore
-  .document('orders/{orderId}')
+export const syncOrderToShiprocketOnCreate = functions
+  .runWith({ secrets: [SHIPROCKET_EMAIL, SHIPROCKET_PASSWORD] })
+  .firestore.document('orders/{orderId}')
   .onCreate(async (snap, context) => {
     const after = snap.data() as OrderData;
     await pushOrderToShiprocket(context.params.orderId, undefined, after);
