@@ -15,11 +15,7 @@ import {
   processCOD,
   createOrder
 } from '@/lib/payu';
-import {
-  checkPincodeServiceability,
-  createShiprocketOrder,
-  updateOrderShipping
-} from '@/lib/shiprocket';
+import { checkPincodeServiceability } from '@/lib/shiprocket';
 import { MapPin, Phone, User, Home, Building, Navigation, CreditCard, Banknote, Truck, Shield, AlertCircle, Package, MessageCircle, X, Info, ArrowRight } from 'lucide-react';
 import CouponCode from '@/components/CouponCode';
 
@@ -166,53 +162,12 @@ export default function Checkout() {
         paymentMethod: paymentMethod === 'cod' ? 'COD' : 'PayU',
         shippingAddress: address,
         txnid: null,
+        // Shiprocket sync is owned by the syncOrderToShiprocket Cloud Function;
+        // it fires when paymentStatus flips to 'paid' (PayU) or 'cod_pending' (COD).
+        shiprocketStatus: 'pending',
       };
 
       const orderId = await createOrder(orderData, promoFreeDelivery);
-
-      // Create Shiprocket order for shipping
-      try {
-          const shiprocketResult = await createShiprocketOrder({
-            orderId,
-            items: items.map(item => ({
-              name: item.name,
-              sku: item.id,
-              units: item.quantity,
-              selling_price: item.price,
-            })),
-            pickupLocation: {
-              name: 'Sugan Warehouse',
-              address: 'III Phase, Boranada',
-              city: 'Jodhpur',
-              state: 'Rajasthan',
-              pincode: '342012',
-              phone: '6367677255',
-            },
-            shippingAddress: {
-              name: address.fullName,
-              address: address.addressLine1,
-              address_2: address.addressLine2,
-              city: address.city,
-              state: address.state,
-              pincode: address.pincode,
-              phone: address.phone,
-            },
-            paymentMethod: paymentMethod === 'cod' ? 'COD' : 'Prepaid',
-            totalAmount: finalTotal,
-          });
-
-          if (shiprocketResult.success) {
-            await updateOrderShipping(orderId, {
-              courier: 'Shiprocket',
-              awb: shiprocketResult.awb || '',
-              shipmentId: shiprocketResult.shipmentId || '',
-              label: shiprocketResult.label,
-            });
-          }
-        } catch (shipError) {
-          console.error('Shiprocket order creation error:', shipError);
-          // Continue with order even if shiprocket fails - can be created later
-        }
 
       if (paymentMethod === 'cod') {
         // Customer confirmation email is handled by the sendOrderPlacedEmail

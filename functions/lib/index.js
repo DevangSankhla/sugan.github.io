@@ -33,7 +33,7 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.settleMonthlyAffiliateCommissions = exports.voidAffiliateCommission = exports.mirrorAffiliateOrderOnUpdate = exports.mirrorAffiliateOrderOnCreate = exports.sendOrderCompletedEmail = exports.sendOrderPlacedEmail = void 0;
+exports.syncOrderToShiprocketOnCreate = exports.syncOrderToShiprocketOnUpdate = exports.settleMonthlyAffiliateCommissions = exports.voidAffiliateCommission = exports.mirrorAffiliateOrderOnUpdate = exports.mirrorAffiliateOrderOnCreate = exports.sendOrderCompletedEmail = exports.sendOrderPlacedEmail = void 0;
 const functions = __importStar(require("firebase-functions"));
 const admin = __importStar(require("firebase-admin"));
 const nodemailer = __importStar(require("nodemailer"));
@@ -530,5 +530,157 @@ exports.settleMonthlyAffiliateCommissions = functions.pubsub
     await Promise.all(writes);
     console.log(`affiliate: settled ${Object.keys(byEmail).length} affiliates for ${monthKey}`);
     return null;
+});
+// ============================================================================
+// Shiprocket auto-sync
+// Pushes paid / cod_pending orders to Shiprocket so we don't pull manually.
+// Idempotent: gated on order.shiprocketStatus, so repeated update events
+// (status, deliveredAt, etc.) don't double-create.
+// ============================================================================
+const SHIPROCKET_API_URL = 'https://apiv2.shiprocket.in/v1/external';
+let cachedShiprocketToken = null;
+async function getShiprocketToken() {
+    var _a, _b;
+    if (cachedShiprocketToken && cachedShiprocketToken.expiresAt > Date.now()) {
+        return cachedShiprocketToken.token;
+    }
+    const cfg = functions.config();
+    const email = (_a = cfg.shiprocket) === null || _a === void 0 ? void 0 : _a.email;
+    const password = (_b = cfg.shiprocket) === null || _b === void 0 ? void 0 : _b.password;
+    if (!email || !password) {
+        throw new Error('Shiprocket credentials not configured (functions.config().shiprocket)');
+    }
+    const res = await fetch(`${SHIPROCKET_API_URL}/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+    });
+    if (!res.ok) {
+        throw new Error(`Shiprocket auth failed: ${res.status} ${await res.text()}`);
+    }
+    const json = (await res.json());
+    if (!json.token)
+        throw new Error('Shiprocket auth returned no token');
+    // Token is good for ~10 days; cache for 9.
+    cachedShiprocketToken = { token: json.token, expiresAt: Date.now() + 9 * 24 * 60 * 60 * 1000 };
+    return json.token;
+}
+async function createShiprocketOrder(orderId, order) {
+    var _a, _b, _c, _d, _e;
+    const token = await getShiprocketToken();
+    const cfg = functions.config();
+    const pickupLocation = ((_a = cfg.shiprocket) === null || _a === void 0 ? void 0 : _a.pickup_location) || 'Factory1';
+    const addr = order.shippingAddress || {};
+    const items = (order.items || []).map((it) => ({
+        name: it.name || it.productId || 'Item',
+        sku: it.productId || '',
+        units: it.quantity,
+        selling_price: it.price,
+    }));
+    const isCOD = (order.paymentMethod || '').toUpperCase() === 'COD';
+    const payload = {
+        order_id: orderId,
+        order_date: new Date().toISOString().split('T')[0],
+        pickup_location: pickupLocation,
+        comment: 'Sugan Order',
+        billing_customer_name: addr.fullName || '',
+        billing_last_name: '',
+        billing_address: addr.addressLine1 || '',
+        billing_address_2: addr.addressLine2 || '',
+        billing_city: addr.city || '',
+        billing_pincode: addr.pincode || '',
+        billing_state: addr.state || '',
+        billing_country: 'India',
+        billing_email: order.userEmail || '',
+        billing_phone: addr.phone || '',
+        shipping_is_billing: true,
+        order_items: items,
+        payment_method: isCOD ? 'COD' : 'Prepaid',
+        sub_total: (_c = (_b = order.subtotal) !== null && _b !== void 0 ? _b : order.total) !== null && _c !== void 0 ? _c : 0,
+        shipping_charges: (_d = order.shipping) !== null && _d !== void 0 ? _d : 0,
+        giftwrap_charges: 0,
+        transaction_charges: 0,
+        total_discount: (_e = order.discount) !== null && _e !== void 0 ? _e : 0,
+        length: 25,
+        breadth: 20,
+        height: 10,
+        weight: 1,
+    };
+    const res = await fetch(`${SHIPROCKET_API_URL}/orders/create/adhoc`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(payload),
+    });
+    const json = (await res.json());
+    if (!res.ok) {
+        throw new Error(`Shiprocket create failed: ${res.status} ${JSON.stringify(json)}`);
+    }
+    return json;
+}
+async function pushOrderToShiprocket(orderId, before, after) {
+    // Only push when the order is actually ready to ship.
+    // PayU: paymentStatus transitions to 'paid'.
+    // COD : paymentStatus transitions to 'cod_pending'.
+    const readyStatuses = ['paid', 'cod_pending'];
+    const wasReady = before ? readyStatuses.includes(before.paymentStatus || '') : false;
+    const isReady = readyStatuses.includes(after.paymentStatus || '');
+    if (!isReady || wasReady) {
+        return;
+    }
+    // Idempotency: skip if we've already created (or are already creating) a Shiprocket entry.
+    const existing = after.shiprocketStatus;
+    if (existing === 'created' || existing === 'syncing') {
+        return;
+    }
+    const ref = admin.firestore().doc(`orders/${orderId}`);
+    // Mark in-flight so a concurrent update doesn't race us.
+    await ref.update({
+        shiprocketStatus: 'syncing',
+        shiprocketSyncedAt: admin.firestore.FieldValue.serverTimestamp(),
+    });
+    try {
+        const result = await createShiprocketOrder(orderId, after);
+        await ref.update({
+            shiprocketStatus: 'created',
+            shiprocketOrderId: result.order_id ? String(result.order_id) : null,
+            shiprocketShipmentId: result.shipment_id ? String(result.shipment_id) : null,
+            shiprocketAwb: result.awb_code || null,
+            shiprocketLabelUrl: result.label_url || null,
+            shiprocketSyncedAt: admin.firestore.FieldValue.serverTimestamp(),
+        });
+        console.log(`shiprocket: created order ${orderId} (shipmentId=${result.shipment_id})`);
+    }
+    catch (err) {
+        const message = err instanceof Error ? err.message : String(err);
+        console.error(`shiprocket: failed to create order ${orderId}:`, message);
+        await ref.update({
+            shiprocketStatus: 'failed',
+            shiprocketError: message.slice(0, 800),
+            shiprocketSyncedAt: admin.firestore.FieldValue.serverTimestamp(),
+        });
+    }
+}
+// PayU orders enter Firestore as 'pending' and are flipped to 'paid' on
+// payment confirmation. COD orders enter as 'pending' and processCOD()
+// flips them to 'cod_pending'. Either path lands on the update trigger.
+exports.syncOrderToShiprocketOnUpdate = functions.firestore
+    .document('orders/{orderId}')
+    .onUpdate(async (change, context) => {
+    const before = change.before.data();
+    const after = change.after.data();
+    await pushOrderToShiprocket(context.params.orderId, before, after);
+});
+// Edge case: an order created already in a ready state (e.g. an admin
+// backfill, or a future flow that skips the 'pending' step) should also
+// sync. The same idempotency guards keep this safe alongside the update
+// trigger above.
+exports.syncOrderToShiprocketOnCreate = functions.firestore
+    .document('orders/{orderId}')
+    .onCreate(async (snap, context) => {
+    const after = snap.data();
+    await pushOrderToShiprocket(context.params.orderId, undefined, after);
 });
 //# sourceMappingURL=index.js.map
