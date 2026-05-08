@@ -966,6 +966,8 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
     }
 ]
   },
+ ],
+ kitchen: [
   {
    id: 'SAC012',
    name: 'Acacia Wood Decorative Napkin Holder',
@@ -2255,7 +2257,33 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
     care: 'Hand wash with mild soap. Do not soak.',
     maintenance: 'Apply mineral oil periodically'
    }
-  }
+  },
+  {
+   id: 'SAC030',
+   name: 'Rajasthani Hand-Embossed Multicolour Wooden Serving Tray',
+   price: 999,
+   originalPrice: 2199,
+   description: 'Hand-embossed and painted by artisans in Jodhpur using traditional Rajasthani techniques, this multicoloured wooden serving tray carries centuries of craft in its surface. Each tray is made individually, which means small variations in colour and pattern are natural signs of a handmade object rather than flaws.',
+   image: '/images/SAC030_01.png',
+   category: 'Serving Trays',
+   room: 'kitchen',
+   inStock: true,
+   rating: 5.0,
+   reviews: 150,
+   details: {
+    materials: 'Natural wood',
+    finish: 'Hand-painted Rajasthani artwork',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['Handcrafted in Jodhpur'],
+    sustainability: 'Sustainably sourced wood',
+    story: 'Every tray Sugan makes carries the spirit of Jodhpur with it. This hand-embossed, hand-painted tray is made by master artisans who have spent their lives practising the traditional Rajasthani craft of wood painting and embossing.',
+    care: 'Hand wash with mild soap. Do not soak.',
+    maintenance: 'Apply mineral oil periodically'
+   }
+  },
  ],
  living: [
   {
@@ -2365,32 +2393,6 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
      depth: '33 cm'
     },
     photos: ['/images/SAC049_03.png']
-   }
-  },
-  {
-   id: 'SAC030',
-   name: 'Rajasthani Hand-Embossed Multicolour Wooden Serving Tray',
-   price: 999,
-   originalPrice: 2199,
-   description: 'Hand-embossed and painted by artisans in Jodhpur using traditional Rajasthani techniques, this multicoloured wooden serving tray carries centuries of craft in its surface. Each tray is made individually, which means small variations in colour and pattern are natural signs of a handmade object rather than flaws.',
-   image: '/images/SAC030_01.png',
-   category: 'Serving Trays',
-   room: 'kitchen',
-   inStock: true,
-   rating: 5.0,
-   reviews: 150,
-   details: {
-    materials: 'Natural wood',
-    finish: 'Hand-painted Rajasthani artwork',
-    origin: 'Made in Jodhpur, Rajasthan',
-    shipping: 'Ships within 2-3 business days',
-    delivery: '5-7 days pan India',
-    returns: '7-day easy returns',
-    usp: ['Handcrafted in Jodhpur'],
-    sustainability: 'Sustainably sourced wood',
-    story: 'Every tray Sugan makes carries the spirit of Jodhpur with it. This hand-embossed, hand-painted tray is made by master artisans who have spent their lives practising the traditional Rajasthani craft of wood painting and embossing.',
-    care: 'Hand wash with mild soap. Do not soak.',
-    maintenance: 'Apply mineral oil periodically'
    }
   },
   {
