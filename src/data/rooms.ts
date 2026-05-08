@@ -11,206 +11,12 @@ export const rooms: Room[] = [
  { id: 'library', name: 'Library/Study', icon: 'BookOpen', description: 'Organized spaces for reading' },
  { id: 'pooja', name: 'Pooja Room', icon: 'Sparkles', description: 'Sacred space essentials' },
  { id: 'outdoor', name: 'Outdoor/Balcony', icon: 'Sun', description: 'Open air living solutions' },
- { id: 'pet', name: 'Pet', icon: 'Heart', description: 'Premium products for your pets' },
+ { id: 'pet', name: 'Pet', icon: 'Heart', description: 'Premium products for your pets' }
 ];
 
 // Products organized by room
 export const roomProducts: Record<string, Product[]> = {
  pet: [
-  {
-   id: '9U-D6EU-J9Y5',
-   name: 'Acacia Wood Double-Bowl Pet Feeder, X-Leg Stand',
-   price: 1999,
-   originalPrice: 2999,
-   description: 'Handcrafted in Jodhpur from solid acacia wood, this double-bowl feeder features a signature X-leg base that keeps bowls at a comfortable height, supporting healthy posture during mealtimes. The natural wood finish is completely non-toxic and pet-safe, while the two stainless steel bowls make it easy to remove for cleaning.',
-   image: '/images/9U-D6EU-J9Y5_01.png',
-   category: 'Pet Feeders',
-   room: 'pet',
-   inStock: true,
-   rating: 4.6,
-   reviews: 190,
-   details: {
-    materials: 'Acacia wood',
-    finish: 'Natural grain finish, food-safe mineral oil',
-    origin: 'Made in Jodhpur, Rajasthan',
-    shipping: 'Ships within 2-3 business days',
-    delivery: '5-7 days pan India',
-    returns: '7-day easy returns',
-    usp: ['Handcrafted in Jodhpur'],
-    sustainability: 'Sustainably sourced wood',
-    story: 'At Sugan, we set out to change how India thinks about everyday pet products. Your pet eats from this bowl twice a day - so why should it be made of cheap plastic that scratches, stains, and harbors bacteria? This feeder is made from solid acacia with a non-toxic, food-safe finish.',
-    care: 'Hand wash with mild soap. Do not soak.',
-    maintenance: 'Apply mineral oil periodically',
-    usesAndMeasurements: `39×23×20 cm, 1.8 L
-
-Pet shoulder height: ~30–45 cm
-Pet weight: ~8–18 kg
-Category: Medium dogs, or large/adult cats that eat a lot.
-Breeds: Beagle, Cocker Spaniel, French Bulldog, medium Indie/Pariah dogs
-Also works for: Maine Coon or other large cat breeds if you want a multi-day refill setup.
-Food math: ~1.8 L = ~4–6 days for a 12 kg dog, well over a week for a cat.`
-   },
-   relatedSizes: [
-    {
-        'size': 'Small',
-        'productId': 'SAC041S',
-        'price': 1599
-    }
-]
-  },
-  {
-   id: 'BM-UQ5U-IU9U',
-   name: 'Acacia Wood Double-Bowl Pet Feeder with Iron Stand',
-   price: 1999,
-   originalPrice: 2599,
-   description: 'Solid acacia wood paired with a hand-forged iron stand gives this double-bowl feeder a warm, considered look that fits naturally into any home. The elevated position supports better digestion and posture, especially for medium-sized breeds, and the two stainless steel bowls detach easily for a thorough clean.',
-   image: '/images/BM-UQ5U-IU9U_01.png',
-   category: 'Pet Feeders',
-   room: 'pet',
-   inStock: true,
-   rating: 4.9,
-   reviews: 58,
-   details: {
-    materials: 'Acacia wood, iron',
-    finish: 'Natural grain finish, food-safe mineral oil',
-    origin: 'Made in Jodhpur, Rajasthan',
-    shipping: 'Ships within 2-3 business days',
-    delivery: '5-7 days pan India',
-    returns: '7-day easy returns',
-    usp: ['Handcrafted in Jodhpur'],
-    sustainability: 'Sustainably sourced wood',
-    story: 'We started Sugan with a simple belief: everyday objects in your home should be beautiful, safe, and built to last. This pet feeder combines high-grade acacia wood - one of the hardest, most water-resistant hardwoods available in India - with a design that supports your pet\'s health and your home\'s aesthetic.',
-    care: 'Hand wash with mild soap. Do not soak.',
-    maintenance: 'Apply mineral oil periodically',
-    usesAndMeasurements: `39×23×20 cm, 1.8 L
-
-Pet shoulder height: ~30–45 cm
-Pet weight: ~8–18 kg
-Category: Medium dogs, or large/adult cats that eat a lot.
-Breeds: Beagle, Cocker Spaniel, French Bulldog, medium Indie/Pariah dogs
-Also works for: Maine Coon or other large cat breeds if you want a multi-day refill setup.
-Food math: ~1.8 L = ~4–6 days for a 12 kg dog, well over a week for a cat.`
-   },
-   relatedSizes: [
-    {
-        'size': 'Small',
-        'productId': 'M0-5FJV-JJ1Q',
-        'price': 1499
-    },
-    {
-        'size': 'Large',
-        'productId': 'ZF-S7K4-NAVG',
-        'price': 2499
-    }
-]
-  },
-  {
-   id: 'M0-5FJV-JJ1Q',
-   name: 'Acacia Wood Double-Bowl Pet Feeder with Iron Stand',
-   price: 1499,
-   originalPrice: 1999,
-   description: 'This compact acacia and iron pet feeder is made for smaller breeds who deserve the same quality of care as larger pets. The iron stand holds the bowls at a height that reduces strain on the neck, while the natural acacia frame brings a warmth to the feeding area that plastic alternatives simply cannot match.',
-   image: '/images/M0-5FJV-JJ1Q_01.png',
-   category: 'Pet Feeders',
-   room: 'pet',
-   inStock: true,
-   rating: 4.8,
-   reviews: 90,
-   details: {
-    materials: 'Acacia wood, iron',
-    finish: 'Natural grain finish, food-safe mineral oil',
-    origin: 'Made in Jodhpur, Rajasthan',
-    shipping: 'Ships within 2-3 business days',
-    delivery: '5-7 days pan India',
-    returns: '7-day easy returns',
-    usp: ['Handcrafted in Jodhpur'],
-    sustainability: 'Sustainably sourced wood',
-    story: 'We started Sugan with a simple belief: everyday objects in your home should be beautiful, safe, and built to last. This pet feeder combines high-grade acacia wood - one of the hardest, most water-resistant hardwoods available in India - with a design that supports your pet\'s health and your home\'s aesthetic.',
-    care: 'Hand wash with mild soap. Do not soak.',
-    maintenance: 'Apply mineral oil periodically',
-    usesAndMeasurements: `32×18×12 cm, 1 L
-
-Pet shoulder height: ~20–30 cm (dogs) / standard cat height
-Pet weight: ~2–8 kg
-Category: Cats and toy/small dog breeds. The 12 cm height is basically a low-profile bowl - ergonomic for cats and short-legged dogs.
-Cat breeds: Persian, Siamese, Bengal, Indian domestic shorthair
-Small dog breeds: Pug, Shih Tzu, Pomeranian, Lhasa Apso
-Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
-   },
-   relatedSizes: [
-    {
-        'size': 'Medium',
-        'productId': 'BM-UQ5U-IU9U',
-        'price': 1999
-    },
-    {
-        'size': 'Large',
-        'productId': 'ZF-S7K4-NAVG',
-        'price': 2499
-    }
-]
-  },
-  {
-   id: 'OF-T4QC-3ZZ3',
-   name: 'Acacia Wood Stripe Crate Pet Feeder with Stainless Steel Bowls',
-   price: 1499,
-   originalPrice: 3999,
-   description: 'This stripe-pattern acacia crate feeder combines the warmth of natural wood with the practicality of two stainless steel bowls set into a sturdy raised frame. The crate design keeps the bowls stable and spill-resistant while adding a refined, furniture-like quality to your pet\'s space. Made in Jodhpur, Rajasthan.',
-   image: '/images/OF-T4QC-3ZZ3_01.png',
-   category: 'Pet Feeders',
-   room: 'pet',
-   inStock: true,
-   rating: 4.6,
-   reviews: 156,
-   details: {
-    materials: 'Acacia wood, stainless steel',
-    finish: 'Natural grain finish, food-safe mineral oil',
-    origin: 'Made in Jodhpur, Rajasthan',
-    shipping: 'Ships within 2-3 business days',
-    delivery: '5-7 days pan India',
-    returns: '7-day easy returns',
-    usp: ['Handcrafted in Jodhpur'],
-    sustainability: 'Sustainably sourced wood',
-    story: 'The idea behind Sugan was to replace the ordinary with something worth keeping. This stripe-design crate feeder is hand-built from sustainably sourced acacia wood, with each plank fitted and finished by artisans in Jodhpur.',
-    care: 'Hand wash with mild soap. Do not soak.',
-    maintenance: 'Apply mineral oil periodically',
-    usesAndMeasurements: `32×18×12 cm, 1 L
-
-Pet shoulder height: ~20–30 cm (dogs) / standard cat height
-Pet weight: ~2–8 kg
-Category: Cats and toy/small dog breeds. The 12 cm height is basically a low-profile bowl - ergonomic for cats and short-legged dogs.
-Cat breeds: Persian, Siamese, Bengal, Indian domestic shorthair
-Small dog breeds: Pug, Shih Tzu, Pomeranian, Lhasa Apso
-Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
-   },
-   relatedSizes: [
-    {
-        'size': 'Small',
-        'productId': 'SAC08_S',
-        'price': 1799
-    },
-    {
-        'size': 'Medium',
-        'productId': 'SAC08_M',
-        'price': 2099
-    },
-    {
-        'size': 'Large',
-        'productId': 'SAC08_L',
-        'price': 2399
-    },
-    {
-        'size': 'Medium',
-        'productId': 'TS-YFCT-J4WR',
-        'price': 1799
-    },
-    {
-        'size': 'Large (Crate)',
-        'productId': 'SAC037_L',
-        'price': 2399
-    }
-]
-  },
   {
    id: 'SAC033',
    name: 'Wooden Cat Feeder with Detachable Stainless Steel Bowls',
@@ -340,16 +146,6 @@ Food math: A 25 kg Lab eats ~300–400 g/day (~500–700 ml dry kibble volume), 
         'size': 'Large',
         'productId': 'SAC08_L',
         'price': 2399
-    },
-    {
-        'size': 'Small (Crate)',
-        'productId': 'OF-T4QC-3ZZ3',
-        'price': 1499
-    },
-    {
-        'size': 'Medium',
-        'productId': 'TS-YFCT-J4WR',
-        'price': 1799
     }
 ]
   },
@@ -671,11 +467,6 @@ Small dog breeds: Pug, Shih Tzu, Pomeranian, Lhasa Apso
 Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
    },
    relatedSizes: [
-    {
-        'size': 'Medium',
-        'productId': '9U-D6EU-J9Y5',
-        'price': 1999
-    }
 ]
   },
   {
@@ -896,16 +687,6 @@ Food math: A 25 kg Lab eats ~300–400 g/day (~500–700 ml dry kibble volume), 
         'price': 2099
     },
     {
-        'size': 'Small (Crate)',
-        'productId': 'OF-T4QC-3ZZ3',
-        'price': 1499
-    },
-    {
-        'size': 'Medium',
-        'productId': 'TS-YFCT-J4WR',
-        'price': 1799
-    },
-    {
         'size': 'Large (Crate)',
         'productId': 'SAC037_L',
         'price': 2399
@@ -957,16 +738,6 @@ Food math: ~1.8 L = ~4–6 days for a 12 kg dog, well over a week for a cat.`
         'price': 2399
     },
     {
-        'size': 'Small (Crate)',
-        'productId': 'OF-T4QC-3ZZ3',
-        'price': 1499
-    },
-    {
-        'size': 'Medium',
-        'productId': 'TS-YFCT-J4WR',
-        'price': 1799
-    },
-    {
         'size': 'Large (Crate)',
         'productId': 'SAC037_L',
         'price': 2399
@@ -1016,16 +787,6 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
         'size': 'Large',
         'productId': 'SAC08_L',
         'price': 2399
-    },
-    {
-        'size': 'Small (Crate)',
-        'productId': 'OF-T4QC-3ZZ3',
-        'price': 1499
-    },
-    {
-        'size': 'Medium',
-        'productId': 'TS-YFCT-J4WR',
-        'price': 1799
     },
     {
         'size': 'Large (Crate)',
@@ -1204,140 +965,6 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
         'price': 1799
     }
 ]
-  },
-  {
-   id: 'TS-YFCT-J4WR',
-   name: 'Acacia Wood Stripe Crate Pet Feeder with Stainless Steel Bowls',
-   price: 1999,
-   originalPrice: 3999,
-   description: 'Handcrafted from solid acacia wood in Jodhpur, this medium stripe crate feeder brings a considered, home-worthy quality to your pet\'s dining space. The crate base provides stability and keeps bowls at a height that supports natural posture, while the two removable stainless steel bowls make daily feeding easier.',
-   image: '/images/TS-YFCT-J4WR_01.png',
-   category: 'Pet Feeders',
-   room: 'pet',
-   inStock: false,
-   rating: 5.0,
-   reviews: 61,
-   details: {
-    materials: 'Acacia wood, stainless steel',
-    finish: 'Natural grain finish, food-safe mineral oil',
-    origin: 'Made in Jodhpur, Rajasthan',
-    shipping: 'Ships within 2-3 business days',
-    delivery: '5-7 days pan India',
-    returns: '7-day easy returns',
-    usp: ['Handcrafted in Jodhpur'],
-    sustainability: 'Sustainably sourced wood',
-    story: 'The idea behind Sugan was to replace the ordinary with something worth keeping. This stripe-design crate feeder is hand-built from sustainably sourced acacia wood, with each plank fitted and finished by artisans in Jodhpur.',
-    care: 'Hand wash with mild soap. Do not soak.',
-    maintenance: 'Apply mineral oil periodically',
-    usesAndMeasurements: `39×23×20 cm, 1.8 L
-
-Pet shoulder height: ~30–45 cm
-Pet weight: ~8–18 kg
-Category: Medium dogs, or large/adult cats that eat a lot.
-Breeds: Beagle, Cocker Spaniel, French Bulldog, medium Indie/Pariah dogs
-Also works for: Maine Coon or other large cat breeds if you want a multi-day refill setup.
-Food math: ~1.8 L = ~4–6 days for a 12 kg dog, well over a week for a cat.`
-   },
-   relatedSizes: [
-    {
-        'size': 'Small',
-        'productId': 'SAC08_S',
-        'price': 1799
-    },
-    {
-        'size': 'Medium',
-        'productId': 'SAC08_M',
-        'price': 2099
-    },
-    {
-        'size': 'Large',
-        'productId': 'SAC08_L',
-        'price': 2399
-    },
-    {
-        'size': 'Small (Crate)',
-        'productId': 'OF-T4QC-3ZZ3',
-        'price': 1499
-    },
-    {
-        'size': 'Large (Crate)',
-        'productId': 'SAC037_L',
-        'price': 2399
-    }
-]
-  },
-  {
-   id: 'ZF-S7K4-NAVG',
-   name: 'Acacia Wood Double-Bowl Pet Feeder with Iron Stand',
-   price: 2499,
-   originalPrice: 2999,
-   description: 'Built for larger dogs with a generous frame of solid acacia wood and a sturdy iron base, this double-bowl feeder handles daily use without fuss. The raised stance promotes a healthier eating posture, reducing the discomfort that comes from floor-level feeding for bigger breeds. Non-toxic, food-safe finish throughout.',
-   image: '/images/ZF-S7K4-NAVG_01.png',
-   category: 'Pet Feeders',
-   room: 'pet',
-   inStock: true,
-   rating: 5.0,
-   reviews: 81,
-   details: {
-    materials: 'Acacia wood, iron',
-    finish: 'Natural grain finish, food-safe mineral oil',
-    origin: 'Made in Jodhpur, Rajasthan',
-    shipping: 'Ships within 2-3 business days',
-    delivery: '5-7 days pan India',
-    returns: '7-day easy returns',
-    usp: ['Handcrafted in Jodhpur'],
-    sustainability: 'Sustainably sourced wood',
-    story: 'We started Sugan with a simple belief: everyday objects in your home should be beautiful, safe, and built to last. This pet feeder combines high-grade acacia wood - one of the hardest, most water-resistant hardwoods available in India - with a design that supports your pet\'s health and your home\'s aesthetic.',
-    care: 'Hand wash with mild soap. Do not soak.',
-    maintenance: 'Apply mineral oil periodically',
-    usesAndMeasurements: `50×29×26 cm, 2.5 L
-
-Pet shoulder height: ~45–65 cm
-Pet weight: ~20–35 kg
-Category: Medium-to-large dogs only. Overkill for cats.
-Breeds: Labrador Retriever, Golden Retriever, German Shepherd, Boxer
-Food math: A 25 kg Lab eats ~300–400 g/day (~500–700 ml dry kibble volume), so 2.5 L = ~3–4 days of food. Decent buffer.`
-   },
-   relatedSizes: [
-    {
-        'size': 'Small',
-        'productId': 'M0-5FJV-JJ1Q',
-        'price': 1499
-    },
-    {
-        'size': 'Medium',
-        'productId': 'BM-UQ5U-IU9U',
-        'price': 1999
-    }
-]
-  },
- ],
- kitchen: [
-  {
-   id: 'SAC010',
-   name: 'Acacia Wood Triangle Napkin Holder',
-   price: 1099,
-   originalPrice: 1299,
-   description: 'Cut from solid acacia wood and shaped into a clean triangle profile, this napkin holder brings a natural elegance to any dining table or kitchen counter. The tight grain of the acacia resists moisture and food contact, making it as practical as it is decorative. Finished with a food-safe oil that keeps the wood nourished and protected.',
-   image: '/images/SAC010_01.png',
-   category: 'Napkin Holders',
-   room: 'kitchen',
-   inStock: true,
-   rating: 4.9,
-   reviews: 232,
-   details: {
-    materials: 'Acacia wood',
-    finish: 'Natural grain finish, food-safe mineral oil',
-    origin: 'Made in Jodhpur, Rajasthan',
-    shipping: 'Ships within 2-3 business days',
-    delivery: '5-7 days pan India',
-    returns: '7-day easy returns',
-    usp: ['Handcrafted in Jodhpur'],
-    sustainability: 'Sustainably sourced wood',
-    story: 'The smallest objects in a home say the most about it. Sugan was built on the belief that even a napkin holder on your dining table should be made from honest materials - not plastic, not painted MDF, but solid hardwood finished with food-safe oil.',
-    care: 'Hand wash with mild soap. Do not soak.',
-    maintenance: 'Apply mineral oil periodically'
-   }
   },
   {
    id: 'SAC012',
@@ -2628,7 +2255,7 @@ Food math: A 25 kg Lab eats ~300–400 g/day (~500–700 ml dry kibble volume), 
     care: 'Hand wash with mild soap. Do not soak.',
     maintenance: 'Apply mineral oil periodically'
    }
-  },
+  }
  ],
  living: [
   {
@@ -2915,7 +2542,7 @@ Food math: A 25 kg Lab eats ~300–400 g/day (~500–700 ml dry kibble volume), 
      depth: '61 cm'
     }
    }
-  },
+  }
  ],
  bedroom: [
   {
@@ -3003,7 +2630,7 @@ Food math: A 25 kg Lab eats ~300–400 g/day (~500–700 ml dry kibble volume), 
      depth: '38 cm'
     }
    }
-  },
+  }
  ],
  pooja: [
   {
@@ -3057,7 +2684,7 @@ Food math: A 25 kg Lab eats ~300–400 g/day (~500–700 ml dry kibble volume), 
     care: 'Hand wash with mild soap. Do not soak.',
     maintenance: 'Apply mineral oil periodically'
    }
-  },
+  }
  ],
  dining: [],
  office: [],
@@ -3131,7 +2758,7 @@ function getProductFamily(product: Product): Product[] {
   }
   
   // Strategy 2: Use relatedSizes for products without standard pattern siblings
-  // This handles: M0-5FJV-JJ1Q family and standalone products like SAC037_L
+  // This handles standalone products like SAC037_L
   const isSetProduct = product.name.toLowerCase().includes('set of') || 
                        product.name.toLowerCase().includes('pack of');
   
@@ -3250,7 +2877,7 @@ export const categories = [
  { id: 'Kitchen', name: 'Kitchen' },
  { id: 'Serveware', name: 'Serveware' },
  { id: 'Home Decor', name: 'Home Decor' },
- { id: 'Pet', name: 'Pet' },
+ { id: 'Pet', name: 'Pet' }
 ];
 
 export const testimonials: Testimonial[] = [
@@ -3281,5 +2908,5 @@ export const testimonials: Testimonial[] = [
   location: 'Pune, India',
   rating: 5,
   text: 'Fast delivery and the product exceeded my expectations. The quality is outstanding. Beautiful work!',
- },
+ }
 ];
