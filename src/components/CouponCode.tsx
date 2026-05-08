@@ -31,6 +31,7 @@ export default function CouponCode({
   const [code, setCode] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const [showCoupons, setShowCoupons] = useState(false);
 
   const handleApply = async () => {
     setError(null);
@@ -143,6 +144,37 @@ export default function CouponCode({
           )}
           {success && (
             <p className="text-xs text-green-600 font-body mt-2">{success}</p>
+          )}
+
+          {/* Available Coupons */}
+          <button
+            onClick={() => setShowCoupons(!showCoupons)}
+            className="text-xs text-sugan-gold font-body mt-3 hover:underline"
+          >
+            {showCoupons ? 'Hide available coupons' : 'View available coupons'}
+          </button>
+
+          {showCoupons && (
+            <div className="mt-3 space-y-2">
+              {AVAILABLE_COUPONS.filter(c => subtotal >= c.minOrder).map((coupon) => (
+                <div 
+                  key={coupon.code}
+                  onClick={() => {
+                    setCode(coupon.code);
+                    setShowCoupons(false);
+                  }}
+                  className="p-3 bg-sugan-bone/50 rounded-lg cursor-pointer hover:bg-sugan-bone transition-colors"
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="font-body text-sm font-medium text-sugan-ink">{coupon.code}</span>
+                    <span className="text-xs text-sugan-gold font-body">
+                      {coupon.type === 'percent' ? `${coupon.discount}% OFF` : `₹${coupon.discount} OFF`}
+                    </span>
+                  </div>
+                  <p className="text-xs text-sugan-ink/60 font-body">{coupon.description}</p>
+                </div>
+              ))}
+            </div>
           )}
         </>
       )}
