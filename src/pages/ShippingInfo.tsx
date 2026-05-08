@@ -32,10 +32,10 @@ export default function ShippingInfo() {
               <Gift className="w-8 h-8 text-white" />
             </div>
             <div>
-              <h2 className="font-display text-2xl text-sugan-ink mb-1">Free Shipping Over ₹1999</h2>
+              <h2 className="font-display text-2xl text-sugan-ink mb-1">Free Shipping on Every Order</h2>
               <p className="text-sugan-ink/70 font-body">
-                Enjoy free delivery on all orders above ₹1999. For orders below ₹1999, 
-                a flat shipping fee of ₹99 applies.
+                Free delivery across India on every purchase, no minimum order value.
+                Cash on Delivery available for an additional ₹50.
               </p>
             </div>
           </div>
@@ -80,18 +80,13 @@ export default function ShippingInfo() {
               </thead>
               <tbody className="font-body text-sugan-ink/70">
                 <tr className="border-t border-sugan-ink/10">
-                  <td className="py-4 px-6">Below ₹999</td>
-                  <td className="py-4 px-6">₹99</td>
+                  <td className="py-4 px-6 font-medium text-sugan-ink">All orders (Prepaid)</td>
+                  <td className="py-4 px-6 text-sugan-gold font-medium">FREE</td>
                   <td className="py-4 px-6">5-9 business days</td>
                 </tr>
                 <tr className="border-t border-sugan-ink/10 bg-sugan-bone/30">
-                  <td className="py-4 px-6">₹999 - ₹1999</td>
-                  <td className="py-4 px-6">₹99</td>
-                  <td className="py-4 px-6">5-9 business days</td>
-                </tr>
-                <tr className="border-t border-sugan-ink/10">
-                  <td className="py-4 px-6 font-medium text-sugan-ink">Above ₹1999</td>
-                  <td className="py-4 px-6 text-sugan-gold font-medium">FREE</td>
+                  <td className="py-4 px-6 font-medium text-sugan-ink">All orders (Cash on Delivery)</td>
+                  <td className="py-4 px-6">+₹50 COD handling</td>
                   <td className="py-4 px-6">5-9 business days</td>
                 </tr>
               </tbody>

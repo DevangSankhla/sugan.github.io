@@ -14,7 +14,7 @@ const badges = [
   {
     icon: Truck,
     title: 'Pan India Delivery',
-    description: 'Free shipping above ₹1999'
+    description: 'Free shipping on every order'
   },
   {
     icon: Award,

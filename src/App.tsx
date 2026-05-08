@@ -83,7 +83,7 @@ function HomePage() {
             'Handcrafted in Jodhpur',
             'Always Solid Wood',
             'Since 1999',
-            'Free Shipping ₹1999+',
+            'Free Shipping on Every Order',
             'Worldwide Shipping',
           ]}
         />

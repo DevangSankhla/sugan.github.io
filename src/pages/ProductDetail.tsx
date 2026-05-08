@@ -1,5 +1,5 @@
 import { useParams, useNavigate, Link, useLocation } from 'react-router-dom';
-import { ArrowLeft, ShoppingBag, Star, Minus, Plus, Heart, Share2, MapPin, Ruler } from 'lucide-react';
+import { ArrowLeft, ShoppingBag, Star, Minus, Plus, Heart, Share2, MapPin, Ruler, Truck, Sparkles } from 'lucide-react';
 import { allProducts, getAllSizeVariants, getBaseProductName, hasSizeVariants } from '@/data/rooms';
 import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
@@ -429,6 +429,22 @@ export default function ProductDetail() {
                 <ShoppingBag className="w-3.5 h-3.5" />
                 {product.price === 0 ? 'Coming soon' : product.inStock ? 'Add to bag' : 'Out of stock'}
               </button>
+
+              {/* Perks under the buy button — universal across products */}
+              <div className="flex flex-col gap-2 pt-1">
+                <div className="flex items-start gap-2 font-body text-body-sm text-sugan-ink-soft leading-relaxed">
+                  <Truck className="w-4 h-4 mt-0.5 shrink-0 text-sugan-gold" />
+                  <span>Free delivery on every order, no minimum.</span>
+                </div>
+                <div className="flex items-start gap-2 font-body text-body-sm text-sugan-ink-soft leading-relaxed">
+                  <Sparkles className="w-4 h-4 mt-0.5 shrink-0 text-sugan-gold" />
+                  <span>
+                    First order? Use code{' '}
+                    <span className="font-medium tracking-wide text-sugan-ink">FIRST10</span>{' '}
+                    for 10% off at checkout.
+                  </span>
+                </div>
+              </div>
 
               <a
                 href={`https://wa.me/916367677255?text=${encodeURIComponent(

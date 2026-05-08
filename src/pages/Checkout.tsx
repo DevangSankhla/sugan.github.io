@@ -70,9 +70,9 @@ export default function Checkout() {
   const hasSAC048 = items.some(item => SAC048_SKUS.includes(item.id));
   const promoFreeDelivery = hasSAC048 && promoRemaining !== null && promoRemaining > 0;
 
-  // Shipping cost: free if promo active, or free for orders > ₹1999, else ₹99
-  const shippingCost = promoFreeDelivery ? 0 : (totalPrice > 1999 ? 0 : 99);
-  // COD charge: waived if promo active, else ₹50
+  // Shipping is free for every order, every customer.
+  const shippingCost = 0;
+  // COD charge: ₹50 on COD, waived if the SAC048 promo is active.
   const codCharge = promoFreeDelivery ? 0 : (paymentMethod === 'cod' ? 50 : 0);
   const finalTotal = totalPrice - discountAmount + shippingCost + codCharge;
 
