@@ -7,7 +7,7 @@ const ROOM_HERO_IMAGES: Record<string, string> = {
   pet: '/images/SAC048M_01.png',
   living: '/images/SAC056_02.png',
   bedroom: '/images/SAC054_02.png',
-  library: '/images/SAC058_01.png',
+  library: '/images/SAC058_02.png',
 };
 
 export default function Products() {
