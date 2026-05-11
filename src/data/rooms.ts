@@ -2957,11 +2957,12 @@ export function getDisplayProduct(product: Product): Product {
   const family = getProductFamily(product);
   if (family.length <= 1) return product;
   
-  // Find the small variant
+  // Find the small variant — exclude set/pack products so "Set of 3-S" doesn't win
   const smallVariant = family.find(p => {
+    if (isSetProduct(p)) return false;
     const id = p.id.toLowerCase();
     const name = p.name.toLowerCase();
-    return id.endsWith('s') || name.includes('small');
+    return id.endsWith('_s') || name.includes('small');
   });
   
   return smallVariant || product;

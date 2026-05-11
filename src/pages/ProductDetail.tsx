@@ -92,7 +92,7 @@ export default function ProductDetail() {
       navigate(`/login?redirect=${encodeURIComponent(`/product/${product.id}`)}`);
       return;
     }
-    if (!product.inStock) return;
+    if (!product.inStock && !product.preOrder) return;
     const itemToAdd = {
       ...product,
       price: product.details?.variants?.[selectedVariant]?.price || product.price,
