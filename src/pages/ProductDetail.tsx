@@ -317,16 +317,16 @@ export default function ProductDetail() {
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
               <span
                 className={`inline-flex items-center gap-2 text-eyebrow font-body uppercase ${
-                  product.price === 0 ? 'text-sugan-ink/50' : product.inStock ? 'text-sugan-ink' : 'text-sugan-ink/50'
+                  product.price === 0 ? 'text-sugan-ink/50' : product.inStock ? 'text-sugan-ink' : product.preOrder ? 'text-amber-700' : 'text-sugan-ink/50'
                 }`}
               >
                 <span
                   className={`block w-1.5 h-1.5 rounded-full ${
-                    product.price === 0 ? 'bg-sugan-gold/40' : product.inStock ? 'bg-sugan-gold' : 'bg-sugan-ink/30'
+                    product.price === 0 ? 'bg-sugan-gold/40' : product.inStock ? 'bg-sugan-gold' : product.preOrder ? 'bg-amber-500' : 'bg-sugan-ink/30'
                   }`}
                   aria-hidden="true"
                 />
-                {product.price === 0 ? 'Coming soon' : product.inStock ? 'In stock' : 'Out of stock'}
+                {product.price === 0 ? 'Coming soon' : product.inStock ? 'In stock' : product.preOrder ? 'Pre-order' : 'Out of stock'}
               </span>
               {isHot && product.inStock && (
                 <span className="inline-flex items-center gap-2 text-eyebrow font-body uppercase text-sugan-gold">
@@ -424,13 +424,13 @@ export default function ProductDetail() {
 
               <button
                 onClick={handleAddToCart}
-                disabled={!product.inStock || product.price === 0}
+                disabled={(!product.inStock && !product.preOrder) || product.price === 0}
                 className={`btn-primary w-full ${
-                  (!product.inStock || product.price === 0) ? 'opacity-40 cursor-not-allowed' : ''
+                  ((!product.inStock && !product.preOrder) || product.price === 0) ? 'opacity-40 cursor-not-allowed' : ''
                 }`}
               >
                 <ShoppingBag className="w-3.5 h-3.5" />
-                {product.price === 0 ? 'Coming soon' : product.inStock ? 'Add to bag' : 'Out of stock'}
+                {product.price === 0 ? 'Coming soon' : product.inStock ? 'Add to bag' : product.preOrder ? 'Pre-order — full payment' : 'Out of stock'}
               </button>
 
               {/* Perks under the buy button — universal across products */}
@@ -495,8 +495,18 @@ export default function ProductDetail() {
               </button>
             )}
 
-            {/* Out of stock fallback */}
-            {!product.inStock && product.price !== 0 && (
+            {/* Pre-order notice */}
+            {product.preOrder && !product.inStock && product.price !== 0 && (
+              <div className="border border-amber-200 bg-amber-50 rounded-sm p-4 flex flex-col gap-2">
+                <p className="font-body text-body-sm font-medium text-amber-900">Pre-order — full payment collected now</p>
+                <p className="font-body text-body-sm text-amber-800 leading-relaxed">
+                  {product.preOrderMessage}
+                </p>
+              </div>
+            )}
+
+            {/* Out of stock fallback (non-pre-order) */}
+            {!product.inStock && !product.preOrder && product.price !== 0 && (
               <div className="border-t border-sugan-ink/10 pt-6 flex flex-col gap-3">
                 <p className="font-body text-body-sm text-sugan-ink-soft">
                   Currently restocking. Request a notification by email.
@@ -610,9 +620,9 @@ export default function ProductDetail() {
 
           <button
             onClick={handleAddToCart}
-            disabled={!product.inStock || product.price === 0}
+            disabled={(!product.inStock && !product.preOrder) || product.price === 0}
             className={`btn-primary flex-1 tabular-nums ${
-              (!product.inStock || product.price === 0) ? 'opacity-40 cursor-not-allowed' : ''
+              ((!product.inStock && !product.preOrder) || product.price === 0) ? 'opacity-40 cursor-not-allowed' : ''
             }`}
           >
             <ShoppingBag className="w-3.5 h-3.5" />
@@ -620,6 +630,8 @@ export default function ProductDetail() {
               ? 'Coming soon'
               : product.inStock
               ? `Add · ₹${(displayPrice * quantity).toLocaleString()}`
+              : product.preOrder
+              ? `Pre-order · ₹${(displayPrice * quantity).toLocaleString()}`
               : 'Out of stock'}
           </button>
         </div>

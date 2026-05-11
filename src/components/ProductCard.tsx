@@ -111,6 +111,13 @@ export default function ProductCard({
           }}
         />
 
+        {/* Pre-order badge */}
+        {product.preOrder && !product.inStock && (
+          <span className="absolute top-3 left-3 bg-amber-500 text-white font-body text-[10px] tracking-[0.1em] uppercase px-2 py-1 z-10">
+            Pre-order
+          </span>
+        )}
+
         {/* Wishlist - persistent at low opacity, fills on active */}
         {showWishlist && (
           <button

@@ -1198,7 +1198,8 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
     sustainability: 'Sustainably sourced wood',
     story: 'Sugan exists because we believed everyday objects in Indian homes could be made without plastic, without harmful chemicals, and without compromising on beauty. This serving tray is hand-crafted in Jodhpur from solid acacia wood, finished with food-safe mineral oil.',
     care: 'Hand wash with mild soap. Do not soak.',
-    maintenance: 'Apply mineral oil periodically'
+    maintenance: 'Apply mineral oil periodically',
+    photos: ['/images/SAC01S_03.png']
    },
    relatedSizes: [
     {
