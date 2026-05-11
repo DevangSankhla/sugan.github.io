@@ -2544,6 +2544,68 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
      depth: '61 cm'
     }
    }
+  },
+  {
+   id: 'SAC057',
+   name: 'Lattice Carved Four-Shelf Bookshelf',
+   price: 0,
+   description: 'Tall, slender, and unmistakably handcrafted - the Lattice Carved Four-Shelf Bookshelf brings old-world artisanship into the modern home. Crafted from solid acacia wood in a warm honey finish, this compact freestanding shelf features four open shelves framed by intricately hand-carved lattice panels on all sides. The repeating ogee arch motif cut into each panel creates a beautiful interplay of light and shadow, making this piece as captivating empty as it is styled. Its slim footprint makes it ideal for tight spaces without compromising on display area or visual character. Whether holding books, plants, ceramics, or curated objects, it earns its place in any room it enters.',
+   image: '/images/SAC057_01.png',
+   category: 'Bookshelf',
+   room: 'living',
+   inStock: false,
+   details: {
+    materials: 'Acacia Wood',
+    finish: 'Natural Honey Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['Handcrafted in Jodhpur', '100% Solid Acacia Wood', 'Hand-carved lattice panels', 'Slim footprint'],
+    sustainability: 'Sustainably sourced acacia wood',
+    story: 'The lattice panels came first - the shelf was built around them. Each panel is hand-carved by artisans in Jodhpur using a repeating ogee arch motif that has been cut into Indian woodwork for centuries. The result is a bookshelf that earns its place in any room it enters: four open shelves in a slim, vertical profile, warm honey acacia throughout, and a carved frame that makes the whole piece feel considered rather than functional.',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '91 cm',
+     width: '37 cm',
+     depth: '28 cm'
+    },
+    photos: ['/images/SAC057_01.png', '/images/SAC057_02.png']
+   },
+   relatedSizes: [
+    { size: 'Dark Walnut', productId: 'SAC058', price: 0 }
+   ]
+  },
+  {
+   id: 'SAC058',
+   name: 'Lattice Carved Four-Shelf Bookshelf (Dark Walnut)',
+   price: 0,
+   description: 'Tall, slender, and unmistakably handcrafted - the Lattice Carved Four-Shelf Bookshelf brings old-world artisanship into the modern home. Crafted from solid acacia wood in a rich dark walnut finish, this compact freestanding shelf features four open shelves framed by intricately hand-carved lattice panels on all sides. The repeating ogee arch motif cut into each panel creates a beautiful interplay of light and shadow, making this piece as captivating empty as it is styled. Its slim footprint makes it ideal for tight spaces without compromising on display area or visual character. The deep espresso tone adds a layer of drama and sophistication, making it a natural fit for darker, moodier interiors. Whether holding books, plants, ceramics, or curated objects, it earns its place in any room it enters.',
+   image: '/images/SAC058_01.png',
+   category: 'Bookshelf',
+   room: 'living',
+   inStock: false,
+   details: {
+    materials: 'Acacia Wood',
+    finish: 'Dark Walnut Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['Handcrafted in Jodhpur', '100% Solid Acacia Wood', 'Hand-carved lattice panels', 'Slim footprint'],
+    sustainability: 'Sustainably sourced acacia wood',
+    story: 'The lattice panels came first - the shelf was built around them. Each panel is hand-carved by artisans in Jodhpur using a repeating ogee arch motif that has been cut into Indian woodwork for centuries. The result is a bookshelf that earns its place in any room it enters: four open shelves in a slim, vertical profile, deep espresso walnut acacia throughout, and a carved frame that makes the whole piece feel considered rather than functional.',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '91 cm',
+     width: '37 cm',
+     depth: '28 cm'
+    },
+    photos: ['/images/SAC058_01.png', '/images/SAC058_02.png']
+   },
+   relatedSizes: [
+    { size: 'Honey', productId: 'SAC057', price: 0 }
+   ]
   }
  ],
  bedroom: [
@@ -2690,12 +2752,77 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
  ],
  dining: [],
  office: [],
- library: [],
+ library: [
+  {
+   id: 'SAC057',
+   name: 'Lattice Carved Four-Shelf Bookshelf',
+   price: 0,
+   description: 'Tall, slender, and unmistakably handcrafted - the Lattice Carved Four-Shelf Bookshelf brings old-world artisanship into the modern home. Crafted from solid acacia wood in a warm honey finish, this compact freestanding shelf features four open shelves framed by intricately hand-carved lattice panels on all sides. The repeating ogee arch motif cut into each panel creates a beautiful interplay of light and shadow, making this piece as captivating empty as it is styled. Its slim footprint makes it ideal for tight spaces without compromising on display area or visual character. Whether holding books, plants, ceramics, or curated objects, it earns its place in any room it enters.',
+   image: '/images/SAC057_01.png',
+   category: 'Bookshelf',
+   room: 'living',
+   inStock: false,
+   details: {
+    materials: 'Acacia Wood',
+    finish: 'Natural Honey Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['Handcrafted in Jodhpur', '100% Solid Acacia Wood', 'Hand-carved lattice panels', 'Slim footprint'],
+    sustainability: 'Sustainably sourced acacia wood',
+    story: 'The lattice panels came first - the shelf was built around them. Each panel is hand-carved by artisans in Jodhpur using a repeating ogee arch motif that has been cut into Indian woodwork for centuries. The result is a bookshelf that earns its place in any room it enters: four open shelves in a slim, vertical profile, warm honey acacia throughout, and a carved frame that makes the whole piece feel considered rather than functional.',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '91 cm',
+     width: '37 cm',
+     depth: '28 cm'
+    },
+    photos: ['/images/SAC057_01.png', '/images/SAC057_02.png']
+   },
+   relatedSizes: [
+    { size: 'Dark Walnut', productId: 'SAC058', price: 0 }
+   ]
+  },
+  {
+   id: 'SAC058',
+   name: 'Lattice Carved Four-Shelf Bookshelf (Dark Walnut)',
+   price: 0,
+   description: 'Tall, slender, and unmistakably handcrafted - the Lattice Carved Four-Shelf Bookshelf brings old-world artisanship into the modern home. Crafted from solid acacia wood in a rich dark walnut finish, this compact freestanding shelf features four open shelves framed by intricately hand-carved lattice panels on all sides. The repeating ogee arch motif cut into each panel creates a beautiful interplay of light and shadow, making this piece as captivating empty as it is styled. Its slim footprint makes it ideal for tight spaces without compromising on display area or visual character. The deep espresso tone adds a layer of drama and sophistication, making it a natural fit for darker, moodier interiors. Whether holding books, plants, ceramics, or curated objects, it earns its place in any room it enters.',
+   image: '/images/SAC058_01.png',
+   category: 'Bookshelf',
+   room: 'living',
+   inStock: false,
+   details: {
+    materials: 'Acacia Wood',
+    finish: 'Dark Walnut Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['Handcrafted in Jodhpur', '100% Solid Acacia Wood', 'Hand-carved lattice panels', 'Slim footprint'],
+    sustainability: 'Sustainably sourced acacia wood',
+    story: 'The lattice panels came first - the shelf was built around them. Each panel is hand-carved by artisans in Jodhpur using a repeating ogee arch motif that has been cut into Indian woodwork for centuries. The result is a bookshelf that earns its place in any room it enters: four open shelves in a slim, vertical profile, deep espresso walnut acacia throughout, and a carved frame that makes the whole piece feel considered rather than functional.',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '91 cm',
+     width: '37 cm',
+     depth: '28 cm'
+    },
+    photos: ['/images/SAC058_01.png', '/images/SAC058_02.png']
+   },
+   relatedSizes: [
+    { size: 'Honey', productId: 'SAC057', price: 0 }
+   ]
+  }
+ ],
  outdoor: [],
 };
 
-// All products combined
-export const allProducts: Product[] = Object.values(roomProducts).flat();
+// All products combined (deduped by id — some products appear in multiple rooms)
+export const allProducts: Product[] = Object.values(roomProducts).flat().filter(
+  (p, i, arr) => arr.findIndex(q => q.id === p.id) === i
+);
 
 export function isSetProduct(p: { name: string }): boolean {
   return p.name.toLowerCase().includes('set of') || p.name.toLowerCase().includes('pack of');

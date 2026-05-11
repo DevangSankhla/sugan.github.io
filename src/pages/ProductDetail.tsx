@@ -347,10 +347,13 @@ export default function ProductDetail() {
                         ? 'border-sugan-ink bg-sugan-ink text-sugan-bone'
                         : 'border-sugan-ink/20 text-sugan-ink hover:border-sugan-ink'
                     }`;
+                    const priceLabel = variant.product.price === 0
+                      ? 'Coming soon'
+                      : `₹${variant.product.price.toLocaleString()}`;
                     if (isActive) {
                       return (
                         <span key={variant.product.id} className={cls}>
-                          {variant.size} · ₹{variant.product.price.toLocaleString()}
+                          {variant.size} · {priceLabel}
                         </span>
                       );
                     }
@@ -361,7 +364,7 @@ export default function ProductDetail() {
                         state={{ from: fromPage || `/shop/${product.room}` }}
                         className={cls}
                       >
-                        {variant.size} · ₹{variant.product.price.toLocaleString()}
+                        {variant.size} · {priceLabel}
                       </Link>
                     );
                   })}
