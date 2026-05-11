@@ -2606,6 +2606,34 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
    relatedSizes: [
     { size: 'Honey', productId: 'SAC057', price: 0 }
    ]
+  },
+  {
+   id: 'SAC059',
+   name: 'Cross Base Round Side Table',
+   price: 0,
+   description: 'Simple in form, striking in detail - the Cross Base Round Side Table is a study in structural elegance. Crafted from solid acacia wood in a rich dark walnut finish, this compact side table features a smooth round top with a beautifully visible two-tone grain pattern, supported by four angled flat legs that meet at the centre in a distinctive interlocking cross base. That base is the defining detail - where most tables play it safe with four straight legs, this one draws the eye downward with a geometric precision that feels both architectural and organic at once. Compact enough for any corner, characterful enough to hold its own in any room.',
+   image: '/images/SAC059_01.png',
+   category: 'Side Tables',
+   room: 'living',
+   inStock: false,
+   details: {
+    materials: 'Acacia Wood',
+    finish: 'Dark Walnut Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['Handcrafted in Jodhpur', '100% Solid Acacia Wood', 'Interlocking cross base', 'Two-tone grain top'],
+    sustainability: 'Sustainably sourced acacia wood',
+    story: 'Most side tables stop at four straight legs and call it done. This one doesn\'t. The interlocking cross base - four angled flat legs meeting at a precise geometric intersection - is the entire point of the piece. It draws the eye downward in a way that feels both architectural and handcrafted, and the smooth round top with its two-tone acacia grain sits above it with quiet confidence. Made from solid acacia in Jodhpur with a deep dark walnut finish.',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '46 cm',
+     width: '41 cm',
+     depth: '41 cm'
+    },
+    photos: ['/images/SAC059_01.png', '/images/SAC059_02.png']
+   }
   }
  ],
  bedroom: [
