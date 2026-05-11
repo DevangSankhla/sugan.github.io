@@ -85,6 +85,8 @@ export interface Product {
   
   // PRICING
   originalPrice?: number;       // Compare at price (for sales)
+  preOrder?: boolean;           // Whether the product is available for pre-order
+  preOrderMessage?: string;     // Custom message shown on pre-order products
   
   // RATINGS & REVIEWS
   rating?: number;              // Average rating (1-5)
