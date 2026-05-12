@@ -11,12 +11,14 @@ const ROOM_HERO_IMAGES: Record<string, string> = {
   living: '/images/SAC056_02.png',
   bedroom: '/images/SAC054_02.png',
   library: '/images/SAC058_02.png',
+  wall: '/images/SAC070_02.png',
 };
 
 const CATEGORY_HERO_IMAGES: Record<string, string> = {
   'pet-feeders': '/images/SAC048M_01.png',
   'side-tables': '/images/SAC050_02.png',
   'bookshelves': '/images/SAC058_01.png',
+  'wall-shelves': '/images/SAC070_02.png',
 };
 import type { Product } from '@/types';
 import ProductCard from '@/components/ProductCard';
