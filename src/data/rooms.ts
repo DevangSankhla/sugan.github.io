@@ -2096,7 +2096,7 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
   {
    id: 'SAC07_M',
    name: 'Acacia Wood Stripe Crate Tray, White',
-   price: 999,
+   price: 1099,
    originalPrice: 1499,
    description: 'A medium stripe acacia crate tray in white, made for organising the kitchen counter, carrying items around the home, or presenting products as a gift. The open-slat sides keep it light and airy, while the solid acacia base and frame give it enough structure to handle daily use. Non-toxic finish, handcrafted in Jodhpur.',
    image: '/images/SAC07M_01.png',
