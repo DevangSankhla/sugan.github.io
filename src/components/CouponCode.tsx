@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Tag, Check, X } from 'lucide-react';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, collection, query, where, getDocs } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
+import { useAuth } from '@/context/AuthContext';
 
 export interface AffiliateMeta {
   code: string;
@@ -28,6 +29,7 @@ export default function CouponCode({
   appliedCoupon,
   discountAmount
 }: CouponCodeProps) {
+  const { user } = useAuth();
   const [code, setCode] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
@@ -38,6 +40,40 @@ export default function CouponCode({
     setSuccess(null);
 
     const normalized = code.trim().toUpperCase();
+
+    if (normalized === 'LOVESUGAN') {
+      if (!user) {
+        setError('Please sign in to use this code');
+        return;
+      }
+      try {
+        const snap = await getDocs(
+          query(collection(db, 'orders'), where('userId', '==', user.uid))
+        );
+        const prior = snap.docs.filter(d => d.data().status !== 'cancelled');
+        const alreadyUsed = prior.some(d => d.data().couponCode === 'LOVESUGAN');
+        if (alreadyUsed) {
+          setError('This code has already been used on a previous order');
+          return;
+        }
+        if (prior.length === 0) {
+          setError('This code is only valid for returning customers');
+          return;
+        }
+        if (prior.length > 1) {
+          setError('This code is only valid for your second order');
+          return;
+        }
+        const discount = Math.round((subtotal * 15) / 100);
+        onApplyCoupon(discount, 'LOVESUGAN');
+        setSuccess(`Coupon applied! You saved ₹${discount.toLocaleString()}`);
+        setCode('');
+      } catch {
+        setError('Could not verify code right now — please try again');
+      }
+      return;
+    }
+
     const coupon = AVAILABLE_COUPONS.find(c => c.code.toUpperCase() === normalized);
 
     if (coupon) {
