@@ -3064,6 +3064,118 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
     },
     photos: ['/images/SAC072_01.png', '/images/SAC072_02.png']
    }
+  },
+  {
+   id: 'SAC067',
+   name: 'Fluted Post Double Tier Wall Shelf',
+   price: 1499,
+   description: 'Simple, slim, and full of handcrafted detail - the Fluted Post Double Tier Wall Shelf is a wall shelf that earns a second look. Crafted from solid mango wood in a warm natural finish, this compact floating shelf features two wide rounded-end tiers held apart by a pair of hand-carved fluted vertical posts with rounded top caps. The vertical fluting on each post adds a subtle classical texture that lifts what could be an ordinary shelf into something genuinely considered. Both tiers have gently rounded ends that keep the overall form soft and organic. Slim in profile and wide in span, it fits neatly on any wall without demanding too much space while still offering two full display levels.',
+   image: '/images/SAC067_01.png',
+   category: 'Wall Shelves',
+   room: 'wall',
+   inStock: true,
+   details: {
+    materials: 'Mango Wood',
+    finish: 'Natural Warm Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['Handcrafted in Jodhpur', '100% Solid Mango Wood', 'Hand-carved fluted posts', 'Rounded-end display tiers', 'Rounded post caps'],
+    sustainability: 'Sustainably sourced mango wood',
+    story: 'The fluting is the point. Two hand-carved vertical posts, each grooved with careful parallel channels by artisans in Jodhpur, connect the two wide tiers and give the piece a classical texture that most wall shelves simply don\'t have. The rounded ends on both tiers and the small rounded post caps add further care. Slim in profile, wide in span, warm in finish.',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '20 cm',
+     width: '61 cm',
+     depth: '9 cm'
+    },
+    photos: ['/images/SAC067_01.png', '/images/SAC067_02.png']
+   }
+  },
+  {
+   id: 'SAC068',
+   name: 'Semicircle Ribbed Wall Shelf',
+   price: 999,
+   description: 'Sculptural, compact, and unmistakably handcrafted - the Semicircle Ribbed Wall Shelf is a wall shelf that functions as a piece of art in its own right. Crafted from solid mango wood in a natural warm finish, this wall-mounted shelf is built around a bold semicircular form with a flat mounting edge against the wall and a smooth flat display surface on top. The front and sides of the bracket are hand-carved with a series of concentric ribbed arches that radiate outward from the centre, creating a stunning sunburst or ripple effect that draws the eye and adds extraordinary depth and texture to an otherwise simple form. Small in footprint, large in personality.',
+   image: '/images/SAC068_01.png',
+   category: 'Wall Shelves',
+   room: 'wall',
+   inStock: true,
+   details: {
+    materials: 'Mango Wood',
+    finish: 'Natural Warm Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['Handcrafted in Jodhpur', '100% Solid Mango Wood', 'Semicircular silhouette', 'Hand-carved concentric ribs', 'Smooth flat display surface'],
+    sustainability: 'Sustainably sourced mango wood',
+    story: 'A semicircle is a simple shape. What happens when you hand-carve concentric ribbed arches across its entire face - a ripple pattern radiating outward from the centre - is not simple at all. Each rib is individually cut by artisans in Jodhpur, and the effect is a piece that reads as wall sculpture as much as it does as a shelf. The smooth flat top holds objects cleanly. The carved face does the rest.',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '20 cm',
+     width: '36 cm',
+     depth: '18 cm'
+    },
+    photos: ['/images/SAC068_01.png', '/images/SAC068_02.png']
+   }
+  },
+  {
+   id: 'SAC069',
+   name: 'Arch Back Ribbed Double Shelf',
+   price: 1499,
+   description: 'Architectural, tactile, and instantly striking - the Arch Back Ribbed Double Shelf is a wall shelf that transforms any surface it touches. Crafted from solid mango wood in a warm dark walnut finish, this wall-mounted shelf is built around a tall arched back panel with hand-carved concentric arch ribbing that runs the full height of the piece. Two semicircular display shelves extend from the front of the panel at different heights, both following the curved silhouette of the arched back for a cohesive, considered form. The vertical fluting on the central column between the shelves adds a further layer of texture and classical detail. Tall, narrow, and full of character.',
+   image: '/images/SAC069_01.png',
+   category: 'Wall Shelves',
+   room: 'wall',
+   inStock: true,
+   details: {
+    materials: 'Mango Wood',
+    finish: 'Dark Walnut Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['Handcrafted in Jodhpur', '100% Solid Mango Wood', 'Arched back panel', 'Two semicircular shelves', 'Hand-carved concentric arch ribs', 'Vertical ribbed column'],
+    sustainability: 'Sustainably sourced mango wood',
+    story: 'The arched back panel sets everything in motion. Tall, bold, and carved with concentric arch ribs that layer upward from bottom to top, it turns a wall shelf into a genuine architectural moment. Two semicircular shelves follow the curve of the arch at different heights - practical, but shaped to match. The vertical ribbed column between them adds one more layer of classical craft. Made from solid mango wood in Jodhpur with a deep dark walnut finish that makes every carved line stand out.',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '56 cm',
+     width: '30 cm',
+     depth: '17 cm'
+    },
+    photos: ['/images/SAC069_01.png', '/images/SAC069_02.png']
+   }
+  },
+  {
+   id: 'SAC071',
+   name: 'Twin Post Three-Tier Wall Shelf',
+   price: 1999,
+   description: 'Structured, minimal, and built with genuine craft - the Twin Post Three-Tier Wall Shelf is a wall-mounted display unit that brings order and warmth to any space it occupies. Crafted from solid mango wood in a light natural finish, this shelf is constructed around two sturdy vertical cylindrical posts that run the full height of the piece, connecting three wide horizontal shelves at evenly spaced intervals. Each shelf features a subtle raised front lip that keeps displayed objects secure and adds a clean visual boundary to each tier. The twin post structure gives the piece an open, airy quality while remaining solid and well-anchored to the wall.',
+   image: '/images/SAC071_01.png',
+   category: 'Wall Shelves',
+   room: 'wall',
+   inStock: true,
+   details: {
+    materials: 'Mango Wood',
+    finish: 'Natural Light Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['Handcrafted in Jodhpur', '100% Solid Mango Wood', 'Three wide display tiers', 'Twin cylindrical post supports', 'Raised front lip on each shelf'],
+    sustainability: 'Sustainably sourced mango wood',
+    story: 'Two cylindrical posts, three shelves, and a raised lip on each tier that keeps everything in its place. The twin post structure is deceptively simple - it creates an open, airy frame that makes the shelves feel light on the wall while staying solid and well-anchored. Each shelf is wide enough to be genuinely useful. The natural light finish keeps the mango grain warm and visible throughout. Made in Jodhpur.',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '58 cm',
+     width: '58 cm',
+     depth: '15 cm'
+    },
+    photos: ['/images/SAC071_01.png', '/images/SAC071_02.png']
+   }
   }
  ],
 };
