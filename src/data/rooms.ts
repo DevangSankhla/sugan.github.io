@@ -2268,7 +2268,9 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
    image: '/images/SAC030_01.png',
    category: 'Serving Trays',
    room: 'kitchen',
-   inStock: true,
+   inStock: false,
+   preOrder: true,
+   preOrderMessage: 'Will ship in 10–14 days if we receive enough orders, or we\'ll refund you in full.',
    rating: 5.0,
    reviews: 150,
    details: {

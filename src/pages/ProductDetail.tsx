@@ -133,11 +133,12 @@ export default function ProductDetail() {
   };
 
   const getAllImages = (): string[] => {
-    const images: string[] = [product.image];
-    if (product.image.includes('_01.png')) {
-      images.push(product.image.replace('_01.png', '_02.png'));
-    }
-    if (product.details?.photos) images.push(...product.details.photos);
+    const seen = new Set<string>();
+    const images: string[] = [];
+    const add = (src: string) => { if (!seen.has(src)) { seen.add(src); images.push(src); } };
+    add(product.image);
+    if (product.image.includes('_01.png')) add(product.image.replace('_01.png', '_02.png'));
+    if (product.details?.photos) product.details.photos.forEach(add);
     return images;
   };
 
