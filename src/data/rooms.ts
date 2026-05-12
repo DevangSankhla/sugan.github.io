@@ -11,7 +11,8 @@ export const rooms: Room[] = [
  { id: 'library', name: 'Library/Study', icon: 'BookOpen', description: 'Organized spaces for reading' },
  { id: 'pooja', name: 'Pooja Room', icon: 'Sparkles', description: 'Sacred space essentials' },
  { id: 'outdoor', name: 'Outdoor/Balcony', icon: 'Sun', description: 'Open air living solutions' },
- { id: 'pet', name: 'Pet', icon: 'Heart', description: 'Premium products for your pets' }
+ { id: 'pet', name: 'Pet', icon: 'Heart', description: 'Premium products for your pets' },
+ { id: 'wall', name: 'Wall Shelves', icon: 'Frame', description: 'Handcrafted wall shelves and displays' }
 ];
 
 // Products organized by room
@@ -2572,6 +2573,118 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
     },
     photos: ['/images/SAC059_01.png', '/images/SAC059_02.png']
    }
+  },
+  {
+   id: 'SAC060',
+   name: 'Barrel Slat Coffee Table',
+   price: 6999,
+   description: 'Low, round, and richly textured - the Barrel Slat Coffee Table is a piece that rewards a second look. Crafted from solid mango wood in a warm dark walnut finish, its barrel-shaped base is constructed from curved vertical slats that bow outward at the centre, mimicking the form of a classic wooden barrel with striking precision. The wide lipped round top sits flush above, offering a smooth, generous surface for everyday use. Light passes freely through the open slat structure, giving the table a sense of airiness despite its substantial presence. Grounded and sculptural in equal measure, this piece works as a centrepiece coffee table or a bold accent alongside a sofa.',
+   image: '/images/SAC060_01.png',
+   category: 'Coffee Tables',
+   room: 'living',
+   inStock: true,
+   details: {
+    materials: 'Mango Wood',
+    finish: 'Dark Walnut Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['Handcrafted in Jodhpur', '100% Solid Mango Wood', 'Curved barrel slat base', 'Open slat structure'],
+    sustainability: 'Sustainably sourced mango wood',
+    story: 'The barrel form has been used in woodworking for centuries because it works - structurally and visually. Each curved slat in the base of this coffee table is individually shaped and fitted by artisans in Jodhpur, bowing outward at the centre to create the characteristic barrel silhouette. The wide lipped top sits above it cleanly, and the open slat structure keeps the whole piece from feeling heavy despite its presence. Made entirely from solid mango wood with a deep dark walnut finish.',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '51 cm',
+     width: '58 cm',
+     depth: '58 cm'
+    },
+    photos: ['/images/SAC060_01.png', '/images/SAC060_02.png']
+   }
+  },
+  {
+   id: 'SAC061',
+   name: 'Dome Slat Coffee Table',
+   price: 8999,
+   description: 'Wide, low, and impossible to ignore - the Dome Slat Coffee Table makes an instant statement in any living room. Crafted from solid mango wood in a warm honey walnut finish, its generously proportioned dome-shaped base is built from curved vertical slats that sweep outward dramatically before tapering back inward at the base, creating a full, rounded silhouette reminiscent of a woven basket or a traditional wooden drum. The extra-wide lipped round top provides an expansive surface for daily use, while the open slat structure keeps the overall form feeling light and breathable despite its commanding size. This is a centrepiece that earns its place.',
+   image: '/images/SAC061_01.png',
+   category: 'Coffee Tables',
+   room: 'living',
+   inStock: true,
+   details: {
+    materials: 'Mango Wood',
+    finish: 'Honey Walnut Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['Handcrafted in Jodhpur', '100% Solid Mango Wood', 'Dome-shaped slat base', 'Extra-wide lipped top'],
+    sustainability: 'Sustainably sourced mango wood',
+    story: 'Scale changes everything. This coffee table is made extra-wide by design - the dome-shaped slat base sweeps outward dramatically, the lipped round top stretches to match, and the whole piece earns its place as the centrepiece of a room rather than an afterthought beside the sofa. The curved slats are shaped and assembled entirely by hand by artisans in Jodhpur, and the honey walnut finish pulls out the warmth of the mango grain.',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '41 cm',
+     width: '79 cm',
+     depth: '79 cm'
+    },
+    photos: ['/images/SAC061_01.png', '/images/SAC061_02.png']
+   }
+  },
+  {
+   id: 'SAC062',
+   name: 'Mushroom Pedestal Coffee Table',
+   price: 9999,
+   description: 'Solid, sculptural, and quietly extraordinary - the Mushroom Pedestal Coffee Table is a masterpiece of minimalist woodworking. Crafted from solid mango wood in a deep dark walnut finish, the table is built around a bold full cylinder base with a single diagonal cut running across its body, creating a dramatic split detail that breaks the symmetry in the most considered way possible. The wide lipped round top showcases a stunning natural grain pattern, with sweeping dark tones flowing across the surface like brushstrokes. Everything about this piece is intentional - the weight of the base, the smoothness of the top, the single line that makes it unforgettable.',
+   image: '/images/SAC062_01.png',
+   category: 'Coffee Tables',
+   room: 'living',
+   inStock: true,
+   details: {
+    materials: 'Mango Wood',
+    finish: 'Dark Walnut Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['Handcrafted in Jodhpur', '100% Solid Mango Wood', 'Solid cylinder base', 'Diagonal split detail'],
+    sustainability: 'Sustainably sourced mango wood',
+    story: 'One cut. That is the entire design gesture that sets this table apart. The solid cylinder base - already substantial and commanding on its own - is given a single diagonal cut that breaks the form just enough to make you look twice. The wide lipped round top carries a flowing grain pattern unique to each piece of mango wood. Made entirely from solid mango in Jodhpur with a deep dark walnut finish that deepens the drama.',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '46 cm',
+     width: '80 cm',
+     depth: '80 cm'
+    },
+    photos: ['/images/SAC062_01.png', '/images/SAC062_02.png']
+   }
+  },
+  {
+   id: 'SAC065',
+   name: 'Stacked Oval Two-Drawer Bedside Table',
+   price: 7999,
+   description: 'Sculptural, soft, and strikingly original - the Stacked Oval Two-Drawer Bedside Table is a piece that does not follow the rules. Crafted from solid mango wood in a warm honey walnut finish, the table is built as two fully rounded oval drawer units stacked one atop the other on a slim square plinth base, creating a form that feels more like a modern art piece than conventional bedroom furniture. Every edge is generously rounded, every corner eliminated, giving the piece a smooth, almost pebble-like quality that is deeply satisfying in person. Each drawer is fitted with a slender cast brass pull handle in an organic, slightly irregular form.',
+   image: '/images/SAC065_01.png',
+   category: 'Side Tables',
+   room: 'bedroom',
+   inStock: true,
+   details: {
+    materials: 'Mango Wood',
+    finish: 'Honey Walnut Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['Handcrafted in Jodhpur', '100% Solid Mango Wood', 'Two stacked oval drawers', 'Organic cast brass pulls', 'Fully rounded edges'],
+    sustainability: 'Sustainably sourced mango wood',
+    story: 'Most bedside tables are boxes with legs. This one is nothing like that. Two fully rounded oval drawer units, stacked and sitting on a slim plinth, with every edge and corner softened until the piece reads almost like a sculpture. The organic cast brass pull handles are individually formed - no two are quite the same. Made from solid mango wood in Jodhpur with a warm honey walnut finish that lets the natural grain speak.',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '51 cm',
+     width: '56 cm',
+     depth: '36 cm'
+    },
+    photos: ['/images/SAC065_01.png', '/images/SAC065_02.png']
+   }
   }
  ],
  bedroom: [
@@ -2659,6 +2772,118 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
      width: '49 cm',
      depth: '38 cm'
     }
+   }
+  },
+  {
+   id: 'SAC063',
+   name: 'Mortise Leg Single Drawer Bedside Table',
+   price: 6999,
+   description: 'Understated, functional, and built with genuine craft - the Mortise Leg Single Drawer Bedside Table is the kind of nightstand that gets better the closer you look. Crafted from solid mango wood in a warm dark walnut finish, this bedside table sits on four sturdy rounded legs connected by traditional mortise and tenon cross stretchers at the base, a joinery technique that speaks to deep roots in artisan woodworking. A single wide drawer with a clean flat wooden bar handle provides easy access to bedside essentials, while the chunky square top offers ample surface space for a lamp, book, or morning cup of tea.',
+   image: '/images/SAC063_01.png',
+   category: 'Side Tables',
+   room: 'bedroom',
+   inStock: true,
+   details: {
+    materials: 'Mango Wood',
+    finish: 'Dark Walnut Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['Handcrafted in Jodhpur', '100% Solid Mango Wood', 'Mortise and tenon cross stretchers', 'Single wide drawer'],
+    sustainability: 'Sustainably sourced mango wood',
+    story: 'The mortise and tenon joint is one of the oldest woodworking techniques in the world, and it shows at the base of this bedside table. The cross stretchers connecting the four rounded legs are not decorative - they are structural, fitted by hand by artisans in Jodhpur who have worked this joint for years. A single wide drawer, a flat bar handle, a generous top. Everything it needs, nothing it doesn\'t.',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '51 cm',
+     width: '46 cm',
+     depth: '46 cm'
+    },
+    photos: ['/images/SAC063_01.png', '/images/SAC063_02.png']
+   }
+  },
+  {
+   id: 'SAC064',
+   name: 'Waterfall Edge Ribbed Drawer Bedside Table',
+   price: 6999,
+   description: 'Refined, tactile, and built with an eye for detail - the Waterfall Edge Ribbed Drawer Bedside Table is a bedside piece that brings genuine design thinking into the bedroom. Crafted from solid mango wood in a deep smoky walnut finish, the table is defined by its dramatically rounded waterfall edges that curve seamlessly from the top panel down through the sides. An open middle shelf provides easy access to books or everyday items, while the bottom drawer features a beautifully hand-carved ribbed front panel with a small round brass knob - a contrast in texture that adds warmth and visual interest without overcomplicating the overall form.',
+   image: '/images/SAC064_01.png',
+   category: 'Side Tables',
+   room: 'bedroom',
+   inStock: true,
+   details: {
+    materials: 'Mango Wood',
+    finish: 'Smoky Walnut Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['Handcrafted in Jodhpur', '100% Solid Mango Wood', 'Waterfall rounded edges', 'Hand-carved ribbed drawer front', 'Round brass knob'],
+    sustainability: 'Sustainably sourced mango wood',
+    story: 'Waterfall edges require patience. The top panel curves seamlessly down through the sides without a visible joint - each curve hand-shaped by artisans in Jodhpur until the transition feels inevitable rather than constructed. The ribbed drawer front below is hand-carved, a deliberate textural contrast against the smooth surfaces above. The brass knob is the final punctuation mark. Made from solid mango wood with a deep smoky walnut finish.',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '48 cm',
+     width: '51 cm',
+     depth: '43 cm'
+    },
+    photos: ['/images/SAC064_01.png', '/images/SAC064_02.png']
+   }
+  },
+  {
+   id: 'SAC065',
+   name: 'Stacked Oval Two-Drawer Bedside Table',
+   price: 7999,
+   description: 'Sculptural, soft, and strikingly original - the Stacked Oval Two-Drawer Bedside Table is a piece that does not follow the rules. Crafted from solid mango wood in a warm honey walnut finish, the table is built as two fully rounded oval drawer units stacked one atop the other on a slim square plinth base, creating a form that feels more like a modern art piece than conventional bedroom furniture. Every edge is generously rounded, every corner eliminated, giving the piece a smooth, almost pebble-like quality that is deeply satisfying in person. Each drawer is fitted with a slender cast brass pull handle in an organic, slightly irregular form.',
+   image: '/images/SAC065_01.png',
+   category: 'Side Tables',
+   room: 'bedroom',
+   inStock: true,
+   details: {
+    materials: 'Mango Wood',
+    finish: 'Honey Walnut Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['Handcrafted in Jodhpur', '100% Solid Mango Wood', 'Two stacked oval drawers', 'Organic cast brass pulls', 'Fully rounded edges'],
+    sustainability: 'Sustainably sourced mango wood',
+    story: 'Most bedside tables are boxes with legs. This one is nothing like that. Two fully rounded oval drawer units, stacked and sitting on a slim plinth, with every edge and corner softened until the piece reads almost like a sculpture. The organic cast brass pull handles are individually formed - no two are quite the same. Made from solid mango wood in Jodhpur with a warm honey walnut finish that lets the natural grain speak.',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '51 cm',
+     width: '56 cm',
+     depth: '36 cm'
+    },
+    photos: ['/images/SAC065_01.png', '/images/SAC065_02.png']
+   }
+  },
+  {
+   id: 'SAC066',
+   name: 'Panel Leg Single Drawer Bedside Table',
+   price: 6999,
+   description: 'Raw, considered, and quietly confident - the Panel Leg Single Drawer Bedside Table is a piece that lets honest craftsmanship do the talking. Crafted from solid mango wood in a light grey-washed finish, the table is built on a distinctive open panel leg structure - two broad flat side panels and a single front leg that together create an airy, architectural base with an industrial-meets-artisan character. The square top features a subtle parquet block pattern, adding a layer of quiet texture to an otherwise clean surface. A single flush drawer fitted with a small round brass knob sits neatly between the legs, keeping the overall form uncluttered and intentional.',
+   image: '/images/SAC066_01.png',
+   category: 'Side Tables',
+   room: 'bedroom',
+   inStock: true,
+   details: {
+    materials: 'Mango Wood',
+    finish: 'Light Grey-Washed Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['Handcrafted in Jodhpur', '100% Solid Mango Wood', 'Open panel leg base', 'Parquet block top', 'Single flush drawer'],
+    sustainability: 'Sustainably sourced mango wood',
+    story: 'The panel leg structure is an unusual choice for a bedside table, and that is exactly why it works. Two broad flat side panels and a single front leg create a base that is open, architectural, and immediately distinctive. The parquet block top adds quiet texture without announcing itself. A brass-knobbed flush drawer completes the piece. Made from solid mango wood in Jodhpur with a light grey-washed finish that keeps the whole thing feeling cool and considered.',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '51 cm',
+     width: '46 cm',
+     depth: '46 cm'
+    },
+    photos: ['/images/SAC066_01.png', '/images/SAC066_02.png']
    }
   }
  ],
@@ -2783,6 +3008,64 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
   }
  ],
  outdoor: [],
+ wall: [
+  {
+   id: 'SAC070',
+   name: 'Double Tier Rounded Wall Shelf',
+   price: 1999,
+   description: 'Compact, clean, and crafted with care - the Double Tier Rounded Wall Shelf brings functional wall storage to life with a warm artisan touch. Crafted from solid mango wood in a muted terracotta-washed finish, this floating shelf features two generously rounded shelves connected by twin vertical bracket supports that double as the wall mounting system. The softly rounded ends on both tiers give the piece an organic, contemporary character that sets it apart from ordinary flat-edged shelving. Mount it in any room and it works - whether displaying small plants, framed photos, candles, or daily essentials.',
+   image: '/images/SAC070_01.png',
+   category: 'Wall Shelves',
+   room: 'wall',
+   inStock: true,
+   details: {
+    materials: 'Mango Wood',
+    finish: 'Terracotta-Washed Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['Handcrafted in Jodhpur', '100% Solid Mango Wood', 'Double tier design', 'Rounded shelf ends', 'Twin bracket wall mount'],
+    sustainability: 'Sustainably sourced mango wood',
+    story: 'The rounded ends are a small detail that changes everything. Most wall shelves are cut straight across and left at that. These are shaped - each end gently curved, making the shelf feel considered rather than functional. Two tiers, twin bracket supports, a terracotta-washed finish that sits warmly against almost any wall colour. Made from solid mango wood in Jodhpur.',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '20 cm',
+     width: '46 cm',
+     depth: '11 cm'
+    },
+    photos: ['/images/SAC070_01.png', '/images/SAC070_02.png']
+   }
+  },
+  {
+   id: 'SAC072',
+   name: 'Bobbin Leg Double Tier Wall Shelf',
+   price: 1499,
+   description: 'Traditional craft, contemporary purpose - the Bobbin Leg Double Tier Wall Shelf is a wall-mounted display piece that brings character and warmth to any bare wall. Crafted from solid mango wood in a warm natural honey finish, this shelf features two wide flat rectangular tiers connected by four hand-turned bobbin legs, each one shaped with a repeating spherical bead pattern that is a hallmark of classical Indian woodturning. Wide enough to hold a meaningful collection of objects, shallow enough to sit flush and unobtrusive against any wall.',
+   image: '/images/SAC072_01.png',
+   category: 'Wall Shelves',
+   room: 'wall',
+   inStock: true,
+   details: {
+    materials: 'Mango Wood',
+    finish: 'Natural Honey Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['Handcrafted in Jodhpur', '100% Solid Mango Wood', 'Hand-turned bobbin legs', 'Two wide display tiers', 'Wide rectangular form'],
+    sustainability: 'Sustainably sourced mango wood',
+    story: 'Bobbin turning is one of the oldest woodworking crafts in India, and you can see every hour of practice in the legs of this shelf. Each of the four legs is individually hand-turned on a lathe by artisans in Jodhpur, shaped with a repeating spherical bead pattern that takes skill and patience to produce consistently. Two wide flat tiers sit above and below, generous in display space, and the natural honey finish keeps the whole piece warm and inviting.',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '33 cm',
+     width: '79 cm',
+     depth: '20 cm'
+    },
+    photos: ['/images/SAC072_01.png', '/images/SAC072_02.png']
+   }
+  }
+ ],
 };
 
 // All products combined (deduped by id — some products appear in multiple rooms)
