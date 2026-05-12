@@ -2305,7 +2305,7 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
   {
    id: 'SAC049',
    name: 'Spiral Side Table',
-   price: 3599,
+   price: 4999,
    description: 'Hand-turned from solid mango wood in Jodhpur, this side table is built around a stacked-disc silhouette that carries the quality of sculpture and the function of furniture. Each layer is shaped and smoothed individually, so no two pieces look exactly the same. The rich dark walnut finish deepens with time, pulling out the natural grain and warmth of the wood.',
    image: '/images/SAC049_01.png',
    category: 'Side Tables',
@@ -2336,12 +2336,12 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
   {
    id: 'SAC050',
    name: 'Mushroom Pedestal Side Table',
-   price: 0,
+   price: 4999,
    description: 'Hand-turned from solid mango wood in Jodhpur, this pedestal side table draws its silhouette from quiet, considered geometry — a wide, smooth top perched on a tapered single column. The natural honey polish keeps the tone warm and inviting, letting the mango wood\'s grain come through. Every piece is turned individually by hand, so the character of the wood shows in each one.',
    image: '/images/SAC050_01.png',
    category: 'Side Tables',
    room: 'living',
-   inStock: false,
+   inStock: true,
    rating: 4.8,
    reviews: 68,
    details: {
@@ -2366,12 +2366,12 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
   {
    id: 'SAC052',
    name: 'Oval Top Shelf Side Table',
-   price: 0,
+   price: 3999,
    description: 'A tall, slim acacia wood side table with a softly rounded oval top and two open shelves below, finished in a rich dark walnut tone. The narrow profile fits comfortably beside a sofa or armchair without crowding the space, and the open shelves keep books, plants, or objects visible and within reach. Made from solid acacia in Jodhpur.',
    image: '/images/SAC052_01.png',
    category: 'Side Tables',
    room: 'living',
-   inStock: false,
+   inStock: true,
    rating: 4.8,
    reviews: 35,
    details: {
@@ -2396,12 +2396,12 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
   {
    id: 'SAC053',
    name: 'Mosaic Pedestal Side Table',
-   price: 0,
+   price: 7999,
    description: 'Built from solid mango wood in Jodhpur, this pedestal side table carries its craft in the base — an hourglass column assembled from hand-cut wood blocks fitted together in a precise mosaic pattern. The wide, lipped circular top sits above it cleanly, offering a generous surface for daily use. Finished in a warm honey walnut tone that draws out the natural depth of the wood.',
    image: '/images/SAC053_01.png',
    category: 'Side Tables',
    room: 'living',
-   inStock: false,
+   inStock: true,
    rating: 4.9,
    reviews: 29,
    details: {
@@ -2426,12 +2426,12 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
   {
    id: 'SAC055',
    name: 'Slatted Base Bowl Top Side Table',
-   price: 0,
+   price: 6999,
    description: 'A wide, bowl-shaped top in a whitewashed gold finish sits above a slatted cylindrical base in deep ebony black — two finishes, one material, striking contrast. The open vertical slats let light pass through and cast clean shadows through the day, giving the piece an architectural quality that reads as much as sculpture as furniture. Made from solid mango wood in Jodhpur.',
    image: '/images/SAC055_01.png',
    category: 'Side Tables',
    room: 'living',
-   inStock: false,
+   inStock: true,
    rating: 4.8,
    reviews: 75,
    details: {
@@ -2456,12 +2456,12 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
   {
    id: 'SAC056',
    name: 'Slatted Drum Base Coffee Table',
-   price: 0,
+   price: 8999,
    description: 'A wide, bowl-shaped top in smoky walnut sits low above a flared slatted drum base made from solid mango wood — the grain at the centre of the top radiates outward, and the precision-cut slats of the base play with light throughout the day. Low, grounded, and quietly commanding, it anchors a living room without competing with anything around it. Made by hand in Jodhpur.',
    image: '/images/SAC056_01.png',
    category: 'Coffee Tables',
    room: 'living',
-   inStock: false,
+   inStock: true,
    rating: 4.9,
    reviews: 45,
    details: {
@@ -2604,12 +2604,12 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
   {
    id: 'SAC051',
    name: 'Brass Knob Bedside Table',
-   price: 0,
+   price: 6999,
    description: 'A two-drawer bedside table in solid mango wood with a dark walnut finish and small round brass knob hardware — refined without being fussy. The turned cylindrical legs lift it cleanly off the floor, and both drawers offer generous space for everyday bedside essentials. The natural grain shows through the deep finish across every drawer front, making each piece distinctly its own.',
    image: '/images/SAC051_01.png',
    category: 'Side Tables',
    room: 'bedroom',
-   inStock: false,
+   inStock: true,
    rating: 4.8,
    reviews: 43,
    details: {
@@ -2634,12 +2634,12 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
   {
    id: 'SAC054',
    name: 'Round Edge Three-Drawer Bedside Table',
-   price: 0,
+   price: 7999,
    description: 'Three smooth-gliding drawers, rounded corners throughout, and raised cylindrical legs — this solid mango wood bedside table is defined by the details that set it apart from the standard. The natural honey finish stays warm and bright, and the softened edges give it a more considered silhouette than most nightstands. Every drawer front shows the natural grain of the mango wood.',
    image: '/images/SAC054_01.png',
    category: 'Side Tables',
    room: 'bedroom',
-   inStock: false,
+   inStock: true,
    rating: 4.8,
    reviews: 42,
    details: {
