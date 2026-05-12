@@ -20,7 +20,7 @@ export const roomProducts: Record<string, Product[]> = {
   {
    id: 'SAC033',
    name: 'Wooden Cat Feeder with Detachable Stainless Steel Bowls',
-   price: 799,
+   price: 999,
    originalPrice: 899,
    description: 'A small wooden cat feeder with two detachable stainless steel bowls, made for kittens and cats who deserve something better than plastic at mealtimes. The natural wood stand raises the bowls to a comfortable height, reducing neck strain during eating, and the non-toxic finish keeps every meal safe for your pet and your home.',
    image: '/images/SAC033_01.png',
@@ -562,7 +562,7 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
   {
    id: 'SAC08XS',
    name: 'Acacia Wood Stripe Cat Feeder with Stainless Steel Bowls',
-   price: 799,
+   price: 999,
    originalPrice: 899,
    description: 'This extra-small acacia wood cat feeder is made for kittens and small cats who need their bowls lifted just off the floor. The striped wood panels give it a refined, furniture-grade look, while the two detachable stainless steel bowls make daily cleaning quick and easy. Non-toxic finish throughout, safe for pets and people alike.',
    image: '/images/SAC08XS_01.png',
@@ -733,7 +733,7 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
   {
    id: 'SAC09XS',
    name: 'Acacia Wood Cat Feeder with S-Leg Stand and Stainless Steel Bowls',
-   price: 799,
+   price: 999,
    originalPrice: 899,
    description: 'A slim-legged extra-small cat feeder made from natural acacia wood with two detachable stainless steel bowls. The S-leg design keeps the frame light and open while still holding the bowls at a comfortable height for kittens and small cats. Non-toxic finish, easy to clean, made by hand in Jodhpur.',
    image: '/images/SAC09XS_01.png',
@@ -767,7 +767,7 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
   {
    id: 'SAC09_L',
    name: 'Acacia Wood Stripe Crate Pet Feeder, S-Leg Stand with Stainless Steel Bowls',
-   price: 1799,
+   price: 1899,
    originalPrice: 2299,
    description: 'This large S-leg acacia crate feeder brings a refined profile to your pet\'s feeding corner, with a frame that is open and airy rather than heavy. Two stainless steel bowls sit at a generous height suited to larger breeds, and both lift out cleanly for washing. Non-toxic, food-safe finish - handcrafted in Jodhpur.',
    image: '/images/SAC09L_01.png',
@@ -812,7 +812,7 @@ Food math: A 25 kg Lab eats ~300–400 g/day (~500–700 ml dry kibble volume), 
   {
    id: 'SAC09_M',
    name: 'Acacia Wood Stripe Crate Pet Feeder, S-Leg Stand with Stainless Steel Bowls',
-   price: 1399,
+   price: 1499,
    originalPrice: 3999,
    description: 'The S-leg design gives this medium acacia feeder a lighter, more considered look than a standard crate frame, without compromising on stability. Two removable stainless steel bowls sit at the right height for medium breeds, and the natural wood finish is completely free from toxic coatings. Made in Jodhpur, Rajasthan.',
    image: '/images/SAC09M_01.png',
@@ -858,7 +858,7 @@ Food math: ~1.8 L = ~4–6 days for a 12 kg dog, well over a week for a cat.`
   {
    id: 'SAC09_S',
    name: 'Acacia Wood Stripe Crate Pet Feeder, S-Leg Stand with Stainless Steel Bowls',
-   price: 899,
+   price: 999,
    originalPrice: 1999,
    description: 'A small-format S-leg feeder in natural acacia wood, made for cats and compact breeds who need their bowls raised just enough for comfortable eating. The open frame style keeps it light and easy to place anywhere in the home, and the stainless steel bowls lift out for quick daily cleaning. Non-toxic, food-safe finish.',
    image: '/images/SAC09S_01.png',
@@ -984,7 +984,7 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
   {
    id: 'SAC01_Combo_Set of 3-S',
    name: 'Acacia Wood Square Serving Trays, Natural Finish, Set of 3',
-   price: 2499,
+   price: 2699,
    originalPrice: 3299,
    description: 'Three graduating square acacia trays, each cut from solid natural hardwood and finished with food-safe mineral oil - a complete set for anyone who values both function and warmth in the kitchen. Use them stacked on the counter, layered on a dining table, or individually as serving boards, breakfast platters, or snack boards.',
    image: '/images/SAC01COMBOSETOF3-S_01.png',
@@ -1027,7 +1027,7 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
   {
    id: 'SAC01_L',
    name: 'Acacia Wood Square Serving Tray, Natural Finish',
-   price: 1299,
+   price: 1399,
    originalPrice: 1999,
    description: 'This large square acacia tray is a versatile piece - generous enough to carry a full tea service, elegant enough to display fruit on a sideboard, and durable enough for daily kitchen use. Handcrafted in Jodhpur from solid acacia with a natural mineral oil finish, it is food-safe, moisture-resistant, and built to last for years of daily use.',
    image: '/images/SAC01L_01.png',
@@ -1070,7 +1070,7 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
   {
    id: 'SAC01_M',
    name: 'Acacia Wood Square Serving Tray, Natural Finish',
-   price: 1099,
+   price: 1199,
    originalPrice: 1999,
    description: 'A medium square acacia serving tray with a natural grain finish, sized for everyday use as a breakfast tray, snack plate, or countertop organiser. Cut from solid acacia in Jodhpur and finished with food-safe mineral oil, it is equally at home on a dining table or a coffee table. The wood ages warmly with every oiling.',
    image: '/images/SAC01M_01.png',
@@ -1113,7 +1113,7 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
   {
    id: 'SAC01_S',
    name: 'Acacia Wood Square Serving Tray, Natural Finish',
-   price: 799,
+   price: 999,
    originalPrice: 999,
    description: 'This small square acacia tray from Jodhpur is cut from a single plank of natural hardwood, finished with food-safe mineral oil, and built to handle daily use in the kitchen or on the dining table. The natural grain pattern is unique to every piece, and the acacia\'s tight wood structure resists moisture and keeps the surface hygienic.',
    image: '/images/SAC01S_01.png',
@@ -1329,7 +1329,7 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
   {
    id: 'SAC03-Antique Checkers-Set of 3',
    name: 'Acacia Wood Antique Checkers Rectangle Serving Trays, Set of 3',
-   price: 2499,
+   price: 2699,
    originalPrice: 2999,
    description: 'Three antique checkers rectangle trays in graduating sizes, each built from alternating light and dark acacia planks for a natural geometric pattern that needs no paint or decoration. The full set covers individual servings to generous table spreads, and every surface is finished with food-safe mineral oil.',
    image: '/images/SAC03-ANTIQUECHECKERS-SETOF3_01.png',
@@ -1397,7 +1397,7 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
   {
    id: 'SAC03_L',
    name: 'Acacia Wood Antique Checkers Rectangle Serving Tray',
-   price: 1299,
+   price: 1399,
    originalPrice: 1799,
    description: 'This large antique checkers tray makes a statement at the dining table with its alternating light and dark acacia grain pattern, created without dyes or synthetic finishes. The full surface is food-safe and flat-finished, making it as practical for serving as it is beautiful as a standalone piece. Handcrafted in Jodhpur, Rajasthan.',
    image: '/images/SAC03L_01.png',
@@ -1440,7 +1440,7 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
   {
    id: 'SAC03_M',
    name: 'Acacia Wood Antique Checkers Rectangle Serving Tray',
-   price: 1199,
+   price: 1299,
    originalPrice: 1599,
    description: 'A medium antique checkers acacia tray that brings visual interest to the table without any artificial decoration - the pattern comes entirely from alternating light and dark acacia planks. Sized for a generous snack spread or afternoon tea, it is finished with food-safe mineral oil and made by hand in Jodhpur.',
    image: '/images/SAC03M_01.png',
@@ -1483,7 +1483,7 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
   {
    id: 'SAC03_S',
    name: 'Acacia Wood Antique Checkers Rectangle Serving Tray',
-   price: 799,
+   price: 999,
    originalPrice: 1099,
    description: 'The antique checkers pattern on this small acacia tray is created by laying alternating planks of lighter and darker acacia wood side by side, then finishing the whole surface flush. The result is a tray with geometric character that is still entirely natural - no dyes, no paint, just the contrast between naturally light and dark acacia.',
    image: '/images/SAC03S_01.png',
@@ -2015,7 +2015,7 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
   {
    id: 'SAC07',
    name: 'Acacia Wood Stripe Crate Trays, White, Set of 3',
-   price: 2599,
+   price: 2799,
    originalPrice: 2999,
    description: 'Three white stripe acacia crate trays in small, medium, and large - a practical and adaptable set for organising and displaying around the home. Each tray is made from solid acacia in Jodhpur with a non-toxic white finish, and the open-slat sides give them a light, airy quality that works in kitchens, living rooms, and bedrooms alike.',
    image: '/images/SAC07_01.png',
@@ -2058,7 +2058,7 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
   {
    id: 'SAC07_L',
    name: 'Acacia Wood Stripe Crate Tray, White',
-   price: 1099,
+   price: 1199,
    originalPrice: 1999,
    description: 'This large white stripe acacia crate tray is built to carry more - a full breakfast spread, a collection of plants, or a styled arrangement on a sideboard. The natural acacia frame is finished with non-toxic white paint that keeps its tone without chipping or peeling with regular use. Handcrafted in Jodhpur, Rajasthan.',
    image: '/images/SAC07L_01.png',
@@ -2096,7 +2096,7 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
   {
    id: 'SAC07_M',
    name: 'Acacia Wood Stripe Crate Tray, White',
-   price: 899,
+   price: 999,
    originalPrice: 1499,
    description: 'A medium stripe acacia crate tray in white, made for organising the kitchen counter, carrying items around the home, or presenting products as a gift. The open-slat sides keep it light and airy, while the solid acacia base and frame give it enough structure to handle daily use. Non-toxic finish, handcrafted in Jodhpur.',
    image: '/images/SAC07M_01.png',
@@ -2134,7 +2134,7 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
   {
    id: 'SAC07_S',
    name: 'Acacia Wood Stripe Crate Tray, White',
-   price: 599,
+   price: 999,
    originalPrice: 999,
    description: 'This small white stripe acacia crate tray is made from natural hardwood with a clean, painted white frame and open-slat sides. Lightweight and versatile, it works as a counter organiser, a decorative tray, or a styled gift holder. Made in Jodhpur from sustainably sourced acacia, finished with non-toxic paint.',
    image: '/images/SAC07S_01.png',
