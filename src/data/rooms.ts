@@ -100,56 +100,6 @@ Food math: ~1.8 L = ~4–6 days for a 12 kg dog, well over a week for a cat.`
 ]
   },
   {
-   id: 'SAC037_L',
-   name: 'Acacia Wood Stripe Crate Pet Feeder with Stainless Steel Bowls',
-   price: 2399,
-   originalPrice: 3999,
-   description: 'A large-format stripe crate feeder crafted from solid acacia wood, built for bigger dogs who need generous bowls at a comfortable height. The natural stripe grain pattern runs through every plank, giving each piece its own character, and the two stainless steel bowls lift out cleanly for washing. Non-toxic, food-safe finish.',
-   image: '/images/SAC037L_01.png',
-   category: 'Pet Feeders',
-   room: 'pet',
-   inStock: false,
-   rating: 4.8,
-   reviews: 187,
-   details: {
-    materials: 'Acacia wood, stainless steel',
-    finish: 'Natural grain finish, food-safe mineral oil',
-    origin: 'Made in Jodhpur, Rajasthan',
-    shipping: 'Ships within 2-3 business days',
-    delivery: '5-7 days pan India',
-    returns: '7-day easy returns',
-    usp: ['Handcrafted in Jodhpur'],
-    sustainability: 'Sustainably sourced wood',
-    story: 'The idea behind Sugan was to replace the ordinary with something worth keeping. This stripe-design crate feeder is hand-built from sustainably sourced acacia wood, with each plank fitted and finished by artisans in Jodhpur.',
-    care: 'Hand wash with mild soap. Do not soak.',
-    maintenance: 'Apply mineral oil periodically',
-    usesAndMeasurements: `50×29×26 cm, 2.5 L
-
-Pet shoulder height: ~45–65 cm
-Pet weight: ~20–35 kg
-Category: Medium-to-large dogs only. Overkill for cats.
-Breeds: Labrador Retriever, Golden Retriever, German Shepherd, Boxer
-Food math: A 25 kg Lab eats ~300–400 g/day (~500–700 ml dry kibble volume), so 2.5 L = ~3–4 days of food. Decent buffer.`
-   },
-   relatedSizes: [
-    {
-        'size': 'Small',
-        'productId': 'SAC08_S',
-        'price': 1799
-    },
-    {
-        'size': 'Medium',
-        'productId': 'SAC08_M',
-        'price': 2099
-    },
-    {
-        'size': 'Large',
-        'productId': 'SAC08_L',
-        'price': 2399
-    }
-]
-  },
-  {
    id: 'SAC039',
    name: 'Acacia Wood Crate Pet Feeder with Stainless Steel Bowls',
    price: 1999,
@@ -686,11 +636,6 @@ Food math: A 25 kg Lab eats ~300–400 g/day (~500–700 ml dry kibble volume), 
         'productId': 'SAC08_M',
         'price': 2099
     },
-    {
-        'size': 'Large (Crate)',
-        'productId': 'SAC037_L',
-        'price': 2399
-    }
 ]
   },
   {
@@ -737,11 +682,6 @@ Food math: ~1.8 L = ~4–6 days for a 12 kg dog, well over a week for a cat.`
         'productId': 'SAC08_L',
         'price': 2399
     },
-    {
-        'size': 'Large (Crate)',
-        'productId': 'SAC037_L',
-        'price': 2399
-    }
 ]
   },
   {
@@ -788,11 +728,6 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
         'productId': 'SAC08_L',
         'price': 2399
     },
-    {
-        'size': 'Large (Crate)',
-        'productId': 'SAC037_L',
-        'price': 2399
-    }
 ]
   },
   {
@@ -2918,8 +2853,7 @@ function getProductFamily(product: Product): Product[] {
   }
   
   // Strategy 2: Use relatedSizes for products without standard pattern siblings
-  // This handles standalone products like SAC037_L
-  const isSetProduct = product.name.toLowerCase().includes('set of') || 
+  const isSetProduct = product.name.toLowerCase().includes('set of') ||
                        product.name.toLowerCase().includes('pack of');
   
   if (product.relatedSizes && product.relatedSizes.length > 0) {

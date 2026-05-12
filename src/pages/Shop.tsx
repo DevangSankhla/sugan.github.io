@@ -6,15 +6,17 @@ import { ArrowRight, X } from 'lucide-react';
 import { rooms, roomProducts, allProducts, getDisplayProduct, getBaseProductName, isSetProduct } from '@/data/rooms';
 
 const ROOM_HERO_IMAGES: Record<string, string> = {
-  kitchen: '/images/SAC05L_01.png',
+  kitchen: '/images/SAC01S_03.png',
   pet: '/images/SAC048M_01.png',
   living: '/images/SAC056_02.png',
   bedroom: '/images/SAC054_02.png',
+  library: '/images/SAC058_02.png',
 };
 
 const CATEGORY_HERO_IMAGES: Record<string, string> = {
   'pet-feeders': '/images/SAC048M_01.png',
   'side-tables': '/images/SAC050_02.png',
+  'bookshelves': '/images/SAC058_01.png',
 };
 import type { Product } from '@/types';
 import ProductCard from '@/components/ProductCard';
@@ -31,6 +33,7 @@ const categories = [
   { id: 'napkin-holders', name: 'Napkin Holders' },
   { id: 'side-tables', name: 'Side Tables' },
   { id: 'coffee-tables', name: 'Coffee Tables' },
+  { id: 'bookshelves', name: 'Bookshelves' },
   { id: 'pooja', name: 'Pooja Essentials' },
 ];
 
@@ -85,6 +88,9 @@ function getCategoryProducts(categoryId: string): Product[] {
       break;
     case 'coffee-tables':
       products = allProducts.filter((p) => p.name.toLowerCase().includes('coffee table'));
+      break;
+    case 'bookshelves':
+      products = allProducts.filter((p) => p.category === 'Bookshelf');
       break;
     case 'pooja':
       products = roomProducts['pooja'] || [];
