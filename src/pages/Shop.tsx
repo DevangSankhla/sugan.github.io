@@ -34,6 +34,7 @@ const categories = [
   { id: 'side-tables', name: 'Side Tables' },
   { id: 'coffee-tables', name: 'Coffee Tables' },
   { id: 'bookshelves', name: 'Bookshelves' },
+  { id: 'wall-shelves', name: 'Wall Shelves' },
   { id: 'pooja', name: 'Pooja Essentials' },
 ];
 
@@ -81,7 +82,10 @@ function getCategoryProducts(categoryId: string): Product[] {
       );
       break;
     case 'napkin-holders':
-      products = allProducts.filter((p) => p.name.toLowerCase().includes('napkin'));
+      products = allProducts.filter((p) =>
+        p.name.toLowerCase().includes('napkin') ||
+        p.name.toLowerCase().includes('tissue')
+      );
       break;
     case 'side-tables':
       products = allProducts.filter((p) => p.name.toLowerCase().includes('side table') || p.name.toLowerCase().includes('bedside table'));
@@ -91,6 +95,9 @@ function getCategoryProducts(categoryId: string): Product[] {
       break;
     case 'bookshelves':
       products = allProducts.filter((p) => p.category === 'Bookshelf');
+      break;
+    case 'wall-shelves':
+      products = roomProducts['wall'] || [];
       break;
     case 'pooja':
       products = roomProducts['pooja'] || [];
