@@ -176,15 +176,19 @@ export default function ProductDetail() {
 
   const isHot = ['SAC048S', 'SAC048M', 'SAC048L'].includes(product.id);
 
+  const ROOM_LABELS: Record<string, string> = {
+    'shop-all': 'Shop', kitchen: 'Kitchen', living: 'Living Room',
+    bedroom: 'Bedroom', dining: 'Dining', office: 'Office',
+    pooja: 'Pooja', outdoor: 'Outdoor', pet: 'Pet', library: 'Library',
+  };
+
   const backLabel = (() => {
     if (fromPage?.includes('/shop/')) {
-      const slug = fromPage.split('/shop/')[1];
-      return slug.charAt(0).toUpperCase() + slug.slice(1);
+      const rawSlug = fromPage.split('/shop/')[1];
+      const slug = rawSlug.split('?')[0].split('#')[0]; // strip query/hash
+      return ROOM_LABELS[slug] ?? 'Shop';
     }
-    if (product.room) {
-      return product.room.charAt(0).toUpperCase() + product.room.slice(1);
-    }
-    return 'Shop';
+    return ROOM_LABELS[product.room] ?? 'Shop';
   })();
 
   return (
