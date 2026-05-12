@@ -2486,12 +2486,12 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
   {
    id: 'SAC057',
    name: 'Lattice Carved Four-Shelf Bookshelf',
-   price: 0,
+   price: 4999,
    description: 'Tall, slender, and unmistakably handcrafted - the Lattice Carved Four-Shelf Bookshelf brings old-world artisanship into the modern home. Crafted from solid acacia wood in a warm honey finish, this compact freestanding shelf features four open shelves framed by intricately hand-carved lattice panels on all sides. The repeating ogee arch motif cut into each panel creates a beautiful interplay of light and shadow, making this piece as captivating empty as it is styled. Its slim footprint makes it ideal for tight spaces without compromising on display area or visual character. Whether holding books, plants, ceramics, or curated objects, it earns its place in any room it enters.',
    image: '/images/SAC057_01.png',
    category: 'Bookshelf',
    room: 'living',
-   inStock: false,
+   inStock: true,
    details: {
     materials: 'Acacia Wood',
     finish: 'Natural Honey Polish',
@@ -2517,12 +2517,12 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
   {
    id: 'SAC058',
    name: 'Lattice Carved Four-Shelf Bookshelf (Dark Walnut)',
-   price: 0,
+   price: 4999,
    description: 'Tall, slender, and unmistakably handcrafted - the Lattice Carved Four-Shelf Bookshelf brings old-world artisanship into the modern home. Crafted from solid acacia wood in a rich dark walnut finish, this compact freestanding shelf features four open shelves framed by intricately hand-carved lattice panels on all sides. The repeating ogee arch motif cut into each panel creates a beautiful interplay of light and shadow, making this piece as captivating empty as it is styled. Its slim footprint makes it ideal for tight spaces without compromising on display area or visual character. The deep espresso tone adds a layer of drama and sophistication, making it a natural fit for darker, moodier interiors. Whether holding books, plants, ceramics, or curated objects, it earns its place in any room it enters.',
    image: '/images/SAC058_01.png',
    category: 'Bookshelf',
    room: 'living',
-   inStock: false,
+   inStock: true,
    details: {
     materials: 'Acacia Wood',
     finish: 'Dark Walnut Polish',
@@ -2548,12 +2548,12 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
   {
    id: 'SAC059',
    name: 'Cross Base Round Side Table',
-   price: 0,
+   price: 2999,
    description: 'Simple in form, striking in detail - the Cross Base Round Side Table is a study in structural elegance. Crafted from solid acacia wood in a rich dark walnut finish, this compact side table features a smooth round top with a beautifully visible two-tone grain pattern, supported by four angled flat legs that meet at the centre in a distinctive interlocking cross base. That base is the defining detail - where most tables play it safe with four straight legs, this one draws the eye downward with a geometric precision that feels both architectural and organic at once. Compact enough for any corner, characterful enough to hold its own in any room.',
    image: '/images/SAC059_01.png',
    category: 'Side Tables',
    room: 'living',
-   inStock: false,
+   inStock: true,
    details: {
     materials: 'Acacia Wood',
     finish: 'Dark Walnut Polish',
@@ -2722,12 +2722,12 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
   {
    id: 'SAC057',
    name: 'Lattice Carved Four-Shelf Bookshelf',
-   price: 0,
+   price: 4999,
    description: 'Tall, slender, and unmistakably handcrafted - the Lattice Carved Four-Shelf Bookshelf brings old-world artisanship into the modern home. Crafted from solid acacia wood in a warm honey finish, this compact freestanding shelf features four open shelves framed by intricately hand-carved lattice panels on all sides. The repeating ogee arch motif cut into each panel creates a beautiful interplay of light and shadow, making this piece as captivating empty as it is styled. Its slim footprint makes it ideal for tight spaces without compromising on display area or visual character. Whether holding books, plants, ceramics, or curated objects, it earns its place in any room it enters.',
    image: '/images/SAC057_01.png',
    category: 'Bookshelf',
    room: 'living',
-   inStock: false,
+   inStock: true,
    details: {
     materials: 'Acacia Wood',
     finish: 'Natural Honey Polish',
@@ -2753,12 +2753,12 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
   {
    id: 'SAC058',
    name: 'Lattice Carved Four-Shelf Bookshelf (Dark Walnut)',
-   price: 0,
+   price: 4999,
    description: 'Tall, slender, and unmistakably handcrafted - the Lattice Carved Four-Shelf Bookshelf brings old-world artisanship into the modern home. Crafted from solid acacia wood in a rich dark walnut finish, this compact freestanding shelf features four open shelves framed by intricately hand-carved lattice panels on all sides. The repeating ogee arch motif cut into each panel creates a beautiful interplay of light and shadow, making this piece as captivating empty as it is styled. Its slim footprint makes it ideal for tight spaces without compromising on display area or visual character. The deep espresso tone adds a layer of drama and sophistication, making it a natural fit for darker, moodier interiors. Whether holding books, plants, ceramics, or curated objects, it earns its place in any room it enters.',
    image: '/images/SAC058_01.png',
    category: 'Bookshelf',
    room: 'living',
-   inStock: false,
+   inStock: true,
    details: {
     materials: 'Acacia Wood',
     finish: 'Dark Walnut Polish',
