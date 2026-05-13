@@ -12,7 +12,7 @@ const ROOM_HERO_IMAGES: Record<string, string> = {
   bedroom: '/images/SAC054_02.png',
   library: '/images/SAC058_02.png',
   wall: '/images/SAC070_02.png',
-  bar: '/images/SAC074_01.png',
+  bar: '/images/SAC073_02.png',
 };
 
 const CATEGORY_HERO_IMAGES: Record<string, string> = {
@@ -20,7 +20,7 @@ const CATEGORY_HERO_IMAGES: Record<string, string> = {
   'side-tables': '/images/SAC050_02.png',
   'bookshelves': '/images/SAC058_01.png',
   'wall-shelves': '/images/SAC070_02.png',
-  'wine-rack': '/images/SAC074_01.png',
+  'wine-rack': '/images/SAC073_02.png',
 };
 import type { Product } from '@/types';
 import ProductCard from '@/components/ProductCard';
