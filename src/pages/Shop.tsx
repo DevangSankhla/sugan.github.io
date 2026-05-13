@@ -12,6 +12,7 @@ const ROOM_HERO_IMAGES: Record<string, string> = {
   bedroom: '/images/SAC054_02.png',
   library: '/images/SAC058_02.png',
   wall: '/images/SAC070_02.png',
+  bar: '/images/SAC074_01.png',
 };
 
 const CATEGORY_HERO_IMAGES: Record<string, string> = {
@@ -19,6 +20,7 @@ const CATEGORY_HERO_IMAGES: Record<string, string> = {
   'side-tables': '/images/SAC050_02.png',
   'bookshelves': '/images/SAC058_01.png',
   'wall-shelves': '/images/SAC070_02.png',
+  'wine-rack': '/images/SAC074_01.png',
 };
 import type { Product } from '@/types';
 import ProductCard from '@/components/ProductCard';
@@ -37,6 +39,7 @@ const categories = [
   { id: 'coffee-tables', name: 'Coffee Tables' },
   { id: 'bookshelves', name: 'Bookshelves' },
   { id: 'wall-shelves', name: 'Wall Shelves' },
+  { id: 'wine-rack', name: 'Wine Racks' },
   { id: 'pooja', name: 'Pooja Essentials' },
 ];
 
@@ -100,6 +103,9 @@ function getCategoryProducts(categoryId: string): Product[] {
       break;
     case 'wall-shelves':
       products = roomProducts['wall'] || [];
+      break;
+    case 'wine-rack':
+      products = allProducts.filter((p) => p.category === 'Wine Rack');
       break;
     case 'pooja':
       products = roomProducts['pooja'] || [];

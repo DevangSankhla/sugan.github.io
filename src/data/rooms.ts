@@ -12,7 +12,8 @@ export const rooms: Room[] = [
  { id: 'pooja', name: 'Pooja Room', icon: 'Sparkles', description: 'Sacred space essentials' },
  { id: 'outdoor', name: 'Outdoor/Balcony', icon: 'Sun', description: 'Open air living solutions' },
  { id: 'pet', name: 'Pet', icon: 'Heart', description: 'Premium products for your pets' },
- { id: 'wall', name: 'Wall Shelves', icon: 'Frame', description: 'Handcrafted wall shelves and displays' }
+ { id: 'wall', name: 'Wall Shelves', icon: 'Frame', description: 'Handcrafted wall shelves and displays' },
+ { id: 'bar', name: 'Bar', icon: 'Wine', description: 'Wine racks and bar essentials' }
 ];
 
 // Products organized by room
@@ -2685,6 +2686,60 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
     },
     photos: ['/images/SAC065_01.png', '/images/SAC065_02.png']
    }
+  },
+  {
+   id: 'SAC073',
+   name: 'Circular Cut Four-Bottle Wine Rack',
+   price: 1999,
+   description: 'Functional craft at its finest - the Circular Cut Four-Bottle Wine Rack is a tabletop wine holder that earns its place in any room it occupies. Crafted from solid acacia wood in a rich dark walnut finish, the rack is built around two large circular side panels with four circular cutouts each, connected by a pair of sturdy round dowel rods that hold the structure together and cradle the bottles securely in place. The dramatic circular side panels give the piece a bold, graphic quality, while the deep grain and natural character marks of the acacia wood add warmth and authenticity to every surface.',
+   image: '/images/SAC073_01.png',
+   category: 'Wine Rack',
+   room: 'bar',
+   inStock: true,
+   details: {
+    materials: 'Acacia Wood',
+    finish: 'Dark Walnut Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['100% Solid Acacia Wood', 'Holds 4 bottles securely', 'Round dowel rod connectors', 'Bold circular side panels', 'Dark walnut finish'],
+    sustainability: 'Sustainably sourced acacia wood',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '29 cm',
+     width: '33 cm',
+     depth: '17 cm'
+    },
+    photos: ['/images/SAC073_01.png', '/images/SAC073_02.png']
+   }
+  },
+  {
+   id: 'SAC074',
+   name: 'Hexagon Five-Bottle Wine Rack',
+   price: 2499,
+   description: 'Geometry meets craftsmanship in the most satisfying way - the Hexagon Five-Bottle Wine Rack is a tabletop wine rack that is as much a design object as it is a practical storage solution. Crafted from solid acacia wood in a warm honey walnut finish, the rack is built within a bold hexagonal frame with thick, cleanly mitered panels that give it a substantial, high-quality feel. Inside, two scalloped cradle rails with hand-cut bottle slots are positioned at staggered heights across three tiers, holding up to five bottles securely in a classic horizontal lay-flat arrangement.',
+   image: '/images/SAC074_01.png',
+   category: 'Wine Rack',
+   room: 'bar',
+   inStock: true,
+   details: {
+    materials: 'Acacia Wood',
+    finish: 'Honey Walnut Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['100% Solid Acacia Wood', 'Bold hexagonal frame', 'Holds 5 bottles across three tiers', 'Lay-flat horizontal storage', 'Honey walnut finish'],
+    sustainability: 'Sustainably sourced acacia wood',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '29 cm',
+     width: '33 cm',
+     depth: '17 cm'
+    },
+    photos: ['/images/SAC074_01.png', '/images/SAC074_02.png']
+   }
   }
  ],
  bedroom: [
@@ -2941,7 +2996,62 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
    }
   }
  ],
- dining: [],
+ dining: [
+  {
+   id: 'SAC073',
+   name: 'Circular Cut Four-Bottle Wine Rack',
+   price: 1999,
+   description: 'Functional craft at its finest - the Circular Cut Four-Bottle Wine Rack is a tabletop wine holder that earns its place in any room it occupies. Crafted from solid acacia wood in a rich dark walnut finish, the rack is built around two large circular side panels with four circular cutouts each, connected by a pair of sturdy round dowel rods that hold the structure together and cradle the bottles securely in place. The dramatic circular side panels give the piece a bold, graphic quality, while the deep grain and natural character marks of the acacia wood add warmth and authenticity to every surface.',
+   image: '/images/SAC073_01.png',
+   category: 'Wine Rack',
+   room: 'bar',
+   inStock: true,
+   details: {
+    materials: 'Acacia Wood',
+    finish: 'Dark Walnut Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['100% Solid Acacia Wood', 'Holds 4 bottles securely', 'Round dowel rod connectors', 'Bold circular side panels', 'Dark walnut finish'],
+    sustainability: 'Sustainably sourced acacia wood',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '29 cm',
+     width: '33 cm',
+     depth: '17 cm'
+    },
+    photos: ['/images/SAC073_01.png', '/images/SAC073_02.png']
+   }
+  },
+  {
+   id: 'SAC074',
+   name: 'Hexagon Five-Bottle Wine Rack',
+   price: 2499,
+   description: 'Geometry meets craftsmanship in the most satisfying way - the Hexagon Five-Bottle Wine Rack is a tabletop wine rack that is as much a design object as it is a practical storage solution. Crafted from solid acacia wood in a warm honey walnut finish, the rack is built within a bold hexagonal frame with thick, cleanly mitered panels that give it a substantial, high-quality feel. Inside, two scalloped cradle rails with hand-cut bottle slots are positioned at staggered heights across three tiers, holding up to five bottles securely in a classic horizontal lay-flat arrangement.',
+   image: '/images/SAC074_01.png',
+   category: 'Wine Rack',
+   room: 'bar',
+   inStock: true,
+   details: {
+    materials: 'Acacia Wood',
+    finish: 'Honey Walnut Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['100% Solid Acacia Wood', 'Bold hexagonal frame', 'Holds 5 bottles across three tiers', 'Lay-flat horizontal storage', 'Honey walnut finish'],
+    sustainability: 'Sustainably sourced acacia wood',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '29 cm',
+     width: '33 cm',
+     depth: '17 cm'
+    },
+    photos: ['/images/SAC074_01.png', '/images/SAC074_02.png']
+   }
+  }
+ ],
  office: [],
  library: [
   {
@@ -3175,6 +3285,62 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
      depth: '15 cm'
     },
     photos: ['/images/SAC071_01.png', '/images/SAC071_02.png']
+   }
+  }
+ ],
+ bar: [
+  {
+   id: 'SAC073',
+   name: 'Circular Cut Four-Bottle Wine Rack',
+   price: 1999,
+   description: 'Functional craft at its finest - the Circular Cut Four-Bottle Wine Rack is a tabletop wine holder that earns its place in any room it occupies. Crafted from solid acacia wood in a rich dark walnut finish, the rack is built around two large circular side panels with four circular cutouts each, connected by a pair of sturdy round dowel rods that hold the structure together and cradle the bottles securely in place. The dramatic circular side panels give the piece a bold, graphic quality, while the deep grain and natural character marks of the acacia wood add warmth and authenticity to every surface.',
+   image: '/images/SAC073_01.png',
+   category: 'Wine Rack',
+   room: 'bar',
+   inStock: true,
+   details: {
+    materials: 'Acacia Wood',
+    finish: 'Dark Walnut Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['100% Solid Acacia Wood', 'Holds 4 bottles securely', 'Round dowel rod connectors', 'Bold circular side panels', 'Dark walnut finish'],
+    sustainability: 'Sustainably sourced acacia wood',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '29 cm',
+     width: '33 cm',
+     depth: '17 cm'
+    },
+    photos: ['/images/SAC073_01.png', '/images/SAC073_02.png']
+   }
+  },
+  {
+   id: 'SAC074',
+   name: 'Hexagon Five-Bottle Wine Rack',
+   price: 2499,
+   description: 'Geometry meets craftsmanship in the most satisfying way - the Hexagon Five-Bottle Wine Rack is a tabletop wine rack that is as much a design object as it is a practical storage solution. Crafted from solid acacia wood in a warm honey walnut finish, the rack is built within a bold hexagonal frame with thick, cleanly mitered panels that give it a substantial, high-quality feel. Inside, two scalloped cradle rails with hand-cut bottle slots are positioned at staggered heights across three tiers, holding up to five bottles securely in a classic horizontal lay-flat arrangement.',
+   image: '/images/SAC074_01.png',
+   category: 'Wine Rack',
+   room: 'bar',
+   inStock: true,
+   details: {
+    materials: 'Acacia Wood',
+    finish: 'Honey Walnut Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['100% Solid Acacia Wood', 'Bold hexagonal frame', 'Holds 5 bottles across three tiers', 'Lay-flat horizontal storage', 'Honey walnut finish'],
+    sustainability: 'Sustainably sourced acacia wood',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '29 cm',
+     width: '33 cm',
+     depth: '17 cm'
+    },
+    photos: ['/images/SAC074_01.png', '/images/SAC074_02.png']
    }
   }
  ],
