@@ -8,12 +8,16 @@ const ROOM_HERO_IMAGES: Record<string, string> = {
   living: '/images/SAC056_02.png',
   bedroom: '/images/SAC054_02.png',
   library: '/images/SAC058_02.png',
+  wall: '/images/SAC070_02.png',
+  bar: '/images/SAC073_02.png',
 };
+
+const SHOWCASE_ROOM_IDS = ['kitchen', 'living', 'bedroom', 'library', 'wall', 'bar'];
 
 export default function Products() {
   const showcaseRooms = rooms
-    .filter((r) => r.id !== 'shop-all')
-    .slice(0, 6)
+    .filter((r) => SHOWCASE_ROOM_IDS.includes(r.id))
+    .sort((a, b) => SHOWCASE_ROOM_IDS.indexOf(a.id) - SHOWCASE_ROOM_IDS.indexOf(b.id))
     .map((r) => ({
       ...r,
       heroImage: ROOM_HERO_IMAGES[r.id] ?? roomProducts[r.id]?.[0]?.image ?? '/images/SAC030.jpeg',
