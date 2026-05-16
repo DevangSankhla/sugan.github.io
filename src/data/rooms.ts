@@ -13,7 +13,8 @@ export const rooms: Room[] = [
  { id: 'outdoor', name: 'Outdoor/Balcony', icon: 'Sun', description: 'Open air living solutions' },
  { id: 'pet', name: 'Pet', icon: 'Heart', description: 'Premium products for your pets' },
  { id: 'wall', name: 'Wall Shelves', icon: 'Frame', description: 'Handcrafted wall shelves and displays' },
- { id: 'bar', name: 'Bar', icon: 'Wine', description: 'Wine racks and bar essentials' }
+ { id: 'bar', name: 'Bar', icon: 'Wine', description: 'Wine racks and bar essentials' },
+ { id: 'entryway', name: 'Entryway', icon: 'DoorOpen', description: 'Cabinets, console tables, and chairs for your entrance' }
 ];
 
 // Products organized by room

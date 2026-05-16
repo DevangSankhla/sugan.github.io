@@ -41,6 +41,11 @@ const categories = [
   { id: 'wall-shelves', name: 'Wall Shelves' },
   { id: 'wine-rack', name: 'Wine Racks' },
   { id: 'pooja', name: 'Pooja Essentials' },
+  { id: 'open-cabinets', name: 'Open Cabinets' },
+  { id: 'closed-cabinets', name: 'Closed Cabinets' },
+  { id: 'tv-cabinets', name: 'TV Cabinets' },
+  { id: 'console-tables', name: 'Console Tables' },
+  { id: 'chairs', name: 'Chairs' },
 ];
 
 const getUniqueProductsByName = (products: Product[]): Product[] => {
@@ -109,6 +114,40 @@ function getCategoryProducts(categoryId: string): Product[] {
       break;
     case 'pooja':
       products = roomProducts['pooja'] || [];
+      break;
+    case 'open-cabinets':
+      products = allProducts.filter((p) =>
+        p.category === 'Open Cabinet' ||
+        p.name.toLowerCase().includes('open cabinet')
+      );
+      break;
+    case 'closed-cabinets':
+      products = allProducts.filter((p) =>
+        p.category === 'Closed Cabinet' ||
+        p.name.toLowerCase().includes('closed cabinet') ||
+        p.name.toLowerCase().includes('cabinet') && !p.name.toLowerCase().includes('open') && !p.name.toLowerCase().includes('tv')
+      );
+      break;
+    case 'tv-cabinets':
+      products = allProducts.filter((p) =>
+        p.category === 'TV Cabinet' ||
+        p.name.toLowerCase().includes('tv cabinet') ||
+        p.name.toLowerCase().includes('tv unit') ||
+        p.name.toLowerCase().includes('media unit')
+      );
+      break;
+    case 'console-tables':
+      products = allProducts.filter((p) =>
+        p.category === 'Console Table' ||
+        p.name.toLowerCase().includes('console table')
+      );
+      break;
+    case 'chairs':
+      products = allProducts.filter((p) =>
+        p.category === 'Chair' ||
+        p.name.toLowerCase().includes('chair') ||
+        p.name.toLowerCase().includes('stool')
+      );
       break;
   }
   return getUniqueProductsByName(products);
