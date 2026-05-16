@@ -50,6 +50,10 @@ const faqCategories: { [key: string]: FAQItem[] } = {
     {
       question: 'What is an unboxing video and why is it required?',
       answer: 'An unboxing video is a recording showing the package condition before opening and the product immediately after opening. It is mandatory for damaged/defective item claims as proof. Without this video, we cannot process returns for damaged items.'
+    },
+    {
+      question: 'What is the Sugan Wallet and can I withdraw from it?',
+      answer: 'The Sugan Wallet is store credit tied to your account. It is non-withdrawable — the balance cannot be transferred to a bank account or any payment method. It can only be used as store credit towards future orders on sugan.shop. Wallet balance does not expire and can be applied at checkout on any order.'
     }
   ],
   'Products & Care': [
