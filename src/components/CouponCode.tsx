@@ -19,7 +19,7 @@ interface CouponCodeProps {
 }
 
 const AVAILABLE_COUPONS = [
-  { code: 'FIRST10', discount: 10, type: 'percent', minOrder: 0, description: '10% off your first order' },
+  { code: 'FIRST10', discount: 10, type: 'percent', minOrder: 0, description: '10% off your first order (max ₹499)' },
 ];
 
 export default function CouponCode({
@@ -64,7 +64,7 @@ export default function CouponCode({
           setError('This code is only valid for your second order');
           return;
         }
-        const discount = Math.round((subtotal * 15) / 100);
+        const discount = Math.min(Math.round((subtotal * 15) / 100), 499);
         onApplyCoupon(discount, 'LOVESUGAN');
         setSuccess(`Coupon applied! You saved ₹${discount.toLocaleString()}`);
         setCode('');
@@ -81,9 +81,10 @@ export default function CouponCode({
         setError(`Minimum order amount is ₹${coupon.minOrder} for this coupon`);
         return;
       }
-      const discount = coupon.type === 'percent'
+      const rawDiscount = coupon.type === 'percent'
         ? Math.round((subtotal * coupon.discount) / 100)
         : coupon.discount;
+      const discount = Math.min(rawDiscount, 499);
       onApplyCoupon(discount, coupon.code);
       setSuccess(`Coupon applied! You saved ₹${discount.toLocaleString()}`);
       setCode('');
@@ -111,7 +112,7 @@ export default function CouponCode({
         setError('This code is misconfigured - contact support');
         return;
       }
-      const discount = Math.round((subtotal * aff.discountPercent) / 100);
+      const discount = Math.min(Math.round((subtotal * aff.discountPercent) / 100), 499);
       const meta: AffiliateMeta = {
         code: normalized,
         email: aff.email,

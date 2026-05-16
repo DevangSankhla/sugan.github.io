@@ -32,8 +32,24 @@ export default function ReturnsRefunds() {
             <div>
               <h3 className="font-body font-medium text-amber-800 mb-1">Return Processing Fee</h3>
               <p className="text-amber-700 font-body text-sm">
-                A processing fee of <strong>₹100</strong> will be deducted from your refund amount for all returns. 
+                A processing fee will be deducted from your refund amount for all returns:{' '}
+                <strong>₹100 for orders under ₹2,999</strong>, and{' '}
+                <strong>10% of the order total for orders ₹2,999 and above</strong>.
                 This fee covers inspection, restocking, and handling costs.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Wallet Refund Notice */}
+        <div className="bg-sugan-bone border border-sugan-gold/30 rounded-2xl p-6 mb-8">
+          <div className="flex items-start gap-3">
+            <CheckCircle className="w-6 h-6 text-sugan-gold flex-shrink-0 mt-0.5" />
+            <div>
+              <h3 className="font-body font-medium text-sugan-ink mb-1">Refunds Credited to Your Sugan Wallet</h3>
+              <p className="text-sugan-ink/70 font-body text-sm">
+                All refunds are credited to the <strong>Sugan wallet linked to the account that placed the order</strong>.
+                Wallet balance can be applied to any future order at checkout.
               </p>
             </div>
           </div>
@@ -59,7 +75,7 @@ export default function ReturnsRefunds() {
             </div>
             <div className="bg-sugan-bone p-4 rounded-xl text-center">
               <CheckCircle className="w-8 h-8 text-sugan-gold mx-auto mb-2" />
-              <p className="font-display text-2xl text-sugan-ink">-₹100</p>
+              <p className="font-display text-2xl text-sugan-ink">₹100 / 10%</p>
               <p className="text-sm text-sugan-ink/60 font-body">Processing Fee</p>
             </div>
           </div>
@@ -188,8 +204,8 @@ export default function ReturnsRefunds() {
             <div className="flex gap-4">
               <div className="w-8 h-8 bg-sugan-gold text-white rounded-full flex items-center justify-center font-display flex-shrink-0">6</div>
               <div>
-                <h3 className="font-body font-medium text-sugan-ink mb-1">Refund Processed</h3>
-                <p className="text-sugan-ink/60 font-body text-sm">After successful inspection, refund will be processed within 7-10 business days (minus ₹100 processing fee)</p>
+                <h3 className="font-body font-medium text-sugan-ink mb-1">Refund Credited to Wallet</h3>
+                <p className="text-sugan-ink/60 font-body text-sm">After successful inspection, your refund will be credited to your Sugan wallet within 7-10 business days, minus the processing fee (₹100 for orders under ₹2,999, or 10% of the order total for orders ₹2,999 and above)</p>
               </div>
             </div>
           </div>
@@ -212,12 +228,12 @@ export default function ReturnsRefunds() {
               <span className="font-medium">1-2 business days</span>
             </div>
             <div className="flex justify-between items-center py-2 border-b border-sugan-bone/10">
-              <span className="text-sugan-bone/80">Refund Processing</span>
+              <span className="text-sugan-bone/80">Refund Credit (Sugan Wallet)</span>
               <span className="font-medium">7-10 business days</span>
             </div>
             <div className="flex justify-between items-center py-2 border-b border-sugan-bone/10">
               <span className="text-sugan-bone/80">Processing Fee</span>
-              <span className="font-medium text-sugan-gold">₹100 deducted</span>
+              <span className="font-medium text-sugan-gold">₹100 / 10%</span>
             </div>
             <div className="flex justify-between items-center py-2">
               <span className="text-sugan-bone/80">Total Time</span>
