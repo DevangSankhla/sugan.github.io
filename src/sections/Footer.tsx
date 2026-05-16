@@ -26,7 +26,7 @@ const columns: FooterColumn[] = [
   {
     label: 'Company',
     links: [
-      { label: 'About', to: '/#about' },
+      { label: 'About', to: '/about' },
       { label: 'Contact', to: '/contact' },
       { label: 'Account', to: '/account' },
     ],
