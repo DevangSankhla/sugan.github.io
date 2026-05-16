@@ -3553,6 +3553,222 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
     },
     photos: ['/images/SAC110_01.png', '/images/SAC110_02.png']
    }
+  },
+  {
+   id: 'SAC111',
+   name: 'Open Frame Side Table',
+   price: 6999,
+   description: 'Clean, open, and crafted with honest simplicity - the Open Frame Side Table is a living room accent in solid acacia wood that balances practicality with a refined structural form. The rectangular top sits on an open frame base with a lower shelf, creating a piece that offers two display levels within a slim, considered footprint. The natural acacia grain and warm finish add character and warmth to an otherwise minimal design.',
+   image: '/images/SAC111_01.png',
+   category: 'Side Table',
+   room: 'living',
+   inStock: true,
+   details: {
+    materials: 'Acacia Wood',
+    finish: 'Natural Warm Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['100% Solid Acacia Wood', 'Rectangular top with open lower shelf', 'Open frame base', 'Slim footprint'],
+    sustainability: 'Sustainably sourced acacia wood',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '58 cm',
+     width: '51 cm',
+     depth: '36 cm'
+    },
+    photos: ['/images/SAC111_01.png', '/images/SAC111_02.png']
+   }
+  },
+  {
+   id: 'SAC117',
+   name: 'Cylinder Toronto Marble Top Side Table',
+   price: 4999,
+   description: 'Small in footprint, high in material quality - the Cylinder Toronto Marble Top Side Table is a compact living room accent that brings genuine natural stone character to any corner. A smooth Toronto marble top with natural veining sits on a slim cylindrical acacia wood base, creating a refined, contemporary accent piece that works beside an armchair, sofa, or bed. An affordable way to bring genuine marble quality into the home.',
+   image: '/images/SAC117_01.png',
+   category: 'Side Table',
+   room: 'living',
+   inStock: true,
+   details: {
+    materials: 'Acacia Wood, Toronto Marble',
+    finish: 'Natural Wood Base, Polished Marble Top',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['Toronto marble top', 'Slim cylindrical acacia wood base', 'Compact proportions', 'Material contrast'],
+    sustainability: 'Sustainably sourced acacia wood',
+    care: 'Wipe wood with a dry cloth, clean marble with a damp cloth, avoid acidic substances on marble surface',
+    dimensions: {
+     height: '51 cm',
+     width: '38 cm',
+     depth: '38 cm'
+    },
+    photos: ['/images/SAC117_01.png', '/images/SAC117_02.png']
+   }
+  },
+  {
+   id: 'SAC118',
+   name: 'Tall Slim Cylinder Side Table',
+   price: 3999,
+   description: 'Stripped back and quietly confident - the Tall Slim Cylinder Side Table is a minimal living room accent in solid acacia wood that delivers a practical top surface in the smallest possible footprint. The clean cylindrical body and flat round top create a form that is entirely without unnecessary detail, relying entirely on the natural warmth and grain of the acacia wood for its character. Tall enough to sit comfortably beside an armchair, slim enough to fit anywhere.',
+   image: '/images/SAC118_01.png',
+   category: 'Side Table',
+   room: 'living',
+   inStock: true,
+   details: {
+    materials: 'Acacia Wood',
+    finish: 'Natural Warm Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['100% Solid Acacia Wood', 'Tall slim cylindrical form', 'Flat round top', 'Affordable accent piece'],
+    sustainability: 'Sustainably sourced acacia wood',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '61 cm',
+     width: '35 cm',
+     depth: '35 cm'
+    },
+    photos: ['/images/SAC118_01.png', '/images/SAC118_02.png']
+   }
+  },
+  {
+   id: 'SAC119',
+   name: 'Round Toronto Marble Top Side Table',
+   price: 4999,
+   description: 'Clean in form and refined in material - the Round Toronto Marble Top Side Table is a compact living room accent that pairs solid acacia wood with a genuine Toronto marble surface in a neat round form. The naturally veined marble top sits on a slim, structured acacia wood base, creating a piece that brings real material quality to any space without demanding too much room. A versatile accent that suits both contemporary and classic interiors.',
+   image: '/images/SAC119_01.png',
+   category: 'Side Table',
+   room: 'living',
+   inStock: true,
+   details: {
+    materials: 'Acacia Wood, Toronto Marble',
+    finish: 'Natural Wood Base, Polished Marble Top',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['Toronto marble top', 'Solid acacia wood base', 'Round form', 'Material contrast'],
+    sustainability: 'Sustainably sourced acacia wood',
+    care: 'Wipe wood with a dry cloth, clean marble with a damp cloth, avoid acidic substances on marble surface',
+    dimensions: {
+     height: '51 cm',
+     width: '41 cm',
+     depth: '41 cm'
+    },
+    photos: ['/images/SAC119_01.png', '/images/SAC119_02.png']
+   }
+  },
+  {
+   id: 'SAC120',
+   name: 'Compact Square Side Table',
+   price: 3999,
+   description: 'Simple, solid, and genuinely well-crafted - the Compact Square Side Table is a versatile living room accent in solid acacia wood that does exactly what a good side table should. The clean square top sits on a minimal structured base, creating a no-fuss surface for everyday use beside any sofa or armchair. The natural acacia grain adds warmth and character to an otherwise restrained form.',
+   image: '/images/SAC120_01.png',
+   category: 'Side Table',
+   room: 'living',
+   inStock: true,
+   details: {
+    materials: 'Acacia Wood',
+    finish: 'Natural Warm Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['100% Solid Acacia Wood', 'Clean square top', 'Minimal base structure', 'Compact proportions'],
+    sustainability: 'Sustainably sourced acacia wood',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '50 cm',
+     width: '41 cm',
+     depth: '41 cm'
+    },
+    photos: ['/images/SAC120_01.png', '/images/SAC120_02.png']
+   }
+  },
+  {
+   id: 'SAC121',
+   name: 'Low Square Side Table',
+   price: 3999,
+   description: 'Low, neat, and quietly useful - the Low Square Side Table is a compact living room accent in solid acacia wood that brings warmth and practicality to any seating area. The clean square top sits on a minimal base at a comfortable lower height, making it ideal beside low-profile sofas or floor-level seating arrangements. The natural acacia grain adds warmth and character to a form that is deliberately restrained.',
+   image: '/images/SAC121_01.png',
+   category: 'Side Table',
+   room: 'living',
+   inStock: true,
+   details: {
+    materials: 'Acacia Wood',
+    finish: 'Natural Warm Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['100% Solid Acacia Wood', 'Clean square top', 'Low profile', 'Minimal base structure'],
+    sustainability: 'Sustainably sourced acacia wood',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '46 cm',
+     width: '41 cm',
+     depth: '41 cm'
+    },
+    photos: ['/images/SAC121_01.png', '/images/SAC121_02.png']
+   }
+  },
+  {
+   id: 'SAC122',
+   name: 'Tall Round Pedestal Side Table',
+   price: 3999,
+   description: 'Slender, tall, and warmly crafted - the Tall Round Pedestal Side Table is a slim living room accent in solid acacia wood that brings a practical surface to any armchair or sofa at exactly the right height. The small round top sits on a slim pedestal body, creating a clean, vertical form that takes up almost no floor space while providing a useful and well-proportioned surface. The natural acacia grain adds warmth and character throughout.',
+   image: '/images/SAC122_01.png',
+   category: 'Side Table',
+   room: 'living',
+   inStock: true,
+   details: {
+    materials: 'Acacia Wood',
+    finish: 'Natural Warm Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['100% Solid Acacia Wood', 'Small round top', 'Tall slim pedestal', 'Affordable accent'],
+    sustainability: 'Sustainably sourced acacia wood',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '56 cm',
+     width: '38 cm',
+     depth: '38 cm'
+    },
+    photos: ['/images/SAC122_01.png', '/images/SAC122_02.png']
+   }
+  },
+  {
+   id: 'SAC124',
+   name: 'Long Low Bench Coffee Table',
+   price: 9999,
+   description: 'Long, low, and effortlessly cool - the Long Low Bench Coffee Table is a living room centrepiece in solid mango wood that brings a relaxed, gallery-like quality to any space. The extremely long, narrow top sits on a minimal low base, creating a bench-like silhouette that suits open-plan living rooms with low-profile seating. The natural mango wood grain flows across the entire length of the top surface, making this an expansive canvas of natural character.',
+   image: '/images/SAC124_01.png',
+   category: 'Coffee Table',
+   room: 'living',
+   inStock: true,
+   details: {
+    materials: 'Mango Wood',
+    finish: 'Natural Warm Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['100% Solid Mango Wood', 'Extra-long narrow top', 'Low profile', 'Minimal base structure'],
+    sustainability: 'Sustainably sourced mango wood',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '34 cm',
+     width: '119 cm',
+     depth: '20 cm'
+    },
+    photos: ['/images/SAC124_01.png', '/images/SAC124_02.png']
+   }
   }
  ],
  bedroom: [
@@ -4133,6 +4349,87 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
     },
     photos: ['/images/SAC074_01.png', '/images/SAC074_02.png']
    }
+  },
+  {
+   id: 'SAC114',
+   name: 'Open Back Dining Chair - Set of 2',
+   price: 9999,
+   description: 'Timeless craft for the dining room - the Open Back Dining Chair is a set of two solid acacia wood chairs that bring warmth, character, and traditional woodworking detail to any dining space. The open back design with its turned or slatted uprights keeps the form light and airy, while the solid acacia wood construction ensures each chair is built for everyday use. Sold as a set of two, they bring an instant sense of considered pairing to any dining table setup.',
+   image: '/images/SAC114_01.png',
+   category: 'Chair',
+   room: 'dining',
+   inStock: true,
+   details: {
+    materials: 'Acacia Wood',
+    finish: 'Natural Warm Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['100% Solid Acacia Wood', 'Open back design', 'Traditional joinery', 'Sold as set of 2'],
+    sustainability: 'Sustainably sourced acacia wood',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '83 cm',
+     width: '48 cm',
+     depth: '48 cm'
+    },
+    photos: ['/images/SAC114_01.png', '/images/SAC114_02.png']
+   }
+  },
+  {
+   id: 'SAC115',
+   name: 'Classic Dining Chair - Set of 2',
+   price: 9999,
+   description: 'Solid, dependable, and built with genuine craft - the Classic Dining Chair is a set of two solid acacia wood chairs designed for dining rooms that value quality and character in equal measure. The clean, classic form with a structured back and solid seat provides comfortable, everyday dining seating with an artisan warmth that factory-made chairs simply cannot replicate. Sold as a set of two, they bring immediate cohesion to any dining table setup.',
+   image: '/images/SAC115_01.png',
+   category: 'Chair',
+   room: 'dining',
+   inStock: true,
+   details: {
+    materials: 'Acacia Wood',
+    finish: 'Natural Warm Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['100% Solid Acacia Wood', 'Classic structured form', 'Solid construction', 'Sold as set of 2'],
+    sustainability: 'Sustainably sourced acacia wood',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '80 cm',
+     width: '47 cm',
+     depth: '48 cm'
+    },
+    photos: ['/images/SAC115_01.png', '/images/SAC115_02.png']
+   }
+  },
+  {
+   id: 'SAC116',
+   name: 'Upholstered Seat Dining Chair',
+   price: 7999,
+   description: 'Where comfort meets craft - the Upholstered Seat Dining Chair is a versatile seating piece that works as well at a home office desk as it does at a dining table. The structured back and upholstered seat provide a level of comfort that pure wood chairs cannot match, while the overall form retains a clean, contemporary character that suits a wide range of interior styles. A practical, stylish chair built for long sessions at the table or desk.',
+   image: '/images/SAC116_01.png',
+   category: 'Chair',
+   room: 'dining',
+   inStock: true,
+   details: {
+    materials: 'Wood Frame, Upholstered Seat',
+    finish: 'Natural Frame, Fabric Seat',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['Upholstered seat', 'Structured back', 'Clean contemporary design', 'Dual purpose'],
+    sustainability: 'Sustainably sourced wood frame',
+    care: 'Wipe frame with a dry cloth, spot clean upholstery as needed',
+    dimensions: {
+     height: '88 cm',
+     width: '58 cm',
+     depth: '55 cm'
+    },
+    photos: ['/images/SAC116_01.png', '/images/SAC116_02.png']
+   }
   }
  ],
  office: [],
@@ -4198,6 +4495,87 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
    relatedSizes: [
     { size: 'Honey', productId: 'SAC057', price: 0 }
    ]
+  },
+  {
+   id: 'SAC112',
+   name: 'Tall Multi-Shelf Cabinet Bookshelf',
+   price: 9999,
+   description: 'Tall, structured, and built for serious storage - the Tall Multi-Shelf Cabinet Bookshelf is a solid acacia wood storage piece designed for home libraries, offices, and living rooms that demand both capacity and character. Multiple open shelves provide generous display and storage space across the full height of the piece, while the solid acacia wood construction ensures it will stand up to years of daily use. The warm, natural finish brings a sense of craft and warmth to even the most utilitarian storage setup.',
+   image: '/images/SAC112_01.png',
+   category: 'Bookshelf',
+   room: 'library',
+   inStock: true,
+   details: {
+    materials: 'Acacia Wood',
+    finish: 'Natural Warm Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['100% Solid Acacia Wood', 'Multiple open shelves', 'Tall proportions', 'Natural warm finish'],
+    sustainability: 'Sustainably sourced acacia wood',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '102 cm',
+     width: '60 cm',
+     depth: '30 cm'
+    },
+    photos: ['/images/SAC112_01.png', '/images/SAC112_02.png']
+   }
+  },
+  {
+   id: 'SAC113',
+   name: 'Compact Open Cabinet Bookshelf',
+   price: 7999,
+   description: 'Compact, warm, and genuinely useful - the Compact Open Cabinet Bookshelf is a smaller-format storage piece in solid acacia wood that brings order and character to any home library, office, or living room corner. Multiple open shelves provide practical display and storage space within a footprint that fits almost anywhere, while the warm natural finish of the acacia wood adds craft and warmth to the overall form.',
+   image: '/images/SAC113_01.png',
+   category: 'Bookshelf',
+   room: 'library',
+   inStock: true,
+   details: {
+    materials: 'Acacia Wood',
+    finish: 'Natural Warm Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['100% Solid Acacia Wood', 'Multiple open shelves', 'Compact format', 'Versatile placement'],
+    sustainability: 'Sustainably sourced acacia wood',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '88 cm',
+     width: '41 cm',
+     depth: '36 cm'
+    },
+    photos: ['/images/SAC113_01.png', '/images/SAC113_02.png']
+   }
+  },
+  {
+   id: 'SAC123',
+   name: 'Wide Open Bookshelf',
+   price: 6999,
+   description: 'Wide, open, and built for generous display - the Wide Open Bookshelf is a solid acacia wood storage piece that brings both practical capacity and warm craft character to any library, home office, or living room. Multiple open shelves span a generous width, providing ample display and storage space for books, plants, ceramics, and curated objects. The natural acacia grain flows across every shelf and panel, adding warmth and authenticity to a form that is as functional as it is handsome.',
+   image: '/images/SAC123_01.png',
+   category: 'Bookshelf',
+   room: 'library',
+   inStock: true,
+   details: {
+    materials: 'Acacia Wood',
+    finish: 'Natural Warm Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['100% Solid Acacia Wood', 'Wide open shelves', 'Multiple shelf levels', 'Open design'],
+    sustainability: 'Sustainably sourced acacia wood',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '91 cm',
+     width: '114 cm',
+     depth: '36 cm'
+    },
+    photos: ['/images/SAC123_01.png', '/images/SAC123_02.png']
+   }
   }
  ],
  outdoor: [],
