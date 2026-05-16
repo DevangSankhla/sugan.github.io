@@ -2741,6 +2741,818 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
     },
     photos: ['/images/SAC074_01.png', '/images/SAC074_02.png']
    }
+  },
+  {
+   id: 'SAC075',
+   name: 'Bleached Slab Leg Coffee Table',
+   price: 9999,
+   description: 'Low, wide, and effortlessly understated - the Bleached Slab Leg Coffee Table brings a raw, organic calm to any living space. Crafted from solid mango wood in a light bleached finish, its long oval-edged rectangular top sits on broad flat slab legs that keep the form grounded and minimal. The pale washed tone draws out the natural grain of the mango wood while giving the piece a driftwood-like quality that suits coastal, Scandi, and organic modern interiors equally well.',
+   image: '/images/SAC075_01.png',
+   category: 'Coffee Table',
+   room: 'living',
+   inStock: true,
+   details: {
+    materials: 'Mango Wood',
+    finish: 'Bleached Natural Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['100% Solid Mango Wood', 'Wide low profile', 'Flat slab legs', 'Bleached finish'],
+    sustainability: 'Sustainably sourced mango wood',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '38 cm',
+     width: '109 cm',
+     depth: '58 cm'
+    },
+    photos: ['/images/SAC075_01.png', '/images/SAC075_02.png']
+   }
+  },
+  {
+   id: 'SAC076',
+   name: 'Dark Base Organic Top Coffee Table',
+   price: 11999,
+   description: 'Bold contrasts and organic forms define the Dark Base Organic Top Coffee Table, a living room centrepiece that commands attention without effort. Crafted from solid mango wood, the free-form organic shaped top sits above a set of dramatically dark sculptural legs, creating a striking two-tone composition that balances raw craft with contemporary design sensibility. The natural grain of the mango wood flows across the top surface, making every piece genuinely one of a kind.',
+   image: '/images/SAC076_01.png',
+   category: 'Coffee Table',
+   room: 'living',
+   inStock: true,
+   details: {
+    materials: 'Mango Wood',
+    finish: 'Natural Top, Dark Ebony Base',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['100% Solid Mango Wood', 'Organic free-form top', 'Dark sculptural base', 'Two-tone composition'],
+    sustainability: 'Sustainably sourced mango wood',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '38 cm',
+     width: '107 cm',
+     depth: '71 cm'
+    },
+    photos: ['/images/SAC076_01.png', '/images/SAC076_02.png']
+   }
+  },
+  {
+   id: 'SAC077',
+   name: 'Pedestal Round Coffee Table',
+   price: 14999,
+   description: 'A true living room centrepiece, the Pedestal Round Coffee Table is a celebration of sculptural craftsmanship in solid mango wood. The wide round top with a beautifully visible natural grain sits atop a solid turned pedestal base, creating a clean, timeless silhouette that works as confidently in a modern interior as it does in a more traditional setting. The warm honey finish brings out the depth and character of the mango wood throughout.',
+   image: '/images/SAC077_01.png',
+   category: 'Coffee Table',
+   room: 'living',
+   inStock: true,
+   details: {
+    materials: 'Mango Wood',
+    finish: 'Honey Walnut Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['100% Solid Mango Wood', 'Wide round top', 'Solid turned pedestal base', 'Warm honey finish'],
+    sustainability: 'Sustainably sourced mango wood',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '38 cm',
+     width: '91 cm',
+     depth: '91 cm'
+    },
+    photos: ['/images/SAC077_01.png', '/images/SAC077_02.png']
+   }
+  },
+  {
+   id: 'SAC078',
+   name: 'Log Base Travertine Top Coffee Table',
+   price: 15999,
+   description: 'Nature and luxury in one piece - the Log Base Travertine Top Coffee Table brings together the raw beauty of solid mango wood and the refined elegance of travertine marble. A smooth round travertine marble top rests on a chunky, textured mango wood log-style base that retains all the character and organic grain of the natural timber. The contrast between the cool stone surface and the warm wood base creates a material dialogue that feels both grounded and luxurious.',
+   image: '/images/SAC078_01.png',
+   category: 'Coffee Table',
+   room: 'living',
+   inStock: true,
+   details: {
+    materials: 'Mango Wood, Travertine Marble',
+    finish: 'Natural Wood Base, Polished Travertine Top',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['Travertine marble top', 'Solid mango wood log base', 'Bold round silhouette', 'Material contrast'],
+    sustainability: 'Sustainably sourced mango wood',
+    care: 'Wipe wood with a dry cloth, clean marble with a damp cloth, avoid acidic substances on marble surface',
+    dimensions: {
+     height: '43 cm',
+     width: '84 cm',
+     depth: '84 cm'
+    },
+    photos: ['/images/SAC078_01.png', '/images/SAC078_02.png']
+   }
+  },
+  {
+   id: 'SAC079',
+   name: 'Travertine Top Pedestal Side Table',
+   price: 7999,
+   description: 'Compact, refined, and effortlessly elegant - the Travertine Top Pedestal Side Table is a versatile accent piece that brings a touch of natural luxury to any room. A smooth travertine marble top sits on a solid mango wood pedestal base, combining two of nature\'s finest materials in a clean, considered form. Small enough to tuck beside a sofa or bed, striking enough to hold its own in any space it occupies.',
+   image: '/images/SAC079_01.png',
+   category: 'Side Table',
+   room: 'living',
+   inStock: true,
+   details: {
+    materials: 'Mango Wood, Travertine Marble',
+    finish: 'Natural Wood Base, Polished Travertine Top',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['Travertine marble top', 'Square pedestal base in solid mango wood', 'Material contrast', 'Compact footprint'],
+    sustainability: 'Sustainably sourced mango wood',
+    care: 'Wipe wood with a dry cloth, clean marble with a damp cloth, avoid acidic substances on marble surface',
+    dimensions: {
+     height: '44 cm',
+     width: '42 cm',
+     depth: '42 cm'
+    },
+    photos: ['/images/SAC079_01.png', '/images/SAC079_02.png']
+   }
+  },
+  {
+   id: 'SAC080',
+   name: 'Trestle Base Travertine Top Coffee Table',
+   price: 15999,
+   description: 'Architectural structure meets natural luxury in the Trestle Base Travertine Top Coffee Table. A wide rectangular travertine marble top sits above a solid mango wood trestle base, creating a refined piece that is as strong in its construction as it is striking in its aesthetic. The warm tones of the mango wood complement the cool, naturally veined travertine surface for a material pairing that feels genuinely considered and premium.',
+   image: '/images/SAC080_01.png',
+   category: 'Coffee Table',
+   room: 'living',
+   inStock: true,
+   details: {
+    materials: 'Mango Wood, Travertine Marble',
+    finish: 'Natural Wood Base, Polished Travertine Top',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['Travertine marble top', 'Solid mango wood trestle base', 'Rectangular form', 'Material contrast'],
+    sustainability: 'Sustainably sourced mango wood',
+    care: 'Wipe wood with a dry cloth, clean marble with a damp cloth, avoid acidic substances on marble surface',
+    dimensions: {
+     height: '39 cm',
+     width: '91 cm',
+     depth: '56 cm'
+    },
+    photos: ['/images/SAC080_01.png', '/images/SAC080_02.png']
+   }
+  },
+  {
+   id: 'SAC081',
+   name: 'T-Base Travertine Top Side Table',
+   price: 8999,
+   description: 'Slim, tall, and quietly luxurious - the T-Base Travertine Top Side Table is a refined accent piece for the living room. A smooth travertine marble top rests on a solid mango wood base with a clean T-shaped or pedestal structure, creating a piece that is elegant in proportion and warm in material character. The height and slim footprint make it ideal beside an armchair or at the end of a sofa.',
+   image: '/images/SAC081_01.png',
+   category: 'Side Table',
+   room: 'living',
+   inStock: true,
+   details: {
+    materials: 'Mango Wood, Travertine Marble',
+    finish: 'Natural Wood Base, Polished Travertine Top',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['Travertine marble top', 'Solid mango wood base', 'Taller proportions', 'Slim footprint'],
+    sustainability: 'Sustainably sourced mango wood',
+    care: 'Wipe wood with a dry cloth, clean marble with a damp cloth, avoid acidic substances on marble surface',
+    dimensions: {
+     height: '55 cm',
+     width: '61 cm',
+     depth: '46 cm'
+    },
+    photos: ['/images/SAC081_01.png', '/images/SAC081_02.png']
+   }
+  },
+  {
+   id: 'SAC082',
+   name: 'Large Trestle Frame Travertine Coffee Table',
+   price: 15999,
+   description: 'Grand in scale and refined in material, the Large Trestle Frame Travertine Coffee Table is a statement piece built for spacious living rooms. A wide travertine marble slab top sits above a solid acacia wood trestle frame base, combining the natural warmth of hand-crafted timber with the cool elegance of genuine travertine stone. The substantial proportions make it a true room anchor, while the open trestle base keeps the overall form feeling light and considered.',
+   image: '/images/SAC082_01.png',
+   category: 'Coffee Table',
+   room: 'living',
+   inStock: true,
+   details: {
+    materials: 'Acacia Wood, Travertine Marble',
+    finish: 'Natural Wood Base, Polished Travertine Top',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['Travertine marble slab top', 'Solid acacia wood trestle base', 'Open frame structure', 'Grand scale'],
+    sustainability: 'Sustainably sourced acacia wood',
+    care: 'Wipe wood with a dry cloth, clean marble with a damp cloth, avoid acidic substances on marble surface',
+    dimensions: {
+     height: '40 cm',
+     width: '110 cm',
+     depth: '70 cm'
+    },
+    photos: ['/images/SAC082_01.png', '/images/SAC082_02.png']
+   }
+  },
+  {
+   id: 'SAC083',
+   name: 'Angular Base Travertine Top Side Table',
+   price: 8999,
+   description: 'Architectural and refined, the Angular Base Travertine Top Side Table is a contemporary accent piece that pairs solid acacia wood with a genuine travertine marble surface. The angular, geometric wood base provides a structured, design-forward foundation for the cool stone top, creating a piece that feels both considered and luxurious. Compact in footprint, strong in character.',
+   image: '/images/SAC083_01.png',
+   category: 'Side Table',
+   room: 'living',
+   inStock: true,
+   details: {
+    materials: 'Acacia Wood, Travertine Marble',
+    finish: 'Natural Wood Base, Polished Travertine Top',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['Travertine marble top', 'Solid acacia wood angular base', 'Material contrast', 'Square proportions'],
+    sustainability: 'Sustainably sourced acacia wood',
+    care: 'Wipe wood with a dry cloth, clean marble with a damp cloth, avoid acidic substances on marble surface',
+    dimensions: {
+     height: '43 cm',
+     width: '55 cm',
+     depth: '55 cm'
+    },
+    photos: ['/images/SAC083_01.png', '/images/SAC083_02.png']
+   }
+  },
+  {
+   id: 'SAC084',
+   name: 'Sculptural Base Round Coffee Table',
+   price: 8999,
+   description: 'Organic, sculptural, and full of character - the Sculptural Base Round Coffee Table is a living room piece that earns its place through genuine craft. Crafted from solid acacia wood, a smooth round top sits above a sculptural organic base that showcases the natural form and grain of the timber. Every surface reveals the natural beauty of the acacia wood, from the flowing grain patterns on the top to the raw character of the base structure.',
+   image: '/images/SAC084_01.png',
+   category: 'Coffee Table',
+   room: 'living',
+   inStock: true,
+   details: {
+    materials: 'Acacia Wood',
+    finish: 'Natural Honey Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['100% Solid Acacia Wood', 'Round top', 'Sculptural organic base', 'Natural acacia finish'],
+    sustainability: 'Sustainably sourced acacia wood',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '41 cm',
+     width: '71 cm',
+     depth: '71 cm'
+    },
+    photos: ['/images/SAC084_01.png', '/images/SAC084_02.png']
+   }
+  },
+  {
+   id: 'SAC085',
+   name: 'Open Shelf Pedestal Side Table',
+   price: 4999,
+   description: 'Practical, clean, and crafted with care - the Open Shelf Pedestal Side Table is a compact accent table that offers two levels of display and storage in a slim, considered form. Crafted from solid acacia wood, a square top sits above a pedestal structure with an open lower shelf, keeping everyday essentials or decor objects neatly within reach. The natural grain of the acacia wood adds warmth and character to an otherwise minimal silhouette.',
+   image: '/images/SAC085_01.png',
+   category: 'Side Table',
+   room: 'living',
+   inStock: true,
+   details: {
+    materials: 'Acacia Wood',
+    finish: 'Natural Honey Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['100% Solid Acacia Wood', 'Square top with open lower shelf', 'Pedestal base structure', 'Natural finish'],
+    sustainability: 'Sustainably sourced acacia wood',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '61 cm',
+     width: '44 cm',
+     depth: '44 cm'
+    },
+    photos: ['/images/SAC085_01.png', '/images/SAC085_02.png']
+   }
+  },
+  {
+   id: 'SAC086',
+   name: 'Wide Slatted Drum Coffee Table',
+   price: 9999,
+   description: 'Expansive, architectural, and unmistakably handcrafted - the Wide Slatted Drum Coffee Table is a bold living room centrepiece in solid acacia wood. A generously wide round top with a lipped edge sits above a full slatted drum base, with vertical slats arranged in an open formation around the circumference. The large scale and open slat structure create a piece that fills a room with presence without ever feeling heavy or imposing.',
+   image: '/images/SAC086_01.png',
+   category: 'Coffee Table',
+   room: 'living',
+   inStock: true,
+   details: {
+    materials: 'Acacia Wood',
+    finish: 'Natural Walnut Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['100% Solid Acacia Wood', 'Wide lipped round top', 'Slatted drum base', 'Natural acacia finish'],
+    sustainability: 'Sustainably sourced acacia wood',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '41 cm',
+     width: '99 cm',
+     depth: '99 cm'
+    },
+    photos: ['/images/SAC086_01.png', '/images/SAC086_02.png']
+   }
+  },
+  {
+   id: 'SAC087',
+   name: 'Geometric Base Square Side Table',
+   price: 6999,
+   description: 'Clean geometry and warm craft combine in the Geometric Base Square Side Table, a compact living room accent in solid acacia wood. A square top with clean edges sits above a geometric cutout base, creating a piece that is minimal in silhouette but considered in detail. The natural acacia grain adds warmth and character throughout, making this a versatile piece that sits comfortably beside a sofa or armchair without demanding too much space.',
+   image: '/images/SAC087_01.png',
+   category: 'Side Table',
+   room: 'living',
+   inStock: true,
+   details: {
+    materials: 'Acacia Wood',
+    finish: 'Natural Honey Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['100% Solid Acacia Wood', 'Square top', 'Geometric cutout base', 'Compact proportions'],
+    sustainability: 'Sustainably sourced acacia wood',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '46 cm',
+     width: '60 cm',
+     depth: '60 cm'
+    },
+    photos: ['/images/SAC087_01.png', '/images/SAC087_02.png']
+   }
+  },
+  {
+   id: 'SAC088',
+   name: 'Round Textured Pedestal Coffee Table',
+   price: 12999,
+   description: 'Grounded, tactile, and full of quiet confidence - the Round Textured Pedestal Coffee Table is a living room centrepiece crafted from solid mango wood in a muted, earthy finish. A wide round top with a lipped edge sits on a solid textured pedestal base, with a surface that reveals the natural character of the mango wood up close. The muted tone gives this piece a concrete-like visual quality while retaining all the warmth of real timber.',
+   image: '/images/SAC088_01.png',
+   category: 'Coffee Table',
+   room: 'living',
+   inStock: true,
+   details: {
+    materials: 'Mango Wood',
+    finish: 'Muted Earth Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['100% Solid Mango Wood', 'Wide lipped round top', 'Solid textured pedestal base', 'Muted earthy finish'],
+    sustainability: 'Sustainably sourced mango wood',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '42 cm',
+     width: '89 cm',
+     depth: '89 cm'
+    },
+    photos: ['/images/SAC088_01.png', '/images/SAC088_02.png']
+   }
+  },
+  {
+   id: 'SAC089',
+   name: 'Goblet Pedestal Side Table',
+   price: 6999,
+   description: 'Elegant in form and honest in craft, the Goblet Pedestal Side Table is a slim accent piece that brings a sculptural quality to any living room corner. Crafted from solid mango wood, the round top sits above a turned goblet-shaped pedestal base with a wide, flared foot, creating a silhouette that is classical in inspiration and contemporary in finish. The natural grain of the mango wood flows through the entire piece, adding warmth and character to every surface.',
+   image: '/images/SAC089_01.png',
+   category: 'Side Table',
+   room: 'living',
+   inStock: true,
+   details: {
+    materials: 'Mango Wood',
+    finish: 'Natural Warm Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['100% Solid Mango Wood', 'Round top', 'Goblet pedestal base', 'Natural warm finish'],
+    sustainability: 'Sustainably sourced mango wood',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '61 cm',
+     width: '45 cm',
+     depth: '45 cm'
+    },
+    photos: ['/images/SAC089_01.png', '/images/SAC089_02.png']
+   }
+  },
+  {
+   id: 'SAC090',
+   name: 'Grey Wash Round Coffee Table',
+   price: 9999,
+   description: 'Cool, calm, and crafted with considered simplicity - the Grey Wash Round Coffee Table brings a light, contemporary energy to any living room. Crafted from solid wood in a pale grey-washed finish, the wide round top sits on a clean pedestal or slab base that keeps the overall form uncluttered and versatile. The washed finish softens the natural grain of the timber, creating a surface that feels relaxed and effortlessly modern.',
+   image: '/images/SAC090_01.png',
+   category: 'Coffee Table',
+   room: 'living',
+   inStock: true,
+   details: {
+    materials: 'Solid Wood',
+    finish: 'Grey-Washed Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['100% Solid Wood', 'Wide round top', 'Grey-washed finish', 'Clean base structure'],
+    sustainability: 'Sustainably sourced solid wood',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '45 cm',
+     width: '80 cm',
+     depth: '80 cm'
+    },
+    photos: ['/images/SAC090_01.png', '/images/SAC090_02.png']
+   }
+  },
+  {
+   id: 'SAC091',
+   name: 'Tree Stump Side Table',
+   price: 6999,
+   description: 'Raw, warm, and beautifully honest - the Tree Stump Side Table is a compact accent piece that brings the organic character of solid mango wood into the living room in its most elemental form. Shaped to mimic the natural form of a tree stump, the piece features a flat round top and a ridged, textured cylindrical body that retains all the natural grain and character marks of the timber. No two pieces are identical, and that is entirely the point.',
+   image: '/images/SAC091_01.png',
+   category: 'Side Table',
+   room: 'living',
+   inStock: true,
+   details: {
+    materials: 'Mango Wood',
+    finish: 'Natural Warm Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['100% Solid Mango Wood', 'Stump-inspired silhouette', 'Flat round top', 'Natural grain and character marks'],
+    sustainability: 'Sustainably sourced mango wood',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '40 cm',
+     width: '40 cm',
+     depth: '40 cm'
+    },
+    photos: ['/images/SAC091_01.png', '/images/SAC091_02.png']
+   }
+  },
+  {
+   id: 'SAC092',
+   name: 'Wide Disc Coffee Table',
+   price: 9999,
+   description: 'Low, wide, and commanding - the Wide Disc Coffee Table is a living room centrepiece that proves restraint and impact are not mutually exclusive. Crafted from solid mango wood, the extra-wide round top with a clean lipped edge sits on a low solid base, creating a broad, grounded presence in any space it occupies. The natural mango wood grain flows across the large top surface, making every piece genuinely distinctive. Low to the ground and generous in width, this table works beautifully in relaxed, low-seating living room setups.',
+   image: '/images/SAC092_01.png',
+   category: 'Coffee Table',
+   room: 'living',
+   inStock: true,
+   details: {
+    materials: 'Mango Wood',
+    finish: 'Natural Honey Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['100% Solid Mango Wood', 'Extra-wide round top', 'Lipped edge', 'Low profile'],
+    sustainability: 'Sustainably sourced mango wood',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '30 cm',
+     width: '90 cm',
+     depth: '90 cm'
+    },
+    photos: ['/images/SAC092_01.png', '/images/SAC092_02.png']
+   }
+  },
+  {
+   id: 'SAC093',
+   name: 'Ribbed Cylinder Side Table',
+   price: 4999,
+   description: 'Small, tactile, and quietly sculptural - the Ribbed Cylinder Side Table is a compact accent piece in solid mango wood that works wherever you need a surface. The cylindrical body features a ribbed or textured exterior that adds depth and a handcrafted feel, topped with a clean flat round surface. Compact enough for any corner, characterful enough to be noticed.',
+   image: '/images/SAC093_01.png',
+   category: 'Side Table',
+   room: 'living',
+   inStock: true,
+   details: {
+    materials: 'Mango Wood',
+    finish: 'Natural Warm Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['100% Solid Mango Wood', 'Ribbed cylindrical body', 'Flat round top', 'Compact proportions'],
+    sustainability: 'Sustainably sourced mango wood',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '42 cm',
+     width: '40 cm',
+     depth: '40 cm'
+    },
+    photos: ['/images/SAC093_01.png', '/images/SAC093_02.png']
+   }
+  },
+  {
+   id: 'SAC094',
+   name: 'Plank Top Double Shelf Coffee Table',
+   price: 12999,
+   description: 'Rustic character meets practical design in the Plank Top Double Shelf Coffee Table, a generous living room piece in solid acacia wood. A wide rectangular top with visible plank joinery and natural grain sits above a lower display shelf, all supported by a sturdy leg structure that speaks to decades of woodworking tradition. The rich natural finish of the acacia wood brings warmth and depth to every surface, while the lower shelf keeps books, magazines, and everyday objects neatly within reach.',
+   image: '/images/SAC094_01.png',
+   category: 'Coffee Table',
+   room: 'living',
+   inStock: true,
+   details: {
+    materials: 'Acacia Wood',
+    finish: 'Natural Rich Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['100% Solid Acacia Wood', 'Wide plank top', 'Open lower shelf', 'Sturdy leg structure'],
+    sustainability: 'Sustainably sourced acacia wood',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '41 cm',
+     width: '112 cm',
+     depth: '69 cm'
+    },
+    photos: ['/images/SAC094_01.png', '/images/SAC094_02.png']
+   }
+  },
+  {
+   id: 'SAC095',
+   name: 'Cube Shelf Side Table',
+   price: 6999,
+   description: 'Versatile, minimal, and built to last - the Cube Shelf Side Table is a compact accent piece in solid acacia wood that works as well beside a bed as it does next to a sofa. The clean square form features a flat top surface and an open lower shelf, providing two levels of display and storage within a footprint that fits anywhere. The natural acacia grain adds warmth and character to what is otherwise a beautifully restrained design.',
+   image: '/images/SAC095_01.png',
+   category: 'Side Table',
+   room: 'living',
+   inStock: true,
+   details: {
+    materials: 'Acacia Wood',
+    finish: 'Natural Honey Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['100% Solid Acacia Wood', 'Cube silhouette', 'Flat top with open lower shelf', 'Compact proportions'],
+    sustainability: 'Sustainably sourced acacia wood',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '51 cm',
+     width: '51 cm',
+     depth: '51 cm'
+    },
+    photos: ['/images/SAC095_01.png', '/images/SAC095_02.png']
+   }
+  },
+  {
+   id: 'SAC096',
+   name: 'Low Organic Coffee Table with Ball Feet',
+   price: 9999,
+   description: 'Long, low, and full of personality - the Low Organic Coffee Table with Ball Feet is a living room piece that brings warmth, wit, and genuine craft in one form. Crafted from solid mango wood, the wide organic-edged rectangular top sits on a set of turned ball feet that give the piece a playful yet considered character. The natural grain and warm tones of the mango wood flow across the entire top surface, making every piece genuinely unique. Low in profile and generous in length, this table is designed for relaxed, lived-in living rooms.',
+   image: '/images/SAC096_01.png',
+   category: 'Coffee Table',
+   room: 'living',
+   inStock: true,
+   relatedSizes: [{ size: 'Dark Walnut', productId: 'SAC097', price: 9999 }],
+   details: {
+    materials: 'Mango Wood',
+    finish: 'Natural Honey Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['100% Solid Mango Wood', 'Wide organic top', 'Turned ball feet', 'Low profile'],
+    sustainability: 'Sustainably sourced mango wood',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '34 cm',
+     width: '119 cm',
+     depth: '80 cm'
+    },
+    photos: ['/images/SAC096_01.png', '/images/SAC096_02.png']
+   }
+  },
+  {
+   id: 'SAC097',
+   name: 'Low Organic Coffee Table with Ball Feet (Dark)',
+   price: 9999,
+   description: 'Long, low, and full of personality - the Low Organic Coffee Table with Ball Feet brings warmth, wit, and genuine craft to any living room. Crafted from solid mango wood in a rich dark walnut finish, the wide organic-edged rectangular top sits on a set of turned ball feet that give the piece a playful yet considered character. The deep, moody finish brings out the natural grain of the mango wood in a more dramatic way, making this the choice for darker, richer interior palettes. Low in profile and generous in length, it is designed for relaxed, lived-in living rooms.',
+   image: '/images/SAC097_01.png',
+   category: 'Coffee Table',
+   room: 'living',
+   inStock: true,
+   relatedSizes: [{ size: 'Natural Honey', productId: 'SAC096', price: 9999 }],
+   details: {
+    materials: 'Mango Wood',
+    finish: 'Dark Walnut Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['100% Solid Mango Wood', 'Wide organic top', 'Turned ball feet', 'Dark walnut finish'],
+    sustainability: 'Sustainably sourced mango wood',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '34 cm',
+     width: '119 cm',
+     depth: '80 cm'
+    },
+    photos: ['/images/SAC097_01.png', '/images/SAC097_02.png']
+   }
+  },
+  {
+   id: 'SAC101',
+   name: 'Mushroom Pedestal Side Table',
+   price: 4999,
+   description: 'Organic in form and honest in material, the Mushroom Pedestal Side Table is a compact living room accent in solid acacia wood. The wide round top with a subtle lipped edge sits on a solid mushroom-shaped pedestal base, creating a clean, sculptural silhouette that suits a wide range of interior styles. The natural acacia grain adds warmth and a sense of authenticity to every surface.',
+   image: '/images/SAC101_01.png',
+   category: 'Side Table',
+   room: 'living',
+   inStock: true,
+   details: {
+    materials: 'Acacia Wood',
+    finish: 'Natural Honey Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['100% Solid Acacia Wood', 'Wide round lipped top', 'Mushroom pedestal base', 'Natural finish'],
+    sustainability: 'Sustainably sourced acacia wood',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '50 cm',
+     width: '46 cm',
+     depth: '46 cm'
+    },
+    photos: ['/images/SAC101_01.png', '/images/SAC101_02.png']
+   }
+  },
+  {
+   id: 'SAC102',
+   name: 'Turned Leg Accent Side Table',
+   price: 6999,
+   description: 'Classic craftsmanship in a compact form - the Turned Leg Accent Side Table is a versatile bedside or living room accent in solid acacia wood. The clean square top sits on a set of hand-turned legs with a warm, traditional character, connected by a sturdy stretcher base that adds stability and visual interest. The natural acacia grain and warm finish make this a piece that works in both classic and contemporary interiors.',
+   image: '/images/SAC102_01.png',
+   category: 'Side Table',
+   room: 'living',
+   inStock: true,
+   details: {
+    materials: 'Acacia Wood',
+    finish: 'Natural Warm Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['100% Solid Acacia Wood', 'Clean square top', 'Hand-turned legs', 'Stretcher base'],
+    sustainability: 'Sustainably sourced acacia wood',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '46 cm',
+     width: '46 cm',
+     depth: '44 cm'
+    },
+    photos: ['/images/SAC102_01.png', '/images/SAC102_02.png']
+   }
+  },
+  {
+   id: 'SAC103',
+   name: 'Tall Slim Pedestal Side Table',
+   price: 3999,
+   description: 'Slim, tall, and quietly elegant - the Tall Slim Pedestal Side Table is a compact living room accent in solid acacia wood that earns its place beside any armchair or sofa. The small round or square top sits on a slender pedestal body, creating a clean, minimal silhouette that takes up very little floor space while providing a practical surface at the right height. The natural acacia grain adds warmth and character to an otherwise restrained form.',
+   image: '/images/SAC103_01.png',
+   category: 'Side Table',
+   room: 'living',
+   inStock: true,
+   details: {
+    materials: 'Acacia Wood',
+    finish: 'Natural Honey Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['100% Solid Acacia Wood', 'Tall slim profile', 'Pedestal form', 'Affordable accent'],
+    sustainability: 'Sustainably sourced acacia wood',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '51 cm',
+     width: '41 cm',
+     depth: '41 cm'
+    },
+    photos: ['/images/SAC103_01.png', '/images/SAC103_02.png']
+   }
+  },
+  {
+   id: 'SAC107',
+   name: 'Toronto Marble Top Side Table',
+   price: 6999,
+   description: 'A versatile accent piece with a genuinely luxurious material finish - the Toronto Marble Top Side Table pairs solid acacia wood with a clean Toronto marble surface for a compact side table that works in both living rooms and bedrooms. The naturally veined marble top sits on a solid acacia wood base, with the warm timber structure providing a natural counterpoint to the cool stone surface above.',
+   image: '/images/SAC107_01.png',
+   category: 'Side Table',
+   room: 'living',
+   inStock: true,
+   details: {
+    materials: 'Acacia Wood, Toronto Marble',
+    finish: 'Natural Wood Base, Polished Marble Top',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['Toronto marble top', 'Solid acacia wood base', 'Versatile proportions', 'Material contrast'],
+    sustainability: 'Sustainably sourced acacia wood',
+    care: 'Wipe wood with a dry cloth, clean marble with a damp cloth, avoid acidic substances on marble surface',
+    dimensions: {
+     height: '51 cm',
+     width: '45 cm',
+     depth: '49 cm'
+    },
+    photos: ['/images/SAC107_01.png', '/images/SAC107_02.png']
+   }
+  },
+  {
+   id: 'SAC108',
+   name: 'Banswada Marble Top Side Table',
+   price: 6999,
+   description: 'Warm, grounded, and quietly luxurious - the Banswada Marble Top Side Table pairs solid acacia wood with a genuine Banswada marble surface for a living room accent that brings natural material quality to any space. The warm-toned, naturally veined Banswada marble top sits above a solid acacia wood base, creating a material pairing that feels rich without being showy. Compact and versatile, this is a piece that earns its place in any living room.',
+   image: '/images/SAC108_01.png',
+   category: 'Side Table',
+   room: 'living',
+   inStock: true,
+   details: {
+    materials: 'Acacia Wood, Banswada Marble',
+    finish: 'Natural Wood Base, Polished Marble Top',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['Banswada marble top', 'Solid acacia wood base', 'Material harmony', 'Natural material quality'],
+    sustainability: 'Sustainably sourced acacia wood',
+    care: 'Wipe wood with a dry cloth, clean marble with a damp cloth, avoid acidic substances on marble surface',
+    dimensions: {
+     height: '50 cm',
+     width: '47 cm',
+     depth: '44 cm'
+    },
+    photos: ['/images/SAC108_01.png', '/images/SAC108_02.png']
+   }
+  },
+  {
+   id: 'SAC109',
+   name: 'Tall Pedestal Banswada Marble Top Side Table',
+   price: 4999,
+   description: 'Slim, tall, and refined in material - the Tall Pedestal Banswada Marble Top Side Table is a compact living room accent that brings natural stone quality to any corner. The genuine Banswada marble top with its warm, natural veining sits on a tall, slim acacia wood pedestal base, creating a piece that is elegant in proportion and honest in material. Its slender profile makes it ideal for tight spaces, while the marble top adds an immediate sense of quality.',
+   image: '/images/SAC109_01.png',
+   category: 'Side Table',
+   room: 'living',
+   inStock: true,
+   details: {
+    materials: 'Acacia Wood, Banswada Marble',
+    finish: 'Natural Wood Base, Polished Marble Top',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['Banswada marble top', 'Solid acacia wood pedestal base', 'Tall slim profile', 'Affordable natural stone accent'],
+    sustainability: 'Sustainably sourced acacia wood',
+    care: 'Wipe wood with a dry cloth, clean marble with a damp cloth, avoid acidic substances on marble surface',
+    dimensions: {
+     height: '59 cm',
+     width: '41 cm',
+     depth: '41 cm'
+    },
+    photos: ['/images/SAC109_01.png', '/images/SAC109_02.png']
+   }
+  },
+  {
+   id: 'SAC110',
+   name: 'Square Banswada Marble Top Side Table',
+   price: 6999,
+   description: 'Compact, grounded, and genuinely premium in material - the Square Banswada Marble Top Side Table pairs solid acacia wood with a warm Banswada marble surface in a clean square form. The natural stone top with its warm-toned veining sits above a solid acacia wood base, creating a material pairing that feels rich, considered, and deeply rooted in natural craft. A compact piece that punches well above its footprint in terms of visual quality.',
+   image: '/images/SAC110_01.png',
+   category: 'Side Table',
+   room: 'living',
+   inStock: true,
+   details: {
+    materials: 'Acacia Wood, Banswada Marble',
+    finish: 'Natural Wood Base, Polished Marble Top',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['Banswada marble top', 'Solid acacia wood base', 'Square form', 'Material harmony'],
+    sustainability: 'Sustainably sourced acacia wood',
+    care: 'Wipe wood with a dry cloth, clean marble with a damp cloth, avoid acidic substances on marble surface',
+    dimensions: {
+     height: '44 cm',
+     width: '46 cm',
+     depth: '46 cm'
+    },
+    photos: ['/images/SAC110_01.png', '/images/SAC110_02.png']
+   }
   }
  ],
  bedroom: [
@@ -2940,6 +3752,276 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
      depth: '46 cm'
     },
     photos: ['/images/SAC066_01.png', '/images/SAC066_02.png']
+   }
+  },
+  {
+   id: 'SAC099',
+   name: 'Rustic Drawer Bedside Table',
+   price: 7999,
+   description: 'Raw character and practical storage come together in the Rustic Drawer Bedside Table, a bedroom accent in solid acacia wood. The piece features a sturdy square top above a drawer unit with visible timber joinery and natural grain, all supported by a simple leg structure. The rustic, unrefined finish celebrates the natural character of the acacia wood - every knot, grain variation, and natural mark is left visible and celebrated.',
+   image: '/images/SAC099_01.png',
+   category: 'Bedside Table',
+   room: 'bedroom',
+   inStock: true,
+   details: {
+    materials: 'Acacia Wood',
+    finish: 'Rustic Natural Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['100% Solid Acacia Wood', 'Drawer storage', 'Rustic finish', 'Sturdy construction'],
+    sustainability: 'Sustainably sourced acacia wood',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '56 cm',
+     width: '51 cm',
+     depth: '36 cm'
+    },
+    photos: ['/images/SAC099_01.png', '/images/SAC099_02.png']
+   }
+  },
+  {
+   id: 'SAC100',
+   name: 'Open Shelf Single Drawer Bedside Table',
+   price: 6999,
+   description: 'Practical, warm, and built for everyday bedroom life - the Open Shelf Single Drawer Bedside Table is a compact nightstand in solid acacia wood that offers both display and drawer storage in a neat, considered form. A flat top surface sits above an open display shelf and a single lower drawer, providing three distinct levels of storage and display within a slim bedroom footprint. The natural acacia grain adds warmth and character throughout.',
+   image: '/images/SAC100_01.png',
+   category: 'Bedside Table',
+   room: 'bedroom',
+   inStock: true,
+   details: {
+    materials: 'Acacia Wood',
+    finish: 'Natural Honey Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['100% Solid Acacia Wood', 'Flat top with open shelf and single drawer', 'Three levels of storage', 'Compact proportions'],
+    sustainability: 'Sustainably sourced acacia wood',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '50 cm',
+     width: '44 cm',
+     depth: '38 cm'
+    },
+    photos: ['/images/SAC100_01.png', '/images/SAC100_02.png']
+   }
+  },
+  {
+   id: 'SAC104',
+   name: 'Tall Rustic Multi-Drawer Bedside Table',
+   price: 8999,
+   description: 'Generous in storage and rich in character - the Tall Rustic Multi-Drawer Bedside Table is a bedroom piece in solid acacia wood that brings both practicality and raw artisan warmth to the bedside. Taller than a conventional nightstand, the piece features multiple drawers with visible timber joinery and natural grain, creating a rustic storage unit that doubles as a genuine design statement. Every knot, grain variation, and natural character mark is left visible and celebrated.',
+   image: '/images/SAC104_01.png',
+   category: 'Bedside Table',
+   room: 'bedroom',
+   inStock: true,
+   details: {
+    materials: 'Acacia Wood',
+    finish: 'Rustic Natural Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['100% Solid Acacia Wood', 'Multiple drawers', 'Tall proportions', 'Rustic finish'],
+    sustainability: 'Sustainably sourced acacia wood',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '76 cm',
+     width: '56 cm',
+     depth: '37 cm'
+    },
+    photos: ['/images/SAC104_01.png', '/images/SAC104_02.png']
+   }
+  },
+  {
+   id: 'SAC105',
+   name: 'Toronto Marble Top Open Shelf Bedside Table',
+   price: 7999,
+   description: 'Refined material and practical form meet in the Toronto Marble Top Open Shelf Bedside Table, a bedroom accent that combines solid acacia wood with a genuine Toronto marble surface. The cool, naturally veined marble top sits above an open display shelf, providing a practical and beautiful bedside setup that keeps everyday essentials within easy reach. The warm acacia wood base grounds the cooler stone surface for a material pairing that feels both considered and premium.',
+   image: '/images/SAC105_01.png',
+   category: 'Bedside Table',
+   room: 'bedroom',
+   inStock: true,
+   details: {
+    materials: 'Acacia Wood, Toronto Marble',
+    finish: 'Natural Wood Base, Polished Marble Top',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['Toronto marble top', 'Solid acacia wood base with open shelf', 'Material contrast', 'Open shelf storage'],
+    sustainability: 'Sustainably sourced acacia wood',
+    care: 'Wipe wood with a dry cloth, clean marble with a damp cloth, avoid acidic substances on marble surface',
+    dimensions: {
+     height: '51 cm',
+     width: '46 cm',
+     depth: '38 cm'
+    },
+    photos: ['/images/SAC105_01.png', '/images/SAC105_02.png']
+   }
+  },
+  {
+   id: 'SAC106',
+   name: 'Toronto Marble Top Dark Bedside Table',
+   price: 7999,
+   description: 'Dark, refined, and built with genuine material quality - the Toronto Marble Top Dark Bedside Table pairs solid acacia wood in a deep finish with a genuine Toronto marble surface for a bedside piece that feels unmistakably premium. The cool, naturally veined marble top sits above a slim, dark wood body with storage, creating a piece that is as functional as it is beautiful. A material pairing that suits moody, design-forward bedroom palettes.',
+   image: '/images/SAC106_01.png',
+   category: 'Bedside Table',
+   room: 'bedroom',
+   inStock: true,
+   details: {
+    materials: 'Acacia Wood, Toronto Marble',
+    finish: 'Dark Wood Base, Polished Marble Top',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['Toronto marble top', 'Solid acacia wood body', 'Drawer storage', 'Dark finish'],
+    sustainability: 'Sustainably sourced acacia wood',
+    care: 'Wipe wood with a dry cloth, clean marble with a damp cloth, avoid acidic substances on marble surface',
+    dimensions: {
+     height: '51 cm',
+     width: '50 cm',
+     depth: '38 cm'
+    },
+    photos: ['/images/SAC106_01.png', '/images/SAC106_02.png']
+   }
+  },
+  {
+   id: 'SAC079',
+   name: 'Travertine Top Pedestal Side Table',
+   price: 7999,
+   description: 'Compact, refined, and effortlessly elegant - the Travertine Top Pedestal Side Table is a versatile accent piece that brings a touch of natural luxury to any room. A smooth travertine marble top sits on a solid mango wood pedestal base, combining two of nature\'s finest materials in a clean, considered form. Small enough to tuck beside a sofa or bed, striking enough to hold its own in any space it occupies.',
+   image: '/images/SAC079_01.png',
+   category: 'Side Table',
+   room: 'living',
+   inStock: true,
+   details: {
+    materials: 'Mango Wood, Travertine Marble',
+    finish: 'Natural Wood Base, Polished Travertine Top',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['Travertine marble top', 'Square pedestal base in solid mango wood', 'Material contrast', 'Compact footprint'],
+    sustainability: 'Sustainably sourced mango wood',
+    care: 'Wipe wood with a dry cloth, clean marble with a damp cloth, avoid acidic substances on marble surface',
+    dimensions: {
+     height: '44 cm',
+     width: '42 cm',
+     depth: '42 cm'
+    },
+    photos: ['/images/SAC079_01.png', '/images/SAC079_02.png']
+   }
+  },
+  {
+   id: 'SAC093',
+   name: 'Ribbed Cylinder Side Table',
+   price: 4999,
+   description: 'Small, tactile, and quietly sculptural - the Ribbed Cylinder Side Table is a compact accent piece in solid mango wood that works wherever you need a surface. The cylindrical body features a ribbed or textured exterior that adds depth and a handcrafted feel, topped with a clean flat round surface. Compact enough for any corner, characterful enough to be noticed.',
+   image: '/images/SAC093_01.png',
+   category: 'Side Table',
+   room: 'living',
+   inStock: true,
+   details: {
+    materials: 'Mango Wood',
+    finish: 'Natural Warm Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['100% Solid Mango Wood', 'Ribbed cylindrical body', 'Flat round top', 'Compact proportions'],
+    sustainability: 'Sustainably sourced mango wood',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '42 cm',
+     width: '40 cm',
+     depth: '40 cm'
+    },
+    photos: ['/images/SAC093_01.png', '/images/SAC093_02.png']
+   }
+  },
+  {
+   id: 'SAC095',
+   name: 'Cube Shelf Side Table',
+   price: 6999,
+   description: 'Versatile, minimal, and built to last - the Cube Shelf Side Table is a compact accent piece in solid acacia wood that works as well beside a bed as it does next to a sofa. The clean square form features a flat top surface and an open lower shelf, providing two levels of display and storage within a footprint that fits anywhere. The natural acacia grain adds warmth and character to what is otherwise a beautifully restrained design.',
+   image: '/images/SAC095_01.png',
+   category: 'Side Table',
+   room: 'living',
+   inStock: true,
+   details: {
+    materials: 'Acacia Wood',
+    finish: 'Natural Honey Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['100% Solid Acacia Wood', 'Cube silhouette', 'Flat top with open lower shelf', 'Compact proportions'],
+    sustainability: 'Sustainably sourced acacia wood',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '51 cm',
+     width: '51 cm',
+     depth: '51 cm'
+    },
+    photos: ['/images/SAC095_01.png', '/images/SAC095_02.png']
+   }
+  },
+  {
+   id: 'SAC102',
+   name: 'Turned Leg Accent Side Table',
+   price: 6999,
+   description: 'Classic craftsmanship in a compact form - the Turned Leg Accent Side Table is a versatile bedside or living room accent in solid acacia wood. The clean square top sits on a set of hand-turned legs with a warm, traditional character, connected by a sturdy stretcher base that adds stability and visual interest. The natural acacia grain and warm finish make this a piece that works in both classic and contemporary interiors.',
+   image: '/images/SAC102_01.png',
+   category: 'Side Table',
+   room: 'living',
+   inStock: true,
+   details: {
+    materials: 'Acacia Wood',
+    finish: 'Natural Warm Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['100% Solid Acacia Wood', 'Clean square top', 'Hand-turned legs', 'Stretcher base'],
+    sustainability: 'Sustainably sourced acacia wood',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '46 cm',
+     width: '46 cm',
+     depth: '44 cm'
+    },
+    photos: ['/images/SAC102_01.png', '/images/SAC102_02.png']
+   }
+  },
+  {
+   id: 'SAC107',
+   name: 'Toronto Marble Top Side Table',
+   price: 6999,
+   description: 'A versatile accent piece with a genuinely luxurious material finish - the Toronto Marble Top Side Table pairs solid acacia wood with a clean Toronto marble surface for a compact side table that works in both living rooms and bedrooms. The naturally veined marble top sits on a solid acacia wood base, with the warm timber structure providing a natural counterpoint to the cool stone surface above.',
+   image: '/images/SAC107_01.png',
+   category: 'Side Table',
+   room: 'living',
+   inStock: true,
+   details: {
+    materials: 'Acacia Wood, Toronto Marble',
+    finish: 'Natural Wood Base, Polished Marble Top',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['Toronto marble top', 'Solid acacia wood base', 'Versatile proportions', 'Material contrast'],
+    sustainability: 'Sustainably sourced acacia wood',
+    care: 'Wipe wood with a dry cloth, clean marble with a damp cloth, avoid acidic substances on marble surface',
+    dimensions: {
+     height: '51 cm',
+     width: '45 cm',
+     depth: '49 cm'
+    },
+    photos: ['/images/SAC107_01.png', '/images/SAC107_02.png']
    }
   }
  ],
@@ -3342,6 +4424,35 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
      depth: '17 cm'
     },
     photos: ['/images/SAC074_01.png', '/images/SAC074_02.png']
+   }
+  }
+ ],
+ entryway: [
+  {
+   id: 'SAC098',
+   name: 'Slim Leg Console Table',
+   price: 9999,
+   description: 'Understated, functional, and built with genuine craft - the Slim Leg Console Table is an entryway piece in solid acacia wood that sets the tone for every room beyond it. Long, narrow, and tall, the clean rectangular top sits on a set of slim, clean legs that keep the form airy and unobtrusive. The natural acacia grain adds warmth and authenticity to an otherwise minimal silhouette. Practical enough for an entryway, elegant enough for a living room or dining room wall.',
+   image: '/images/SAC098_01.png',
+   category: 'Console Table',
+   room: 'entryway',
+   inStock: true,
+   details: {
+    materials: 'Acacia Wood',
+    finish: 'Natural Honey Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['100% Solid Acacia Wood', 'Long narrow top', 'Slim leg structure', 'Versatile placement'],
+    sustainability: 'Sustainably sourced acacia wood',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: {
+     height: '77 cm',
+     width: '121 cm',
+     depth: '39 cm'
+    },
+    photos: ['/images/SAC098_01.png', '/images/SAC098_02.png']
    }
   }
  ],

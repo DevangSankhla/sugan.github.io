@@ -13,6 +13,7 @@ const ROOM_HERO_IMAGES: Record<string, string> = {
   library: '/images/SAC058_02.png',
   wall: '/images/SAC070_02.png',
   bar: '/images/SAC073_02.png',
+  entryway: '/images/SAC098_01.png',
 };
 
 const CATEGORY_HERO_IMAGES: Record<string, string> = {
