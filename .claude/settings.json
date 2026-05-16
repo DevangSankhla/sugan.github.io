@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(firebase functions:secrets:access SMTP_USER --project sugan-shop)"
+      "Bash(firebase functions:secrets:access SMTP_USER --project sugan-shop)",
+      "Bash(git commit -m ' *)"
     ]
   }
 }
