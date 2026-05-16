@@ -10,7 +10,7 @@ import { addToRecentlyViewed } from '@/components/RecentlyViewed';
 import RecentlyViewed from '@/components/RecentlyViewed';
 import RelatedProducts from '@/components/RelatedProducts';
 
-type SpecRow = { label: string; value: string };
+type SpecRow = { label: string; value: string; href?: string };
 
 function ExpandableDescription({ product }: { product: import('@/types').Product }) {
   const description = product.description;
@@ -172,6 +172,7 @@ export default function ProductDetail() {
   if (d?.usesAndMeasurements) specs.push({ label: 'Size Guide', value: d.usesAndMeasurements });
   if (d?.care) specs.push({ label: 'Care', value: d.care });
   if (d?.shipping) specs.push({ label: 'Shipping', value: d.shipping });
+  specs.push({ label: 'Returns', value: '7-day easy returns', href: '/returns-refunds' });
   if (d?.warranty) specs.push({ label: 'Warranty', value: d.warranty });
 
   const isHot = ['SAC048S', 'SAC048M', 'SAC048L'].includes(product.id);
@@ -555,7 +556,11 @@ export default function ProductDetail() {
                   {row.label}
                 </span>
                 <span className={`font-body text-body text-sugan-ink leading-relaxed ${row.label === 'Size Guide' ? 'whitespace-pre-line' : ''}`}>
-                  {row.value}
+                  {row.href ? (
+                    <Link to={row.href} className="underline underline-offset-2 hover:text-sugan-ink-soft transition-colors duration-200">
+                      {row.value}
+                    </Link>
+                  ) : row.value}
                 </span>
               </div>
             ))}
