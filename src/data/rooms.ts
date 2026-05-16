@@ -4502,7 +4502,7 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
    price: 9999,
    description: 'Tall, structured, and built for serious storage - the Tall Multi-Shelf Cabinet Bookshelf is a solid acacia wood storage piece designed for home libraries, offices, and living rooms that demand both capacity and character. Multiple open shelves provide generous display and storage space across the full height of the piece, while the solid acacia wood construction ensures it will stand up to years of daily use. The warm, natural finish brings a sense of craft and warmth to even the most utilitarian storage setup.',
    image: '/images/SAC112_01.png',
-   category: 'Bookshelf',
+   category: 'Open Cabinet',
    room: 'library',
    inStock: true,
    details: {
