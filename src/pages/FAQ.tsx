@@ -29,15 +29,15 @@ const faqCategories: { [key: string]: FAQItem[] } = {
   'Returns & Refunds': [
     {
       question: 'What is your return policy?',
-      answer: 'We offer a 7-day hassle-free return policy. If you are not satisfied with your purchase, you can return the item within 7 days of delivery for a refund credited to your Sugan wallet (minus a processing fee — ₹100 for orders under ₹2,999, or 10% of the order total for orders ₹2,999 and above), provided it is in unused condition with original packaging. For damaged/defective items, an unboxing video is mandatory as proof.'
+      answer: 'We offer a 7-day hassle-free return policy. If you are not satisfied with your purchase, you can return the item within 7 days of delivery for a refund (minus a processing fee — ₹100 for orders under ₹2,999, or 10% of the order total for orders ₹2,999 and above), provided it is in unused condition with original packaging. Prepaid orders can be refunded to the original payment method or your Sugan wallet — your choice. COD orders are refunded to your Sugan wallet. For damaged/defective items, an unboxing video is mandatory as proof.'
     },
     {
       question: 'How do I initiate a return?',
-      answer: 'To initiate a return, contact us at contact@sugan.shop or call +91 6367677255 within 7 days of delivery. Our team will guide you through the process and arrange a pickup. Note: A processing fee will be deducted from your refund — ₹100 for orders under ₹2,999, or 10% of the order total for orders ₹2,999 and above.'
+      answer: 'To initiate a return, contact us at contact@sugan.shop or call +91 6367677255 within 7 days of delivery. Include your order number, reason for return, and — if your order was prepaid — whether you would like the refund to your original payment method or your Sugan wallet. Our team will guide you through the process and arrange a pickup. Note: A processing fee will be deducted from your refund — ₹100 for orders under ₹2,999, or 10% of the order total for orders ₹2,999 and above.'
     },
     {
       question: 'When will I receive my refund?',
-      answer: 'Once we receive and inspect the returned item (quality check takes 1-2 days), your refund will be processed within 7-10 business days. The refund is credited to the Sugan wallet associated with the account that placed the order, minus the processing fee (₹100 for orders under ₹2,999, or 10% of the order total for orders ₹2,999 and above). Wallet balance can be used on any future order.'
+      answer: 'Once we receive and inspect the returned item (quality check takes 1-2 days), your refund will be processed within 7-10 business days, minus the processing fee (₹100 for orders under ₹2,999, or 10% of the order total for orders ₹2,999 and above). If your order was prepaid (card, UPI, net banking, or wallet), you can choose to receive the refund to your original payment method or your Sugan wallet — let us know your preference when initiating the return. COD orders are refunded to your Sugan wallet.'
     },
     {
       question: 'Are there any items that cannot be returned?',

@@ -41,15 +41,17 @@ export default function ReturnsRefunds() {
           </div>
         </div>
 
-        {/* Wallet Refund Notice */}
+        {/* Refund Mode Notice */}
         <div className="bg-sugan-bone border border-sugan-gold/30 rounded-2xl p-6 mb-8">
           <div className="flex items-start gap-3">
             <CheckCircle className="w-6 h-6 text-sugan-gold flex-shrink-0 mt-0.5" />
             <div>
-              <h3 className="font-body font-medium text-sugan-ink mb-1">Refunds Credited to Your Sugan Wallet</h3>
+              <h3 className="font-body font-medium text-sugan-ink mb-2">Refund to Original Payment Method or Sugan Wallet</h3>
+              <p className="text-sugan-ink/70 font-body text-sm mb-2">
+                <strong>Prepaid orders</strong> (paid via card, UPI, net banking, or wallet) can be refunded to the <strong>original payment method</strong> or to your <strong>Sugan wallet</strong> — your choice.
+              </p>
               <p className="text-sugan-ink/70 font-body text-sm">
-                All refunds are credited to the <strong>Sugan wallet linked to the account that placed the order</strong>.
-                Wallet balance can be applied to any future order at checkout.
+                COD and Sugan wallet orders are refunded to your Sugan wallet. In all cases, the applicable processing fee (₹100 for orders under ₹2,999, or 10% for orders ₹2,999 and above) is deducted from the refund amount.
               </p>
             </div>
           </div>
@@ -204,8 +206,8 @@ export default function ReturnsRefunds() {
             <div className="flex gap-4">
               <div className="w-8 h-8 bg-sugan-gold text-white rounded-full flex items-center justify-center font-display flex-shrink-0">6</div>
               <div>
-                <h3 className="font-body font-medium text-sugan-ink mb-1">Refund Credited to Wallet</h3>
-                <p className="text-sugan-ink/60 font-body text-sm">After successful inspection, your refund will be credited to your Sugan wallet within 7-10 business days, minus the processing fee (₹100 for orders under ₹2,999, or 10% of the order total for orders ₹2,999 and above)</p>
+                <h3 className="font-body font-medium text-sugan-ink mb-1">Refund Processed</h3>
+                <p className="text-sugan-ink/60 font-body text-sm">After successful inspection, your refund is processed within 7-10 business days, minus the processing fee (₹100 for orders under ₹2,999, or 10% for orders ₹2,999 and above). Prepaid orders can be refunded to the original payment method or your Sugan wallet — let us know your preference when initiating the return. COD orders are refunded to your Sugan wallet.</p>
               </div>
             </div>
           </div>
@@ -228,7 +230,7 @@ export default function ReturnsRefunds() {
               <span className="font-medium">1-2 business days</span>
             </div>
             <div className="flex justify-between items-center py-2 border-b border-sugan-bone/10">
-              <span className="text-sugan-bone/80">Refund Credit (Sugan Wallet)</span>
+              <span className="text-sugan-bone/80">Refund (Original Method / Wallet)</span>
               <span className="font-medium">7-10 business days</span>
             </div>
             <div className="flex justify-between items-center py-2 border-b border-sugan-bone/10">
