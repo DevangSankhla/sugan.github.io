@@ -172,7 +172,7 @@ export default function ProductDetail() {
   if (d?.usesAndMeasurements) specs.push({ label: 'Size Guide', value: d.usesAndMeasurements });
   if (d?.care) specs.push({ label: 'Care', value: d.care });
   if (d?.shipping) specs.push({ label: 'Shipping', value: d.shipping });
-  specs.push({ label: 'Returns', value: '7-day easy returns', href: '/returns-refunds' });
+  specs.push({ label: 'Returns', value: '7-day easy returns — read our return policy before ordering', href: '/returns' });
   if (d?.warranty) specs.push({ label: 'Warranty', value: d.warranty });
 
   const isHot = ['SAC048S', 'SAC048M', 'SAC048L'].includes(product.id);
