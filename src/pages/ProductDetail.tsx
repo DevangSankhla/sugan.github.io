@@ -312,9 +312,16 @@ export default function ProductDetail() {
             )}
 
             {/* Price */}
-            <p className="font-body text-display-md font-light text-sugan-ink tabular-nums">
-              {displayPrice === 0 ? 'Coming soon' : `₹${displayPrice.toLocaleString()}`}
-            </p>
+            <div className="flex items-baseline gap-3">
+              <p className="font-body text-display-md font-light text-sugan-ink tabular-nums">
+                {displayPrice === 0 ? 'Coming soon' : `₹${displayPrice.toLocaleString()}`}
+              </p>
+              {product.originalPrice && displayPrice > 0 && (
+                <span className="font-body text-body text-sugan-ink/40 line-through tabular-nums">
+                  ₹{product.originalPrice.toLocaleString()}
+                </span>
+              )}
+            </div>
 
             {/* Description — visible immediately, expandable if details.story is longer */}
             <ExpandableDescription product={product} />

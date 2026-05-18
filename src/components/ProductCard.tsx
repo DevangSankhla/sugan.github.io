@@ -148,8 +148,13 @@ export default function ProductCard({
             {sizeText ?? specLine}
           </p>
         )}
-        <p className="mt-2 font-body text-[15px] text-sugan-ink tabular-nums">
+        <p className="mt-2 font-body text-[15px] text-sugan-ink tabular-nums flex items-baseline gap-2">
           {product.price === 0 ? 'Coming soon' : `₹${product.price.toLocaleString()}`}
+          {product.originalPrice && product.price > 0 && (
+            <span className="text-[13px] text-sugan-ink/40 line-through">
+              ₹{product.originalPrice.toLocaleString()}
+            </span>
+          )}
         </p>
       </div>
     </Link>
