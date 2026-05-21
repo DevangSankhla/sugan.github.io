@@ -85,6 +85,7 @@ export interface Product {
   
   // PRICING
   originalPrice?: number;       // Compare at price (for sales)
+  onSale?: boolean;             // Show strikethrough originalPrice on listings
   preOrder?: boolean;           // Whether the product is available for pre-order
   preOrderMessage?: string;     // Custom message shown on pre-order products
   
