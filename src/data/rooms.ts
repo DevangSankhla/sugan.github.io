@@ -425,8 +425,8 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
   {
    id: 'SAC048L',
    name: 'Marble-Top Acacia Wood Pet Feeder with Stainless Steel Bowls',
-   price: 1599,
-   originalPrice: 1999,
+   price: 2399,
+   originalPrice: 2999,
    onSale: true,
    description: 'This large marble-top pet feeder pairs the warmth of acacia wood with the cool elegance of natural marble in a piece that looks as much like furniture as it does a feeder. The two stainless steel bowls sit at a height suited to larger breeds, supporting healthy posture and digestion. Every marble slab is hand-selected for its unique veining, and the acacia wood base is finished with food-safe mineral oil. Non-toxic throughout - safe for daily mealtime, beautiful enough to leave out.',
    image: '/images/SAC048L_01.png',
@@ -520,8 +520,8 @@ Food math: ~1.8 L = ~4–6 days for a 12 kg dog, well over a week for a cat.`
   {
    id: 'SAC048S',
    name: 'Marble-Top Acacia Wood Pet Feeder with Stainless Steel Bowls',
-   price: 2399,
-   originalPrice: 2999,
+   price: 1399,
+   originalPrice: 1999,
    onSale: true,
    description: 'This small marble-top pet feeder is made for cats and compact breeds who deserve beautiful materials at their daily mealtime. Natural acacia wood, genuine marble, and stainless steel come together in a piece that sits comfortably on a kitchen floor without looking like an afterthought. Non-toxic throughout, easy to clean, and finished with food-safe mineral oil - a piece that looks as intentional as your coffee table.',
    image: '/images/SAC048S_01.png',
