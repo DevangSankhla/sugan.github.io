@@ -118,6 +118,22 @@ export default function ProductCard({
           </span>
         )}
 
+        {/* Premium + Best Seller badges */}
+        {(product.isPremium || product.isBestSeller) && (
+          <div className="absolute bottom-3 left-3 flex flex-col gap-1 z-10">
+            {product.isPremium && (
+              <span className="bg-[#3C3530] text-[#FAF8F5] font-body text-[9px] tracking-[0.12em] uppercase px-2 py-1 w-fit">
+                Premium
+              </span>
+            )}
+            {product.isBestSeller && (
+              <span className="bg-emerald-700 text-white font-body text-[9px] tracking-[0.12em] uppercase px-2 py-1 w-fit">
+                Best Seller
+              </span>
+            )}
+          </div>
+        )}
+
         {/* Wishlist - persistent at low opacity, fills on active */}
         {showWishlist && (
           <button

@@ -86,6 +86,8 @@ export interface Product {
   // PRICING
   originalPrice?: number;       // Compare at price (for sales)
   onSale?: boolean;             // Show strikethrough originalPrice on listings
+  isPremium?: boolean;          // Show "Premium" badge on product card
+  isBestSeller?: boolean;       // Show "Best Seller" badge on product card
   preOrder?: boolean;           // Whether the product is available for pre-order
   preOrderMessage?: string;     // Custom message shown on pre-order products
   
