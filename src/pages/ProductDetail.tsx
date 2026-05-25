@@ -224,38 +224,38 @@ export default function ProductDetail() {
       <div className="grid grid-cols-1 lg:grid-cols-[60fr_40fr]">
         {/* Vertical image + video stack */}
         <div className="bg-sugan-bone-dark">
-          {galleryImages.length > 0 ? (
-            galleryImages.map((src, i) => (
-              <div
-                key={`${src}-${i}`}
-                className="relative w-full aspect-square lg:aspect-[4/5] overflow-hidden bg-sugan-bone-dark"
-              >
-                <img
-                  src={src}
-                  alt={`${product.name} - view ${i + 2}`}
-                  loading="lazy"
-                  className="absolute inset-0 w-full h-full object-contain"
-                  onError={() =>
-                    setFailedImages((prev) => {
-                      if (prev.has(src)) return prev;
-                      const next = new Set(prev);
-                      next.add(src);
-                      return next;
-                    })
-                  }
-                />
-              </div>
-            ))
-          ) : (
-            <div className="relative w-full aspect-square lg:aspect-[4/5] overflow-hidden bg-sugan-bone-dark">
+          {/* Hero image — always shown first */}
+          <div className="relative w-full aspect-square lg:aspect-[4/5] overflow-hidden bg-sugan-bone-dark">
+            <img
+              src={heroImage}
+              alt={product.name}
+              loading="lazy"
+              className="absolute inset-0 w-full h-full object-contain"
+            />
+          </div>
+
+          {/* Additional gallery images */}
+          {galleryImages.map((src, i) => (
+            <div
+              key={`${src}-${i}`}
+              className="relative w-full aspect-square lg:aspect-[4/5] overflow-hidden bg-sugan-bone-dark"
+            >
               <img
-                src={heroImage}
-                alt={product.name}
+                src={src}
+                alt={`${product.name} - view ${i + 2}`}
                 loading="lazy"
                 className="absolute inset-0 w-full h-full object-contain"
+                onError={() =>
+                  setFailedImages((prev) => {
+                    if (prev.has(src)) return prev;
+                    const next = new Set(prev);
+                    next.add(src);
+                    return next;
+                  })
+                }
               />
             </div>
-          )}
+          ))}
 
           {/* Videos */}
           {galleryVideos.map((src, i) => (
