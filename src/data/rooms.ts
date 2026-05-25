@@ -423,20 +423,20 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
 ]
   },
   {
-   id: 'SAC048L',
+   id: 'SAC048S',
    name: 'Marble-Top Acacia Wood Pet Feeder with Stainless Steel Bowls',
-   price: 2399,
-   originalPrice: 2999,
+   price: 1399,
+   originalPrice: 1999,
    onSale: true,
    isPremium: true,
    isBestSeller: true,
-   description: 'This large marble-top pet feeder pairs the warmth of acacia wood with the cool elegance of natural marble in a piece that looks as much like furniture as it does a feeder. The two stainless steel bowls sit at a height suited to larger breeds, supporting healthy posture and digestion. Every marble slab is hand-selected for its unique veining, and the acacia wood base is finished with food-safe mineral oil. Non-toxic throughout - safe for daily mealtime, beautiful enough to leave out.',
-   image: '/images/SAC048L_01.png',
+   description: 'This small marble-top pet feeder is made for cats and compact breeds who deserve beautiful materials at their daily mealtime. Natural acacia wood, genuine marble, and stainless steel come together in a piece that sits comfortably on a kitchen floor without looking like an afterthought. Non-toxic throughout, easy to clean, and finished with food-safe mineral oil - a piece that looks as intentional as your coffee table.',
+   image: '/images/SAC048S_01.png',
    category: 'Pet Feeders',
    room: 'pet',
    inStock: true,
    rating: 4.9,
-   reviews: 238,
+   reviews: 66,
    details: {
     materials: 'Acacia wood',
     finish: 'Natural marble top, mineral oil finish',
@@ -446,28 +446,29 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
     returns: '7-day easy returns',
     usp: ['Handcrafted in Jodhpur'],
     sustainability: 'Sustainably sourced wood',
-    story: 'We started Sugan because we believed your pet deserved better than a plastic bowl on the floor. This feeder pairs hand-selected acacia wood - sustainably sourced from forests across India - with a natural marble top and two detachable stainless steel bowls. The raised stance supports posture-friendly eating for larger breeds, the materials are completely plastic-free, and every piece is handcrafted in our Jodhpur workshop.',
+    story: 'We started Sugan because we believed your pet deserved better than a plastic bowl on the floor. This feeder pairs hand-selected acacia wood - sustainably sourced from forests across India - with a natural marble top and two detachable stainless steel bowls. Compact enough for cats and small breeds, and handcrafted in our Jodhpur workshop.',
     care: 'Hand wash with mild soap. Do not soak.',
     maintenance: 'Apply mineral oil periodically',
-    videos: ['/videos/SAC048L_video.mp4'],
-    usesAndMeasurements: `50×29×26 cm, 2.5 L
+    videos: ['/videos/SAC048S_video.mp4'],
+    usesAndMeasurements: `32×18×12 cm, 1 L
 
-Pet shoulder height: ~45–65 cm
-Pet weight: ~20–35 kg
-Category: Medium-to-large dogs only. Overkill for cats.
-Breeds: Labrador Retriever, Golden Retriever, German Shepherd, Boxer
-Food math: A 25 kg Lab eats ~300–400 g/day (~500–700 ml dry kibble volume), so 2.5 L = ~3–4 days of food. Decent buffer.`
+Pet shoulder height: ~20–30 cm (dogs) / standard cat height
+Pet weight: ~2–8 kg
+Category: Cats and toy/small dog breeds. The 12 cm height is basically a low-profile bowl - ergonomic for cats and short-legged dogs.
+Cat breeds: Persian, Siamese, Bengal, Indian domestic shorthair
+Small dog breeds: Pug, Shih Tzu, Pomeranian, Lhasa Apso
+Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
    },
    relatedSizes: [
-    {
-        'size': 'Small',
-        'productId': 'SAC048S',
-        'price': 1999
-    },
     {
         'size': 'Medium',
         'productId': 'SAC048M',
         'price': 2499
+    },
+    {
+        'size': 'Large',
+        'productId': 'SAC048L',
+        'price': 2999
     }
 ]
   },
@@ -522,20 +523,20 @@ Food math: ~1.8 L = ~4–6 days for a 12 kg dog, well over a week for a cat.`
 ]
   },
   {
-   id: 'SAC048S',
+   id: 'SAC048L',
    name: 'Marble-Top Acacia Wood Pet Feeder with Stainless Steel Bowls',
-   price: 1399,
-   originalPrice: 1999,
+   price: 2399,
+   originalPrice: 2999,
    onSale: true,
    isPremium: true,
    isBestSeller: true,
-   description: 'This small marble-top pet feeder is made for cats and compact breeds who deserve beautiful materials at their daily mealtime. Natural acacia wood, genuine marble, and stainless steel come together in a piece that sits comfortably on a kitchen floor without looking like an afterthought. Non-toxic throughout, easy to clean, and finished with food-safe mineral oil - a piece that looks as intentional as your coffee table.',
-   image: '/images/SAC048S_01.png',
+   description: 'This large marble-top pet feeder pairs the warmth of acacia wood with the cool elegance of natural marble in a piece that looks as much like furniture as it does a feeder. The two stainless steel bowls sit at a height suited to larger breeds, supporting healthy posture and digestion. Every marble slab is hand-selected for its unique veining, and the acacia wood base is finished with food-safe mineral oil. Non-toxic throughout - safe for daily mealtime, beautiful enough to leave out.',
+   image: '/images/SAC048L_01.png',
    category: 'Pet Feeders',
    room: 'pet',
    inStock: true,
    rating: 4.9,
-   reviews: 66,
+   reviews: 238,
    details: {
     materials: 'Acacia wood',
     finish: 'Natural marble top, mineral oil finish',
@@ -545,29 +546,28 @@ Food math: ~1.8 L = ~4–6 days for a 12 kg dog, well over a week for a cat.`
     returns: '7-day easy returns',
     usp: ['Handcrafted in Jodhpur'],
     sustainability: 'Sustainably sourced wood',
-    story: 'We started Sugan because we believed your pet deserved better than a plastic bowl on the floor. This feeder pairs hand-selected acacia wood - sustainably sourced from forests across India - with a natural marble top and two detachable stainless steel bowls. Compact enough for cats and small breeds, and handcrafted in our Jodhpur workshop.',
+    story: 'We started Sugan because we believed your pet deserved better than a plastic bowl on the floor. This feeder pairs hand-selected acacia wood - sustainably sourced from forests across India - with a natural marble top and two detachable stainless steel bowls. The raised stance supports posture-friendly eating for larger breeds, the materials are completely plastic-free, and every piece is handcrafted in our Jodhpur workshop.',
     care: 'Hand wash with mild soap. Do not soak.',
     maintenance: 'Apply mineral oil periodically',
-    videos: ['/videos/SAC048S_video.mp4'],
-    usesAndMeasurements: `32×18×12 cm, 1 L
+    videos: ['/videos/SAC048L_video.mp4'],
+    usesAndMeasurements: `50×29×26 cm, 2.5 L
 
-Pet shoulder height: ~20–30 cm (dogs) / standard cat height
-Pet weight: ~2–8 kg
-Category: Cats and toy/small dog breeds. The 12 cm height is basically a low-profile bowl - ergonomic for cats and short-legged dogs.
-Cat breeds: Persian, Siamese, Bengal, Indian domestic shorthair
-Small dog breeds: Pug, Shih Tzu, Pomeranian, Lhasa Apso
-Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
+Pet shoulder height: ~45–65 cm
+Pet weight: ~20–35 kg
+Category: Medium-to-large dogs only. Overkill for cats.
+Breeds: Labrador Retriever, Golden Retriever, German Shepherd, Boxer
+Food math: A 25 kg Lab eats ~300–400 g/day (~500–700 ml dry kibble volume), so 2.5 L = ~3–4 days of food. Decent buffer.`
    },
    relatedSizes: [
+    {
+        'size': 'Small',
+        'productId': 'SAC048S',
+        'price': 1999
+    },
     {
         'size': 'Medium',
         'productId': 'SAC048M',
         'price': 2499
-    },
-    {
-        'size': 'Large',
-        'productId': 'SAC048L',
-        'price': 2999
     }
 ]
   },
