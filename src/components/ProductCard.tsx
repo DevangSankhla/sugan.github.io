@@ -5,6 +5,7 @@ import { useAuth } from '@/context/AuthContext';
 import { db } from '@/lib/firebase';
 import { collection, query, where, onSnapshot, addDoc, deleteDoc, doc } from 'firebase/firestore';
 import type { Product } from '@/types';
+import { formatPrice } from '@/lib/utils';
 
 interface ProductCardProps {
   product: Product;
@@ -118,16 +119,15 @@ export default function ProductCard({
           </span>
         )}
 
-        {/* Premium + Best Seller badges */}
         {(product.isPremium || product.isBestSeller) && (
           <div className="absolute bottom-3 left-3 flex flex-col gap-1 z-10">
             {product.isPremium && (
-              <span className="bg-[#3C3530] text-[#FAF8F5] font-body text-[9px] tracking-[0.12em] uppercase px-2 py-1 w-fit">
+              <span className="bg-sugan-ink-soft text-sugan-bone font-body text-[9px] tracking-[0.12em] uppercase px-2 py-1 w-fit">
                 Premium
               </span>
             )}
             {product.isBestSeller && (
-              <span className="bg-emerald-700 text-white font-body text-[9px] tracking-[0.12em] uppercase px-2 py-1 w-fit">
+              <span className="bg-emerald-700 text-sugan-bone font-body text-[9px] tracking-[0.12em] uppercase px-2 py-1 w-fit">
                 Best Seller
               </span>
             )}
@@ -165,7 +165,7 @@ export default function ProductCard({
           </p>
         )}
         <p className="mt-2 font-body text-[15px] text-sugan-ink tabular-nums flex items-baseline gap-2">
-          {product.price === 0 ? 'Coming soon' : `₹${product.price.toLocaleString()}`}
+          {formatPrice(product.price)}
           {product.onSale && product.originalPrice && product.price > 0 && (
             <span className="text-[13px] text-sugan-ink/40 line-through">
               ₹{product.originalPrice.toLocaleString()}

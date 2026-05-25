@@ -3,12 +3,13 @@ import { ArrowLeft, ShoppingBag, Star, Minus, Plus, Heart, Share2, MapPin, Ruler
 import { allProducts, getAllSizeVariants, getBaseProductName, hasSizeVariants } from '@/data/rooms';
 import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { db } from '@/lib/firebase';
 import { collection, query, where, onSnapshot, addDoc, deleteDoc, doc } from 'firebase/firestore';
 import { addToRecentlyViewed } from '@/components/RecentlyViewed';
 import RecentlyViewed from '@/components/RecentlyViewed';
 import RelatedProducts from '@/components/RelatedProducts';
+import { formatPrice } from '@/lib/utils';
 
 type SpecRow = { label: string; value: string; href?: string };
 
@@ -132,7 +133,8 @@ export default function ProductDetail() {
     }
   };
 
-  const getAllImages = (): string[] => {
+  const [failedImages, setFailedImages] = useState<Set<string>>(new Set());
+  const allImages = useMemo(() => {
     const seen = new Set<string>();
     const images: string[] = [];
     const add = (src: string) => { if (!seen.has(src)) { seen.add(src); images.push(src); } };
@@ -140,10 +142,7 @@ export default function ProductDetail() {
     if (product.image.includes('_01.png')) add(product.image.replace('_01.png', '_02.png'));
     if (product.details?.photos) product.details.photos.forEach(add);
     return images;
-  };
-
-  const [failedImages, setFailedImages] = useState<Set<string>>(new Set());
-  const allImages = getAllImages();
+  }, [product.image, product.details?.photos]);
   const heroImage = allImages[0];
   const galleryImages = allImages.slice(1).filter((src) => !failedImages.has(src));
   const galleryVideos: string[] = product.details?.videos ?? [];
@@ -153,27 +152,29 @@ export default function ProductDetail() {
   const displaySku =
     product.details?.variants?.[selectedVariant]?.sku || product.id;
 
-  // Build the specifications table
-  const specs: SpecRow[] = [];
-  const d = product.details;
-  if (d?.materials) specs.push({ label: 'Material', value: d.materials });
-  if (d?.construction) specs.push({ label: 'Construction', value: d.construction });
-  if (d?.finish) specs.push({ label: 'Finish', value: d.finish });
-  if (d?.dimensions) {
-    const parts: string[] = [];
-    if (d.dimensions.height) parts.push(`H ${d.dimensions.height}`);
-    if (d.dimensions.length) parts.push(`L ${d.dimensions.length}`);
-    if (d.dimensions.width) parts.push(`W ${d.dimensions.width}`);
-    if (d.dimensions.depth) parts.push(`D ${d.dimensions.depth}`);
-    if (d.dimensions.diameter) parts.push(`Ø ${d.dimensions.diameter}`);
-    if (parts.length) specs.push({ label: 'Dimensions', value: parts.join(' · ') });
-    if (d.dimensions.weight) specs.push({ label: 'Weight', value: String(d.dimensions.weight) });
-  }
-  if (d?.usesAndMeasurements) specs.push({ label: 'Size Guide', value: d.usesAndMeasurements });
-  if (d?.care) specs.push({ label: 'Care', value: d.care });
-  if (d?.shipping) specs.push({ label: 'Shipping', value: d.shipping });
-  specs.push({ label: 'Returns', value: '7-day easy returns — read our return policy before ordering', href: '/returns' });
-  if (d?.warranty) specs.push({ label: 'Warranty', value: d.warranty });
+  const specs = useMemo(() => {
+    const rows: SpecRow[] = [];
+    const d = product.details;
+    if (d?.materials) rows.push({ label: 'Material', value: d.materials });
+    if (d?.construction) rows.push({ label: 'Construction', value: d.construction });
+    if (d?.finish) rows.push({ label: 'Finish', value: d.finish });
+    if (d?.dimensions) {
+      const parts: string[] = [];
+      if (d.dimensions.height) parts.push(`H ${d.dimensions.height}`);
+      if (d.dimensions.length) parts.push(`L ${d.dimensions.length}`);
+      if (d.dimensions.width) parts.push(`W ${d.dimensions.width}`);
+      if (d.dimensions.depth) parts.push(`D ${d.dimensions.depth}`);
+      if (d.dimensions.diameter) parts.push(`Ø ${d.dimensions.diameter}`);
+      if (parts.length) rows.push({ label: 'Dimensions', value: parts.join(' · ') });
+      if (d.dimensions.weight) rows.push({ label: 'Weight', value: String(d.dimensions.weight) });
+    }
+    if (d?.usesAndMeasurements) rows.push({ label: 'Size Guide', value: d.usesAndMeasurements });
+    if (d?.care) rows.push({ label: 'Care', value: d.care });
+    if (d?.shipping) rows.push({ label: 'Shipping', value: d.shipping });
+    rows.push({ label: 'Returns', value: '7-day easy returns — read our return policy before ordering', href: '/returns' });
+    if (d?.warranty) rows.push({ label: 'Warranty', value: d.warranty });
+    return rows;
+  }, [product.details]);
 
   const isHot = ['SAC048S', 'SAC048M', 'SAC048L'].includes(product.id);
 
@@ -224,7 +225,6 @@ export default function ProductDetail() {
       <div className="grid grid-cols-1 lg:grid-cols-[60fr_40fr]">
         {/* Vertical image + video stack */}
         <div className="bg-sugan-bone-dark">
-          {/* Hero image — always shown first */}
           <div className="relative w-full aspect-square lg:aspect-[4/5] overflow-hidden bg-sugan-bone-dark">
             <img
               src={heroImage}
@@ -234,7 +234,6 @@ export default function ProductDetail() {
             />
           </div>
 
-          {/* Additional gallery images */}
           {galleryImages.map((src, i) => (
             <div
               key={`${src}-${i}`}
@@ -314,7 +313,7 @@ export default function ProductDetail() {
             {/* Price */}
             <div className="flex items-baseline gap-3">
               <p className="font-body text-display-md font-light text-sugan-ink tabular-nums">
-                {displayPrice === 0 ? 'Coming soon' : `₹${displayPrice.toLocaleString()}`}
+                {formatPrice(displayPrice)}
               </p>
               {product.onSale && product.originalPrice && displayPrice > 0 && (
                 <span className="font-body text-body text-sugan-ink/40 line-through tabular-nums">
