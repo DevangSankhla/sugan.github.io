@@ -2234,6 +2234,56 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
     maintenance: 'Apply mineral oil periodically'
    }
   },
+  {
+   id: 'SAC125',
+   name: 'Solid Wood Stepping Stool',
+   price: 1499,
+   description: 'Simple, sturdy, and endlessly useful - the Solid Wood Stepping Stool is a compact acacia wood piece that earns its place in any home. Built on a clean U-shaped metal-accented base with a solid acacia wood seat, this stool is equally at home as a stepping aid, a low plant stand, a gardening seat, or a casual perch beside a window or potting table. The combination of solid acacia wood and dark metal legs gives it a grounded, industrial-meets-natural character that works across a wide range of home and outdoor settings. Compact, lightweight, and genuinely versatile.',
+   image: '/images/SAC125_01.png',
+   category: 'Stepping Stool',
+   room: 'kitchen',
+   inStock: true,
+   details: {
+    materials: 'Acacia Wood, Metal',
+    finish: 'Natural Acacia Wood, Dark Metal Frame',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['Solid Acacia Wood seat — dense, durable, and naturally grained', 'Dark metal U-frame base — strong, stable, and built for regular everyday use', 'Multi-purpose design — stepping stool, plant stand, garden seat, or accent perch', 'Compact footprint — stores easily and fits anywhere', 'Natural and industrial material pairing'],
+    sustainability: 'Sustainably sourced acacia wood',
+    care: 'Wipe wood with a dry or slightly damp cloth, wipe metal with a dry cloth to prevent rust, avoid prolonged outdoor moisture exposure',
+    dimensions: {
+     height: '25 cm',
+     length: '30 cm',
+     width: '30 cm'
+    },
+    photos: ['/images/SAC125_01.png', '/images/SAC125_02.png']
+   }
+  },
+  {
+   id: 'SAC126',
+   name: 'Oval Serving Tray - Set of 2',
+   price: 1499,
+   description: 'Warm, natural, and crafted for everyday use - the Oval Serving Tray Set brings two generously sized acacia wood trays to your kitchen or living room table. Each tray features a classic oval form with a raised rim edge and a beautifully visible natural grain pattern across the surface, with the distinctive lighter and darker streaks of acacia wood creating a striking two-tone effect on every piece. Sold as a set of two in complementary sizes, they nest together for easy storage and work together or independently for serving, organising, or displaying across the home.',
+   image: '/images/SAC126_01.png',
+   category: 'Serving Tray',
+   room: 'kitchen',
+   inStock: true,
+   details: {
+    materials: 'Acacia Wood',
+    finish: 'Natural Acacia Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['100% Solid Acacia Wood — dense, naturally antibacterial, and beautifully grained', 'Set of 2 in nested sizes — large and small tray that store together and work independently', 'Oval form with raised rim — keeps contents secure while serving or displaying', 'Natural two-tone grain — the distinctive acacia streaking makes every set unique', 'Versatile use — serving food, organising countertops, or styling a coffee table'],
+    sustainability: 'Sustainably sourced acacia wood',
+    care: 'Hand wash with mild soap, dry immediately, do not soak or put in dishwasher, apply food-safe mineral oil periodically to maintain finish',
+    usesAndMeasurements: 'Large tray: 41×20×5 cm (L×W×H)\nSmall tray: 36×15×5 cm (L×W×H)',
+    photos: ['/images/SAC126_01.png', '/images/SAC126_02.png']
+   }
+  },
  ],
  living: [
   {
@@ -3777,6 +3827,29 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
      depth: '20 cm'
     },
     photos: ['/images/SAC124_01.png', '/images/SAC124_02.png']
+   }
+  },
+  {
+   id: 'SAC126',
+   name: 'Oval Serving Tray - Set of 2',
+   price: 1499,
+   description: 'Warm, natural, and crafted for everyday use - the Oval Serving Tray Set brings two generously sized acacia wood trays to your kitchen or living room table. Each tray features a classic oval form with a raised rim edge and a beautifully visible natural grain pattern across the surface, with the distinctive lighter and darker streaks of acacia wood creating a striking two-tone effect on every piece. Sold as a set of two in complementary sizes, they nest together for easy storage and work together or independently for serving, organising, or displaying across the home.',
+   image: '/images/SAC126_01.png',
+   category: 'Serving Tray',
+   room: 'living',
+   inStock: true,
+   details: {
+    materials: 'Acacia Wood',
+    finish: 'Natural Acacia Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['100% Solid Acacia Wood — dense, naturally antibacterial, and beautifully grained', 'Set of 2 in nested sizes — large and small tray that store together and work independently', 'Oval form with raised rim — keeps contents secure while serving or displaying', 'Natural two-tone grain — the distinctive acacia streaking makes every set unique', 'Versatile use — serving food, organising countertops, or styling a coffee table'],
+    sustainability: 'Sustainably sourced acacia wood',
+    care: 'Hand wash with mild soap, dry immediately, do not soak or put in dishwasher, apply food-safe mineral oil periodically to maintain finish',
+    usesAndMeasurements: 'Large tray: 41×20×5 cm (L×W×H)\nSmall tray: 36×15×5 cm (L×W×H)',
+    photos: ['/images/SAC126_01.png', '/images/SAC126_02.png']
    }
   }
  ],
