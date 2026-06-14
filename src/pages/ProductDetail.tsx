@@ -73,6 +73,42 @@ export default function ProductDetail() {
     if (product) addToRecentlyViewed(product.id);
   }, [product]);
 
+  const [failedImages, setFailedImages] = useState<Set<string>>(new Set());
+  const allImages = useMemo(() => {
+    if (!product) return [];
+    const seen = new Set<string>();
+    const images: string[] = [];
+    const add = (src: string) => { if (!seen.has(src)) { seen.add(src); images.push(src); } };
+    add(product.image);
+    if (product.image.includes('_01.png')) add(product.image.replace('_01.png', '_02.png'));
+    if (product.details?.photos) product.details.photos.forEach(add);
+    return images;
+  }, [product]);
+
+  const specs = useMemo(() => {
+    const rows: SpecRow[] = [];
+    const d = product?.details;
+    if (d?.materials) rows.push({ label: 'Material', value: d.materials });
+    if (d?.construction) rows.push({ label: 'Construction', value: d.construction });
+    if (d?.finish) rows.push({ label: 'Finish', value: d.finish });
+    if (d?.dimensions) {
+      const parts: string[] = [];
+      if (d.dimensions.height) parts.push(`H ${d.dimensions.height}`);
+      if (d.dimensions.length) parts.push(`L ${d.dimensions.length}`);
+      if (d.dimensions.width) parts.push(`W ${d.dimensions.width}`);
+      if (d.dimensions.depth) parts.push(`D ${d.dimensions.depth}`);
+      if (d.dimensions.diameter) parts.push(`Ø ${d.dimensions.diameter}`);
+      if (parts.length) rows.push({ label: 'Dimensions', value: parts.join(' · ') });
+      if (d.dimensions.weight) rows.push({ label: 'Weight', value: String(d.dimensions.weight) });
+    }
+    if (d?.usesAndMeasurements) rows.push({ label: 'Size Guide', value: d.usesAndMeasurements });
+    if (d?.care) rows.push({ label: 'Care', value: d.care });
+    if (d?.shipping) rows.push({ label: 'Shipping', value: d.shipping });
+    rows.push({ label: 'Returns', value: '7-day easy returns — read our return policy before ordering', href: '/returns' });
+    if (d?.warranty) rows.push({ label: 'Warranty', value: d.warranty });
+    return rows;
+  }, [product]);
+
   if (!product) {
     return (
       <div className="min-h-screen bg-sugan-bone pt-32 flex items-center justify-center">
@@ -133,16 +169,6 @@ export default function ProductDetail() {
     }
   };
 
-  const [failedImages, setFailedImages] = useState<Set<string>>(new Set());
-  const allImages = useMemo(() => {
-    const seen = new Set<string>();
-    const images: string[] = [];
-    const add = (src: string) => { if (!seen.has(src)) { seen.add(src); images.push(src); } };
-    add(product.image);
-    if (product.image.includes('_01.png')) add(product.image.replace('_01.png', '_02.png'));
-    if (product.details?.photos) product.details.photos.forEach(add);
-    return images;
-  }, [product.image, product.details?.photos]);
   const heroImage = allImages[0];
   const galleryImages = allImages.slice(1).filter((src) => !failedImages.has(src));
   const galleryVideos: string[] = product.details?.videos ?? [];
@@ -151,30 +177,6 @@ export default function ProductDetail() {
     product.details?.variants?.[selectedVariant]?.price || product.price;
   const displaySku =
     product.details?.variants?.[selectedVariant]?.sku || product.id;
-
-  const specs = useMemo(() => {
-    const rows: SpecRow[] = [];
-    const d = product.details;
-    if (d?.materials) rows.push({ label: 'Material', value: d.materials });
-    if (d?.construction) rows.push({ label: 'Construction', value: d.construction });
-    if (d?.finish) rows.push({ label: 'Finish', value: d.finish });
-    if (d?.dimensions) {
-      const parts: string[] = [];
-      if (d.dimensions.height) parts.push(`H ${d.dimensions.height}`);
-      if (d.dimensions.length) parts.push(`L ${d.dimensions.length}`);
-      if (d.dimensions.width) parts.push(`W ${d.dimensions.width}`);
-      if (d.dimensions.depth) parts.push(`D ${d.dimensions.depth}`);
-      if (d.dimensions.diameter) parts.push(`Ø ${d.dimensions.diameter}`);
-      if (parts.length) rows.push({ label: 'Dimensions', value: parts.join(' · ') });
-      if (d.dimensions.weight) rows.push({ label: 'Weight', value: String(d.dimensions.weight) });
-    }
-    if (d?.usesAndMeasurements) rows.push({ label: 'Size Guide', value: d.usesAndMeasurements });
-    if (d?.care) rows.push({ label: 'Care', value: d.care });
-    if (d?.shipping) rows.push({ label: 'Shipping', value: d.shipping });
-    rows.push({ label: 'Returns', value: '7-day easy returns — read our return policy before ordering', href: '/returns' });
-    if (d?.warranty) rows.push({ label: 'Warranty', value: d.warranty });
-    return rows;
-  }, [product.details]);
 
   const isHot = ['SAC048S', 'SAC048M', 'SAC048L'].includes(product.id);
 
