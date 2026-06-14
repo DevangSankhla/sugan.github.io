@@ -30,6 +30,7 @@ import {
 } from 'lucide-react';
 import { db } from '@/lib/firebase';
 import { collection, query, onSnapshot, doc, updateDoc, serverTimestamp, deleteDoc, where, getDocs, limit } from 'firebase/firestore';
+import type { FirestoreTimestamp } from '@/types';
 
 interface OrderItem {
   productId: string;
@@ -73,8 +74,8 @@ interface Order {
   paymentMethod: string;
   shippingAddress: ShippingAddress;
   txnid: string | null;
-  createdAt: any;
-  updatedAt: any;
+  createdAt: FirestoreTimestamp;
+  updatedAt: FirestoreTimestamp;
   shippingDetails?: ShippingDetails;
   couponCode?: string | null;
   discount?: number;

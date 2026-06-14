@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Eye, EyeOff, Mail, Lock, User, Chrome } from 'lucide-react';
+import { getErrorMessage } from '@/lib/utils';
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -43,8 +44,8 @@ export default function Signup() {
     try {
       await signup(email, password, name);
       navigate(redirectPath);
-    } catch (err: any) {
-      setError(err.message || 'Failed to create account');
+    } catch (err) {
+      setError(getErrorMessage(err, 'Failed to create account'));
     } finally {
       setLoading(false);
     }
@@ -55,8 +56,8 @@ export default function Signup() {
     try {
       await loginWithGoogle();
       navigate(redirectPath);
-    } catch (err: any) {
-      setError(err.message || 'Failed to signup with Google');
+    } catch (err) {
+      setError(getErrorMessage(err, 'Failed to signup with Google'));
     } finally {
       setLoading(false);
     }

@@ -243,7 +243,7 @@ export async function getOrderDetails(orderId: string) {
 
 // Create order in Firestore with sequential SO# order number
 // applyPromo: atomically decrement promotions/sac048_free_delivery counter if true
-export async function createOrder(orderData: any, applyPromo?: boolean): Promise<string> {
+export async function createOrder(orderData: Record<string, unknown>, applyPromo?: boolean): Promise<string> {
   const counterRef = doc(db, 'counters', 'orders');
   const newOrderRef = doc(collection(db, 'orders'));
   const promoRef = doc(db, 'promotions', 'sac048_free_delivery');

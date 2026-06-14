@@ -11,8 +11,10 @@ import {
   getRedirectResult,
   sendPasswordResetEmail
 } from 'firebase/auth';
-import { collection, doc, getDoc, getDocs, query, where, limit, setDoc, serverTimestamp } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs, query, where, limit, setDoc, serverTimestamp, type FieldValue } from 'firebase/firestore';
 import { auth, db } from '@/lib/firebase';
+import { getErrorCode } from '@/lib/utils';
+import type { FirestoreTimestamp } from '@/types';
 
 interface UserData {
   uid: string;
@@ -21,7 +23,7 @@ interface UserData {
   photoURL?: string | null;
   provider?: string;
   isAdmin: boolean;
-  createdAt: Date | any;
+  createdAt: Date | FirestoreTimestamp | FieldValue;
 }
 
 interface AuthContextType {
@@ -148,9 +150,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       // Try popup first (better UX on desktop)
       const { user } = await signInWithPopup(auth, provider);
       await syncGoogleUser(user);
-    } catch (popupErr: any) {
+    } catch (popupErr) {
       // Fallback to redirect on mobile or if popup blocked
-      if (popupErr.code === 'auth/popup-blocked' || popupErr.code === 'auth/cancelled-popup-request') {
+      const code = getErrorCode(popupErr);
+      if (code === 'auth/popup-blocked' || code === 'auth/cancelled-popup-request') {
         await signInWithRedirect(auth, provider);
       } else {
         throw popupErr;

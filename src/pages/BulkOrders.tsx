@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { db } from '@/lib/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { getErrorMessage } from '@/lib/utils';
 
 export default function BulkOrders() {
   const navigate = useNavigate();
@@ -41,9 +42,9 @@ export default function BulkOrders() {
         quantity: '',
         message: ''
       });
-    } catch (err: any) {
+    } catch (err) {
       console.error('Error submitting form:', err);
-      setError(err.message || 'Failed to submit request. Please try again or contact us directly.');
+      setError(getErrorMessage(err, 'Failed to submit request. Please try again or contact us directly.'));
     } finally {
       setSubmitting(false);
     }

@@ -4,11 +4,12 @@ import { CheckCircle, Package, Mail, Phone, AlertTriangle } from 'lucide-react';
 import { getOrderDetails, handlePaymentSuccess } from '@/lib/payu';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import { getErrorMessage } from '@/lib/utils';
 
 export default function PaymentSuccess() {
   const [searchParams] = useSearchParams();
   const [isProcessing, setIsProcessing] = useState(true);
-  const [orderDetails, setOrderDetails] = useState<any>(null);
+  const [orderDetails, setOrderDetails] = useState<{ id?: string; total?: number; txnid?: string } | null>(null);
   const [error, setError] = useState('');
   const [isHostedOnStatic, setIsHostedOnStatic] = useState(false);
 
@@ -41,11 +42,11 @@ export default function PaymentSuccess() {
         const order = await getOrderDetails(orderId);
         setOrderDetails(order);
         sessionStorage.removeItem('pendingOrderId');
-      } catch (err: any) {
+      } catch (err) {
         console.error('Payment processing error:', err);
         // Detect if we're on a static host that doesn't support POST (GitHub Pages)
-        if (window.location.hostname.includes('github.io') || 
-            (err.message && err.message.includes('405'))) {
+        if (window.location.hostname.includes('github.io') ||
+            getErrorMessage(err, '').includes('405')) {
           setIsHostedOnStatic(true);
         }
         setError('Something went wrong while confirming your order. Please check your orders page.');

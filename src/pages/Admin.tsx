@@ -16,7 +16,7 @@ import { db, functions as fns } from '@/lib/firebase';
 import { collection, query, onSnapshot, doc, updateDoc, serverTimestamp, setDoc, deleteDoc, where, getDocs, limit } from 'firebase/firestore';
 import { httpsCallable } from 'firebase/functions';
 import { allProducts } from '@/data/rooms';
-import type { Product } from '@/types';
+import type { Product, FirestoreTimestamp } from '@/types';
 
 interface OrderItem {
   productId: string;
@@ -60,8 +60,8 @@ interface Order {
   paymentMethod: string;
   shippingAddress: ShippingAddress;
   txnid: string | null;
-  createdAt: any;
-  updatedAt: any;
+  createdAt: FirestoreTimestamp;
+  updatedAt: FirestoreTimestamp;
   shippingDetails?: ShippingDetails;
   isTrial?: boolean;
   orderType?: 'regular' | 'trial' | 'creator';
@@ -73,7 +73,7 @@ interface UserData {
   email: string;
   name: string;
   isAdmin: boolean;
-  createdAt: any;
+  createdAt: FirestoreTimestamp | null;
 }
 
 interface AffiliateCodeRow {
@@ -86,7 +86,7 @@ interface AffiliateCodeRow {
   active: boolean;
   totalOrders?: number;
   totalCommissionAccrued?: number;
-  createdAt?: any;
+  createdAt?: FirestoreTimestamp;
 }
 
 interface AffiliateOrderRow {
@@ -101,10 +101,10 @@ interface AffiliateOrderRow {
   commissionAmount: number;
   commissionVoided: boolean;
   voidReason?: string;
-  eligibilityDate?: any;
+  eligibilityDate?: FirestoreTimestamp;
   commissionMonth?: string | null;
-  createdAt?: any;
-  deliveredAt?: any;
+  createdAt?: FirestoreTimestamp;
+  deliveredAt?: FirestoreTimestamp;
 }
 
 interface ContactSubmission {
@@ -117,7 +117,7 @@ interface ContactSubmission {
   message: string;
   type: 'general_contact' | 'bulk_order';
   status: 'new' | 'read' | 'replied';
-  createdAt: any;
+  createdAt: FirestoreTimestamp;
   orderType?: string;
   quantity?: string;
 }
@@ -1495,7 +1495,7 @@ function ProductEditForm({
     onSave(formData);
   };
 
-  const updateDetail = (key: string, value: any) => {
+  const updateDetail = (key: string, value: string) => {
     setFormData(prev => ({
       ...prev,
       details: {

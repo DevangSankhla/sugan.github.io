@@ -40,6 +40,13 @@ interface ShippingRate {
   rating: number;
 }
 
+export interface ShipmentTrackEvent {
+  date: string;
+  status: string;
+  location: string;
+  time?: string;
+}
+
 // Get Shiprocket Auth Token
 async function getAuthToken(): Promise<string | null> {
   // Return existing token if not expired
@@ -101,7 +108,7 @@ export async function calculateShippingRates(
     if (!response.ok) throw new Error('Failed to fetch rates');
 
     const data = await response.json();
-    return data.data?.available_courier_companies?.map((courier: any) => ({
+    return data.data?.available_courier_companies?.map((courier: ShippingRate) => ({
       courier_name: courier.courier_name,
       rate: courier.rate,
       cod: courier.cod,
@@ -180,9 +187,9 @@ export async function checkPincodeServiceability(
     
     return {
       available: couriers.length > 0,
-      cod: couriers.some((c: any) => c.cod === 1),
+      cod: couriers.some((c: { cod: number }) => c.cod === 1),
     };
-  } catch (error) {
+  } catch {
     return { available: true, cod: true };
   }
 }
@@ -276,7 +283,7 @@ export async function createShiprocketOrder(orderData: {
 }
 
 // Track shipment
-export async function trackShipment(awb: string): Promise<any[]> {
+export async function trackShipment(awb: string): Promise<ShipmentTrackEvent[]> {
   if (!SHIPROCKET_EMAIL || !SHIPROCKET_PASSWORD) {
     // Mock tracking data
     return [
@@ -300,8 +307,8 @@ export async function trackShipment(awb: string): Promise<any[]> {
     if (!response.ok) return [];
 
     const data = await response.json();
-    return data.tracking_data?.shipment_track || [];
-  } catch (error) {
+    return (data.tracking_data?.shipment_track as ShipmentTrackEvent[]) || [];
+  } catch {
     return [];
   }
 }
@@ -329,7 +336,7 @@ export async function generateLabel(shipmentId: string): Promise<string | null> 
 
     const data = await response.json();
     return data.label_url;
-  } catch (error) {
+  } catch {
     return null;
   }
 }

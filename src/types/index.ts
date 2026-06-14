@@ -149,6 +149,14 @@ export interface Room {
 // ORDER & SHIPPING TYPES
 // ============================================
 
+// Firestore Timestamp shape (as read back from the database).
+// toDate() is optional to stay compatible with the defensive `?.toDate?.()` calls in the UI.
+export interface FirestoreTimestamp {
+  toDate?: () => Date;
+  seconds?: number;
+  nanoseconds?: number;
+}
+
 export interface ShippingAddress {
   fullName: string;
   phone: string;

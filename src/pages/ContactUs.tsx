@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useState } from 'react';
 import { db } from '@/lib/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { getErrorMessage } from '@/lib/utils';
 
 export default function ContactUs() {
   const navigate = useNavigate();
@@ -30,9 +31,9 @@ export default function ContactUs() {
       });
       setSubmitted(true);
       setFormData({ name: '', email: '', subject: '', message: '' });
-    } catch (err: any) {
+    } catch (err) {
       console.error('Error submitting form:', err);
-      setError(err.message || 'Failed to send message. Please try again or contact us directly at contact@sugan.shop');
+      setError(getErrorMessage(err, 'Failed to send message. Please try again or contact us directly at contact@sugan.shop'));
     } finally {
       setSubmitting(false);
     }

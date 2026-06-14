@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Eye, EyeOff, Mail, Lock, Chrome, KeyRound } from 'lucide-react';
+import { getErrorMessage, getErrorCode } from '@/lib/utils';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -33,8 +34,8 @@ export default function Login() {
     try {
       await login(email, password);
       navigate(redirectPath);
-    } catch (err: any) {
-      setError(err.message || 'Failed to login');
+    } catch (err) {
+      setError(getErrorMessage(err, 'Failed to login'));
     } finally {
       setLoading(false);
     }
@@ -46,14 +47,15 @@ export default function Login() {
     try {
       await loginWithGoogle();
       navigate(redirectPath);
-    } catch (err: any) {
+    } catch (err) {
       console.error('Google login error:', err);
-      if (err.code === 'auth/popup-closed-by-user') {
+      const code = getErrorCode(err);
+      if (code === 'auth/popup-closed-by-user') {
         setError('Login popup was closed. Please try again.');
-      } else if (err.code === 'auth/unauthorized-domain') {
+      } else if (code === 'auth/unauthorized-domain') {
         setError('This domain is not authorized for Google login. Please contact support.');
       } else {
-        setError(err.message || 'Failed to login with Google');
+        setError(getErrorMessage(err, 'Failed to login with Google'));
       }
     } finally {
       setLoading(false);
@@ -71,8 +73,8 @@ export default function Login() {
     try {
       await resetPassword(email);
       setResetSent(true);
-    } catch (err: any) {
-      setError(err.message || 'Failed to send reset email');
+    } catch (err) {
+      setError(getErrorMessage(err, 'Failed to send reset email'));
     } finally {
       setLoading(false);
     }

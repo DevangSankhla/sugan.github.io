@@ -14,11 +14,11 @@ import {
 } from 'lucide-react';
 import { db } from '@/lib/firebase';
 import { collection, query, where, onSnapshot, doc, deleteDoc } from 'firebase/firestore';
-import type { Product } from '@/types';
+import type { Product, CartItem, ShippingAddress, FirestoreTimestamp } from '@/types';
 
 interface Order {
   id: string;
-  items: any[];
+  items: CartItem[];
   total: number;
   subtotal?: number;
   discount?: number;
@@ -29,10 +29,10 @@ interface Order {
   paymentStatus?: string;
   paymentMethod?: string;
   txnid?: string | null;
-  createdAt: any;
-  shippedAt?: any;
-  deliveredAt?: any;
-  shippingAddress: any;
+  createdAt: FirestoreTimestamp;
+  shippedAt?: FirestoreTimestamp;
+  deliveredAt?: FirestoreTimestamp;
+  shippingAddress: ShippingAddress;
 }
 
 interface WishlistItem {
@@ -102,7 +102,7 @@ export default function Account() {
         id: doc.id,
         ...doc.data()
       })) as Order[];
-      setOrders(ordersData.sort((a, b) => b.createdAt?.seconds - a.createdAt?.seconds));
+      setOrders(ordersData.sort((a, b) => (b.createdAt?.seconds ?? 0) - (a.createdAt?.seconds ?? 0)));
       setLoading(false);
     });
 
@@ -297,7 +297,7 @@ export default function Account() {
                                   {order.items?.length} items • ₹{order.total?.toLocaleString()}
                                 </p>
                                 <p className="font-body text-xs text-sugan-ink/40 mt-1">
-                                  {order.createdAt?.toDate().toLocaleDateString('en-IN', {
+                                  {order.createdAt?.toDate?.().toLocaleDateString('en-IN', {
                                     day: 'numeric',
                                     month: 'long',
                                     year: 'numeric'
@@ -320,7 +320,7 @@ export default function Account() {
                                 {/* Order Items with SKUs */}
                                 <div className="space-y-3 mb-4">
                                   <h4 className="font-body font-medium text-sugan-ink">Order Items</h4>
-                                  {order.items?.map((item: any, idx: number) => (
+                                  {order.items?.map((item, idx) => (
                                     <div key={idx} className="flex items-center gap-3 bg-sugan-bone/50 p-3 rounded-lg">
                                       <img
                                         src={item.image}
@@ -615,15 +615,18 @@ export default function Account() {
                     </div>
                     <div className="p-4 bg-sugan-bone/50 rounded-lg">
                       <p className="text-sm text-sugan-ink/60 font-body mb-1">Phone</p>
-                      <p className="font-body text-sugan-ink">{(userData as any)?.phone || 'Not set'}</p>
+                      <p className="font-body text-sugan-ink">{(userData as { phone?: string })?.phone || 'Not set'}</p>
                     </div>
                     <div className="p-4 bg-sugan-bone/50 rounded-lg">
                       <p className="text-sm text-sugan-ink/60 font-body mb-1">Member Since</p>
                       <p className="font-body text-sugan-ink">
-                        {(userData as any)?.createdAt?.toDate?.() ? (userData as any).createdAt.toDate().toLocaleDateString('en-IN', {
-                          month: 'long',
-                          year: 'numeric'
-                        }) : 'N/A'}
+                        {(() => {
+                          const created = (userData as { createdAt?: FirestoreTimestamp })?.createdAt;
+                          return created?.toDate?.() ? created.toDate!().toLocaleDateString('en-IN', {
+                            month: 'long',
+                            year: 'numeric'
+                          }) : 'N/A';
+                        })()}
                       </p>
                     </div>
                   </div>
