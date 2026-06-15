@@ -14,7 +14,8 @@ export const rooms: Room[] = [
  { id: 'pet', name: 'Pet', icon: 'Heart', description: 'Premium products for your pets' },
  { id: 'wall', name: 'Wall Shelves', icon: 'Frame', description: 'Handcrafted wall shelves and displays' },
  { id: 'bar', name: 'Bar', icon: 'Wine', description: 'Wine racks and bar essentials' },
- { id: 'entryway', name: 'Entryway', icon: 'DoorOpen', description: 'Cabinets, console tables, and chairs for your entrance' }
+ { id: 'entryway', name: 'Entryway', icon: 'DoorOpen', description: 'Cabinets, console tables, and chairs for your entrance' },
+ { id: 'lounge', name: 'Lounge', icon: 'Armchair', description: 'Coffee tables and lounge chairs for your lounge space' },
 ];
 
 // Products organized by room
@@ -4916,7 +4917,161 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
    }
   }
  ],
+ lounge: [
+  {
+   id: 'SAC129',
+   name: 'Ladder Back Lounge Chair with Angled Arms',
+   price: 10999,
+   description: 'Structured comfort and honest design converge in the Ladder Back Lounge Chair, a solid mango wood piece that captures the essence of mid-century modernism with a contemporary edge. The back features a series of horizontal slats - a ladder-like pattern that creates visual rhythm while offering support, while the angled armrests slope downward for a relaxed, inviting posture. The solid seat is cut from a single piece of wood, creating a surface that\'s both sculptural and welcoming. Deep black finish throughout gives the piece a gallery-like presence, while the solid construction promises decades of daily use.',
+   image: '/images/SAC129_01.png',
+   category: 'Lounge Chair',
+   room: 'lounge',
+   inStock: false,
+   details: {
+    materials: 'Mango Wood',
+    finish: 'Deep Black Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['100% Solid Mango Wood — dense, durable, and built for comfort and longevity', 'Ladder-slat back design — provides visual rhythm and ergonomic support', 'Angled armrests — slope downward for an inviting, relaxed seating angle', 'Solid single-piece wood seat — sculptural and comfortable', 'Deep black finish — creates a moody, gallery-like presence'],
+    sustainability: 'Sustainably sourced mango wood',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight',
+    dimensions: { width: '72 cm', depth: '82 cm', height: '78 cm' },
+    usesAndMeasurements: 'Seat height: 37 cm · Arm height: 56 cm · Seat depth: 55 cm',
+    photos: ['/images/SAC129_01.png', '/images/SAC129_02.png']
+   }
+  },
+  {
+   id: 'SAC130',
+   name: 'Rattan Sling Lounge Chair',
+   price: 15499,
+   description: 'Where natural materials meet sculptural form, the Rattan Sling Lounge Chair redefines casual comfort. The frame is solid mango wood finished in deep black, while the back and seat are woven from warm natural rattan in a tight, precise grid - a material pairing that creates beautiful contrast and textural depth. The curved, sculptural back leans back at a generous angle, cradling you into the chair, while the angled armrests and clean lines of the black frame keep the overall silhouette contemporary and refined.',
+   image: '/images/SAC130_01.png',
+   category: 'Lounge Chair',
+   room: 'lounge',
+   inStock: false,
+   details: {
+    materials: 'Mango Wood Frame, Natural Rattan Weave',
+    finish: 'Deep Black Wood, Natural Rattan',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['Solid Mango Wood frame in deep black finish — durable and contemporary', 'Hand-woven natural rattan back and seat — warm tones that age beautifully', 'Curved sculptural back — generous recline angle for true comfort', 'Material contrast — warm rattan against cool black wood', 'Angled armrests — slope naturally for relaxation and conversation'],
+    sustainability: 'Sustainably sourced mango wood',
+    care: 'Wipe wood frame with a dry cloth, clean rattan gently with a soft brush, avoid prolonged moisture exposure, rattan may develop a patina with age',
+    dimensions: { width: '68 cm', depth: '74 cm', height: '73 cm' },
+    usesAndMeasurements: 'Seat height: 38 cm · Arm height: 54 cm · Seat depth: 50 cm',
+    photos: ['/images/SAC130_01.png', '/images/SAC130_02.png']
+   }
+  },
+  {
+   id: 'SAC131',
+   name: 'Curved Back Lounge Chair with Padded Seat',
+   price: 10999,
+   description: 'Sculptural, inviting, and built for genuine comfort - the Curved Back Lounge Chair is a study in organic form and honest craftsmanship. The back is one sweeping curve carved from solid mango wood, creating a form that is both architectural and embracing. The seat is cushioned and covered in the same finish as the frame - creating an upholstered surface that feels sumptuous without ever being fussy. The armrests are thick, rounded, and generous, inviting you to rest your elbows while reading or conversing. Finished entirely in deep black, every element of the wood grain is brought into dramatic relief.',
+   image: '/images/SAC131_01.png',
+   category: 'Lounge Chair',
+   room: 'lounge',
+   inStock: false,
+   details: {
+    materials: 'Mango Wood, Upholstered Padding',
+    finish: 'Deep Black Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['100% Solid Mango Wood frame — dense and built for decades of use', 'Curved organic back form — sculptural and supportive in equal measure', 'Padded seat with upholstered finish — genuine comfort without compromise', 'Thick, rounded armrests — generously proportioned and supportive', 'Deep black finish throughout — creates drama and showcases the wood grain'],
+    sustainability: 'Sustainably sourced mango wood',
+    care: 'Wipe wood frame with a dry cloth, spot clean upholstered areas as needed, avoid prolonged moisture exposure',
+    dimensions: { width: '70 cm', depth: '68 cm', height: '70 cm' },
+    usesAndMeasurements: 'Seat height: 42 cm · Arm height: 60 cm · Seat depth: 48 cm',
+    photos: ['/images/SAC131_01.png', '/images/SAC131_02.png']
+   }
+  },
+  {
+   id: 'SAC132',
+   name: 'Perforated Mesh Back Lounge Chair',
+   price: 10999,
+   description: 'Modern, sculptural, and engineered for comfort - the Perforated Mesh Back Lounge Chair brings industrial precision to a traditionally organic form. The frame is solid mango wood in deep black, while the back features a precision-perforated metal mesh panel - thousands of small holes arranged in a geometric pattern that creates a striking visual rhythm and allows air to flow freely for long-session comfort. The seat is solid wood, generously proportioned and slightly curved for support, while the angled armrests and four clean legs complete a design that is entirely contemporary.',
+   image: '/images/SAC132_01.png',
+   category: 'Lounge Chair',
+   room: 'lounge',
+   inStock: false,
+   details: {
+    materials: 'Mango Wood Frame, Perforated Metal Mesh',
+    finish: 'Deep Black Wood, Brushed Metal Mesh',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['Solid Mango Wood frame in deep black finish — durable and architecturally clean', 'Perforated metal mesh back — geometric pattern with natural airflow', 'Solid wood seat — generously proportioned and sculptural', 'Angled armrests — slope naturally for comfort', 'Material pairing — warm wood against cool perforated metal'],
+    sustainability: 'Sustainably sourced mango wood',
+    care: 'Wipe wood frame with a dry cloth, clean mesh gently with a soft brush or cloth, avoid moisture on mesh, keep away from direct sunlight',
+    dimensions: { width: '63 cm', depth: '72 cm', height: '72 cm' },
+    usesAndMeasurements: 'Seat height: 40 cm · Arm height: 56 cm · Seat depth: 52 cm',
+    photos: ['/images/SAC132_01.png', '/images/SAC132_02.png']
+   }
+  },
+  {
+   id: 'SAC133',
+   name: 'Solid Curved Back Lounge Chair',
+   price: 10999,
+   description: 'Understated elegance and genuine comfort define the Solid Curved Back Lounge Chair, a piece of sculptural simplicity in solid mango wood. The entire back is cut from a single piece of timber, creating a sweeping curve that is both visually minimal and physically supportive - a form that cradles without overwhelming. The seat is equally generous, carved with a subtle curve to support the natural contours of the body. The armrests are simplified and rounded, offering support without fuss. Four straight, clean legs ground the entire structure, while the deep black finish throughout allows the grain and subtle variations of the mango wood to become the focus.',
+   image: '/images/SAC133_01.png',
+   category: 'Lounge Chair',
+   room: 'lounge',
+   inStock: false,
+   details: {
+    materials: 'Mango Wood',
+    finish: 'Deep Black Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['100% Solid Mango Wood — sustainably sourced and beautifully grained', 'Single-piece curved back — sculptural form carved from solid timber', 'Curved seat — contoured for genuine comfort and support', 'Simplified rounded armrests — functional and visually clean', 'Deep black finish — celebrates the natural grain of the wood'],
+    sustainability: 'Sustainably sourced mango wood',
+    care: 'Wipe with a dry or slightly damp cloth, avoid prolonged moisture exposure, keep away from direct sunlight, wood grain may develop a natural patina with age',
+    dimensions: { width: '66 cm', depth: '76 cm', height: '64 cm' },
+    usesAndMeasurements: 'Seat height: 34 cm · Seat depth: 54 cm',
+    photos: ['/images/SAC133_01.png', '/images/SAC133_02.png']
+   }
+  },
+  {
+   id: 'SAC134',
+   name: 'Curved Barrel Lounge Chair',
+   price: 15499,
+   description: 'Pure comfort wrapped in sculptural form - the Curved Barrel Lounge Chair is a contemporary masterpiece that prioritises genuine ease without sacrificing on design integrity. The entire chair is a single sweeping curve, an embrace of upholstered comfort that begins at the generous arms and curves up and around to envelop the back, creating a barrel-like silhouette that is simultaneously minimal and maximally inviting. Upholstered entirely in a warm cream boucle fabric, the textured surface catches light and shadow throughout the day, revealing subtle depth and movement.',
+   image: '/images/SAC134_01.png',
+   category: 'Lounge Chair',
+   room: 'lounge',
+   inStock: false,
+   details: {
+    materials: 'Upholstered Boucle Fabric, Wood or Metal Base',
+    finish: 'Cream Boucle, Dark Base',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['Completely upholstered sculptural form — seamless curve from arms to back to seat', 'Warm cream boucle fabric — textured surface that catches light and reveals depth', 'Generous proportions — provides genuine comfort and support', 'Organic barrel silhouette — embracing, inviting, and visually striking', 'Dark plinth base — grounds the piece while maintaining visual lightness'],
+    sustainability: 'Sustainably sourced base materials',
+    care: 'Spot clean upholstery with mild detergent and warm water, avoid prolonged moisture exposure, professional dry cleaning recommended for deep cleaning, vacuum gently with upholstery attachment, rotate cushions periodically',
+    dimensions: { width: '80 cm', depth: '78 cm', height: '70 cm' },
+    usesAndMeasurements: 'Seat height: 42 cm · Arm height: 62 cm · Seat depth: 52 cm',
+    photos: ['/images/SAC134_01.png', '/images/SAC134_02.png']
+   }
+  },
+ ],
 };
+
+// Populate lounge with all coffee tables from living (keeps them in living too)
+roomProducts['lounge'] = [
+ ...(roomProducts['living'] || []).filter(
+  p => p.category === 'Coffee Table' || p.category === 'Coffee Tables'
+ ),
+ ...roomProducts['lounge'],
+];
 
 // All products combined (deduped by id — some products appear in multiple rooms)
 export const allProducts: Product[] = Object.values(roomProducts).flat().filter(
