@@ -175,7 +175,6 @@ export function submitPayUPayment(formData: PayUTransaction): void {
 
   document.body.appendChild(form);
   form.submit();
-  document.body.removeChild(form);
 }
 
 // Process Cash on Delivery

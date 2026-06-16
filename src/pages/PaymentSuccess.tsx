@@ -9,7 +9,7 @@ import { getErrorMessage } from '@/lib/utils';
 export default function PaymentSuccess() {
   const [searchParams] = useSearchParams();
   const [isProcessing, setIsProcessing] = useState(true);
-  const [orderDetails, setOrderDetails] = useState<{ id?: string; total?: number; txnid?: string } | null>(null);
+  const [orderDetails, setOrderDetails] = useState<{ id?: string; orderNumber?: string; total?: number; txnid?: string } | null>(null);
   const [error, setError] = useState('');
   const [isHostedOnStatic, setIsHostedOnStatic] = useState(false);
 
@@ -129,8 +129,10 @@ export default function PaymentSuccess() {
               <div className="bg-sugan-bone rounded-xl p-6 mb-8 text-left">
                 <div className="grid grid-cols-2 gap-4 mb-4">
                   <div>
-                    <p className="text-sm text-sugan-ink/50 font-body">Order ID</p>
-                    <p className="font-body font-medium text-sugan-ink">#{orderDetails.id?.slice(-8).toUpperCase()}</p>
+                    <p className="text-sm text-sugan-ink/50 font-body">Order Number</p>
+                    <p className="font-body font-medium text-sugan-ink">
+                      {orderDetails.orderNumber || `#${orderDetails.id?.slice(-8).toUpperCase()}`}
+                    </p>
                   </div>
                   <div>
                     <p className="text-sm text-sugan-ink/50 font-body">Amount Paid</p>
@@ -188,7 +190,7 @@ export default function PaymentSuccess() {
                 Have questions about your order?
               </p>
               <a
-                href={`https://wa.me/916367677255?text=Hi, I have a question about my order #${orderDetails?.id?.slice(-8).toUpperCase()}`}
+                href={`https://wa.me/916367677255?text=Hi, I have a question about my order ${orderDetails?.orderNumber || '#' + orderDetails?.id?.slice(-8).toUpperCase()}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-sugan-gold font-body hover:underline"

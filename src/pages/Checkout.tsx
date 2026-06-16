@@ -20,8 +20,18 @@ import {
   createShiprocketOrder,
   updateOrderShipping
 } from '@/lib/shiprocket';
-import { MapPin, Phone, User, Home, Building, Navigation, CreditCard, Banknote, Truck, Shield, AlertCircle, Package, MessageCircle, X, Info, ArrowRight } from 'lucide-react';
+import { MapPin, Phone, User, Home, Building, Navigation, CreditCard, Banknote, Truck, Shield, AlertCircle, Package, MessageCircle, X, Info, ArrowRight, Loader2, ChevronDown } from 'lucide-react';
 import CouponCode from '@/components/CouponCode';
+
+const INDIAN_STATES = [
+  'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh',
+  'Goa', 'Gujarat', 'Haryana', 'Himachal Pradesh', 'Jharkhand', 'Karnataka',
+  'Kerala', 'Madhya Pradesh', 'Maharashtra', 'Manipur', 'Meghalaya', 'Mizoram',
+  'Nagaland', 'Odisha', 'Punjab', 'Rajasthan', 'Sikkim', 'Tamil Nadu',
+  'Telangana', 'Tripura', 'Uttar Pradesh', 'Uttarakhand', 'West Bengal',
+  'Andaman and Nicobar Islands', 'Chandigarh', 'Dadra and Nagar Haveli and Daman and Diu',
+  'Delhi', 'Jammu and Kashmir', 'Ladakh', 'Lakshadweep', 'Puducherry',
+];
 
 type PaymentMethod = 'payu' | 'cod';
 
@@ -54,6 +64,8 @@ export default function Checkout() {
   });
   const [pincodeError, setPincodeError] = useState('');
   const [isPincodeValid, setIsPincodeValid] = useState(false);
+  const [isPincodeChecking, setIsPincodeChecking] = useState(false);
+  const [phoneError, setPhoneError] = useState('');
   const [codAvailable, setCodAvailable] = useState(true);
   const [appliedCoupon, setAppliedCoupon] = useState<string | null>(null);
   const [discountAmount, setDiscountAmount] = useState(0);
@@ -76,7 +88,7 @@ export default function Checkout() {
   const codCharge = promoFreeDelivery ? 0 : (paymentMethod === 'cod' ? 50 : 0);
   const finalTotal = totalPrice - discountAmount + shippingCost + codCharge;
 
-  // Redirect if not logged in
+  // Redirect if not logged in or cart is empty
   useEffect(() => {
     if (!user) {
       navigate('/login?redirect=/checkout');
@@ -84,10 +96,18 @@ export default function Checkout() {
     }
   }, [user, navigate]);
 
+  // Pre-fill name from Firebase auth profile
+  useEffect(() => {
+    if (user?.displayName && !address.fullName) {
+      setAddress(prev => ({ ...prev, fullName: user.displayName! }));
+    }
+  }, [user?.displayName]);
+
   // Validate pincode and check COD availability
   useEffect(() => {
     if (address.pincode.length !== 6) {
       setIsPincodeValid(false);
+      setIsPincodeChecking(false);
       setPincodeError('');
       return;
     }
@@ -98,13 +118,18 @@ export default function Checkout() {
 
     if (!isValid) return;
 
+    setIsPincodeChecking(true);
     let cancelled = false;
     const timer = setTimeout(async () => {
       try {
         const serviceability = await checkPincodeServiceability(address.pincode);
-        if (!cancelled) setCodAvailable(serviceability.cod);
+        if (!cancelled) {
+          setCodAvailable(serviceability.cod);
+          setIsPincodeChecking(false);
+        }
       } catch (error) {
         console.error('Error checking serviceability:', error);
+        if (!cancelled) setIsPincodeChecking(false);
       }
     }, 400);
 
@@ -258,7 +283,9 @@ export default function Checkout() {
                       !!address.city && !!address.state && isPincodeValid;
 
   // Don't render if redirecting (must be after all hooks)
-  if (!user || items.length === 0) {
+  if (!user) return null;
+  if (items.length === 0) {
+    navigate('/shop');
     return null;
   }
 
@@ -300,13 +327,27 @@ export default function Checkout() {
                       <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-sugan-ink/40" />
                       <Input
                         value={address.phone}
-                        onChange={(e) => setAddress({...address, phone: e.target.value})}
-                        className="pl-10 font-body"
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          setAddress({...address, phone: val});
+                          if (val.length > 0 && !/^[6-9]\d{0,9}$/.test(val)) {
+                            setPhoneError('Enter a valid 10-digit Indian mobile number');
+                          } else if (val.length === 10 && !/^[6-9]\d{9}$/.test(val)) {
+                            setPhoneError('Number must start with 6, 7, 8, or 9');
+                          } else {
+                            setPhoneError('');
+                          }
+                        }}
+                        className={`pl-10 font-body ${phoneError ? 'border-red-500' : ''}`}
                         placeholder="10-digit mobile number"
                         required
-                        pattern="[0-9]{10}"
+                        maxLength={10}
+                        inputMode="numeric"
                       />
                     </div>
+                    {phoneError && (
+                      <p className="text-xs text-red-500 font-body">{phoneError}</p>
+                    )}
                   </div>
 
                   <div className="space-y-2">
@@ -349,13 +390,20 @@ export default function Checkout() {
                     </div>
                     <div className="space-y-2">
                       <Label className="font-body">State</Label>
-                      <Input
-                        value={address.state}
-                        onChange={(e) => setAddress({...address, state: e.target.value})}
-                        className="font-body"
-                        placeholder="State"
-                        required
-                      />
+                      <div className="relative">
+                        <select
+                          value={address.state}
+                          onChange={(e) => setAddress({...address, state: e.target.value})}
+                          className="w-full h-10 pl-3 pr-8 font-body text-sm border border-input rounded-md bg-background text-sugan-ink appearance-none focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                          required
+                        >
+                          <option value="">Select state</option>
+                          {INDIAN_STATES.map(s => (
+                            <option key={s} value={s}>{s}</option>
+                          ))}
+                        </select>
+                        <ChevronDown className="absolute right-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-sugan-ink/40 pointer-events-none" />
+                      </div>
                     </div>
                   </div>
 
@@ -366,12 +414,19 @@ export default function Checkout() {
                         <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-sugan-ink/40" />
                         <Input
                           value={address.pincode}
-                          onChange={(e) => setAddress({...address, pincode: e.target.value})}
-                          className={`pl-10 font-body ${pincodeError ? 'border-red-500' : ''}`}
+                          onChange={(e) => setAddress({...address, pincode: e.target.value.replace(/\D/g, '').slice(0, 6)})}
+                          className={`pl-10 pr-8 font-body ${pincodeError ? 'border-red-500' : isPincodeValid ? 'border-green-500' : ''}`}
                           placeholder="6-digit PIN"
                           required
-                          pattern="[0-9]{6}"
+                          maxLength={6}
+                          inputMode="numeric"
                         />
+                        {isPincodeChecking && (
+                          <Loader2 className="absolute right-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-sugan-ink/40 animate-spin" />
+                        )}
+                        {isPincodeValid && !isPincodeChecking && (
+                          <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-green-500 text-xs">✓</span>
+                        )}
                       </div>
                       {pincodeError && (
                         <p className="text-xs text-red-500 font-body">{pincodeError}</p>
@@ -437,20 +492,11 @@ export default function Checkout() {
                       📸 Screenshot this message and send it to us on WhatsApp before placing your next order.
                     </p>
                   </div>
-                ) : totalPrice > 1999 ? (
+                ) : (
                   <div className="mt-4 p-3 bg-green-50 rounded-lg">
                     <p className="text-sm text-green-700 font-body flex items-center gap-2">
                       <Truck className="w-4 h-4" />
-                      Free shipping on orders above ₹1999!
-                    </p>
-                  </div>
-                ) : (
-                  <div className="mt-4 p-3 bg-sugan-bone rounded-lg">
-                    <p className="text-sm text-sugan-ink/60 font-body">
-                      Shipping: <span className="font-medium text-sugan-ink">₹99</span>
-                    </p>
-                    <p className="text-xs text-sugan-ink/40 font-body mt-1">
-                      Free shipping on orders above ₹1999
+                      Free shipping on all orders!
                     </p>
                   </div>
                 )}
@@ -642,7 +688,7 @@ export default function Checkout() {
                     </div>
                     <div className="flex items-center gap-1 text-xs text-sugan-ink/50 font-body">
                       <Truck className="w-4 h-4" />
-                      Free Shipping above ₹1999
+                      Free Shipping
                     </div>
                   </div>
 
