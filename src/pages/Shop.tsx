@@ -155,7 +155,7 @@ function getCategoryProducts(categoryId: string): Product[] {
 }
 
 export default function Shop() {
-  const [browseBy, setBrowseBy] = useState<'rooms' | 'categories'>('rooms');
+  const [browseBy, setBrowseBy] = useState<'rooms' | 'categories'>('categories');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
