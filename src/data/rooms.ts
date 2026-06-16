@@ -917,6 +917,36 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
  ],
  kitchen: [
   {
+   id: 'SAC127',
+   name: 'Oval Serving Tray - Set of 2',
+   price: 1599,
+   originalPrice: 1899,
+   onSale: true,
+   isHot: true,
+   description: 'Warm, natural, and crafted for everyday use - the Oval Serving Tray Set brings two generously sized acacia wood trays to your kitchen or living room table. Each tray features a classic oval form with a raised rim edge and a beautifully visible natural grain pattern across the surface, with the distinctive lighter and darker streaks of acacia wood creating a striking two-tone effect on every piece. Sold as a set of two in complementary sizes, they nest together for easy storage and work together or independently for serving, organising, or displaying across the home.',
+   image: '/images/SAC127_01.png',
+   category: 'Serving Tray',
+   room: 'kitchen',
+   inStock: true,
+   relatedSizes: [
+    { size: 'Small (Single)', productId: 'SAC127S', price: 799 },
+    { size: 'Large (Single)', productId: 'SAC127L', price: 899 },
+   ],
+   details: {
+    materials: 'Acacia Wood',
+    finish: 'Natural Acacia Polish',
+    origin: 'Made in Jodhpur, Rajasthan',
+    shipping: 'Ships within 2-3 business days',
+    delivery: '5-7 days pan India',
+    returns: '7-day easy returns',
+    usp: ['100% Solid Acacia Wood — dense, naturally antibacterial, and beautifully grained', 'Set of 2 in nested sizes — large and small tray that store together and work independently', 'Oval form with raised rim — keeps contents secure while serving or displaying', 'Natural two-tone grain — the distinctive acacia streaking makes every set unique', 'Versatile use — serving food, organising countertops, or styling a coffee table'],
+    sustainability: 'Sustainably sourced acacia wood',
+    care: 'Hand wash with mild soap, dry immediately, do not soak or put in dishwasher, apply food-safe mineral oil periodically to maintain finish',
+    usesAndMeasurements: 'Large tray: 41×20×5 cm (L×W×H)\nSmall tray: 36×15×5 cm (L×W×H)',
+    photos: ['/images/SAC127_01.png', '/images/SAC127_02.png', '/images/SAC127_03.png', '/images/SAC127_04.png', '/images/SAC127_05.png']
+   }
+  },
+  {
    id: 'SAC012',
    name: 'Acacia Wood Decorative Napkin Holder',
    price: 999,
@@ -2260,29 +2290,6 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
      width: '30 cm'
     },
     photos: ['/images/SAC125_01.png', '/images/SAC125_02.png']
-   }
-  },
-  {
-   id: 'SAC126',
-   name: 'Oval Serving Tray - Set of 2',
-   price: 1499,
-   description: 'Warm, natural, and crafted for everyday use - the Oval Serving Tray Set brings two generously sized acacia wood trays to your kitchen or living room table. Each tray features a classic oval form with a raised rim edge and a beautifully visible natural grain pattern across the surface, with the distinctive lighter and darker streaks of acacia wood creating a striking two-tone effect on every piece. Sold as a set of two in complementary sizes, they nest together for easy storage and work together or independently for serving, organising, or displaying across the home.',
-   image: '/images/SAC126_01.png',
-   category: 'Serving Tray',
-   room: 'kitchen',
-   inStock: true,
-   details: {
-    materials: 'Acacia Wood',
-    finish: 'Natural Acacia Polish',
-    origin: 'Made in Jodhpur, Rajasthan',
-    shipping: 'Ships within 2-3 business days',
-    delivery: '5-7 days pan India',
-    returns: '7-day easy returns',
-    usp: ['100% Solid Acacia Wood — dense, naturally antibacterial, and beautifully grained', 'Set of 2 in nested sizes — large and small tray that store together and work independently', 'Oval form with raised rim — keeps contents secure while serving or displaying', 'Natural two-tone grain — the distinctive acacia streaking makes every set unique', 'Versatile use — serving food, organising countertops, or styling a coffee table'],
-    sustainability: 'Sustainably sourced acacia wood',
-    care: 'Hand wash with mild soap, dry immediately, do not soak or put in dishwasher, apply food-safe mineral oil periodically to maintain finish',
-    usesAndMeasurements: 'Large tray: 41×20×5 cm (L×W×H)\nSmall tray: 36×15×5 cm (L×W×H)',
-    photos: ['/images/SAC126_01.png', '/images/SAC126_02.png']
    }
   },
  ],
@@ -3831,14 +3838,21 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
    }
   },
   {
-   id: 'SAC126',
+   id: 'SAC127',
    name: 'Oval Serving Tray - Set of 2',
-   price: 1499,
+   price: 1599,
+   originalPrice: 1899,
+   onSale: true,
+   isHot: true,
    description: 'Warm, natural, and crafted for everyday use - the Oval Serving Tray Set brings two generously sized acacia wood trays to your kitchen or living room table. Each tray features a classic oval form with a raised rim edge and a beautifully visible natural grain pattern across the surface, with the distinctive lighter and darker streaks of acacia wood creating a striking two-tone effect on every piece. Sold as a set of two in complementary sizes, they nest together for easy storage and work together or independently for serving, organising, or displaying across the home.',
-   image: '/images/SAC126_01.png',
+   image: '/images/SAC127_01.png',
    category: 'Serving Tray',
    room: 'living',
    inStock: true,
+   relatedSizes: [
+    { size: 'Small (Single)', productId: 'SAC127S', price: 799 },
+    { size: 'Large (Single)', productId: 'SAC127L', price: 899 },
+   ],
    details: {
     materials: 'Acacia Wood',
     finish: 'Natural Acacia Polish',
@@ -3850,7 +3864,7 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
     sustainability: 'Sustainably sourced acacia wood',
     care: 'Hand wash with mild soap, dry immediately, do not soak or put in dishwasher, apply food-safe mineral oil periodically to maintain finish',
     usesAndMeasurements: 'Large tray: 41×20×5 cm (L×W×H)\nSmall tray: 36×15×5 cm (L×W×H)',
-    photos: ['/images/SAC126_01.png', '/images/SAC126_02.png']
+    photos: ['/images/SAC127_01.png', '/images/SAC127_02.png', '/images/SAC127_03.png', '/images/SAC127_04.png', '/images/SAC127_05.png']
    }
   }
  ],
@@ -5073,10 +5087,75 @@ roomProducts['lounge'] = [
  ...roomProducts['lounge'],
 ];
 
-// All products combined (deduped by id — some products appear in multiple rooms)
-export const allProducts: Product[] = Object.values(roomProducts).flat().filter(
+// Hidden products: accessible via /product/:id but not shown in any room listing
+export const hiddenProducts: Product[] = [
+ {
+  id: 'SAC127S',
+  name: 'Oval Serving Tray - Small',
+  price: 799,
+  originalPrice: 899,
+  onSale: true,
+  description: 'Warm, natural, and crafted for everyday use - the Oval Serving Tray in Small brings a beautifully compact acacia wood tray to your kitchen or living room table. The tray features a classic oval form with a raised rim edge and a beautifully visible natural grain pattern across the surface, with the distinctive lighter and darker streaks of acacia wood creating a striking two-tone effect. Perfect for everyday serving, organising, or styling.',
+  image: '/images/SAC127S_01.png',
+  category: 'Serving Tray',
+  room: 'kitchen',
+  inStock: true,
+  relatedSizes: [
+   { size: 'Large (Single)', productId: 'SAC127L', price: 899 },
+   { size: 'Set of 2', productId: 'SAC127', price: 1599 },
+  ],
+  details: {
+   materials: 'Acacia Wood',
+   finish: 'Natural Acacia Polish',
+   origin: 'Made in Jodhpur, Rajasthan',
+   shipping: 'Ships within 2-3 business days',
+   delivery: '5-7 days pan India',
+   returns: '7-day easy returns',
+   usp: ['100% Solid Acacia Wood — dense, naturally antibacterial, and beautifully grained', 'Oval form with raised rim — keeps contents secure while serving or displaying', 'Natural two-tone grain — the distinctive acacia streaking makes every piece unique', 'Compact size — perfect for individual serving or countertop styling'],
+   sustainability: 'Sustainably sourced acacia wood',
+   care: 'Hand wash with mild soap, dry immediately, do not soak or put in dishwasher, apply food-safe mineral oil periodically to maintain finish',
+   usesAndMeasurements: '36×15×5 cm (L×W×H)',
+   photos: ['/images/SAC127S_01.png', '/images/SAC127S_02.png', '/images/SAC127S_03.png', '/images/SAC127S_04.png', '/images/SAC127S_05.png']
+  }
+ },
+ {
+  id: 'SAC127L',
+  name: 'Oval Serving Tray - Large',
+  price: 899,
+  originalPrice: 999,
+  onSale: true,
+  description: 'Warm, natural, and crafted for everyday use - the Oval Serving Tray in Large brings a generously sized acacia wood tray to your kitchen or living room table. The tray features a classic oval form with a raised rim edge and a beautifully visible natural grain pattern across the surface, with the distinctive lighter and darker streaks of acacia wood creating a striking two-tone effect. Perfect for sharing food, serving guests, or bold countertop styling.',
+  image: '/images/SAC127L_01.png',
+  category: 'Serving Tray',
+  room: 'kitchen',
+  inStock: true,
+  relatedSizes: [
+   { size: 'Small (Single)', productId: 'SAC127S', price: 799 },
+   { size: 'Set of 2', productId: 'SAC127', price: 1599 },
+  ],
+  details: {
+   materials: 'Acacia Wood',
+   finish: 'Natural Acacia Polish',
+   origin: 'Made in Jodhpur, Rajasthan',
+   shipping: 'Ships within 2-3 business days',
+   delivery: '5-7 days pan India',
+   returns: '7-day easy returns',
+   usp: ['100% Solid Acacia Wood — dense, naturally antibacterial, and beautifully grained', 'Oval form with raised rim — keeps contents secure while serving or displaying', 'Natural two-tone grain — the distinctive acacia streaking makes every piece unique', 'Generous size — ideal for sharing food or bold countertop styling'],
+   sustainability: 'Sustainably sourced acacia wood',
+   care: 'Hand wash with mild soap, dry immediately, do not soak or put in dishwasher, apply food-safe mineral oil periodically to maintain finish',
+   usesAndMeasurements: '41×20×5 cm (L×W×H)',
+   photos: ['/images/SAC127L_01.png', '/images/SAC127L_02.png', '/images/SAC127L_03.png', '/images/SAC127L_04.png', '/images/SAC127L_05.png']
+  }
+ },
+];
+
+// All products combined (deduped by id — some products appear in multiple rooms), plus hidden products
+export const allProducts: Product[] = [
+ ...Object.values(roomProducts).flat().filter(
   (p, i, arr) => arr.findIndex(q => q.id === p.id) === i
-);
+ ),
+ ...hiddenProducts,
+];
 
 export function isSetProduct(p: { name: string }): boolean {
   return p.name.toLowerCase().includes('set of') || p.name.toLowerCase().includes('pack of');

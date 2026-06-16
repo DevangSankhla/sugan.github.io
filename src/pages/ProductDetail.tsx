@@ -73,7 +73,13 @@ export default function ProductDetail() {
     if (product) addToRecentlyViewed(product.id);
   }, [product]);
 
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [failedImages, setFailedImages] = useState<Set<string>>(new Set());
+
+  useEffect(() => {
+    setSelectedImageIndex(0);
+    setFailedImages(new Set());
+  }, [product?.id]);
   const allImages = useMemo(() => {
     if (!product) return [];
     const seen = new Set<string>();
@@ -170,7 +176,8 @@ export default function ProductDetail() {
   };
 
   const heroImage = allImages[0];
-  const galleryImages = allImages.slice(1).filter((src) => !failedImages.has(src));
+  const visibleImages = allImages.filter((src) => !failedImages.has(src));
+  const selectedImage = failedImages.has(allImages[selectedImageIndex] ?? '') ? heroImage : (allImages[selectedImageIndex] ?? heroImage);
   const galleryVideos: string[] = product.details?.videos ?? [];
 
   const displayPrice =
@@ -178,7 +185,7 @@ export default function ProductDetail() {
   const displaySku =
     product.details?.variants?.[selectedVariant]?.sku || product.id;
 
-  const isHot = ['SAC048S', 'SAC048M', 'SAC048L'].includes(product.id);
+  const isHot = product.isHot ?? false;
 
   const ROOM_LABELS: Record<string, string> = {
     'shop-all': 'Shop', kitchen: 'Kitchen', living: 'Living Room',
@@ -225,38 +232,49 @@ export default function ProductDetail() {
 
       {/* Editorial layout: gallery left, sticky info right */}
       <div className="grid grid-cols-1 lg:grid-cols-[60fr_40fr]">
-        {/* Vertical image + video stack */}
+        {/* Image gallery: large selected image + thumbnail strip */}
         <div className="bg-sugan-bone-dark">
           <div className="relative w-full aspect-square lg:aspect-[4/5] overflow-hidden bg-sugan-bone-dark">
             <img
-              src={heroImage}
+              src={selectedImage}
               alt={product.name}
               loading="lazy"
               className="absolute inset-0 w-full h-full object-contain"
             />
           </div>
 
-          {galleryImages.map((src, i) => (
-            <div
-              key={`${src}-${i}`}
-              className="relative w-full aspect-square lg:aspect-[4/5] overflow-hidden bg-sugan-bone-dark"
-            >
-              <img
-                src={src}
-                alt={`${product.name} - view ${i + 2}`}
-                loading="lazy"
-                className="absolute inset-0 w-full h-full object-contain"
-                onError={() =>
-                  setFailedImages((prev) => {
-                    if (prev.has(src)) return prev;
-                    const next = new Set(prev);
-                    next.add(src);
-                    return next;
-                  })
-                }
-              />
+          {/* Thumbnail strip — only shown when there are multiple images */}
+          {visibleImages.length > 1 && (
+            <div className="flex gap-2 p-4 overflow-x-auto scrollbar-none">
+              {visibleImages.map((src, i) => {
+                const originalIndex = allImages.indexOf(src);
+                const isActive = originalIndex === selectedImageIndex;
+                return (
+                  <button
+                    key={src}
+                    onClick={() => setSelectedImageIndex(originalIndex)}
+                    className={`flex-shrink-0 w-16 h-16 overflow-hidden transition-opacity duration-200 border ${
+                      isActive ? 'border-sugan-ink opacity-100' : 'border-transparent opacity-40 hover:opacity-70'
+                    }`}
+                  >
+                    <img
+                      src={src}
+                      alt={`View ${i + 1}`}
+                      className="w-full h-full object-contain bg-sugan-bone-dark"
+                      onError={() =>
+                        setFailedImages((prev) => {
+                          if (prev.has(src)) return prev;
+                          const next = new Set(prev);
+                          next.add(src);
+                          return next;
+                        })
+                      }
+                    />
+                  </button>
+                );
+              })}
             </div>
-          ))}
+          )}
 
           {/* Videos */}
           {galleryVideos.map((src, i) => (

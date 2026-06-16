@@ -134,19 +134,28 @@ export default function ProductCard({
           </div>
         )}
 
-        {/* Wishlist - persistent at low opacity, fills on active */}
-        {showWishlist && (
-          <button
-            onClick={handleWishlistClick}
-            aria-label={isInWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
-            className={`absolute top-3 right-3 w-9 h-9 flex items-center justify-center transition-opacity duration-300 ease-apple ${
-              isInWishlist
-                ? 'text-sugan-ink opacity-100'
-                : 'text-sugan-ink/70 opacity-30 group-hover:opacity-100'
-            }`}
-          >
-            <Heart className={`w-4 h-4 ${isInWishlist ? 'fill-current' : ''}`} />
-          </button>
+        {/* HOT badge + wishlist stacked at top-right */}
+        {(product.isHot || showWishlist) && (
+          <div className="absolute top-3 right-3 flex flex-col items-end gap-1.5 z-10">
+            {product.isHot && (
+              <span className="bg-red-500 text-white font-body text-[9px] tracking-[0.14em] uppercase px-2 py-1">
+                Hot
+              </span>
+            )}
+            {showWishlist && (
+              <button
+                onClick={handleWishlistClick}
+                aria-label={isInWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
+                className={`w-9 h-9 flex items-center justify-center transition-opacity duration-300 ease-apple ${
+                  isInWishlist
+                    ? 'text-sugan-ink opacity-100'
+                    : 'text-sugan-ink/70 opacity-30 group-hover:opacity-100'
+                }`}
+              >
+                <Heart className={`w-4 h-4 ${isInWishlist ? 'fill-current' : ''}`} />
+              </button>
+            )}
+          </div>
         )}
       </div>
 
