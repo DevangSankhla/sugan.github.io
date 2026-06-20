@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { doc, onSnapshot } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { useAuth } from '@/context/AuthContext';
@@ -77,6 +77,9 @@ export default function Checkout() {
   const [showPayUWarning, setShowPayUWarning] = useState(false);
   const [pendingPayUOrderId, setPendingPayUOrderId] = useState<string | null>(null);
   const [promoRemaining, setPromoRemaining] = useState<number | null>(null);
+  const [guestEmail, setGuestEmail] = useState('');
+  const [guestEmailError, setGuestEmailError] = useState('');
+  const [confirmedOrder, setConfirmedOrder] = useState<{ id: string; orderNumber?: string } | null>(null);
 
   const SAC048_SKUS = ['SAC048S', 'SAC048M', 'SAC048L'];
   const hasSAC048 = items.some(item => SAC048_SKUS.includes(item.id));
@@ -88,13 +91,7 @@ export default function Checkout() {
   const codCharge = promoFreeDelivery ? 0 : (paymentMethod === 'cod' ? 50 : 0);
   const finalTotal = totalPrice - discountAmount + shippingCost + codCharge;
 
-  // Redirect if not logged in or cart is empty
-  useEffect(() => {
-    if (!user) {
-      navigate('/login?redirect=/checkout');
-      return;
-    }
-  }, [user, navigate]);
+  // Nothing to redirect on — guests are allowed through checkout
 
   // Pre-fill name from Firebase auth profile
   useEffect(() => {
@@ -150,10 +147,6 @@ export default function Checkout() {
   }, [hasSAC048]);
 
   const handleSubmit = async () => {
-    if (!user) {
-      navigate('/login?redirect=/checkout');
-      return;
-    }
     setLoading(true);
 
     try {
@@ -167,10 +160,13 @@ export default function Checkout() {
         affiliateCommissionAmount: Math.round(itemsTotal * affiliateMeta.commissionPercent) / 100,
       } : {};
 
+      const effectiveEmail = user ? user.email : guestEmail;
+
       // Create order in Firestore first
       const orderData = {
-        userId: user.uid,
-        userEmail: user.email,
+        userId: user?.uid || null,
+        userEmail: effectiveEmail,
+        ...(user ? {} : { guestEmail, guestPhone: address.phone }),
         items: items.map(item => ({
           productId: item.id,
           name: item.name,
@@ -244,7 +240,14 @@ export default function Checkout() {
         // Cloud Function trigger - no client-side notify call needed.
         await processCOD(orderId);
         clearCart();
-        navigate(`/account?order=${orderId}&cod=true`);
+        if (user) {
+          navigate(`/account?order=${orderId}&cod=true`);
+        } else {
+          // Guest COD: show inline confirmation (no account to navigate to)
+          const { getOrderDetails } = await import('@/lib/payu');
+          const orderDoc = await getOrderDetails(orderId);
+          setConfirmedOrder({ id: orderId, orderNumber: (orderDoc as Record<string, unknown>)?.orderNumber as string | undefined });
+        }
       } else {
         // Show warning before PayU redirect (GitHub Pages blocks POST back)
         setPendingPayUOrderId(orderId);
@@ -261,13 +264,13 @@ export default function Checkout() {
   };
 
   const proceedToPayU = () => {
-    if (!pendingPayUOrderId || !user) return;
+    if (!pendingPayUOrderId) return;
     const payuFormData = preparePayUForm({
       orderId: pendingPayUOrderId,
-      userId: user.uid,
+      userId: user?.uid || '',
       amount: finalTotal,
       customerName: address.fullName,
-      customerEmail: user.email || '',
+      customerEmail: user?.email || guestEmail,
       customerPhone: address.phone,
       productInfo: `Order from Sugan (${items.length} items)`
     });
@@ -279,14 +282,59 @@ export default function Checkout() {
 
 
   const isPhoneValid = /^[6-9]\d{9}$/.test(address.phone);
+  const isGuestEmailValid = !user ? /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(guestEmail) : true;
   const isFormValid = !!address.fullName && isPhoneValid && !!address.addressLine1 &&
-                      !!address.city && !!address.state && isPincodeValid;
+                      !!address.city && !!address.state && isPincodeValid && isGuestEmailValid;
 
-  // Don't render if redirecting (must be after all hooks)
-  if (!user) return null;
-  if (items.length === 0) {
+  // Must be after all hooks
+  if (items.length === 0 && !confirmedOrder) {
     navigate('/shop');
     return null;
+  }
+
+  // Guest COD confirmed screen
+  if (confirmedOrder) {
+    return (
+      <div className="min-h-screen bg-sugan-bone pt-24 pb-12">
+        <div className="max-w-md mx-auto px-4">
+          <Card className="border-none shadow-xl">
+            <CardContent className="p-8 text-center">
+              <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Package className="w-10 h-10 text-green-500" />
+              </div>
+              <h1 className="font-display text-3xl text-sugan-ink mb-2">Order Placed!</h1>
+              <p className="text-sugan-ink/60 font-body mb-6">
+                Your Cash on Delivery order has been confirmed.
+              </p>
+              {confirmedOrder.orderNumber && (
+                <p className="font-body font-semibold text-sugan-ink mb-4">
+                  Order Number: {confirmedOrder.orderNumber}
+                </p>
+              )}
+              <div className="bg-sugan-bone rounded-xl p-4 mb-6 text-sm text-sugan-ink/70 font-body text-left space-y-2">
+                <p>• A confirmation email has been sent to <strong>{guestEmail}</strong></p>
+                <p>• Delivery in 5–7 business days</p>
+                <p>• Please keep the exact amount ready at delivery</p>
+              </div>
+              <a
+                href={`https://wa.me/916367677255?text=Hi, I just placed a COD order${confirmedOrder.orderNumber ? ' ' + confirmedOrder.orderNumber : ''}. Please confirm.`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 w-full justify-center px-6 py-3 bg-green-500 text-white rounded-full font-body hover:bg-green-600 transition-colors mb-4"
+              >
+                <Phone className="w-4 h-4" />
+                Track via WhatsApp
+              </a>
+              <Link to="/shop">
+                <Button variant="outline" className="w-full font-body border-sugan-ink/20">
+                  Continue Shopping
+                </Button>
+              </Link>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -297,6 +345,50 @@ export default function Checkout() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Left Column - Shipping & Payment */}
           <div className="space-y-6">
+            {/* Guest email card — only shown when not signed in */}
+            {!user && (
+              <Card>
+                <CardHeader>
+                  <CardTitle className="font-display text-xl text-sugan-ink flex items-center gap-2">
+                    <User className="w-5 h-5 text-sugan-gold" />
+                    Contact Details
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-2">
+                    <Label className="font-body">Email Address</Label>
+                    <Input
+                      type="email"
+                      value={guestEmail}
+                      onChange={(e) => {
+                        setGuestEmail(e.target.value);
+                        setGuestEmailError('');
+                      }}
+                      onBlur={() => {
+                        if (guestEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(guestEmail)) {
+                          setGuestEmailError('Enter a valid email address');
+                        }
+                      }}
+                      className={`font-body ${guestEmailError ? 'border-red-500' : ''}`}
+                      placeholder="you@example.com"
+                    />
+                    {guestEmailError && (
+                      <p className="text-xs text-red-500 font-body">{guestEmailError}</p>
+                    )}
+                    <p className="text-xs text-sugan-ink/50 font-body">
+                      Order confirmation will be sent here. Sign up later to track your order.
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2 p-3 bg-sugan-bone rounded-lg">
+                    <span className="text-xs text-sugan-ink/60 font-body">Already have an account?</span>
+                    <Link to="/login?redirect=/checkout" className="text-xs text-sugan-gold font-body hover:underline">
+                      Sign in
+                    </Link>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
             {/* Shipping Address */}
             <Card>
               <CardHeader>
@@ -631,6 +723,7 @@ export default function Checkout() {
                   {/* Coupon */}
                   <CouponCode
                     subtotal={totalPrice}
+                    paymentMethod={paymentMethod}
                     onApplyCoupon={(discount, code, aff) => {
                       setDiscountAmount(discount);
                       setAppliedCoupon(code);

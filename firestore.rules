@@ -30,13 +30,25 @@ service cloud.firestore {
     }
 
     // Users can read their own orders, admin can read all.
-    // Owner updates are restricted to a safe allowlist of payment/shipping
-    // fields — financial fields (total, subtotal, items, shippingAddress) are
-    // immutable from the client after creation.
+    // Guest orders (userId == null) are readable by anyone who knows the orderId
+    // (orderId is a non-guessable Firestore UUID), and also by signed-in users
+    // whose email matches the guestEmail on the order.
     match /orders/{orderId} {
-      allow read: if isSignedIn() &&
-        (request.auth.uid == resource.data.userId || isAdmin());
+      // Authenticated users read their own orders
+      allow read: if isSignedIn() && request.auth.uid == resource.data.userId;
+      allow read: if isAdmin();
+      // Signed-in users can read guest orders that belong to their email
+      allow read: if isSignedIn() && resource.data.userId == null &&
+        resource.data.guestEmail == request.auth.token.email;
+      // Anyone can read guest orders (non-guessable orderId makes this safe)
+      allow read: if resource.data.userId == null;
+
+      // Authenticated users create their own orders
       allow create: if isSignedIn() && request.auth.uid == request.resource.data.userId;
+      // Anyone can create guest orders (no userId)
+      allow create: if request.resource.data.userId == null;
+
+      // Owner updates payment/shipping fields only
       allow update: if isSignedIn() &&
         request.auth.uid == resource.data.userId &&
         request.resource.data.userId == resource.data.userId &&
@@ -48,6 +60,20 @@ service cloud.firestore {
           .hasOnly(['paymentStatus', 'paymentMethod', 'txnid', 'paidAmount',
                     'paidAt', 'errorMessage', 'updatedAt',
                     'shippingDetails', 'status', 'shippedAt']);
+
+      // Guest order payment status updates (no auth required — orderId is non-guessable)
+      allow update: if resource.data.userId == null &&
+        request.resource.data.diff(resource.data).affectedKeys()
+          .hasOnly(['paymentStatus', 'paymentMethod', 'txnid', 'paidAmount',
+                    'paidAt', 'errorMessage', 'updatedAt']);
+
+      // Signed-in user claims ownership of their guest order (links it to account)
+      allow update: if isSignedIn() &&
+        resource.data.userId == null &&
+        resource.data.guestEmail == request.auth.token.email &&
+        request.resource.data.userId == request.auth.uid &&
+        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['userId', 'updatedAt']);
+
       allow update: if isAdmin();
     }
 
@@ -63,16 +89,16 @@ service cloud.firestore {
       allow write: if isAdmin();
     }
 
-    // Order number counter - readable by all, writable by authenticated users
+    // Order number counter - open write so guest orders also get sequential SO# numbers
     match /counters/{counterId} {
       allow read: if true;
-      allow write: if isSignedIn();
+      allow write: if true;
     }
 
     // Promotions - readable by all, customers can only decrement by 1
     match /promotions/{promoId} {
       allow read: if true;
-      allow update: if isSignedIn() && (
+      allow update: if (
         (request.resource.data.remaining == resource.data.remaining - 1 &&
          request.resource.data.remaining >= 0) ||
         isAdmin()

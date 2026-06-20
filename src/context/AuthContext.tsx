@@ -11,7 +11,7 @@ import {
   getRedirectResult,
   sendPasswordResetEmail
 } from 'firebase/auth';
-import { collection, doc, getDoc, getDocs, query, where, limit, setDoc, serverTimestamp, type FieldValue } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs, query, where, limit, setDoc, writeBatch, serverTimestamp, type FieldValue } from 'firebase/firestore';
 import { auth, db } from '@/lib/firebase';
 import { getErrorCode } from '@/lib/utils';
 import type { FirestoreTimestamp } from '@/types';
@@ -138,6 +138,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
 
     await setDoc(doc(db, 'users', user.uid), userData, { merge: true });
+
+    // Link any guest orders placed with this email before account creation
+    try {
+      const guestOrdersSnap = await getDocs(
+        query(collection(db, 'orders'), where('guestEmail', '==', email), where('userId', '==', null))
+      );
+      if (!guestOrdersSnap.empty) {
+        const batch = writeBatch(db);
+        guestOrdersSnap.docs.forEach(d => {
+          batch.update(d.ref, { userId: user.uid, updatedAt: serverTimestamp() });
+        });
+        await batch.commit();
+      }
+    } catch {
+      // Non-critical — guest orders can be claimed later from the account page
+    }
   };
 
   const loginWithGoogle = async () => {
@@ -164,7 +180,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const syncGoogleUser = async (user: User) => {
     const userRef = doc(db, 'users', user.uid);
     const userDoc = await getDoc(userRef);
-    if (!userDoc.exists()) {
+    const isNewUser = !userDoc.exists();
+    if (isNewUser) {
       const userData: UserData = {
         uid: user.uid,
         email: user.email,
@@ -186,6 +203,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         },
         { merge: true }
       );
+    }
+    // Link guest orders for new Google sign-in users
+    if (isNewUser && user.email) {
+      try {
+        const guestOrdersSnap = await getDocs(
+          query(collection(db, 'orders'), where('guestEmail', '==', user.email), where('userId', '==', null))
+        );
+        if (!guestOrdersSnap.empty) {
+          const batch = writeBatch(db);
+          guestOrdersSnap.docs.forEach(d => {
+            batch.update(d.ref, { userId: user.uid, updatedAt: serverTimestamp() });
+          });
+          await batch.commit();
+        }
+      } catch {
+        // Non-critical
+      }
     }
   };
 

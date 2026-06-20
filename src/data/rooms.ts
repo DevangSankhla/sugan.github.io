@@ -426,7 +426,7 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
   {
    id: 'SAC048S',
    name: 'Marble-Top Acacia Wood Pet Feeder with Stainless Steel Bowls',
-   price: 1399,
+   price: 1799,
    originalPrice: 1999,
    onSale: true,
    isPremium: true,
@@ -514,7 +514,7 @@ Food math: ~1.8 L = ~4–6 days for a 12 kg dog, well over a week for a cat.`
     {
         'size': 'Small',
         'productId': 'SAC048S',
-        'price': 1999
+        'price': 1799
     },
     {
         'size': 'Large',
@@ -563,7 +563,7 @@ Food math: A 25 kg Lab eats ~300–400 g/day (~500–700 ml dry kibble volume), 
     {
         'size': 'Small',
         'productId': 'SAC048S',
-        'price': 1999
+        'price': 1799
     },
     {
         'size': 'Medium',
@@ -1866,7 +1866,7 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
   {
    id: 'SAC05_L',
    name: 'Acacia Wood Hand-Carved Round Serving Bowl, Natural Grain',
-   price: 1199,
+   price: 1399,
    originalPrice: 1999,
    description: 'A large hand-carved acacia serving bowl made for the dining table - wide enough for a full salad, a fruit centrepiece, or a shared snack spread for four to six. Finished with food-safe mineral oil and carved from solid acacia in Jodhpur, the natural grain runs deep and the bowl improves in richness with every oiling.',
    image: '/images/SAC05L_01.png',
@@ -1889,27 +1889,15 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
     maintenance: 'Apply mineral oil periodically'
    },
    relatedSizes: [
-    {
-        'size': 'Small',
-        'productId': 'SAC05_S',
-        'price': 799
-    },
-    {
-        'size': 'Medium',
-        'productId': 'SAC05_M',
-        'price': 1099
-    }
-,    {
-        'size': 'Set of 3',
-        'productId': 'SAC05_Pack of 3',
-        'price': 2399
-    }
+    { 'size': 'Small',    'productId': 'SAC05_S',        'price': 899 },
+    { 'size': 'Medium',   'productId': 'SAC05_M',        'price': 999 },
+    { 'size': 'Set of 3', 'productId': 'SAC05_Pack of 3','price': 2999 }
 ]
   },
   {
    id: 'SAC05_M',
    name: 'Acacia Wood Hand-Carved Round Serving Bowl, Natural Grain',
-   price: 1099,
+   price: 999,
    originalPrice: 1299,
    description: 'This medium hand-carved acacia wood bowl is the right size for a generous fruit arrangement, a salad for two, or a bowl of snacks on the coffee table. Finished with food-safe mineral oil and completely free from synthetic coatings, it handles daily contact with food safely and looks better with every use.',
    image: '/images/SAC05M_01.png',
@@ -1932,22 +1920,14 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
     maintenance: 'Apply mineral oil periodically'
    },
    relatedSizes: [
-    {
-        'size': 'Small',
-        'productId': 'SAC05_S',
-        'price': 799
-    },
-    {
-        'size': 'Large',
-        'productId': 'SAC05_L',
-        'price': 1199
-    }
+    { 'size': 'Small', 'productId': 'SAC05_S', 'price': 899 },
+    { 'size': 'Large', 'productId': 'SAC05_L', 'price': 1399 }
 ]
   },
   {
    id: 'SAC05_Pack of 3',
    name: 'Acacia Wood Hand-Carved Round Serving Bowls, Natural Grain, Set of 3',
-   price: 2399,
+   price: 2999,
    originalPrice: 3999,
    description: 'Three hand-carved acacia serving bowls in small, medium, and large - a complete set for the table, counter, and sideboard. Each bowl is finished with food-safe mineral oil and carries its own natural grain pattern, making the set cohesive but never identical. Handcrafted in Jodhpur from sustainably sourced acacia wood.',
    image: '/images/SAC05PACKOF3_01.png',
@@ -1970,27 +1950,15 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
     maintenance: 'Apply mineral oil periodically'
    },
    relatedSizes: [
-    {
-        'size': 'Small',
-        'productId': 'SAC05_S',
-        'price': 899
-    },
-    {
-        'size': 'Medium',
-        'productId': 'SAC05_M',
-        'price': 1199
-    },
-    {
-        'size': 'Large',
-        'productId': 'SAC05_L',
-        'price': 1499
-    }
+    { 'size': 'Small',  'productId': 'SAC05_S', 'price': 899 },
+    { 'size': 'Medium', 'productId': 'SAC05_M', 'price': 999 },
+    { 'size': 'Large',  'productId': 'SAC05_L', 'price': 1399 }
 ]
   },
   {
    id: 'SAC05_S',
    name: 'Acacia Wood Hand-Carved Round Serving Bowl, Natural Grain',
-   price: 799,
+   price: 899,
    originalPrice: 1099,
    description: 'Hand-carved in Jodhpur from solid acacia wood, this small serving bowl is finished smooth with food-safe mineral oil, making it safe for direct contact with fruit, nuts, salads, and dry snacks. The natural honey-to-dark-brown grain variation across the surface is unique to every piece - a result of the natural variation in acacia grain.',
    image: '/images/SAC05S_01.png',
@@ -2013,21 +1981,9 @@ Food math: 1 L = ~1.5–2 weeks for a cat, ~4–5 days for a small dog.`
     maintenance: 'Apply mineral oil periodically'
    },
    relatedSizes: [
-    {
-        'size': 'Medium',
-        'productId': 'SAC05_M',
-        'price': 1099
-    },
-    {
-        'size': 'Large',
-        'productId': 'SAC05_L',
-        'price': 1199
-    }
-,    {
-        'size': 'Set of 3',
-        'productId': 'SAC05_Pack of 3',
-        'price': 2399
-    }
+    { 'size': 'Medium',   'productId': 'SAC05_M',        'price': 999 },
+    { 'size': 'Large',    'productId': 'SAC05_L',        'price': 1399 },
+    { 'size': 'Set of 3', 'productId': 'SAC05_Pack of 3','price': 2999 }
 ]
   },
   {

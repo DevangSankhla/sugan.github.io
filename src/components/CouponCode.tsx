@@ -12,6 +12,7 @@ export interface AffiliateMeta {
 
 interface CouponCodeProps {
   subtotal: number;
+  paymentMethod?: 'payu' | 'cod';
   onApplyCoupon: (discount: number, code: string, affiliate?: AffiliateMeta) => void;
   onRemoveCoupon: () => void;
   appliedCoupon: string | null;
@@ -19,11 +20,12 @@ interface CouponCodeProps {
 }
 
 const AVAILABLE_COUPONS = [
-  { code: 'FIRST10', discount: 10, type: 'percent', minOrder: 0, description: '10% off your first order (max ₹499)' },
+  { code: 'PREPAID10', discount: 10, type: 'percent', minOrder: 0, description: '10% off on prepaid orders (max ₹499)' },
 ];
 
 export default function CouponCode({
   subtotal,
+  paymentMethod,
   onApplyCoupon,
   onRemoveCoupon,
   appliedCoupon,
@@ -77,6 +79,10 @@ export default function CouponCode({
     const coupon = AVAILABLE_COUPONS.find(c => c.code.toUpperCase() === normalized);
 
     if (coupon) {
+      if (coupon.code === 'PREPAID10' && paymentMethod === 'cod') {
+        setError('PREPAID10 is only valid for online (prepaid) payments, not COD');
+        return;
+      }
       if (subtotal < coupon.minOrder) {
         setError(`Minimum order amount is ₹${coupon.minOrder} for this coupon`);
         return;

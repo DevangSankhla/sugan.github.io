@@ -474,9 +474,9 @@ export default function ProductDetail() {
                 <div className="flex items-start gap-2 font-body text-body-sm text-sugan-ink-soft leading-relaxed">
                   <Sparkles className="w-4 h-4 mt-0.5 shrink-0 text-sugan-gold" />
                   <span>
-                    First order? Use code{' '}
-                    <span className="font-medium tracking-wide text-sugan-ink">FIRST10</span>{' '}
-                    for 10% off at checkout.
+                    Save 10% on prepaid orders — use code{' '}
+                    <span className="font-medium tracking-wide text-sugan-ink">PREPAID10</span>{' '}
+                    at checkout.
                   </span>
                 </div>
               </div>
