@@ -1,13 +1,18 @@
-// Generates functions/src/knowledge.generated.ts — a compact, token-efficient
-// product catalog the chatbot uses as grounding context.
+// Generates functions/src/knowledge.generated.ts — a structured, compact product
+// catalog the chatbot uses as grounding context.
 //
-// Source of truth is src/data/rooms.ts. We esbuild-transform it (which strips
-// the type-only `@/types` import, leaving pure data) and import the result, so
-// this stays in sync with the real catalog. Re-run after editing products:
+// The bot uses RETRIEVAL: it sends only the most relevant products per question
+// (not the whole catalog), to stay within free-tier token limits and scale to any
+// catalog size. So we emit a structured PRODUCTS array (with a precomputed `search`
+// blob) plus a small ROOMS_OVERVIEW, and the function selects + formats a subset.
+//
+// Source of truth is src/data/rooms.ts. We esbuild-transform it (stripping the
+// type-only `@/types` import, leaving pure data) and import the result, so this
+// stays in sync with the real catalog. Re-run after editing products:
 //
 //   node scripts/generate-chat-knowledge.mjs
 //
-// (Also wired into `npm run build` via predeploy — see package.json.)
+// (Also wired into `npm run build`.)
 
 import { transform } from 'esbuild';
 import { readFile, writeFile, mkdir, rm } from 'node:fs/promises';
@@ -32,7 +37,6 @@ function specsOf(p) {
   const bits = [];
   if (d.materials) bits.push(clip(d.materials, 40));
   if (d.finish && d.finish !== d.materials) bits.push(clip(d.finish, 40));
-  // Dimensions: prefer the structured object, else the first line of the freeform block.
   const dim = d.dimensions;
   if (dim && (dim.length || dim.width || dim.height || dim.diameter)) {
     const dimStr = [
@@ -58,110 +62,121 @@ function flagsOf(p) {
   if (p.isPremium) f.push('premium');
   if (p.isHot) f.push('hot');
   if (p.onSale) f.push('on sale');
-  return f.length ? ` (${f.join(', ')})` : '';
+  return f.join(', ');
 }
 
-function availabilityOf(p) {
-  if (p.preOrder) return 'pre-order';
-  return p.inStock ? 'in stock' : 'out of stock';
-}
-
-function priceOf(p) {
-  const base = `₹${p.price.toLocaleString('en-IN')}`;
-  if (p.onSale && p.originalPrice && p.originalPrice > p.price) {
-    return `${base} (was ₹${p.originalPrice.toLocaleString('en-IN')})`;
-  }
-  return base;
-}
-
-function lineFor(p) {
-  const parts = [
-    p.id,
-    p.name,
-    priceOf(p) + flagsOf(p),
-    availabilityOf(p),
-  ];
-  const specs = specsOf(p);
-  if (specs) parts.push(specs);
-  const desc = clip(p.description, 130);
-  if (desc) parts.push(desc);
-  let line = parts.join(' | ') + ` | link: /product/${p.id}`;
-  if (Array.isArray(p.relatedSizes) && p.relatedSizes.length) {
-    const sizes = p.relatedSizes
-      .map((s) => `${s.size} ₹${Number(s.price).toLocaleString('en-IN')} (/product/${s.productId})`)
-      .join('; ');
-    line += ` | other sizes: ${sizes}`;
-  }
-  return line;
+function sizesOf(p) {
+  if (!Array.isArray(p.relatedSizes) || !p.relatedSizes.length) return '';
+  return p.relatedSizes
+    .map((s) => `${s.size} ₹${Number(s.price).toLocaleString('en-IN')} (/product/${s.productId})`)
+    .join('; ');
 }
 
 async function main() {
   const tsSource = await readFile(ROOMS_TS, 'utf8');
-  const { code } = await transform(tsSource, {
-    loader: 'ts',
-    format: 'esm',
-    target: 'es2020',
-  });
+  const { code } = await transform(tsSource, { loader: 'ts', format: 'esm', target: 'es2020' });
 
   const tmp = join(tmpdir(), `sugan-rooms-${Date.now()}.mjs`);
   await writeFile(tmp, code, 'utf8');
-  let rooms, allProducts, categories;
+  let rooms, allProducts;
   try {
-    ({ rooms, allProducts, categories } = await import(pathToFileURL(tmp).href));
+    ({ rooms, allProducts } = await import(pathToFileURL(tmp).href));
   } finally {
     await rm(tmp, { force: true });
   }
 
   const roomName = new Map((rooms || []).map((r) => [r.id, r.name]));
 
-  // Group products by room, preserving the rooms[] ordering.
-  const byRoom = new Map();
-  for (const p of allProducts) {
-    const key = p.room || 'other';
-    if (!byRoom.has(key)) byRoom.set(key, []);
-    byRoom.get(key).push(p);
+  const products = allProducts.map((p) => {
+    const d = p.details || {};
+    const room = p.room || 'other';
+    const obj = {
+      id: p.id,
+      name: p.name,
+      price: p.price,
+      room,
+      roomName: roomName.get(room) || room,
+      inStock: p.inStock !== false,
+      desc: clip(p.description, 130),
+    };
+    if (p.originalPrice) obj.originalPrice = p.originalPrice;
+    if (p.onSale) obj.onSale = true;
+    if (p.preOrder) obj.preOrder = true;
+    if (p.category) obj.category = p.category;
+    const flags = flagsOf(p);
+    if (flags) obj.flags = flags;
+    const specs = specsOf(p);
+    if (specs) obj.specs = specs;
+    const sizes = sizesOf(p);
+    if (sizes) obj.sizes = sizes;
+    // Search blob is used server-side for retrieval only — it is NOT sent in the
+    // prompt, so we can afford to make it rich.
+    obj.search = [
+      p.id,
+      p.name,
+      p.category,
+      obj.roomName,
+      room,
+      p.description,
+      d.materials,
+      d.finish,
+      Array.isArray(p.tags) ? p.tags.join(' ') : '',
+      Array.isArray(d.usp) ? d.usp.join(' ') : '',
+      d.usesAndMeasurements,
+    ]
+      .filter(Boolean)
+      .join(' ')
+      .toLowerCase()
+      .replace(/\s+/g, ' ')
+      .slice(0, 600);
+    return obj;
+  });
+
+  // Rooms overview: "Kitchen (32), Pet (18), …" in rooms[] order (skip shop-all).
+  const counts = new Map();
+  for (const p of products) counts.set(p.room, (counts.get(p.room) || 0) + 1);
+  const overviewParts = [];
+  for (const r of rooms || []) {
+    if (r.id === 'shop-all') continue;
+    const c = counts.get(r.id);
+    if (c) overviewParts.push(`${r.name} (${c}) → /shop/${r.id}`);
   }
-
-  const orderedRoomIds = [
-    ...(rooms || []).map((r) => r.id).filter((id) => byRoom.has(id) && id !== 'shop-all'),
-    ...[...byRoom.keys()].filter((id) => !roomName.has(id)),
-  ];
-
-  const sections = [];
-  for (const roomId of orderedRoomIds) {
-    const items = byRoom.get(roomId);
-    if (!items || !items.length) continue;
-    const title = roomName.get(roomId) || roomId;
-    sections.push(
-      `### ${title} (browse: /shop/${roomId})\n` + items.map(lineFor).join('\n'),
-    );
+  for (const [id, c] of counts) {
+    if (!roomName.has(id)) overviewParts.push(`${id} (${c})`);
   }
+  const roomsOverview = overviewParts.join(', ');
 
-  const catalog = [
-    `PRODUCT CATALOG — ${allProducts.length} products. Prices in INR (₹). Use exact prices, names, and /product/<ID> links from here; never invent products or prices.`,
-    categories && categories.length
-      ? `Categories: ${categories
-          .map((c) => (typeof c === 'string' ? c : c && (c.name || c.id)))
-          .filter((c) => c && !/^all/i.test(c))
-          .join(', ')}.`
-      : '',
-    '',
-    sections.join('\n\n'),
-  ]
-    .filter(Boolean)
-    .join('\n');
+  const iface = `export interface CatalogProduct {
+  id: string;
+  name: string;
+  price: number;
+  originalPrice?: number;
+  onSale?: boolean;
+  preOrder?: boolean;
+  inStock: boolean;
+  room: string;
+  roomName: string;
+  category?: string;
+  flags?: string;
+  specs?: string;
+  sizes?: string;
+  desc: string;
+  search: string;
+}`;
 
   const banner = `// AUTO-GENERATED by scripts/generate-chat-knowledge.mjs — DO NOT EDIT BY HAND.\n// Re-run: node scripts/generate-chat-knowledge.mjs\n`;
   const out =
     banner +
-    `\nexport const PRODUCT_COUNT = ${allProducts.length};\n` +
+    `\n${iface}\n\n` +
+    `export const PRODUCT_COUNT = ${products.length};\n` +
     `export const GENERATED_AT = ${JSON.stringify(new Date().toISOString())};\n` +
-    `export const PRODUCT_CATALOG = ${JSON.stringify(catalog)};\n`;
+    `export const ROOMS_OVERVIEW = ${JSON.stringify(roomsOverview)};\n` +
+    `export const PRODUCTS: CatalogProduct[] = ${JSON.stringify(products)};\n`;
 
   await mkdir(dirname(OUT_TS), { recursive: true });
   await writeFile(OUT_TS, out, 'utf8');
   console.log(
-    `✓ Wrote ${OUT_TS} (${allProducts.length} products, ${(out.length / 1024).toFixed(1)} KB)`,
+    `✓ Wrote ${OUT_TS} (${products.length} products, ${(out.length / 1024).toFixed(1)} KB)`,
   );
 }
 

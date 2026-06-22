@@ -1,10 +1,15 @@
 "use strict";
 // Hand-authored grounding for the Sugan storefront assistant.
-// The product catalog is generated from src/data/rooms.ts (see knowledge.generated.ts);
-// business facts and policies below are maintained here. Keep them in sync with the
-// /shipping, /returns, /faq, /bulk-orders, and /contact pages.
+// Business facts and policies are maintained here; the product catalog is
+// generated from src/data/rooms.ts (knowledge.generated.ts). Keep policies in
+// sync with the /shipping, /returns, /faq, /bulk-orders, and /contact pages.
+//
+// To stay within free-tier token limits (and to scale to any catalog size), the
+// assistant uses RETRIEVAL: only the most relevant products for each question are
+// included in the prompt, not the whole catalog.
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.KNOWLEDGE_META = void 0;
+exports.selectRelevantProducts = selectRelevantProducts;
 exports.buildSystemPrompt = buildSystemPrompt;
 const knowledge_generated_1 = require("./knowledge.generated");
 const BUSINESS_INFO = `
@@ -59,14 +64,15 @@ YOUR JOB
 - Help shoppers discover products and pick the right one, answer questions about materials, dimensions, care, and use, and answer store policy questions (shipping, returns, payments, bulk orders).
 
 GROUNDING RULES (important)
-- Use ONLY the information in this prompt (business info, policies, and the product catalog). Do NOT invent products, prices, SKUs, dimensions, materials, discounts, or policies.
-- All prices are in Indian Rupees (₹). Quote prices and availability exactly as listed in the catalog.
-- If you don't know something or it isn't covered here, say so honestly and point the customer to contact@sugan.shop or +91 6367677255.
+- Use ONLY the information in this prompt (business info, policies, and the product list). Do NOT invent products, prices, SKUs, dimensions, materials, discounts, or policies.
+- The "RELEVANT PRODUCTS" list is only a SUBSET of the full catalogue, chosen to match this question — it is not everything we sell. If the customer wants something not in the list, recommend the closest options shown and point them to the relevant section page (e.g. /shop/kitchen) or /shop to browse the rest. Never claim a specific product exists unless it appears in the list.
+- All prices are in Indian Rupees (₹). Quote prices and availability exactly as listed.
+- If you don't know something or it isn't covered here, say so honestly and point to contact@sugan.shop or +91 6367677255.
 
 RECOMMENDING PRODUCTS
-- When suggesting products, recommend 1–4 relevant items. For each, use a markdown link in the exact form [Product Name](/product/SKU) using the link from the catalog.
+- Recommend 1–4 relevant items. For each, use a markdown link in the exact form [Product Name](/product/SKU) using the link from the list.
 - Match the shopper's need (room, use, budget, size, material). Mention price and a one-line reason. If an item is out of stock, say so and offer an in-stock alternative if there is one.
-- To point someone at a whole category, you can link a room page like [Kitchen](/shop/kitchen).
+- To point at a whole category, link a section page like [Kitchen](/shop/kitchen).
 
 ORDER STATUS
 - You cannot access individual orders. For "where is my order"-type questions, point to "My Account" (/account) and the tracking email/SMS, or to contact support with the order number.
@@ -78,12 +84,133 @@ STYLE
 - For complaints, custom quotes, or anything needing a human, share contact@sugan.shop / +91 6367677255 and the relevant page.
 - Format all links as site-relative paths beginning with "/" (this is a single-page app).
 `.trim();
+// --- Retrieval ---------------------------------------------------------------
+const MAX_PRODUCTS = 30;
+const MIN_PRODUCTS = 12;
+const STOPWORDS = new Set([
+    'the', 'and', 'for', 'are', 'you', 'your', 'with', 'have', 'has', 'can', 'what',
+    'which', 'where', 'how', 'does', 'will', 'this', 'that', 'they', 'them', 'some',
+    'something', 'any', 'need', 'want', 'looking', 'look', 'please', 'show', 'tell',
+    'about', 'under', 'below', 'above', 'over', 'between', 'than', 'less', 'upto',
+    'price', 'priced', 'cost', 'cheap', 'cheapest', 'buy', 'get', 'find', 'recommend',
+    'recommendation', 'suggest', 'idea', 'ideas', 'rupees', 'inr', 'rs', 'good', 'best',
+    'nice', 'me', 'my', 'mine', 'our', 'from', 'into', 'around',
+]);
+function parsePriceMax(q) {
+    const m = q.match(/(?:under|below|less than|upto|up to|within|max|maximum|budget(?:\s+of)?)\s*(?:₹|rs\.?|inr)?\s*([\d,]+)/i) ||
+        q.match(/(?:₹|rs\.?|inr)\s*([\d,]+)/i);
+    if (!m)
+        return null;
+    const n = parseInt(m[1].replace(/,/g, ''), 10);
+    return Number.isFinite(n) && n > 0 ? n : null;
+}
+function termsOf(q) {
+    const raw = q
+        .toLowerCase()
+        .split(/[^a-z0-9]+/)
+        .filter((t) => t.length > 2 && !STOPWORDS.has(t));
+    const set = new Set();
+    for (const t of raw) {
+        set.add(t);
+        if (t.endsWith('s') && t.length > 3)
+            set.add(t.slice(0, -1)); // naive singular
+    }
+    return [...set];
+}
+function fallbackProducts(priceMax) {
+    const out = [];
+    const seen = new Set();
+    const within = (p) => priceMax === null || p.price <= priceMax;
+    const add = (p) => {
+        if (!seen.has(p.id) && within(p)) {
+            seen.add(p.id);
+            out.push(p);
+        }
+    };
+    // Highlights first.
+    for (const p of knowledge_generated_1.PRODUCTS)
+        if (p.inStock && p.flags && /bestseller|hot/.test(p.flags))
+            add(p);
+    // Then spread one per room for variety.
+    const perRoom = new Set();
+    for (const p of knowledge_generated_1.PRODUCTS) {
+        if (out.length >= MAX_PRODUCTS)
+            break;
+        if (p.inStock && !perRoom.has(p.room)) {
+            perRoom.add(p.room);
+            add(p);
+        }
+    }
+    // Top up if still short.
+    for (const p of knowledge_generated_1.PRODUCTS) {
+        if (out.length >= MIN_PRODUCTS)
+            break;
+        add(p);
+    }
+    return out.slice(0, MAX_PRODUCTS);
+}
+function selectRelevantProducts(query) {
+    const q = (query || '').toLowerCase();
+    const priceMax = parsePriceMax(q);
+    const skus = new Set((query.match(/\bSAC[a-z0-9_]+/gi) || []).map((s) => s.toUpperCase()));
+    const terms = termsOf(q);
+    const scored = knowledge_generated_1.PRODUCTS.map((p) => {
+        let score = 0;
+        if (skus.has(p.id))
+            score += 100;
+        for (const t of terms)
+            if (p.search.includes(t))
+                score += 1;
+        if (priceMax !== null && p.price <= priceMax)
+            score += 0.5;
+        return { p, score };
+    });
+    let picked = scored
+        .filter((x) => x.score > 0)
+        .filter((x) => priceMax === null || x.p.price <= priceMax || skus.has(x.p.id))
+        .sort((a, b) => b.score - a.score || a.p.price - b.p.price)
+        .map((x) => x.p);
+    if (picked.length < MIN_PRODUCTS) {
+        const seen = new Set(picked.map((p) => p.id));
+        for (const p of fallbackProducts(priceMax)) {
+            if (picked.length >= MAX_PRODUCTS)
+                break;
+            if (!seen.has(p.id)) {
+                seen.add(p.id);
+                picked.push(p);
+            }
+        }
+    }
+    return picked.slice(0, MAX_PRODUCTS);
+}
+function formatProduct(p) {
+    let price = `₹${p.price.toLocaleString('en-IN')}`;
+    if (p.onSale && p.originalPrice && p.originalPrice > p.price) {
+        price += ` (was ₹${p.originalPrice.toLocaleString('en-IN')})`;
+    }
+    if (p.flags)
+        price += ` [${p.flags}]`;
+    const availability = p.preOrder ? 'pre-order' : p.inStock ? 'in stock' : 'out of stock';
+    const parts = [p.id, p.name, price, availability];
+    if (p.specs)
+        parts.push(p.specs);
+    if (p.desc)
+        parts.push(p.desc);
+    let line = parts.join(' | ') + ` | link: /product/${p.id}`;
+    if (p.sizes)
+        line += ` | other sizes: ${p.sizes}`;
+    return line;
+}
 /**
- * Builds the full system prompt. Stable across requests (good for prompt caching
- * if/when moving to a provider that supports it).
+ * Builds the system prompt for a given user message. Includes business info,
+ * policies, instructions, and a relevant SUBSET of products (retrieval).
  */
-function buildSystemPrompt() {
-    return [BUSINESS_INFO, POLICIES, INSTRUCTIONS, knowledge_generated_1.PRODUCT_CATALOG].join('\n\n');
+function buildSystemPrompt(latestUserMessage) {
+    const products = selectRelevantProducts(latestUserMessage);
+    const catalog = `RELEVANT PRODUCTS — a subset of our ${knowledge_generated_1.PRODUCT_COUNT}-product catalogue, matched to this question (not the full range). ` +
+        `Browse everything by section: ${knowledge_generated_1.ROOMS_OVERVIEW}.\n` +
+        products.map(formatProduct).join('\n');
+    return [BUSINESS_INFO, POLICIES, INSTRUCTIONS, catalog].join('\n\n');
 }
 exports.KNOWLEDGE_META = { productCount: knowledge_generated_1.PRODUCT_COUNT };
 //# sourceMappingURL=knowledge.js.map

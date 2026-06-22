@@ -86,13 +86,16 @@ export const chat = onRequest(
         baseURL: CHAT_BASE_URL,
       });
 
+      // Retrieval is keyed on the latest user turn.
+      const latestUser = [...messages].reverse().find((m) => m.role === 'user')?.content ?? '';
+
       const stream = await client.chat.completions.create({
         model: CHAT_MODEL,
         temperature: 0.4,
         max_tokens: MAX_OUTPUT_TOKENS,
         stream: true,
         messages: [
-          { role: 'system', content: buildSystemPrompt() },
+          { role: 'system', content: buildSystemPrompt(latestUser) },
           ...messages,
         ],
       });
