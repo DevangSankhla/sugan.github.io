@@ -4,6 +4,9 @@ import * as nodemailer from 'nodemailer';
 
 admin.initializeApp();
 
+// On-site AI chat assistant (Groq-backed, streaming). Defined in chat.ts.
+export { chat } from './chat';
+
 const adminEmail = 'sac280422@gmail.com';
 const fromName = 'Sugan Shop';
 

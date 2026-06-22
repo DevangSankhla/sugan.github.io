@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "gen:chat-knowledge": "node scripts/generate-chat-knowledge.mjs",
+    "build": "node scripts/generate-chat-knowledge.mjs && tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },

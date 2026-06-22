@@ -15,7 +15,7 @@ const faqCategories: { [key: string]: FAQItem[] } = {
     },
     {
       question: 'Do you offer free shipping?',
-      answer: 'Yes! We offer free shipping on all orders above ₹1999. For orders below ₹1999, a flat shipping fee of ₹99 applies.'
+      answer: 'Yes! We offer free shipping on every order across India, with no minimum order value. Cash on Delivery (COD) orders include a flat ₹50 handling charge.'
     },
     {
       question: 'Do you deliver to my location?',

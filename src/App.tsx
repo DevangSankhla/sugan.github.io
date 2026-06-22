@@ -15,6 +15,7 @@ import CTA from '@/sections/CTA';
 import Footer from '@/sections/Footer';
 import CartDrawer from '@/sections/CartDrawer';
 import BottomNavigation from '@/components/BottomNavigation';
+import ChatWidget from '@/components/ChatWidget';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import Cursor from '@/components/Cursor';
 import Marquee from '@/components/Marquee';
@@ -150,6 +151,9 @@ function App() {
 
           {/* Cart Drawer */}
           <CartDrawer />
+
+          {/* On-site AI assistant */}
+          <ChatWidget />
 
           {/* Bottom Navigation (Mobile) */}
           <BottomNavigation />
