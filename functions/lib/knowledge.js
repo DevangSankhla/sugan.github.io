@@ -4,9 +4,9 @@
 // generated from src/data/rooms.ts (knowledge.generated.ts). Keep policies in
 // sync with the /shipping, /returns, /faq, /bulk-orders, and /contact pages.
 //
-// To stay within free-tier token limits (and to scale to any catalog size), the
-// assistant uses RETRIEVAL: only the most relevant products for each question are
-// included in the prompt, not the whole catalog.
+// To stay within free-tier token limits, scale to any catalog size, and stay
+// precise, the assistant uses FACETED RETRIEVAL: it sends only the products
+// matched to each question (by type / colour / price), not the whole catalog.
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.KNOWLEDGE_META = void 0;
 exports.selectRelevantProducts = selectRelevantProducts;
@@ -72,6 +72,8 @@ GROUNDING RULES (important)
 RECOMMENDING PRODUCTS
 - Recommend 1–4 relevant items. For each, use a markdown link in the exact form [Product Name](/product/SKU) using the link from the list.
 - Match the shopper's need (room, use, budget, size, material). Mention price and a one-line reason. If an item is out of stock, say so and offer an in-stock alternative if there is one.
+- MATCH THE TYPE asked for: the list is pre-filtered to the right product type, so recommend that type only (e.g. for "coffee table" don't suggest a side table).
+- COLOUR HONESTY: each product shows a "colour:" field (the finishes we detected). Only describe an item using a colour shown there. The list header states how many EXACT colour matches exist for the request. If it says 0 exact matches, tell the customer plainly that we don't have that colour and offer the closest finish honestly (e.g. "we don't have an all-black coffee table — the closest is one with a dark ebony base"). Never call a natural, walnut, or grey piece "black".
 - To point at a whole category, link a section page like [Kitchen](/shop/kitchen).
 
 ORDER STATUS
@@ -84,9 +86,10 @@ STYLE
 - For complaints, custom quotes, or anything needing a human, share contact@sugan.shop / +91 6367677255 and the relevant page.
 - Format all links as site-relative paths beginning with "/" (this is a single-page app).
 `.trim();
-// --- Retrieval ---------------------------------------------------------------
-const MAX_PRODUCTS = 30;
+// --- Faceted retrieval -------------------------------------------------------
+const MAX_PRODUCTS = 24;
 const MIN_PRODUCTS = 12;
+const MAX_COLOR_ALTERNATIVES = 8;
 const STOPWORDS = new Set([
     'the', 'and', 'for', 'are', 'you', 'your', 'with', 'have', 'has', 'can', 'what',
     'which', 'where', 'how', 'does', 'will', 'this', 'that', 'they', 'them', 'some',
@@ -117,6 +120,71 @@ function termsOf(q) {
     }
     return [...set];
 }
+// Type detection: map query phrases to canonical product types (longest first so
+// "coffee table" wins over the generic "table").
+const PRESENT_TYPES = new Set(knowledge_generated_1.PRODUCT_TYPES);
+const ALL_TABLE_TYPES = knowledge_generated_1.PRODUCT_TYPES.filter((t) => t.endsWith(' table'));
+const PHRASE_TO_TYPES = {
+    'coffee table': ['coffee table'], 'center table': ['coffee table'], 'centre table': ['coffee table'],
+    'cocktail table': ['coffee table'], 'couch table': ['coffee table'],
+    'side table': ['side table'], 'end table': ['side table'], 'accent table': ['side table'],
+    'bedside table': ['bedside table'], nightstand: ['bedside table'], 'night stand': ['bedside table'],
+    'console table': ['console table'], console: ['console table'],
+    'serving tray': ['serving tray'], tray: ['serving tray'],
+    'serving bowl': ['serving bowl'], bowl: ['serving bowl'],
+    'serving board': ['serving board'], 'chopping board': ['serving board'],
+    'cutting board': ['serving board'], 'cheese board': ['serving board'], board: ['serving board'],
+    'wall shelf': ['wall shelf'], 'wall shelves': ['wall shelf'], 'floating shelf': ['wall shelf'],
+    shelf: ['wall shelf'], shelves: ['wall shelf'],
+    bookshelf: ['bookshelf'], 'book shelf': ['bookshelf'], bookcase: ['bookshelf'],
+    'lounge chair': ['lounge chair'], armchair: ['lounge chair'], 'arm chair': ['lounge chair'],
+    'accent chair': ['lounge chair'], chair: ['chair', 'lounge chair'],
+    'wine rack': ['wine rack'],
+    'napkin holder': ['napkin holder'], 'napkin holders': ['napkin holder'],
+    pooja: ['pooja'], temple: ['pooja'], mandir: ['pooja'],
+    cabinet: ['cabinet'],
+    'stepping stool': ['stepping stool'], stool: ['stepping stool'],
+    'storage box': ['storage box'], box: ['storage box'],
+    'pet feeder': ['pet feeder'], feeder: ['pet feeder'], 'cat feeder': ['pet feeder'],
+    'dog feeder': ['pet feeder'], 'pet bowl': ['pet feeder'], 'cat bowl': ['pet feeder'], 'dog bowl': ['pet feeder'],
+    table: ['__ALL_TABLES__'],
+};
+const TYPE_PHRASES = Object.keys(PHRASE_TO_TYPES).sort((a, b) => b.split(' ').length - a.split(' ').length || b.length - a.length);
+function detectTypes(q) {
+    let work = ' ' + q.replace(/[^a-z0-9]+/g, ' ').trim() + ' ';
+    const out = new Set();
+    for (const ph of TYPE_PHRASES) {
+        const pad = ' ' + ph + ' ';
+        if (work.includes(pad)) {
+            for (const t of PHRASE_TO_TYPES[ph]) {
+                if (t === '__ALL_TABLES__')
+                    ALL_TABLE_TYPES.forEach((tt) => out.add(tt));
+                else if (PRESENT_TYPES.has(t))
+                    out.add(t);
+            }
+            work = work.split(pad).join(' '); // consume so shorter phrases don't re-match
+        }
+    }
+    return out;
+}
+// Colour detection in the query → canonical colours (matched against product.colors).
+const QUERY_COLORS = [
+    ['black', /\b(black|ebony|charcoal|jet)\b/],
+    ['white', /\b(white|bleached|ivory)\b/],
+    ['grey', /\b(grey|gray|greywash)\b/],
+    ['brown', /\b(brown|walnut|mahogany|chocolate)\b/],
+    ['natural', /\b(natural|honey|tan|beige|oak)\b/],
+    ['dark', /\bdark\b/],
+    ['light', /\blight\b/],
+];
+const NEAR_COLOR = { black: ['dark'], white: ['light'] };
+function detectColors(q) {
+    const out = new Set();
+    for (const [c, re] of QUERY_COLORS)
+        if (re.test(q))
+            out.add(c);
+    return out;
+}
 function fallbackProducts(priceMax) {
     const out = [];
     const seen = new Set();
@@ -127,11 +195,9 @@ function fallbackProducts(priceMax) {
             out.push(p);
         }
     };
-    // Highlights first.
     for (const p of knowledge_generated_1.PRODUCTS)
         if (p.inStock && p.flags && /bestseller|hot/.test(p.flags))
             add(p);
-    // Then spread one per room for variety.
     const perRoom = new Set();
     for (const p of knowledge_generated_1.PRODUCTS) {
         if (out.length >= MAX_PRODUCTS)
@@ -141,7 +207,6 @@ function fallbackProducts(priceMax) {
             add(p);
         }
     }
-    // Top up if still short.
     for (const p of knowledge_generated_1.PRODUCTS) {
         if (out.length >= MIN_PRODUCTS)
             break;
@@ -153,35 +218,79 @@ function selectRelevantProducts(query) {
     const q = (query || '').toLowerCase();
     const priceMax = parsePriceMax(q);
     const skus = new Set((query.match(/\bSAC[a-z0-9_]+/gi) || []).map((s) => s.toUpperCase()));
+    const types = detectTypes(q);
+    const colors = detectColors(q);
     const terms = termsOf(q);
-    const scored = knowledge_generated_1.PRODUCTS.map((p) => {
-        let score = 0;
+    const near = new Set();
+    for (const c of colors)
+        (NEAR_COLOR[c] || []).forEach((n) => near.add(n));
+    const isExact = (p) => colors.size > 0 && p.colors.some((c) => colors.has(c));
+    const isNear = (p) => near.size > 0 && p.colors.some((c) => near.has(c));
+    // Candidate pool: filter by type and price (SKUs explicitly named always pass).
+    let pool = knowledge_generated_1.PRODUCTS;
+    if (types.size)
+        pool = pool.filter((p) => types.has(p.type) || skus.has(p.id));
+    if (priceMax !== null)
+        pool = pool.filter((p) => p.price <= priceMax || skus.has(p.id));
+    const colorExactCount = colors.size ? pool.filter(isExact).length : null;
+    const score = (p) => {
+        let s = 0;
         if (skus.has(p.id))
-            score += 100;
-        for (const t of terms)
-            if (p.search.includes(t))
-                score += 1;
-        if (priceMax !== null && p.price <= priceMax)
-            score += 0.5;
-        return { p, score };
-    });
-    let picked = scored
-        .filter((x) => x.score > 0)
-        .filter((x) => priceMax === null || x.p.price <= priceMax || skus.has(x.p.id))
-        .sort((a, b) => b.score - a.score || a.p.price - b.p.price)
-        .map((x) => x.p);
-    if (picked.length < MIN_PRODUCTS) {
-        const seen = new Set(picked.map((p) => p.id));
-        for (const p of fallbackProducts(priceMax)) {
-            if (picked.length >= MAX_PRODUCTS)
-                break;
-            if (!seen.has(p.id)) {
-                seen.add(p.id);
-                picked.push(p);
+            s += 1000;
+        if (isExact(p))
+            s += 50;
+        else if (isNear(p))
+            s += 8;
+        for (const t of terms) {
+            if (p.name.toLowerCase().includes(t))
+                s += 4;
+            else if (p.type.includes(t) || (p.category || '').toLowerCase().includes(t))
+                s += 2;
+            else if (p.search.includes(t))
+                s += 1;
+        }
+        if (p.flags && /bestseller|hot/.test(p.flags))
+            s += 0.3;
+        return s;
+    };
+    let ranked;
+    if (types.size) {
+        // A type was named — keep the whole (filtered) type pool, best-ranked first.
+        ranked = [...pool].sort((a, b) => score(b) - score(a) || a.price - b.price);
+    }
+    else {
+        ranked = pool
+            .map((p) => ({ p, s: score(p) }))
+            .filter((x) => x.s > 0)
+            .sort((a, b) => b.s - a.s || a.p.price - b.p.price)
+            .map((x) => x.p);
+        if (ranked.length < MIN_PRODUCTS) {
+            const seen = new Set(ranked.map((p) => p.id));
+            for (const p of fallbackProducts(priceMax)) {
+                if (ranked.length >= MAX_PRODUCTS)
+                    break;
+                if (!seen.has(p.id)) {
+                    seen.add(p.id);
+                    ranked.push(p);
+                }
             }
         }
     }
-    return picked.slice(0, MAX_PRODUCTS);
+    // When a colour is requested: exact matches first, then a few alternatives —
+    // keeps requests token-light and lets the model be honest about gaps.
+    if (colors.size) {
+        const exactSet = new Set(ranked.filter(isExact).map((p) => p.id));
+        const exact = ranked.filter((p) => exactSet.has(p.id));
+        const others = ranked.filter((p) => !exactSet.has(p.id));
+        ranked = [...exact, ...others.slice(0, MAX_COLOR_ALTERNATIVES)];
+    }
+    return {
+        products: ranked.slice(0, MAX_PRODUCTS),
+        types: [...types],
+        colors: [...colors],
+        colorExactCount,
+        priceMax,
+    };
 }
 function formatProduct(p) {
     let price = `₹${p.price.toLocaleString('en-IN')}`;
@@ -192,6 +301,8 @@ function formatProduct(p) {
         price += ` [${p.flags}]`;
     const availability = p.preOrder ? 'pre-order' : p.inStock ? 'in stock' : 'out of stock';
     const parts = [p.id, p.name, price, availability];
+    if (p.colors.length)
+        parts.push(`colour: ${p.colors.join('/')}`);
     if (p.specs)
         parts.push(p.specs);
     if (p.desc)
@@ -202,15 +313,32 @@ function formatProduct(p) {
     return line;
 }
 /**
- * Builds the system prompt for a given user message. Includes business info,
- * policies, instructions, and a relevant SUBSET of products (retrieval).
+ * Builds the system prompt for a given user message: business info, policies,
+ * instructions, and a relevant SUBSET of products (faceted retrieval), with a
+ * header that tells the model what was matched (type/budget/colour exactness).
  */
 function buildSystemPrompt(latestUserMessage) {
-    const products = selectRelevantProducts(latestUserMessage);
-    const catalog = `RELEVANT PRODUCTS — a subset of our ${knowledge_generated_1.PRODUCT_COUNT}-product catalogue, matched to this question (not the full range). ` +
-        `Browse everything by section: ${knowledge_generated_1.ROOMS_OVERVIEW}.\n` +
-        products.map(formatProduct).join('\n');
-    return [BUSINESS_INFO, POLICIES, INSTRUCTIONS, catalog].join('\n\n');
+    const sel = selectRelevantProducts(latestUserMessage);
+    const notes = [];
+    if (sel.types.length)
+        notes.push(`Type: ${sel.types.join(' / ')}.`);
+    if (sel.priceMax !== null)
+        notes.push(`Budget: ≤ ₹${sel.priceMax.toLocaleString('en-IN')}.`);
+    if (sel.colors.length) {
+        const c = sel.colors.join('/');
+        notes.push(sel.colorExactCount
+            ? `Colour requested: ${c} — ${sel.colorExactCount} exact match(es), listed first; the rest are NOT ${c} (offer only as alternatives and say so).`
+            : `Colour requested: ${c} — we have NO exact ${c} match in this type. The items below are the closest, but are NOT ${c}; tell the customer we don't have ${c} and suggest the nearest finish.`);
+    }
+    const header = `RELEVANT PRODUCTS — a subset of our ${knowledge_generated_1.PRODUCT_COUNT}-item catalogue matched to this question (not the full range). ` +
+        (notes.length ? notes.join(' ') + ' ' : '') +
+        `Browse everything by section: ${knowledge_generated_1.ROOMS_OVERVIEW}.`;
+    return [
+        BUSINESS_INFO,
+        POLICIES,
+        INSTRUCTIONS,
+        header + '\n' + sel.products.map(formatProduct).join('\n'),
+    ].join('\n\n');
 }
 exports.KNOWLEDGE_META = { productCount: knowledge_generated_1.PRODUCT_COUNT };
 //# sourceMappingURL=knowledge.js.map
