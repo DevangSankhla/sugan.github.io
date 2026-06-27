@@ -143,5 +143,22 @@ service cloud.firestore {
       );
       allow write: if false;
     }
+
+    // -------------------------------------------------------------------
+    // Sugan Wallet (store credit) — real money, so balances are written
+    // ONLY by Cloud Functions (admin SDK bypasses these rules). Clients can
+    // read their own wallet + ledger; admin can read all.
+    // -------------------------------------------------------------------
+    match /wallets/{uid} {
+      allow read: if isSignedIn() && request.auth.uid == uid;
+      allow read: if isAdmin();
+      allow write: if false;
+    }
+
+    match /walletTransactions/{txnId} {
+      allow read: if isSignedIn() && resource.data.uid == request.auth.uid;
+      allow read: if isAdmin();
+      allow write: if false;
+    }
   }
 }

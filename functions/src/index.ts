@@ -7,6 +7,9 @@ admin.initializeApp();
 // On-site AI chat assistant (Groq-backed, streaming). Defined in chat.ts.
 export { chat } from './chat';
 
+// Sugan Wallet (store credit). Defined in wallet.ts.
+export { adminAdjustWallet, redeemWalletForOrder, refundWalletOnOrderFailure } from './wallet';
+
 const adminEmail = 'sac280422@gmail.com';
 const fromName = 'Sugan Shop';
 
@@ -103,6 +106,9 @@ interface OrderData {
   shipping?: number;
   codCharge?: number;
   total?: number;
+  walletRequested?: number;
+  walletApplied?: number;
+  amountToPay?: number;
   paymentMethod?: string;
   paymentStatus?: string;
   shippingAddress?: ShippingAddress;
@@ -171,6 +177,8 @@ export const sendOrderPlacedEmail = functions.firestore
 
     // --- Customer confirmation email ---
     const isCOD = (data.paymentMethod || '').toUpperCase() === 'COD';
+    const walletAmt = Math.min(Number(data.walletRequested || 0), Number(data.total || 0));
+    const onlinePayable = Math.max(0, (data.total || 0) - walletAmt);
     const customerSubject = `Your Sugan order is confirmed — ${orderRef}`;
     const customerHtml = `
       <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;color:#333;background:#fffdf8;padding:32px;border-radius:12px;">
@@ -213,10 +221,20 @@ export const sendOrderPlacedEmail = functions.firestore
             <td style="padding:6px 0;border-bottom:1px solid #eee;color:#777;">COD Fee</td>
             <td style="padding:6px 0;border-bottom:1px solid #eee;text-align:right;">${formatCurrency(data.codCharge || 0)}</td>
           </tr>` : ''}
+          ${walletAmt > 0 ? `
           <tr>
-            <td style="padding:10px 0 0;font-weight:bold;font-size:16px;color:#5D4037;">Total</td>
+            <td style="padding:6px 0;border-bottom:1px solid #eee;color:#9E7A5A;">Sugan Wallet</td>
+            <td style="padding:6px 0;border-bottom:1px solid #eee;text-align:right;color:#9E7A5A;">−${formatCurrency(walletAmt)}</td>
+          </tr>` : ''}
+          <tr>
+            <td style="padding:10px 0 0;font-weight:bold;font-size:16px;color:#5D4037;">${walletAmt > 0 ? 'Order Total' : 'Total'}</td>
             <td style="padding:10px 0 0;text-align:right;font-weight:bold;font-size:16px;color:#5D4037;">${formatCurrency(data.total || 0)}</td>
           </tr>
+          ${walletAmt > 0 ? `
+          <tr>
+            <td style="padding:6px 0 0;font-weight:bold;font-size:16px;color:#2E7D32;">${onlinePayable > 0 ? 'Paid Online' : 'Paid via Wallet'}</td>
+            <td style="padding:6px 0 0;text-align:right;font-weight:bold;font-size:16px;color:#2E7D32;">${formatCurrency(onlinePayable)}</td>
+          </tr>` : ''}
         </table>
 
         <h3 style="color:#5D4037;margin:24px 0 8px;">Delivering To</h3>

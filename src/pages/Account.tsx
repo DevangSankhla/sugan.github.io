@@ -7,13 +7,15 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { 
+import {
   Package, Heart, LogOut, User,
   ShoppingBag, Clock, Truck, CheckCircle, RefreshCw,
-  ChevronDown, ChevronUp, AlertTriangle, MessageCircle
+  ChevronDown, ChevronUp, AlertTriangle, MessageCircle,
+  Wallet as WalletIcon, Plus, Minus
 } from 'lucide-react';
 import { db } from '@/lib/firebase';
 import { collection, query, where, onSnapshot, doc, deleteDoc } from 'firebase/firestore';
+import { subscribeWalletBalance, subscribeWalletTransactions, type WalletTransaction } from '@/lib/wallet';
 import type { Product, CartItem, ShippingAddress, FirestoreTimestamp } from '@/types';
 
 interface Order {
@@ -74,6 +76,8 @@ export default function Account() {
   const [loading, setLoading] = useState(true);
   const [expandedOrder, setExpandedOrder] = useState<string | null>(null);
   const [orderNotification, setOrderNotification] = useState<string | null>(null);
+  const [walletBalance, setWalletBalance] = useState(0);
+  const [walletTxns, setWalletTxns] = useState<WalletTransaction[]>([]);
 
   useEffect(() => {
     if (!user) {
@@ -120,9 +124,15 @@ export default function Account() {
       setWishlist(wishlistData);
     });
 
+    // Wallet balance + transactions
+    const unsubscribeWallet = subscribeWalletBalance(user.uid, setWalletBalance);
+    const unsubscribeWalletTxns = subscribeWalletTransactions(user.uid, setWalletTxns);
+
     return () => {
       unsubscribeOrders();
       unsubscribeWishlist();
+      unsubscribeWallet();
+      unsubscribeWalletTxns();
     };
   }, [user, navigate]);
 
@@ -227,6 +237,10 @@ export default function Account() {
             <TabsTrigger value="orders" className="font-body data-[state=active]:bg-sugan-ink data-[state=active]:text-white">
               <Package className="w-4 h-4 mr-2" />
               Orders
+            </TabsTrigger>
+            <TabsTrigger value="wallet" className="font-body data-[state=active]:bg-sugan-ink data-[state=active]:text-white">
+              <WalletIcon className="w-4 h-4 mr-2" />
+              Wallet
             </TabsTrigger>
             <TabsTrigger value="wishlist" className="font-body data-[state=active]:bg-sugan-ink data-[state=active]:text-white">
               <Heart className="w-4 h-4 mr-2" />
@@ -514,6 +528,63 @@ export default function Account() {
                             )}
                           </CardContent>
                         </Card>
+                      );
+                    })}
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Wallet Tab */}
+          <TabsContent value="wallet">
+            <Card>
+              <CardHeader>
+                <CardTitle className="font-display text-xl text-sugan-ink flex items-center gap-2">
+                  <WalletIcon className="w-5 h-5 text-sugan-gold" />
+                  Sugan Wallet
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="bg-sugan-ink text-sugan-bone rounded-xl p-6 mb-6">
+                  <p className="text-xs uppercase tracking-[0.18em] text-sugan-bone/60 font-body">Available Balance</p>
+                  <p className="font-display text-4xl mt-1 tabular-nums">₹{walletBalance.toLocaleString('en-IN')}</p>
+                  <p className="text-xs text-sugan-bone/60 mt-2 font-body">
+                    Use your credit at checkout (prepaid orders only; can't be combined with a coupon).
+                  </p>
+                </div>
+
+                <h4 className="font-body font-medium text-sugan-ink mb-3">Recent Activity</h4>
+                {walletTxns.length === 0 ? (
+                  <p className="font-body text-sm text-sugan-ink/50 py-8 text-center">
+                    No wallet activity yet.
+                  </p>
+                ) : (
+                  <div className="space-y-2">
+                    {walletTxns.map((t) => {
+                      const credit = t.amount >= 0;
+                      return (
+                        <div key={t.id} className="flex items-center justify-between p-3 bg-sugan-bone/50 rounded-lg">
+                          <div className="flex items-center gap-3">
+                            <div className={`w-8 h-8 rounded-full flex items-center justify-center ${credit ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+                              {credit ? <Plus className="w-4 h-4" /> : <Minus className="w-4 h-4" />}
+                            </div>
+                            <div>
+                              <p className="font-body text-sm text-sugan-ink">{t.reason || t.type}</p>
+                              <p className="font-body text-xs text-sugan-ink/40">
+                                {t.createdAt?.toDate?.().toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) || ''}
+                              </p>
+                            </div>
+                          </div>
+                          <div className="text-right">
+                            <p className={`font-body text-sm font-medium tabular-nums ${credit ? 'text-green-700' : 'text-red-600'}`}>
+                              {credit ? '+' : '−'}₹{Math.abs(t.amount).toLocaleString('en-IN')}
+                            </p>
+                            <p className="font-body text-xs text-sugan-ink/40 tabular-nums">
+                              Bal ₹{Number(t.balanceAfter ?? 0).toLocaleString('en-IN')}
+                            </p>
+                          </div>
+                        </div>
                       );
                     })}
                   </div>

@@ -16,6 +16,7 @@ import { db, functions as fns } from '@/lib/firebase';
 import { collection, query, onSnapshot, doc, updateDoc, serverTimestamp, setDoc, deleteDoc, where, getDocs, limit } from 'firebase/firestore';
 import { httpsCallable } from 'firebase/functions';
 import { allProducts } from '@/data/rooms';
+import AdminWalletControl from '@/components/AdminWalletControl';
 import type { Product, FirestoreTimestamp } from '@/types';
 
 interface OrderItem {
@@ -880,6 +881,7 @@ export default function Admin() {
                             </Dialog>
                           </div>
                         </div>
+                        <AdminWalletControl uid={userData.uid} />
                       </CardContent>
                     </Card>
                   ))}

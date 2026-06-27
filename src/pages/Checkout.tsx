@@ -20,8 +20,10 @@ import {
   createShiprocketOrder,
   updateOrderShipping
 } from '@/lib/shiprocket';
-import { MapPin, Phone, User, Home, Building, Navigation, CreditCard, Banknote, Truck, Shield, AlertCircle, Package, MessageCircle, X, Info, ArrowRight, Loader2, ChevronDown } from 'lucide-react';
+import { MapPin, Phone, User, Home, Building, Navigation, CreditCard, Banknote, Truck, Shield, AlertCircle, Package, MessageCircle, X, Info, ArrowRight, Loader2, ChevronDown, Wallet } from 'lucide-react';
 import CouponCode from '@/components/CouponCode';
+import { subscribeWalletBalance, redeemWalletForOrder } from '@/lib/wallet';
+import { getErrorMessage } from '@/lib/utils';
 
 const INDIAN_STATES = [
   'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh',
@@ -80,6 +82,10 @@ export default function Checkout() {
   const [guestEmail, setGuestEmail] = useState('');
   const [guestEmailError, setGuestEmailError] = useState('');
   const [confirmedOrder, setConfirmedOrder] = useState<{ id: string; orderNumber?: string } | null>(null);
+  const [walletBalance, setWalletBalance] = useState(0);
+  const [useWalletCredit, setUseWalletCredit] = useState(false);
+  const [walletAmount, setWalletAmount] = useState(0);
+  const [pendingPayUAmount, setPendingPayUAmount] = useState(0);
 
   const SAC048_SKUS = ['SAC048S', 'SAC048M', 'SAC048L'];
   const hasSAC048 = items.some(item => SAC048_SKUS.includes(item.id));
@@ -90,6 +96,20 @@ export default function Checkout() {
   // COD charge: ₹50 on COD, waived if the SAC048 promo is active.
   const codCharge = promoFreeDelivery ? 0 : (paymentMethod === 'cod' ? 50 : 0);
   const finalTotal = totalPrice - discountAmount + shippingCost + codCharge;
+  // Sugan Wallet: signed-in only, capped at balance and the order total.
+  const maxWallet = Math.min(walletBalance, finalTotal);
+  const walletApplied = user && useWalletCredit ? Math.min(Math.max(0, walletAmount), maxWallet) : 0;
+  const amountToPay = Math.max(0, finalTotal - walletApplied);
+
+  // Using wallet credit forces prepaid and clears any coupon (mutually exclusive).
+  const enableWallet = () => {
+    setUseWalletCredit(true);
+    setWalletAmount(Math.min(walletBalance, finalTotal));
+    setPaymentMethod('payu');
+    setDiscountAmount(0);
+    setAppliedCoupon(null);
+    setAffiliateMeta(null);
+  };
 
   // Nothing to redirect on — guests are allowed through checkout
 
@@ -146,6 +166,16 @@ export default function Checkout() {
     return () => unsub();
   }, [hasSAC048]);
 
+  // Wallet balance (signed-in users only)
+  useEffect(() => {
+    if (!user) {
+      setWalletBalance(0);
+      return;
+    }
+    const unsub = subscribeWalletBalance(user.uid, setWalletBalance);
+    return () => unsub();
+  }, [user]);
+
   const handleSubmit = async () => {
     setLoading(true);
 
@@ -182,6 +212,7 @@ export default function Checkout() {
         shippingCourier: 'Shiprocket',
         codCharge: codCharge,
         total: finalTotal,
+        ...(walletApplied > 0 ? { walletRequested: walletApplied } : {}),
         status: 'pending',
         paymentStatus: 'pending',
         paymentMethod: paymentMethod === 'cod' ? 'COD' : 'PayU',
@@ -249,6 +280,27 @@ export default function Checkout() {
           setConfirmedOrder({ id: orderId, orderNumber: (orderDoc as Record<string, unknown>)?.orderNumber as string | undefined });
         }
       } else {
+        // Prepaid. If wallet credit is applied, redeem it server-side first.
+        if (walletApplied > 0) {
+          try {
+            const res = await redeemWalletForOrder({ orderId, amount: walletApplied });
+            const data = res.data;
+            if (data.fullyPaid || data.amountToPay <= 0) {
+              // Wallet covered the whole order — nothing to pay online.
+              clearCart();
+              navigate(`/account?order=${orderId}`);
+              return;
+            }
+            setPendingPayUAmount(data.amountToPay);
+          } catch (werr) {
+            console.error('Wallet redeem failed:', werr);
+            alert(getErrorMessage(werr, 'Could not apply your wallet credit. Please try again.'));
+            setLoading(false);
+            return;
+          }
+        } else {
+          setPendingPayUAmount(finalTotal);
+        }
         // Show warning before PayU redirect (GitHub Pages blocks POST back)
         setPendingPayUOrderId(orderId);
         setShowPayUWarning(true);
@@ -268,7 +320,7 @@ export default function Checkout() {
     const payuFormData = preparePayUForm({
       orderId: pendingPayUOrderId,
       userId: user?.uid || '',
-      amount: finalTotal,
+      amount: pendingPayUAmount || finalTotal,
       customerName: address.fullName,
       customerEmail: user?.email || guestEmail,
       customerPhone: address.phone,
@@ -648,12 +700,13 @@ export default function Checkout() {
                   {/* Cash on Delivery */}
                   <button
                     type="button"
-                    onClick={() => setPaymentMethod('cod')}
+                    onClick={() => { if (!useWalletCredit) setPaymentMethod('cod'); }}
+                    disabled={useWalletCredit}
                     className={`w-full p-4 rounded-xl border-2 text-left transition-all ${
                       paymentMethod === 'cod'
                         ? 'border-sugan-gold bg-sugan-gold/5'
                         : 'border-sugan-ink/10 hover:border-sugan-ink/30'
-                    }`}
+                    } ${useWalletCredit ? 'opacity-50 cursor-not-allowed' : ''}`}
                   >
                     <div className="flex items-center gap-3">
                       <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
@@ -683,6 +736,12 @@ export default function Checkout() {
                         Please keep exact change ready at the time of delivery.
                       </p>
                     </div>
+                  )}
+
+                  {useWalletCredit && (
+                    <p className="text-xs text-sugan-ink/50 font-body">
+                      Cash on Delivery is unavailable while using wallet credit (online payment only).
+                    </p>
                   )}
                 </div>
               </CardContent>
@@ -720,10 +779,72 @@ export default function Checkout() {
                     </div>
                   ))}
 
+                  {/* Sugan Wallet */}
+                  {user && walletBalance > 0 && (
+                    <div className="border border-sugan-ink/10 rounded-xl p-4 mb-4">
+                      <div className="flex items-center justify-between mb-2">
+                        <h3 className="font-body font-medium text-sugan-ink flex items-center gap-2">
+                          <Wallet className="w-4 h-4 text-sugan-gold" />
+                          Sugan Wallet
+                        </h3>
+                        <span className="font-body text-sm text-sugan-ink/60 tabular-nums">
+                          Balance ₹{walletBalance.toLocaleString('en-IN')}
+                        </span>
+                      </div>
+                      {!useWalletCredit ? (
+                        <>
+                          <button
+                            type="button"
+                            disabled={!!appliedCoupon}
+                            onClick={enableWallet}
+                            className="w-full py-2 bg-sugan-ink text-sugan-bone rounded-lg font-body text-sm hover:bg-sugan-ink/90 disabled:opacity-50 disabled:cursor-not-allowed"
+                          >
+                            Use wallet credit
+                          </button>
+                          {appliedCoupon && (
+                            <p className="text-xs text-sugan-ink/40 font-body mt-2">
+                              Remove the coupon to use wallet credit.
+                            </p>
+                          )}
+                        </>
+                      ) : (
+                        <div className="space-y-2">
+                          <label className="text-xs text-sugan-ink/60 font-body">
+                            Amount to use (max ₹{maxWallet.toLocaleString('en-IN')})
+                          </label>
+                          <div className="flex gap-2">
+                            <input
+                              type="number"
+                              min="0"
+                              max={maxWallet}
+                              value={walletAmount || ''}
+                              onChange={(e) =>
+                                setWalletAmount(Math.min(Math.max(0, Number(e.target.value) || 0), maxWallet))
+                              }
+                              className="flex-1 px-3 py-2 border border-sugan-ink/20 rounded-lg font-body text-sm focus:outline-none focus:border-sugan-gold tabular-nums"
+                            />
+                            <button
+                              type="button"
+                              onClick={() => setUseWalletCredit(false)}
+                              className="px-3 py-2 text-red-500 hover:text-red-700"
+                              aria-label="Remove wallet credit"
+                            >
+                              <X className="w-4 h-4" />
+                            </button>
+                          </div>
+                          <p className="text-xs text-sugan-ink/50 font-body">
+                            Wallet can't be combined with a coupon and requires online payment.
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
                   {/* Coupon */}
                   <CouponCode
                     subtotal={totalPrice}
                     paymentMethod={paymentMethod}
+                    disabled={useWalletCredit}
                     onApplyCoupon={(discount, code, aff) => {
                       setDiscountAmount(discount);
                       setAppliedCoupon(code);
@@ -767,9 +888,18 @@ export default function Checkout() {
                         <span>₹{codCharge}</span>
                       </div>
                     ) : null}
+                    {walletApplied > 0 && (
+                      <div className="flex justify-between font-body text-sugan-gold">
+                        <span className="flex items-center gap-1">
+                          <Wallet className="w-3.5 h-3.5" />
+                          Sugan Wallet
+                        </span>
+                        <span>-₹{walletApplied.toLocaleString()}</span>
+                      </div>
+                    )}
                     <div className="flex justify-between font-body text-sugan-ink font-semibold text-lg pt-2 border-t border-sugan-ink/10">
-                      <span>Total</span>
-                      <span>₹{finalTotal.toLocaleString()}</span>
+                      <span>{walletApplied > 0 ? 'To Pay' : 'Total'}</span>
+                      <span>₹{amountToPay.toLocaleString()}</span>
                     </div>
                   </div>
 
@@ -799,6 +929,10 @@ export default function Checkout() {
                       </span>
                     ) : paymentMethod === 'cod' ? (
                       'Place Order (COD)'
+                    ) : walletApplied > 0 && amountToPay <= 0 ? (
+                      'Place Order'
+                    ) : walletApplied > 0 ? (
+                      `Pay ₹${amountToPay.toLocaleString()}`
                     ) : (
                       'Proceed to Pay'
                     )}

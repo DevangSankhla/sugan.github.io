@@ -33,7 +33,7 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.settleMonthlyAffiliateCommissions = exports.voidAffiliateCommission = exports.mirrorAffiliateOrderOnUpdate = exports.mirrorAffiliateOrderOnCreate = exports.sendOrderCompletedEmail = exports.sendOrderPlacedEmail = exports.chat = void 0;
+exports.settleMonthlyAffiliateCommissions = exports.voidAffiliateCommission = exports.mirrorAffiliateOrderOnUpdate = exports.mirrorAffiliateOrderOnCreate = exports.sendOrderCompletedEmail = exports.sendOrderPlacedEmail = exports.refundWalletOnOrderFailure = exports.redeemWalletForOrder = exports.adminAdjustWallet = exports.chat = void 0;
 const functions = __importStar(require("firebase-functions"));
 const admin = __importStar(require("firebase-admin"));
 const nodemailer = __importStar(require("nodemailer"));
@@ -41,6 +41,11 @@ admin.initializeApp();
 // On-site AI chat assistant (Groq-backed, streaming). Defined in chat.ts.
 var chat_1 = require("./chat");
 Object.defineProperty(exports, "chat", { enumerable: true, get: function () { return chat_1.chat; } });
+// Sugan Wallet (store credit). Defined in wallet.ts.
+var wallet_1 = require("./wallet");
+Object.defineProperty(exports, "adminAdjustWallet", { enumerable: true, get: function () { return wallet_1.adminAdjustWallet; } });
+Object.defineProperty(exports, "redeemWalletForOrder", { enumerable: true, get: function () { return wallet_1.redeemWalletForOrder; } });
+Object.defineProperty(exports, "refundWalletOnOrderFailure", { enumerable: true, get: function () { return wallet_1.refundWalletOnOrderFailure; } });
 const adminEmail = 'sac280422@gmail.com';
 const fromName = 'Sugan Shop';
 // Transporter reads credentials from functions.config() at invocation time
@@ -150,6 +155,8 @@ exports.sendOrderPlacedEmail = functions.firestore
     `;
     // --- Customer confirmation email ---
     const isCOD = (data.paymentMethod || '').toUpperCase() === 'COD';
+    const walletAmt = Math.min(Number(data.walletRequested || 0), Number(data.total || 0));
+    const onlinePayable = Math.max(0, (data.total || 0) - walletAmt);
     const customerSubject = `Your Sugan order is confirmed — ${orderRef}`;
     const customerHtml = `
       <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;color:#333;background:#fffdf8;padding:32px;border-radius:12px;">
@@ -192,10 +199,20 @@ exports.sendOrderPlacedEmail = functions.firestore
             <td style="padding:6px 0;border-bottom:1px solid #eee;color:#777;">COD Fee</td>
             <td style="padding:6px 0;border-bottom:1px solid #eee;text-align:right;">${formatCurrency(data.codCharge || 0)}</td>
           </tr>` : ''}
+          ${walletAmt > 0 ? `
           <tr>
-            <td style="padding:10px 0 0;font-weight:bold;font-size:16px;color:#5D4037;">Total</td>
+            <td style="padding:6px 0;border-bottom:1px solid #eee;color:#9E7A5A;">Sugan Wallet</td>
+            <td style="padding:6px 0;border-bottom:1px solid #eee;text-align:right;color:#9E7A5A;">−${formatCurrency(walletAmt)}</td>
+          </tr>` : ''}
+          <tr>
+            <td style="padding:10px 0 0;font-weight:bold;font-size:16px;color:#5D4037;">${walletAmt > 0 ? 'Order Total' : 'Total'}</td>
             <td style="padding:10px 0 0;text-align:right;font-weight:bold;font-size:16px;color:#5D4037;">${formatCurrency(data.total || 0)}</td>
           </tr>
+          ${walletAmt > 0 ? `
+          <tr>
+            <td style="padding:6px 0 0;font-weight:bold;font-size:16px;color:#2E7D32;">${onlinePayable > 0 ? 'Paid Online' : 'Paid via Wallet'}</td>
+            <td style="padding:6px 0 0;text-align:right;font-weight:bold;font-size:16px;color:#2E7D32;">${formatCurrency(onlinePayable)}</td>
+          </tr>` : ''}
         </table>
 
         <h3 style="color:#5D4037;margin:24px 0 8px;">Delivering To</h3>

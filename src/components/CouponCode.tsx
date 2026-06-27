@@ -17,6 +17,7 @@ interface CouponCodeProps {
   onRemoveCoupon: () => void;
   appliedCoupon: string | null;
   discountAmount: number;
+  disabled?: boolean;
 }
 
 const AVAILABLE_COUPONS = [
@@ -29,7 +30,8 @@ export default function CouponCode({
   onApplyCoupon,
   onRemoveCoupon,
   appliedCoupon,
-  discountAmount
+  discountAmount,
+  disabled = false
 }: CouponCodeProps) {
   const { user } = useAuth();
   const [code, setCode] = useState('');
@@ -147,7 +149,11 @@ export default function CouponCode({
         Apply Coupon
       </h3>
 
-      {appliedCoupon ? (
+      {disabled && !appliedCoupon ? (
+        <p className="text-xs text-sugan-ink/40 font-body">
+          Coupons can't be combined with Sugan Wallet credit. Remove the wallet credit to use a coupon.
+        </p>
+      ) : appliedCoupon ? (
         <div className="flex items-center justify-between bg-green-50 border border-green-200 rounded-lg p-3">
           <div className="flex items-center gap-2">
             <Check className="w-4 h-4 text-green-600" />
