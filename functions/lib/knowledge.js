@@ -47,7 +47,12 @@ RETURNS & REFUNDS
 - NOT returnable: used/washed/altered items, damage from misuse, customized/personalized orders (unless a manufacturing defect), returns after 7 days, and damaged items without an unboxing video.
 
 SUGAN WALLET
-- Store credit tied to the customer's account. Non-withdrawable (cannot be moved to a bank/card), no expiry, usable toward future orders at checkout.
+- Store credit tied to the customer's account. Customers view their balance and history under Account → Wallet.
+- How credit is added: issued by Sugan only — e.g. refunds on returns, or goodwill/promotional credit. Customers cannot buy or top up wallet credit themselves.
+- Using it at checkout: a signed-in customer with a balance can apply any amount of their credit (up to their balance and up to the order total) to reduce what they pay. Example: a ₹999 order with ₹699 wallet credit applied = ₹300 left to pay.
+- Rules: wallet credit CANNOT be combined with a coupon code, and can ONLY be used with online/prepaid payment — NOT Cash on Delivery. If the credit covers the whole order, nothing is charged online and the order is placed immediately.
+- Non-withdrawable (cannot be moved to a bank account or card) and never expires.
+- If an online payment fails or is cancelled after credit was applied, the credit is automatically returned to the wallet.
 
 CARE
 - Clean with a soft, damp cloth and mild soap. Do not soak or use harsh chemicals or a dishwasher.

@@ -53,7 +53,37 @@ const faqCategories: { [key: string]: FAQItem[] } = {
     },
     {
       question: 'What is the Sugan Wallet and can I withdraw from it?',
-      answer: 'The Sugan Wallet is store credit tied to your account. It is non-withdrawable — the balance cannot be transferred to a bank account or any payment method. It can only be used as store credit towards future orders on sugan.shop. Wallet balance does not expire and can be applied at checkout on any order.'
+      answer: 'The Sugan Wallet is store credit tied to your account. It is non-withdrawable — the balance cannot be transferred to a bank account or any payment method. It can only be used as store credit towards future orders on sugan.shop. Wallet balance does not expire and can be applied at checkout on any order. See the "Sugan Wallet" section below for full details.'
+    }
+  ],
+  'Sugan Wallet': [
+    {
+      question: 'What is the Sugan Wallet?',
+      answer: 'The Sugan Wallet is store credit linked to your account. You can view your balance and full transaction history under Account → Wallet, and use it at checkout to pay for part or all of an order.'
+    },
+    {
+      question: 'How do I get wallet credit?',
+      answer: 'Wallet credit is issued by Sugan — for example, as a refund on a returned order, or as goodwill or promotional credit from our team. You cannot purchase or top up wallet credit yourself; it is added by Sugan.'
+    },
+    {
+      question: 'How do I use my wallet credit at checkout?',
+      answer: 'If you are signed in and have a balance, a "Use Sugan Wallet" option appears in your order summary at checkout. Enter how much credit you want to apply — up to your balance, and up to the order total — and it is deducted from the amount you pay. For example, on a ₹999 order you could apply ₹699 of wallet credit and pay only ₹300.'
+    },
+    {
+      question: 'Can I use wallet credit and a coupon together?',
+      answer: 'No. Wallet credit and coupon codes cannot be combined on the same order — you can use one or the other. Applying wallet credit removes any coupon, and applying a coupon disables the wallet for that order.'
+    },
+    {
+      question: 'Can I use my wallet with Cash on Delivery?',
+      answer: 'No. When you use wallet credit, the remaining amount must be paid online (prepaid) — Cash on Delivery is not available on wallet orders. If your wallet credit covers the entire order, there is nothing left to pay and the order is placed right away.'
+    },
+    {
+      question: 'What happens to my wallet credit if my payment fails?',
+      answer: 'If your online payment fails or is cancelled after applying wallet credit, the credit is automatically returned to your wallet. You will see it back in your balance and in your Account → Wallet history.'
+    },
+    {
+      question: 'Can I withdraw wallet money to my bank account?',
+      answer: 'No. The Sugan Wallet is non-withdrawable — the balance cannot be transferred to a bank account, card, or any payment method. It can only be used as credit towards orders on sugan.shop, and it never expires.'
     }
   ],
   'Products & Care': [
