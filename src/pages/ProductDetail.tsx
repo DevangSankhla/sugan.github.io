@@ -512,7 +512,7 @@ export default function ProductDetail() {
             </div>
 
             {/* Size guide reminder */}
-            {product.details?.usesAndMeasurements && (
+            {product.details?.usesAndMeasurements && product.room === 'pet' && (
               <button
                 type="button"
                 onClick={() => {
